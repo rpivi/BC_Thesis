@@ -1,326 +1,264 @@
 import jax
 import jax.numpy as jnp
-import matplotlib.pyplot as plt
 import optax
 
-def init_mlp_params(key, in_dim, hidden_dim, out_dim):
+# ---------------------------------------------------------------------------
+# MLP 
+# ---------------------------------------------------------------------------
+
+def _mlp_init(key, in_dim, hidden_dim, out_dim):
     k1, k2, k3 = jax.random.split(key, 3)
     return {
-        "W1": jax.random.normal(k1, (in_dim, hidden_dim)) * 0.1,
-        "b1": jnp.zeros((hidden_dim,)),
-        "W2": jax.random.normal(k2, (hidden_dim, hidden_dim)) * 0.1,
-        "b2": jnp.zeros((hidden_dim,)),
-        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.1,
-        "b3": jnp.zeros((out_dim,))
+        "W1": jax.random.normal(k1, (in_dim, hidden_dim)) * jnp.sqrt(1.0 / in_dim),
+        "b1": jnp.zeros(hidden_dim),
+        "W2": jax.random.normal(k2, (hidden_dim, hidden_dim)) * jnp.sqrt(1.0 / hidden_dim),
+        "b2": jnp.zeros(hidden_dim),
+        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.01,  # ultimo layer piccolo
+        "b3": jnp.zeros(out_dim),
     }
 
-# Initialize MLP parameters with small random values: weights from a normal distribution and biases as zeros.
 
-#The mlp function defines a simple feedforward neural network with one hidden layer. 
-# It takes input x, applies a linear transformation followed by a tanh activation to get the hidden representation h, 
-# and then applies another linear transformation to produce the output.
-def mlp(params, x):
+def _mlp(params, x):
+    """MLP a 2 hidden layers con attivazione tanh."""
     h = jnp.tanh(x @ params["W1"] + params["b1"])
     h = jnp.tanh(h @ params["W2"] + params["b2"])
     return h @ params["W3"] + params["b3"]
 
-def init_params(key):
-    keys = jax.random.split(key, 20)
-    return {
-        "s1": init_mlp_params(keys[0], 1, 16, 1),
-        "t1": init_mlp_params(keys[1], 1, 16, 1),
-        "s2": init_mlp_params(keys[2], 1, 16, 1),
-        "t2": init_mlp_params(keys[3], 1, 16, 1),
-        "s3": init_mlp_params(keys[4], 1, 16, 1),
-        "t3": init_mlp_params(keys[5], 1, 16, 1),
-        "s4": init_mlp_params(keys[6], 1, 16, 1),
-        "t4": init_mlp_params(keys[7], 1, 16, 1),
-        "s5": init_mlp_params(keys[8], 1, 16, 1),
-        "t5": init_mlp_params(keys[9], 1, 16, 1),
-        "s6": init_mlp_params(keys[10], 1, 16, 1),
-        "t6": init_mlp_params(keys[11], 1, 16, 1),
-        "s7": init_mlp_params(keys[12], 1, 16, 1),
-        "t7": init_mlp_params(keys[13], 1, 16, 1),
-        "s8": init_mlp_params(keys[14], 1, 16, 1),
-        "t8": init_mlp_params(keys[15], 1, 16, 1),
-        "s9": init_mlp_params(keys[16], 1, 16, 1),
-        "t9": init_mlp_params(keys[17], 1, 16, 1),
-        "s10": init_mlp_params(keys[18], 1, 16, 1),
-        "t10": init_mlp_params(keys[19], 1, 16, 1)
-    }
-# The init_params function initializes the parameters for two coupling layers, each with its own scale (s) and translation (t) MLPs.
 
-def permute(x):
-    return x[:, ::-1]
+# ---------------------------------------------------------------------------
+# Coupling layer RealNVP generica
+# ---------------------------------------------------------------------------
+# Dati d dimensioni totali, la coupling layer:
+#   - passa le prime d_pass dimensioni invariate  (x1 = z1)
+#   - trasforma le restanti d_transform con s,t  (x2 = z2 * exp(s(z1)) + t(z1))
+#
+# Uso:
+#   s_out = scale_factor * tanh(mlp_s(z1))
+# con scale_factor ~ 2.0 per evitare esplosioni di exp(s).
 
-################################################################## COUPLING LAYERS #####################################
+_SCALE_FACTOR = 2.0
 
-def coupling1(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-    
-    s = mlp(params["s1"], z1)
 
-    t = mlp(params["t1"], z1)
+def _coupling_forward(s_params, t_params, z, d_pass):
+    """
+    Forward di una singola coupling layer.
+    d_pass: numero di dimensioni passate invariate (le altre vengono trasformate).
+    Ritorna (x, log_det_jacobian) con log_det shape (batch,).
+    """
+    z1 = z[:, :d_pass]        # (batch, d_pass)
+    z2 = z[:, d_pass:]        # (batch, d - d_pass)
+
+    s_raw = _mlp(s_params, z1)                         # (batch, d - d_pass)
+    s = _SCALE_FACTOR * jnp.tanh(s_raw)               # bounded: evita exp overflow
+    t = _mlp(t_params, z1)                             # (batch, d - d_pass)
 
     x1 = z1
     x2 = z2 * jnp.exp(s) + t
 
-    log_det = jnp.sum(s, axis=1)
-
+    log_det = jnp.sum(s, axis=1)                       # (batch,)
     x = jnp.concatenate([x1, x2], axis=1)
     return x, log_det
 
-def coupling2(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
+def _coupling_inverse(s_params, t_params, x, d_pass):
+    """
+    Inversa esatta della coupling layer forward.
+    """
+    x1 = x[:, :d_pass]
+    x2 = x[:, d_pass:]
 
-    s = mlp(params["s2"], z1)
+    s_raw = _mlp(s_params, x1)
+    s = _SCALE_FACTOR * jnp.tanh(s_raw)
+    t = _mlp(t_params, x1)
 
-    t = mlp(params["t2"], z1)
+    z1 = x1
+    z2 = (x2 - t) * jnp.exp(-s)
 
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**2 # Use a quadratic function for translation to increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling3(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s3"], z1)) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t3"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**2 # Use a quadratic function for translation to increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling4(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s4"], z1)**2) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t4"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**3 # Use a cubic function for translation to further increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling5(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s5"], z1)) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t5"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**3 # Use a cubic function for translation to further increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling6(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.sin(mlp(params["s6"], z1)) # Use a sinusoidal function for scale to introduce periodicity
-
-    t = mlp(params["t6"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t 
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling7(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.sin(mlp(params["s7"], z1)) # Use a sinusoidal function for scale to introduce periodicity
-
-    t = mlp(params["t7"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t 
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling8(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s8"], z1)) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t8"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**3 # Use a cubic function for translation to further increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling9(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s9"], z1)) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t9"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**3 # Use a cubic function for translation to further increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
-
-def coupling10(params, z):
-    z1 = z[:, 0:1]
-    z2 = z[:, 1:2]
-
-    s = jnp.tanh(mlp(params["s10"], z1)) # Use a tanh function for scale to introduce nonlinearity and ensure stability
-
-    t = mlp(params["t10"], z1)
-
-    x1 = z1
-    x2 = z2 * jnp.exp(s) + t**3 # Use a cubic function for translation to further increase nonlinearity
-
-    log_det = jnp.sum(s, axis=1)
-
-    x = jnp.concatenate([x1, x2], axis=1)
-    return x, log_det
+    log_det = -jnp.sum(s, axis=1)                      # segno negativo per l'inversa
+    z = jnp.concatenate([z1, z2], axis=1)
+    return z, log_det
 
 
-##################################### FORWARD FUNCTION #####################################
+# ---------------------------------------------------------------------------
+# Permutazione: swap delle dimensioni (alternato)
+# ---------------------------------------------------------------------------
+
+def _permute(x):
+    """Inverte l'ordine delle dimensioni. È la sua stessa inversa."""
+    return x[:, ::-1]
+
+
+# ---------------------------------------------------------------------------
+# Inizializzazione parametri
+# ---------------------------------------------------------------------------
+
+def init_params(key, dim=2, n_layers=6, hidden_dim=32):
+    """
+    Inizializza i parametri per n_layers coupling layers.
+
+    dim: dimensionalità dello spazio (2 o 3).
+    Per dim=2: d_pass alterna tra 1 e 1.
+    Per dim=3: d_pass alterna tra 1 e 2 (prima passa 1, poi dopo permute passa 2).
+
+    Ritorna un dict con chiavi "layers": lista di {"s": ..., "t": ...}.
+    """
+    keys = jax.random.split(key, 2 * n_layers)
+    layers = []
+    for i in range(n_layers):
+        # d_pass per questo layer (prima della permutazione eventuale)
+        # Usiamo sempre d_pass=1 (la variabile lenta) come input alle reti s,t.
+        # Dopo la permutazione le dimensioni si scambiano, quindi il layer successivo
+        # riceverà le variabili veloci come input invariato. Questo alterna naturalmente.
+        #
+        # Per generalità: d_pass_i = 1 se i pari, (dim-1) se i dispari
+        # (prima di qualsiasi permutazione; la permutazione è applicata *dopo* ogni layer)
+        if i % 2 == 0:
+            d_pass_i = 1
+        else:
+            d_pass_i = dim - 1
+
+        d_transform_i = dim - d_pass_i
+
+        layers.append({
+            "s": _mlp_init(keys[2 * i], d_pass_i, hidden_dim, d_transform_i),
+            "t": _mlp_init(keys[2 * i + 1], d_pass_i, hidden_dim, d_transform_i),
+            "d_pass": d_pass_i,
+        })
+
+    return {"layers": layers, "dim": dim}
+
+# ---------------------------------------------------------------------------
+# Forward e inversa
+# ---------------------------------------------------------------------------
 
 def forward(params, z):
-    x, log_det1 = coupling1(params, z)
-    
-    x = permute(x)
-    
-    x, log_det2 = coupling2(params, x)
-    
-    log_det = log_det1 + log_det2
+    """
+    Mappa z ~ N(0,I) -> x ~ q_flow(x).
+    Ritorna (x, log_det_totale) con log_det shape (batch,).
+    """
+    x = z
+    log_det_total = jnp.zeros(z.shape[0])
 
-    x = permute(x) 
+    for layer in params["layers"]:
+        x, ld = _coupling_forward(layer["s"], layer["t"], x, layer["d_pass"])
+        log_det_total += ld
+        x = _permute(x)
 
-    x, log_det3 = coupling3(params, x)
+    return x, log_det_total
 
-    log_det += log_det3
 
-    x = permute(x)
+def inverse(params, x):
+    """
+    Mappa x -> z (inversa esatta).
+    Ritorna (z, log_det_totale_inverso).
+    """
+    z = x
+    log_det_total = jnp.zeros(x.shape[0])
 
-    x, log_det4 = coupling4(params, x)
+    # L'inversa percorre i layer al contrario, con permutazione *prima* di ogni layer
+    for layer in reversed(params["layers"]):
+        z = _permute(z)                        # inversa della permutazione (che è se stessa)
+        z, ld = _coupling_inverse(layer["s"], layer["t"], z, layer["d_pass"])
+        log_det_total += ld
 
-    log_det += log_det4
+    return z, log_det_total
 
-    x = permute(x)
 
-    x, log_det5 = coupling5(params, x)
-
-    log_det += log_det5
-
-    x = permute(x)
-
-    x, log_det6 = coupling6(params, x)
-
-    log_det += log_det6
-
-    x = permute(x)
-
-    x, log_det7 = coupling7(params, x)
-
-    log_det += log_det7
-
-    x = permute(x)
-
-    x, log_det8 = coupling8(params, x)
-
-    log_det += log_det8
-
-    x = permute(x)
-
-    x, log_det9 = coupling9(params, x)
-
-    log_det += log_det9
-
-    x = permute(x)
-
-    x, log_det10 = coupling10(params, x)
-
-    log_det += log_det10
-
-    x = permute(x)
-    
-    return x, log_det
-
-########################## INVERSE FUNCTION ####################################
-
-########################## LOG PROBABILITIES ####################################
+# ---------------------------------------------------------------------------
+# Log-probabilità
+# ---------------------------------------------------------------------------
 
 def log_pz(z):
-    return -0.5 * jnp.sum(z**2, axis=1)
+    """Log-probabilità della base distribution N(0, I). Shape: (batch,)."""
+    d = z.shape[1]
+    return -0.5 * jnp.sum(z ** 2, axis=1) - 0.5 * d * jnp.log(2.0 * jnp.pi)
 
-def log_q_target(x, T):
+
+def log_q_target(x, T, dim=2):
+    """
+    Log-probabilità (non normalizzata) del target di Boltzmann:
+        p(x) ∝ exp(-E(x) / (kb * T))
+
+    Energia:
+      - variabile lenta x[:,0]: double well  E_slow = (x^2 - 1)^2
+      - variabili veloci x[:,1:]: armoniche  E_fast = 0.5 * sum(x_i^2)
+
+    Per dim=2: 1 lenta + 1 veloce
+    Per dim=3: 1 lenta + 2 veloci
+    """
+    kb = 1.0
     x_slow = x[:, 0:1]
-    x_fast = x[:, 1:2]
-    # Double well in x_slow: minimi in ±1
-    energy_slow = (x_slow**2 - 1)**2   # double well potential (variabile lenta)
-    energy_fast = x_fast**2             # potenziale armonico (variabile veloce)
-    kb = 1.0  # Boltzmann constant
-    return (-jnp.sum(energy_slow, axis=1) - 0.5 * jnp.sum(energy_fast, axis=1)) / (kb * T)
+    x_fast = x[:, 1:]
+
+    energy = (x_slow ** 2 - 1.0) ** 2 + 0.5 * jnp.sum(x_fast ** 2, axis=1, keepdims=True)
+    energy = jnp.squeeze(energy, axis=1)    # (batch,)
+
+    return -energy / (kb * T)
 
 
-############################# LOSS AND TRAINING ####################################
+# ---------------------------------------------------------------------------
+# Loss KL forward
+# ---------------------------------------------------------------------------
 
-def loss(params, key, n_samples, T):
-    z = jax.random.normal(key, (n_samples, 2))
+def loss_fn(params, key, n_samples=500, T=1.0):
+    """
+    Minimizza KL(q_flow || p_target):
+        L = E_{z~N}[ log p_z(z) - log_det J - log p_target(x) ]
+          = E_{z~N}[ log p_z(z) - log_det J - log_q_target(f(z)) ]
+
+    Questo è equivalente a minimizzare -ELBO (evidence lower bound).
+    """
+    dim = params["dim"]
+    z = jax.random.normal(key, (n_samples, dim))
     x, log_det = forward(params, z)
 
     log_p = log_pz(z)
-    log_q = log_q_target(x, T)
+    log_q = log_q_target(x, T, dim=dim)
 
+    # log p_z(z) - log|det J| - log p_target(x)
     return jnp.mean(log_p - log_det - log_q)
 
-@jax.jit
-def step(params, opt_state, key, n_samples=500, T=1.0):
-    l, grads = jax.value_and_grad(loss)(params, key, n_samples=n_samples, T=T)
-    updates, opt_state = optimizer.update(grads, opt_state)
-    new_params = optax.apply_updates(params, updates)
-    return new_params, opt_state, l
 
-####################### SAMPLING ######################
+# ---------------------------------------------------------------------------
+# Step di training
+# ---------------------------------------------------------------------------
+
+def make_step(optimizer):
+    """
+    Restituisce una funzione step jit-compilata che usa l'optimizer dato.
+    Passa optimizer come argomento invece di usarlo come globale.
+    """
+    @jax.jit
+    def step(params, opt_state, key, n_samples=500, T=1.0):
+        l, grads = jax.value_and_grad(loss_fn)(params, key, n_samples=n_samples, T=T)
+        updates, new_opt_state = optimizer.update(grads, opt_state)
+        new_params = optax.apply_updates(params, updates)
+        return new_params, new_opt_state, l
+
+    return step
+
+
+# ---------------------------------------------------------------------------
+# Sampling
+# ---------------------------------------------------------------------------
 
 def sample(params, key, n_samples=10000):
+    """
+    Campiona n_samples punti dalla distribuzione appresa q_flow.
+    Ritorna (x, log_det, new_key).
+    """
     key, subkey = jax.random.split(key)
-    n_samples = 10000
-    z = jax.random.normal(subkey, (n_samples, 2))
+    z = jax.random.normal(subkey, (n_samples, params["dim"]))
     x, log_det = forward(params, z)
     return x, log_det, key
 
-################## EVALUATION OF PROBABILITIES ####################
+
+def sample_with_logprob(params, key, n_samples=10000):
+    """
+    Come sample, ma ritorna anche log q_flow(x) = log p_z(z) - log_det.
+    Utile per confronti con MCMC.
+    """
+    key, subkey = jax.random.split(key)
+    z = jax.random.normal(subkey, (n_samples, params["dim"]))
+    x, log_det = forward(params, z)
+    log_qx = log_pz(z) - log_det    # log-prob del flow valutata in x
+    return x, log_qx, key
