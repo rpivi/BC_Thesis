@@ -262,3 +262,18 @@ def sample_with_logprob(params, key, n_samples=10000):
     x, log_det = forward(params, z)
     log_qx = log_pz(z) - log_det    # log-prob del flow valutata in x
     return x, log_qx, key
+
+# ---------------------------------------------------------------------------
+# Reweighting
+# ---------------------------------------------------------------------------
+def reweight_samples(x, log_qx, T, kb=1.0):
+    """
+    Ricalcola i pesi dei campioni x ~ q_flow(x) per ottenere la distribuzione target p_target(x).
+    p_target(x) ∝ exp(-E(x)/(kb*T))
+    w_i = p_target(x_i) / q_flow(x_i) = exp(-E(x_i)/(kb*T)) / q_flow(x_i)
+    """
+    log_p_target = log_q_target(x, T, dim=x.shape[1])
+    log_weights = log_p_target - log_qx
+    weights = jnp.exp(log_weights - jnp.max(log_weights))  # stabilità numerica
+    weights /= jnp.sum(weights)  # normalizza
+    return weights
