@@ -10,6 +10,8 @@ def main():
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
 
+    key = jax.random.PRNGKey(42)
+
     # potential parameters
     a = 0.01
     b = 1.0
@@ -39,7 +41,7 @@ def main():
         }
 
     x, key = gen_config(key)
-    for T in tqdm(Ts, desc=f"T={T}", unit="T"):
+    for T in tqdm(Ts, desc="Temperature sweep", unit="T"):
         if T == Ts[0]:
             _, _, key , x = run_first_therm(key, T, step_size, x) # thermalization for the first temperature, starting from a fixed configuration (normal distribution)
         _, _, key , x = run_therm(key, T, step_size, x) # thermalization for the other temperatures, starting from the last configuration of the previous thermalization
@@ -51,7 +53,7 @@ def main():
         obs.append_observables(results, T, trajectory, acceptance_rate, V, tollerance,window, c, kb)
 
     print("MCMC simulation completed.")
-    
+
 ###### BOLTZMANN GENERATOR ######
 
 ##### MCMC-BOLTZMANN GENERATOR ######

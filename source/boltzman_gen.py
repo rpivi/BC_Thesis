@@ -185,7 +185,8 @@ def log_q_target(x, T, dim=2):
     Per dim=2: 1 lenta + 1 veloce
     Per dim=3: 1 lenta + 2 veloci
     """
-    kb = 1.0
+
+    kb = 8.617333262145e-5  # eV/K
     x_slow = x[:, 0:1]
     x_fast = x[:, 1:]
 
@@ -266,7 +267,7 @@ def sample_with_logprob(params, key, n_samples=10000):
 # ---------------------------------------------------------------------------
 # Reweighting
 # ---------------------------------------------------------------------------
-def reweight_samples(x, log_qx, T, kb=1.0):
+def reweight_samples(x, log_qx, T, kb=8.617333262145e-5):
     """
     Ricalcola i pesi dei campioni x ~ q_flow(x) per ottenere la distribuzione target p_target(x).
     p_target(x) ∝ exp(-E(x)/(kb*T))
