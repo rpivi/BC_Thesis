@@ -3,7 +3,7 @@ import jax.numpy as jnp
 from typing import Callable
 
 
-def make_config_generator(D: int, init_type: str = "uniform") -> Callable[[jax.Array], tuple[jax.Array, jax.Array]]:
+def make_config_generator(D: int, init_type: str = "normal") -> Callable[[jax.Array], tuple[jax.Array, jax.Array]]:
     def _generate_config(key: jax.Array) -> tuple[jax.Array, jax.Array]:
         if init_type == "ones":
             return jnp.ones(D), key

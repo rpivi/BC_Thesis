@@ -13,8 +13,7 @@ def _mlp_init(key, in_dim, hidden_dim, out_dim):
         "b1": jnp.zeros(hidden_dim),
         "W2": jax.random.normal(k2, (hidden_dim, hidden_dim)) * jnp.sqrt(1.0 / hidden_dim),
         "b2": jnp.zeros(hidden_dim),
-        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.01,  # ultimo layer piccolo
-        "b3": jnp.zeros(out_dim),
+        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.01,  # ultimo layer piccolo in modo che la rete inizi vicino a zero (diventi una identità)        "b3": jnp.zeros(out_dim),
     }
 
 
@@ -26,7 +25,7 @@ def _mlp(params, x):
 
 
 # ---------------------------------------------------------------------------
-# Coupling layer RealNVP generica
+# Coupling layer RealNVP 
 # ---------------------------------------------------------------------------
 # Dati d dimensioni totali, la coupling layer:
 #   - passa le prime d_pass dimensioni invariate  (x1 = z1)
@@ -76,11 +75,6 @@ def _coupling_inverse(s_params, t_params, x, d_pass):
     log_det = -jnp.sum(s, axis=1)                      # segno negativo per l'inversa
     z = jnp.concatenate([z1, z2], axis=1)
     return z, log_det
-
-
-# ---------------------------------------------------------------------------
-# Permutazione: swap delle dimensioni (alternato)
-# ---------------------------------------------------------------------------
 
 def _permute(x):
     """Inverte l'ordine delle dimensioni. È la sua stessa inversa."""
@@ -173,25 +167,15 @@ def log_pz(z):
     return -0.5 * jnp.sum(z ** 2, axis=1) - 0.5 * d * jnp.log(2.0 * jnp.pi)
 
 
-def log_q_target(x, T, dim=2):
+def log_q_target(x, T, a=1.0, b=1.0, kb=8.617333262145e-5):
     """
-    Log-probabilità (non normalizzata) del target di Boltzmann:
-        p(x) ∝ exp(-E(x) / (kb * T))
-
-    Energia:
-      - variabile lenta x[:,0]: double well  E_slow = (x^2 - 1)^2
-      - variabili veloci x[:,1:]: armoniche  E_fast = 0.5 * sum(x_i^2)
-
-    Per dim=2: 1 lenta + 1 veloce
-    Per dim=3: 1 lenta + 2 veloci
+    p(x) ∝ exp(-E(x) / (kb * T))
+    E(x) = a*(x_slow^2 - b)^2 + 0.5 * sum(x_fast^2)
     """
-
-    kb = 8.617333262145e-5  # eV/K
-    x_slow = x[:, 0:1]
+    x_slow = x[:, 0]
     x_fast = x[:, 1:]
 
-    energy = (x_slow ** 2 - 1.0) ** 2 + 0.5 * jnp.sum(x_fast ** 2, axis=1, keepdims=True)
-    energy = jnp.squeeze(energy, axis=1)    # (batch,)
+    energy = (a/b**4) * (x_slow ** 2 - b) ** 2 + 0.5 * jnp.sum(x_fast ** 2, axis=1) # stesso potenziale di observable.py
 
     return -energy / (kb * T)
 
@@ -200,7 +184,7 @@ def log_q_target(x, T, dim=2):
 # Loss KL forward
 # ---------------------------------------------------------------------------
 
-def loss_fn(params, key, n_samples=500, T=1.0):
+def loss_fn(params, key, n_samples=500, T=1.0, a=1.0, b=1.0):
     """
     Minimizza KL(q_flow || p_target):
         L = E_{z~N}[ log p_z(z) - log_det J - log p_target(x) ]
@@ -213,7 +197,7 @@ def loss_fn(params, key, n_samples=500, T=1.0):
     x, log_det = forward(params, z)
 
     log_p = log_pz(z)
-    log_q = log_q_target(x, T, dim=dim)
+    log_q = log_q_target(x, T, a, b, kb=8.617333262145e-5)
 
     # log p_z(z) - log|det J| - log p_target(x)
     return jnp.mean(log_p - log_det - log_q)
@@ -229,8 +213,8 @@ def make_step(optimizer):
     Passa optimizer come argomento invece di usarlo come globale.
     """
     @jax.jit
-    def step(params, opt_state, key, n_samples=500, T=1.0):
-        l, grads = jax.value_and_grad(loss_fn)(params, key, n_samples=n_samples, T=T)
+    def step(params, opt_state, key, n_samples=500, T=1.0, a=1.0, b=1.0):
+        l, grads = jax.value_and_grad(loss_fn)(params, key, n_samples=n_samples, T=T, a=a, b=b)
         updates, new_opt_state = optimizer.update(grads, opt_state)
         new_params = optax.apply_updates(params, updates)
         return new_params, new_opt_state, l
@@ -245,35 +229,23 @@ def make_step(optimizer):
 def sample(params, key, n_samples=10000):
     """
     Campiona n_samples punti dalla distribuzione appresa q_flow.
-    Ritorna (x, log_det, new_key).
     """
     key, subkey = jax.random.split(key)
     z = jax.random.normal(subkey, (n_samples, params["dim"]))
     x, log_det = forward(params, z)
-    return x, log_det, key
 
-
-def sample_with_logprob(params, key, n_samples=10000):
-    """
-    Come sample, ma ritorna anche log q_flow(x) = log p_z(z) - log_det.
-    Utile per confronti con MCMC.
-    """
-    key, subkey = jax.random.split(key)
-    z = jax.random.normal(subkey, (n_samples, params["dim"]))
-    x, log_det = forward(params, z)
-    log_qx = log_pz(z) - log_det    # log-prob del flow valutata in x
-    return x, log_qx, key
+    return x, log_det, key ####!!!!!!!!!!!!!!!!!
 
 # ---------------------------------------------------------------------------
 # Reweighting
 # ---------------------------------------------------------------------------
-def reweight_samples(x, log_qx, T, kb=8.617333262145e-5):
+def reweight_samples(x, log_qx, T, a, b, kb=8.617333262145e-5):
     """
     Ricalcola i pesi dei campioni x ~ q_flow(x) per ottenere la distribuzione target p_target(x).
     p_target(x) ∝ exp(-E(x)/(kb*T))
     w_i = p_target(x_i) / q_flow(x_i) = exp(-E(x_i)/(kb*T)) / q_flow(x_i)
     """
-    log_p_target = log_q_target(x, T, dim=x.shape[1])
+    log_p_target = log_q_target(x, T, a, b, kb)
     log_weights = log_p_target - log_qx
     weights = jnp.exp(log_weights - jnp.max(log_weights))  # stabilità numerica
     weights /= jnp.sum(weights)  # normalizza
