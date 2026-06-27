@@ -13,7 +13,8 @@ def _mlp_init(key, in_dim, hidden_dim, out_dim):
         "b1": jnp.zeros(hidden_dim),
         "W2": jax.random.normal(k2, (hidden_dim, hidden_dim)) * jnp.sqrt(1.0 / hidden_dim),
         "b2": jnp.zeros(hidden_dim),
-        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.01,  # ultimo layer piccolo in modo che la rete inizi vicino a zero (diventi una identità)        "b3": jnp.zeros(out_dim),
+        "W3": jax.random.normal(k3, (hidden_dim, out_dim)) * 0.01,  # ultimo layer piccolo in modo che la rete inizi vicino a zero (diventi una identità)        
+        "b3": jnp.zeros(out_dim),
     }
 
 
@@ -228,13 +229,21 @@ def make_step(optimizer):
 
 def sample(params, key, n_samples=10000):
     """
-    Campiona n_samples punti dalla distribuzione appresa q_flow.
+    Campiona n_samples punti dalla distribuzione appresa q_flow
     """
     key, subkey = jax.random.split(key)
     z = jax.random.normal(subkey, (n_samples, params["dim"]))
     x, log_det = forward(params, z)
 
-    return x, log_det, key ####!!!!!!!!!!!!!!!!!
+    return x, key 
+
+def flow_ev_probability(params, x):
+    """
+    Calcola log q_flow(x) = log p_z(z) + log|det J|
+    """
+    z, log_det = inverse(params, x)
+    log_p = log_pz(z)
+    return log_p + log_det
 
 # ---------------------------------------------------------------------------
 # Reweighting
@@ -250,3 +259,10 @@ def reweight_samples(x, log_qx, T, a, b, kb=8.617333262145e-5):
     weights = jnp.exp(log_weights - jnp.max(log_weights))  # stabilità numerica
     weights /= jnp.sum(weights)  # normalizza
     return weights
+
+def Ess(weights):
+    """
+    Calcola l'Effective Sample Size (ESS) dei pesi normalizzati.
+    ESS = 1 / sum(w_i^2)
+    """
+    return 1.0 / jnp.sum(weights ** 2)
