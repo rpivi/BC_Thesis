@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    Ts = jnp.array([1, 10, 20, 30 ]) # temperatures to simulate
+    Ts = jnp.logspace(0, 2, num=4)  # temperatures from 1K to 100K, logarithmically spaced
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
@@ -47,8 +47,8 @@ def main():
         }   
     
 ####### 0. INITIALIZATION FOR MCMC AND MCMC-BOLTZMANN #######
-    tollerance = 0.05 # (tollerance*100)% of the mean value of the observable, in log scale
-    window = 4 # number of consecutive values to consider for the plateau detection, in log scale
+    tollerance = 0.1
+    window = 3 # number of consecutive values to consider for the plateau detection, in log scale
     c = 5 # Sokal method parameter for tau estimation, tau_int(x, c)
     n_thermalization = 1000
     step_size = 0.1
@@ -81,21 +81,21 @@ def main():
 
     n_train_steps = 8000
 
-    for T in tqdm(Ts, desc="BG training", unit="T"):
+    for T in tqdm(Ts, desc="BG and MCMC-BG", unit="T"):
         key, subkey = jax.random.split(key)
-        bg_params = bg.init_params(subkey, dim=D, n_layers=6, hidden_dim=32)
+        bg_params, bg_static = bg.init_params(subkey, dim=D, n_layers=6, hidden_dim=32)
         optimizer = optax.adam(learning_rate=1e-3)
         opt_state = optimizer.init(bg_params)
         step_fn = bg.make_step(optimizer)
         for i in range(n_train_steps):
             key, subkey = jax.random.split(key)
             bg_params, opt_state, loss = step_fn(
-                bg_params, opt_state, subkey, n_samples=500, T=T, a=a, b=b
+                bg_params, bg_static, opt_state, subkey, n_samples=500, T=T, a=a, b=b
             )
 
         # --- Sampling e reweighting ---
-        x_bg, key = bg.sample(bg_params,key, n_samples=n_samples) 
-        log_qx = bg.flow_ev_probability(bg_params, x_bg)
+        x_bg, key = bg.sample(bg_params, bg_static, key, n_samples=n_samples) 
+        log_qx = bg.flow_ev_probability(bg_params, bg_static, x_bg)
         weights = bg.reweight_samples(x_bg, log_qx, T=T, a=a, b=b, kb=kb) # pesi già normalizzati
 
         # Stima osservabili con pesi di importanza
@@ -114,10 +114,10 @@ def main():
         results_bg["tau_eff"].append(tau_eff)
 ##### 3. MCMC-BOLTZMANN GENERATOR ###### we use the flow already trained (we are in the T loop of BG)
         # sampling the starting config 
-        x_start, key = bg.sample(bg_params, key, n_samples=1)
+        x_start, key = bg.sample(bg_params, bg_static, key, n_samples=1)                
         x_start = x_start[0]
         # running the MCMC-Boltzmann simulation
-        trajectory, acceptance_rate, key, x = run_flow_prod(key, T, x_start, bg_params)
+        trajectory, acceptance_rate, key, x = run_flow_prod(key, T, x_start, bg_params, bg_static) 
 
         obs.append_observables(results_mcmc_bg, T, trajectory, acceptance_rate, V, tollerance, window, c, kb)
 
@@ -125,8 +125,9 @@ def main():
         
 ####### PLOTTING #######
 
+    plot.E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
 
-
+    print("All simulations completed and plot saved.")
 
 if __name__ == "__main__":
     main()
