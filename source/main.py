@@ -10,16 +10,18 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    Ts = jnp.logspace(0, 2, num=4)  # temperatures from 1K to 100K, logarithmically spaced
+    Ts = jnp.logspace(4, 0, 20)      # from hot to cold
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
     n_samples = 10000 # these are the number of samples for the Boltzmann generator and the steps of MCMC
+    n_train_steps = 8000 # number of training steps for the Boltzmann generator at each temperature
 
     # potential parameters
-    a = 0.01
+    a = 0.1
     b = 1.0
-    V = obs.make_potential(a, b)
+    c = 0.0
+    V = obs.make_potential(a, b, c, "simmetric_double_well")
 
     #results dictionaries
     results_mcmc = {
@@ -79,24 +81,31 @@ def main():
 
     # --- Training del BG ---
 
-    n_train_steps = 8000
+    key, subkey = jax.random.split(key)
+
+    # Initialize the Boltzmann generator parameters and optimizer (out of the T loop! - change!)
+
+    bg_params, bg_static = bg.init_params(
+        subkey,
+        dim=D,
+        n_layers=6,
+        hidden_dim=32,
+    )
+
+    optimizer = optax.adam(1e-3)
+    opt_state = optimizer.init(bg_params)
+    step_fn = bg.make_step(optimizer, potential=V, kb=kb)
 
     for T in tqdm(Ts, desc="BG and MCMC-BG", unit="T"):
-        key, subkey = jax.random.split(key)
-        bg_params, bg_static = bg.init_params(subkey, dim=D, n_layers=6, hidden_dim=32)
-        optimizer = optax.adam(learning_rate=1e-3)
-        opt_state = optimizer.init(bg_params)
-        step_fn = bg.make_step(optimizer)
-        for i in range(n_train_steps):
+        for _ in range(n_train_steps):
             key, subkey = jax.random.split(key)
             bg_params, opt_state, loss = step_fn(
-                bg_params, bg_static, opt_state, subkey, n_samples=500, T=T, a=a, b=b
-            )
+                bg_params, bg_static, opt_state, subkey, n_samples=500, T=T)
 
         # --- Sampling e reweighting ---
         x_bg, key = bg.sample(bg_params, bg_static, key, n_samples=n_samples) 
         log_qx = bg.flow_ev_probability(bg_params, bg_static, x_bg)
-        weights = bg.reweight_samples(x_bg, log_qx, T=T, a=a, b=b, kb=kb) # pesi già normalizzati
+        weights = bg.reweight_samples(x_bg, log_qx, T=T, potential=V, kb=kb) # pesi già normalizzati
 
         # Stima osservabili con pesi di importanza
         E_values = jax.vmap(V)(x_bg)
@@ -126,6 +135,7 @@ def main():
 ####### PLOTTING #######
 
     plot.E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
+    plot.tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
 
     print("All simulations completed and plot saved.")
 

@@ -150,23 +150,23 @@ def log_pz(z):
     return -0.5 * jnp.sum(z ** 2, axis=1) - 0.5 * d * jnp.log(2.0 * jnp.pi)
 
 
-def log_q_target(x, T, a=1.0, b=1.0, kb=8.617333262145e-5):
-    x_slow = x[:, 0]
-    x_fast = x[:, 1:]
-    energy = (a / b**4) * (x_slow ** 2 - b) ** 2 + 0.5 * jnp.sum(x_fast ** 2, axis=1)
-    return -energy / (kb * T)
+def log_q_target(x, T, potential, kb):
+
+    energy = jax.vmap(potential)(x)
+
+    return -energy/(kb*T)
 
 
 # ---------------------------------------------------------------------------
 # Loss (reverse-KL / -ELBO)
 # ---------------------------------------------------------------------------
 
-def loss_fn(params, static, key, n_samples=500, T=1.0, a=1.0, b=1.0):
+def loss_fn(params, static, key, T, potential, kb, n_samples=500):
     z = jax.random.normal(key, (n_samples, static.dim))
     x, log_det = forward(params, static, z)
 
     log_p = log_pz(z)
-    log_q = log_q_target(x, T, a, b, kb=8.617333262145e-5)
+    log_q = log_q_target(x, T, potential, kb=kb)
 
     return jnp.mean(log_p - log_det - log_q)
 
@@ -175,11 +175,11 @@ def loss_fn(params, static, key, n_samples=500, T=1.0, a=1.0, b=1.0):
 # Step di training
 # ---------------------------------------------------------------------------
 
-def make_step(optimizer):
+def make_step(optimizer, potential=None, kb=8.617333262145e-5):
     @partial(jax.jit, static_argnames=("static", "n_samples"))
-    def step(params, static, opt_state, key, n_samples=500, T=1.0, a=1.0, b=1.0):
+    def step(params, static, opt_state, key, n_samples=500, T=1.0):
         l, grads = jax.value_and_grad(loss_fn)(
-            params, static, key, n_samples=n_samples, T=T, a=a, b=b
+            params, static, key, T=T, potential=potential, kb=kb, n_samples=n_samples
         )
         updates, new_opt_state = optimizer.update(grads, opt_state)
         new_params = optax.apply_updates(params, updates)
@@ -209,8 +209,8 @@ def flow_ev_probability(params, static, x):
 # Reweighting
 # ---------------------------------------------------------------------------
 
-def reweight_samples(x, log_qx, T, a, b, kb=8.617333262145e-5):
-    log_p_target = log_q_target(x, T, a, b, kb)
+def reweight_samples(x, log_qx, T, potential, kb=8.617333262145e-5):
+    log_p_target = log_q_target(x, T, potential, kb)
     log_weights = log_p_target - log_qx
     weights = jnp.exp(log_weights - jnp.max(log_weights))
     weights /= jnp.sum(weights)

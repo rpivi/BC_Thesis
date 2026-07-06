@@ -23,3 +23,21 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.tight_layout()
     #save the plot in the tex/images folder outside the source folder
     plt.savefig(OUT_DIR / "E_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
+    """
+    Plotta τ vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(results_mcmc["T"], results_mcmc["tau_x"], 'o-', label='MCMC', capsize=5)
+    plt.plot(results_bg["T"], results_bg["tau_eff"], 's-', label='Boltzmann Generator', capsize=5)
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], '^-', label='MCMC-Boltzmann', capsize=5)
+
+    plt.xlabel('Temperature (T)')
+    plt.ylabel('Effective Time τ')
+    plt.title('Effective Time vs Temperature')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    #save the plot in the tex/images folder outside the source folder
+    plt.savefig(OUT_DIR / "tau_vs_T_plot.png", dpi=150, bbox_inches="tight")

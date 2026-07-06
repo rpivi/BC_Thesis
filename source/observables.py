@@ -3,13 +3,17 @@ import jax.numpy as jnp
 import numpy as np  
 from typing import Callable
 
-def make_potential(a: float = 1.0, b: float = 1.0) -> Callable[[jax.Array], jax.Array]:
+def make_potential(a: float = 1.0, b: float = 1.0,c: float = 0.0, potential_type: str = "simmetric_double_well") -> Callable[[jax.Array], jax.Array]:
     @jax.jit
     def V(x: jax.Array) -> jax.Array:
-        double_well = (a/b**4) * (x[0] ** 2 - b) ** 2
-        harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
-        return double_well + harmonic
- 
+        if potential_type == "simmetric_double_well":
+            double_well = (a/b**4) * (x[0] ** 2 - b) ** 2
+            harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
+            return double_well + harmonic
+        elif potential_type == "asymmetric_double_well":
+            double_well = (a/b**4) * (x[0] ** 2 - b) ** 2 + c * x[0]
+            harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
+            return double_well + harmonic
     return V
 
 def find_plateau(R, window=3, tolerance=0.2, obs="_"):
