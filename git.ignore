@@ -1,0 +1,27 @@
+# ignora i file che si generano dalla compilazione latex
+# LaTeX aux files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+
+# latexmk
+latexmkrc
+*.latexmk
+
+# editor files
+*.swp
+*.swo
+*~
