@@ -29,9 +29,9 @@ def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     Plotta τ vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
     """
     plt.figure(figsize=(8, 6))
-    plt.plot(results_mcmc["T"], results_mcmc["tau_x"], 'o-', label='MCMC', capsize=5)
-    plt.plot(results_bg["T"], results_bg["tau_eff"], 's-', label='Boltzmann Generator', capsize=5)
-    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], '^-', label='MCMC-Boltzmann', capsize=5)
+    plt.plot(results_mcmc["T"], results_mcmc["tau_x"], 'o-', label='MCMC')
+    plt.plot(results_bg["T"], results_bg["tau_eff"], 's-', label='Boltzmann Generator')
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], '^-', label='MCMC-Boltzmann')
 
     plt.xlabel('Temperature (T)')
     plt.ylabel('Effective Time τ')

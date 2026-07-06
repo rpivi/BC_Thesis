@@ -14,6 +14,8 @@ def make_potential(a: float = 1.0, b: float = 1.0,c: float = 0.0, potential_type
             double_well = (a/b**4) * (x[0] ** 2 - b) ** 2 + c * x[0]
             harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
             return double_well + harmonic
+        else:
+            raise ValueError(f"Unknown potential_type: {potential_type}, the options are: 'simmetric_double_well', 'asymmetric_double_well'")
     return V
 
 def find_plateau(R, window=3, tolerance=0.2, obs="_"):
@@ -91,7 +93,6 @@ def tau_int(x, c=5):
     acf = autocorr_fft(x)
     N = len(acf)
     tau = 0.5
-    window = 1
     for t in range(1, N):
         tau += acf[t]
         if t > c * tau:

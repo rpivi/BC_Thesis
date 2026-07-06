@@ -28,11 +28,11 @@ def make_flow_metropolis_step(V: Callable, kb: float) -> Callable:
         # --- proposal dal flow ---
         key, subkey = jax.random.split(key)
         z_prop = jax.random.normal(subkey, shape=(1, static.dim))
-        x_prop, _ = bg.forward(params, static, z_prop)
+        x_prop, log_det_fwd = bg.forward(params, static, z_prop)
         x_prop = x_prop[0]  # (D,)
 
         # --- log q(x') ---
-        log_qx_prop = bg.flow_ev_probability(params, static, x_prop[None, :])[0]
+        log_qx_prop = bg.log_pz(z_prop)[0] - log_det_fwd[0]
 
         # --- log p(x) e log p(x') ---
         log_px      = -V(x)       / (kb * T)

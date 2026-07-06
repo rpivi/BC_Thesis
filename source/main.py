@@ -10,7 +10,9 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    Ts = jnp.logspace(4, 0, 20)      # from hot to cold
+    T_max = 100.0   # temperatura più alta
+    T_min = 5.0     # temperatura più bassa
+    Ts = jnp.arange(T_max, T_min ,-5)   # da T_max a T_min, passo -5
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
@@ -20,8 +22,8 @@ def main():
     # potential parameters
     a = 0.1
     b = 1.0
-    c = 0.0
-    V = obs.make_potential(a, b, c, "simmetric_double_well")
+    l = 0.0
+    V = obs.make_potential(a, b, l, "simmetric_double_well")
 
     #results dictionaries
     results_mcmc = {
@@ -82,8 +84,6 @@ def main():
     # --- Training del BG ---
 
     key, subkey = jax.random.split(key)
-
-    # Initialize the Boltzmann generator parameters and optimizer (out of the T loop! - change!)
 
     bg_params, bg_static = bg.init_params(
         subkey,
