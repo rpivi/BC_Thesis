@@ -187,6 +187,26 @@ def make_step(optimizer, potential=None, kb=8.617333262145e-5):
 
     return step
 
+def make_train_loop(optimizer, potential=None, kb=8.617333262145e-5):
+    step_fn = make_step(optimizer, potential=potential, kb=kb)
+
+    @partial(jax.jit, static_argnames=("static", "n_samples", "n_steps"))
+    def train_T(params, static, opt_state, key, T, n_samples=500, n_steps=8000):
+        def body(carry, _):
+            params, opt_state, key = carry
+            key, subkey = jax.random.split(key)
+            params, opt_state, loss = step_fn(
+                params, static, opt_state, subkey, n_samples=n_samples, T=T
+            )
+            return (params, opt_state, key), loss
+
+        (params, opt_state, key), losses = jax.lax.scan(
+            body, (params, opt_state, key), None, length=n_steps
+        )
+        return params, opt_state, key, losses
+
+    return train_T
+
 
 # ---------------------------------------------------------------------------
 # Sampling

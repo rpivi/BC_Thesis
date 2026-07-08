@@ -10,9 +10,9 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    T_max = 100.0   # temperatura più alta
-    T_min = 5.0     # temperatura più bassa
-    Ts = jnp.arange(T_max, T_min ,-5)   # da T_max a T_min, passo -5
+    T_max = 1000.0   # temperatura più alta
+    T_min = 10.0     # temperatura più bassa
+    Ts = jnp.arange(T_max, T_min ,-100)  # from hot to cold
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
@@ -31,7 +31,8 @@ def main():
             "E_mean": [],
             "E_mean_err": [],
             "acceptance": [],
-            "tau_x": []
+            "tau_x": [],
+            "total_sign": []
         } 
     
     results_bg = {
@@ -39,7 +40,8 @@ def main():
             "E_mean": [],
             "E_mean_err": [],
             "ESS": [], 
-            "tau_eff": []
+            "tau_eff": [],
+            "total_sign": []
         } 
 
     results_mcmc_bg = {
@@ -47,13 +49,15 @@ def main():
             "E_mean": [],
             "E_mean_err": [],
             "acceptance": [],
-            "tau_x": []
+            "tau_x": [],
+            "total_sign": []
         }   
     
 ####### 0. INITIALIZATION FOR MCMC AND MCMC-BOLTZMANN #######
     tollerance = 0.1
-    window = 3 # number of consecutive values to consider for the plateau detection, in log scale
+    window = 5 # number of consecutive values to consider for the plateau detection, in log scale
     c = 5 # Sokal method parameter for tau estimation, tau_int(x, c)
+    abs_tol = 0.01 # absolute tolerance for plateau detection, to avoid problems with very small values of R
     n_thermalization = 1000
     step_size = 0.1
 
@@ -75,7 +79,7 @@ def main():
         trajectory, acceptance_rate, key , x = run_prod(key, T, step_size, x)
             # x is the last configuration of the trajectory, used as initial configuration for the next temperature
 
-        obs.append_observables(results_mcmc, T, trajectory, acceptance_rate, V, tollerance,window, c, kb)
+        obs.append_observables(results_mcmc, T, trajectory, acceptance_rate, V, tollerance,window, c, abs_tol, kb)
 
     print("MCMC simulation completed.")
 
@@ -93,14 +97,16 @@ def main():
     )
 
     optimizer = optax.adam(1e-3)
+
     opt_state = optimizer.init(bg_params)
-    step_fn = bg.make_step(optimizer, potential=V, kb=kb)
+
+    train_T = bg.make_train_loop(optimizer,potential=V,kb=kb)
 
     for T in tqdm(Ts, desc="BG and MCMC-BG", unit="T"):
-        for _ in range(n_train_steps):
-            key, subkey = jax.random.split(key)
-            bg_params, opt_state, loss = step_fn(
-                bg_params, bg_static, opt_state, subkey, n_samples=500, T=T)
+        key, subkey = jax.random.split(key)
+        bg_params, opt_state, key, losses = train_T(
+            bg_params, bg_static, opt_state, subkey, T,
+            n_samples=500, n_steps=n_train_steps)
 
         # --- Sampling e reweighting ---
         x_bg, key = bg.sample(bg_params, bg_static, key, n_samples=n_samples) 
@@ -121,6 +127,7 @@ def main():
         results_bg["ESS"].append(Ess)
         results_bg["T"].append(T)
         results_bg["tau_eff"].append(tau_eff)
+        results_bg["total_sign"].append(jnp.sum(jnp.sign(x_bg[:, 0])))
 ##### 3. MCMC-BOLTZMANN GENERATOR ###### we use the flow already trained (we are in the T loop of BG)
         # sampling the starting config 
         x_start, key = bg.sample(bg_params, bg_static, key, n_samples=1)                
@@ -128,7 +135,7 @@ def main():
         # running the MCMC-Boltzmann simulation
         trajectory, acceptance_rate, key, x = run_flow_prod(key, T, x_start, bg_params, bg_static) 
 
-        obs.append_observables(results_mcmc_bg, T, trajectory, acceptance_rate, V, tollerance, window, c, kb)
+        obs.append_observables(results_mcmc_bg, T, trajectory, acceptance_rate, V, tollerance, window, c, abs_tol, kb)
 
     print("Boltzmann generator and MCMC-Boltzmann completed.")
         
@@ -136,7 +143,8 @@ def main():
 
     plot.E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
-
+    plot.acceptance_vs_T_plot(results_mcmc, results_mcmc_bg)
+    plot.total_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     print("All simulations completed and plot saved.")
 
 if __name__ == "__main__":

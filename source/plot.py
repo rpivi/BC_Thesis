@@ -41,3 +41,38 @@ def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.tight_layout()
     #save the plot in the tex/images folder outside the source folder
     plt.savefig(OUT_DIR / "tau_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def acceptance_vs_T_plot(results_mcmc, results_mcmc_bg):
+    """
+    Plotta acceptance rate vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(results_mcmc["T"], results_mcmc["acceptance"], 'o-', label='MCMC')
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["acceptance"], '^-', label='MCMC-Boltzmann')
+
+    plt.xlabel('Temperature (T)')
+    plt.ylabel('Acceptance Rate')
+    plt.title('Acceptance Rate vs Temperature')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    #save the plot in the tex/images folder outside the source folder
+    plt.savefig(OUT_DIR / "acceptance_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def total_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
+    """
+    Plotta total sign vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(results_mcmc["T"], results_mcmc["total_sign"], 'o-', label='MCMC')
+    plt.plot(results_bg["T"], results_bg["total_sign"], 's-', label='Boltzmann Generator')
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["total_sign"], '^-', label='MCMC-Boltzmann')
+
+    plt.xlabel('Temperature (T)')
+    plt.ylabel('Total Sign')
+    plt.title('Total Sign vs Temperature')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    #save the plot in the tex/images folder outside the source folder
+    plt.savefig(OUT_DIR / "total_sign_vs_T_plot.png", dpi=150, bbox_inches="tight")
