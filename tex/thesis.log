@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  6 JUL 2026 22:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  17 JUL 2026 10:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -81,22 +81,22 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Info: Redefining \it@ocap on input line 8.
-LaTeX Info: Redefining \it@ccap on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Info: Redefining \it@ocap on input line 7.
+LaTeX Info: Redefining \it@ccap on input line 7.
 
 
 File italian.ldf warning: 
@@ -104,7 +104,7 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting
-italian.ldf    on input line 8.
+italian.ldf    on input line 7.
 
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -121,40 +121,68 @@ italian.ldf    on input line 8.
 \everyMPtoPDFconversion=\toks18
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 16.
+(Font)              <17.28> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 16.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 16.
+(Font)              <12> on input line 15.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 15.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 41--52
+Underfull \hbox (badness 10000) in paragraph at lines 35--41
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--52
+Underfull \hbox (badness 10000) in paragraph at lines 35--41
 
  []
 
 [1
 
-{C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] (thesis.toc
+{C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [1
+
+] [2] (abstract.tex) [3
+
+] (thesis.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
+(Font)              <8> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+(Font)              <6> on input line 5.
 )
 \tf@toc=\write3
 \openout3 = `thesis.toc'.
 
- [1
+ [4
 
-] (abstract.tex) (cap1.tex) (cap2.tex) (cap3.tex) (cap4.tex) (cap5.tex) (ringraziamenti.tex) (thesis.bbl [2]
+
+] (cap1.tex [5
+
+
+]
+Capitolo 1.
+) (cap2.tex [6
+
+]
+Capitolo 2.
+) (cap3.tex [7
+
+]
+Capitolo 3.
+) (cap4.tex [8
+
+]
+Capitolo 4.
+) (conclusion.tex [9
+
+]) (ringraziamenti.tex [10
+
+]) (thesis.bbl [11
+
+]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [3
+) [12
 
 ] (thesis.aux)
  ***********
@@ -163,17 +191,17 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 2667 strings out of 467871
- 45161 string characters out of 5418376
- 462643 words of memory out of 5000000
- 31532 multiletter control sequences out of 15000+600000
- 634934 words of font info for 67 fonts, out of 8000000 for 9000
+ 2672 strings out of 467871
+ 45297 string characters out of 5418376
+ 463648 words of memory out of 5000000
+ 31536 multiletter control sequences out of 15000+600000
+ 635588 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,5n,51p,268b,215s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on thesis.pdf (5 pages, 73647 bytes).
+<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on thesis.pdf (14 pages, 93411 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
+ 78 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,9 +1,8 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt, a4paper]{report}
 \usepackage[italian]{babel}
 \usepackage{newlfont}
 \usepackage{color}
 \textwidth=450pt\oddsidemargin=0pt
-
 
 \begin{document}
 \begin{titlepage}
@@ -26,25 +25,15 @@ Corso di Laurea in Fisica}}
 \vspace{23mm}
 
 \begin{center}\textcolor{black}{
-%
-% INSERIRE IL TITOLO DELLA TESI
-%
 {\LARGE{\bf Studio del campionamento della distribuzione di Boltzmann per il potenziale doppio pozzo mediante metodi Monte Carlo e Normalizing Flow.}}\\
 }\end{center}
 
 \vspace{50mm} \par \noindent
 
 \begin{minipage}[t]{0.47\textwidth}
-%
-% INSERIRE IL NOME DEL RELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
-%
+
 {\large{\bf Relatore: \vspace{2mm}\\\textcolor{black}{
 Prof. Cesare Franchini}\\\\
-%
-% INSERIRE IL NOME DEL CORRELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
-%
-% SE NON AVETE UN CORRELATORE CANCELLATE LE PROSSIME 3 RIGHE
-%
 \textcolor{black}{
 \bf Correlatore:
 \vspace{2mm}\\
@@ -56,9 +45,6 @@ Dott. Luca Leoni\\\\}}}
 \begin{minipage}[t]{0.47\textwidth}\raggedleft \textcolor{black}{
 {\large{\bf Presentata da:
 \vspace{2mm}\\
-%
-% INSERIRE IL NOME DEL CANDIDATO
-%
 Riccardo Pivi}}}
 \end{minipage}
 
@@ -70,22 +56,43 @@ Riccardo Pivi}}}
 %
 Anno Accademico \textcolor{red}{ 202*/202*}
 \end{center}
-
 \end{titlepage}
 
-\tableofcontents
+\cleardoublepage
+\thispagestyle{empty}
+
+\vspace*{\fill}
+
+\begin{flushright}
+\itshape
+A mio fratello e ai miei genitori,\\
+per essere stati il mio faro e il mio porto sicuro.
+\end{flushright}
+
+\vspace*{\fill}
+
+\newpage
+\thispagestyle{empty}
+\null
 \newpage
 
 \input{abstract.tex}
+
+\cleardoublepage
+\tableofcontents
+\cleardoublepage
+\newpage
+
 \input{cap1.tex}
 \input{cap2.tex}
 \input{cap3.tex}
 \input{cap4.tex}
-\input{cap5.tex}
+\input{conclusion.tex}
 \input{ringraziamenti.tex}
 
 
 \bibliographystyle{unsrt}
-\bibliography{bibliografia}
+\bibliography{Bibliografia}
+\addcontentsline{toc}{chapter}{Bibliografia}
 
 \end{document}

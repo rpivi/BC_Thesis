@@ -67,7 +67,7 @@ def blocking_analysis(data, window, threshold, abs_tol, obs="_"):
     R_plateau, tau = find_plateau(R_list,window, threshold,abs_tol, obs)
     M = data.shape[0]
     sigma_mean = jnp.sqrt(R_plateau * varX / M)
-    return sigma_mean, tau
+    return sigma_mean, tau, R_list
 
 def autocorr_fft(x):
     x = x - np.mean(x)
@@ -94,7 +94,7 @@ def append_observables(results,T,trajectory,acceptance_rate,V: Callable,toleranc
 
     # blocking for E
     E_mean =np.mean(energies)
-    E_mean_err, _ = blocking_analysis(energies, window, tolerance, abs_tol, obs="E_mean")
+    E_mean_err, _, R_list = blocking_analysis(energies, window, tolerance, abs_tol, obs="E_mean")
 
     # tau for x[0]
     tau_x = tau_int(trajectory[:, 0],c)
@@ -107,3 +107,4 @@ def append_observables(results,T,trajectory,acceptance_rate,V: Callable,toleranc
     results["acceptance"].append(acceptance_rate)
     results["tau_x"].append(tau_x)
     results["total_sign"].append(tot_sign)
+    results["R_list"].append(R_list)

@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 from pathlib import Path
+import numpy as np
 
 # plot.py is in BC_Thesis/source/, quindi .parent.parent = BC_Thesis/
 HERE = Path(__file__).resolve().parent
@@ -76,3 +77,89 @@ def total_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.tight_layout()
     #save the plot in the tex/images folder outside the source folder
     plt.savefig(OUT_DIR / "total_sign_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def plot_loss_vs_T(results_bg):
+    """
+    Plotta la loss del Boltzmann Generator durante il training per ogni temperatura.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(results_bg["T"], results_bg["loss_last"], 'o-', label='Boltzmann Generator Loss Last')
+    plt.plot(results_bg["T"], results_bg["loss_start"], 's--', label='Boltzmann Generator Loss Start')
+    
+    plt.xlabel('Temperature (T)')
+    plt.ylabel('Last Loss')
+    plt.title('Boltzmann Generator Loss vs Temperature')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    #save the plot in the tex/images folder outside the source folder
+    plt.savefig(OUT_DIR / "bg_loss_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def plot_Ess_normalized_vs_T(results_bg):
+    """
+    Plotta l'Effective Sample Size (ESS) del Boltzmann Generator per ogni temperatura.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(results_bg["T"], results_bg["ESS_normalized"], 's--', label='Boltzmann Generator ESS Normalized')
+    
+    plt.xlabel('Temperature (T)')
+    plt.ylabel('Effective Sample Size (ESS)')
+    plt.title('Boltzmann Generator ESS vs Temperature')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    #save the plot in the tex/images folder outside the source folder
+    plt.savefig(OUT_DIR / "bg_ess_normalized_vs_T_plot.png", dpi=150, bbox_inches="tight")
+
+def plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T):
+    """
+    Plotta R(m) vs m per MCMC e MCMC-Boltzmann
+    alla temperatura T richiesta.
+    """
+
+    # trova indice della temperatura
+    idx_mcmc = np.argmin(np.abs(np.array(results_mcmc["T"]) - T))
+    idx_bg = np.argmin(np.abs(np.array(results_mcmc_bg["T"]) - T))
+
+    # estrai R_list della temperatura scelta
+    R_mcmc = results_mcmc["R_list"][idx_mcmc]
+    R_bg = results_mcmc_bg["R_list"][idx_bg]
+
+    plt.figure(figsize=(8, 6))
+
+    # vero block size
+    m_mcmc = 2 ** np.arange(len(R_mcmc))
+    m_bg = 2 ** np.arange(len(R_bg))
+
+    plt.plot(
+        m_mcmc,
+        R_mcmc,
+        'o-',
+        label="MCMC"
+    )
+
+    plt.plot(
+        m_bg,
+        R_bg,
+        '^-',
+        label="MCMC-Boltzmann"
+    )
+
+    plt.xscale("log", base=2)
+
+    plt.xlabel("Block size m")
+    plt.ylabel("R(m)")
+    plt.title(f"Blocking analysis at T={T}")
+
+    plt.legend()
+    plt.grid(True, which="both")
+
+    plt.tight_layout()
+
+    plt.savefig(
+        OUT_DIR / f"blocking_analysis_R_vs_m_T_{T}.png",
+        dpi=150,
+        bbox_inches="tight"
+    )
+
+    plt.close()

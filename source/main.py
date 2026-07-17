@@ -10,14 +10,14 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    T_max = 1000.0   # temperatura più alta
-    T_min = 10.0     # temperatura più bassa
-    Ts = jnp.arange(T_max, T_min ,-100)  # from hot to cold
+    T_max = 2000.0   # temperatura più alta
+    T_min = 100.0     # temperatura più bassa
+    Ts = jnp.arange(T_max, T_min ,-200)  # from hot to cold
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
-    n_samples = 10000 # these are the number of samples for the Boltzmann generator and the steps of MCMC
-    n_train_steps = 8000 # number of training steps for the Boltzmann generator at each temperature
+    n_samples = 200000 # these are the number of samples for the Boltzmann generator and the steps of MCMC
+    n_train_steps = 4000 # number of training steps for the Boltzmann generator at each temperature
 
     # potential parameters
     a = 0.1
@@ -32,7 +32,8 @@ def main():
             "E_mean_err": [],
             "acceptance": [],
             "tau_x": [],
-            "total_sign": []
+            "total_sign": [],
+            "R_list": []
         } 
     
     results_bg = {
@@ -41,7 +42,10 @@ def main():
             "E_mean_err": [],
             "ESS": [], 
             "tau_eff": [],
-            "total_sign": []
+            "total_sign": [],
+            "loss_last": [],
+            "loss_start": [],
+            "ESS_normalized": []
         } 
 
     results_mcmc_bg = {
@@ -50,12 +54,13 @@ def main():
             "E_mean_err": [],
             "acceptance": [],
             "tau_x": [],
-            "total_sign": []
+            "total_sign": [],
+            "R_list": []
         }   
     
 ####### 0. INITIALIZATION FOR MCMC AND MCMC-BOLTZMANN #######
     tollerance = 0.1
-    window = 5 # number of consecutive values to consider for the plateau detection, in log scale
+    window = 3 # number of consecutive values to consider for the plateau detection, in log scale
     c = 5 # Sokal method parameter for tau estimation, tau_int(x, c)
     abs_tol = 0.01 # absolute tolerance for plateau detection, to avoid problems with very small values of R
     n_thermalization = 1000
@@ -116,6 +121,7 @@ def main():
         # Stima osservabili con pesi di importanza
         E_values = jax.vmap(V)(x_bg)
         Ess = bg.Ess(weights)
+        Ess_normalized = Ess / n_samples
         E_bg_mean = jnp.sum(weights * E_values)
         var_E_weighted = jnp.sum(weights * (E_values - E_bg_mean)**2)
         E_bg_mean_err = jnp.sqrt(var_E_weighted / Ess)
@@ -125,9 +131,13 @@ def main():
         results_bg["E_mean"].append(E_bg_mean)
         results_bg["E_mean_err"].append(E_bg_mean_err)
         results_bg["ESS"].append(Ess)
+        results_bg["ESS_normalized"].append(Ess_normalized)
         results_bg["T"].append(T)
         results_bg["tau_eff"].append(tau_eff)
         results_bg["total_sign"].append(jnp.sum(jnp.sign(x_bg[:, 0])))
+        results_bg["loss_last"].append(losses[-1]) # ultimo valore della loss, per monitorare il training
+        results_bg["loss_start"].append(losses[0]) # primo valore della loss, per monitorare il training
+
 ##### 3. MCMC-BOLTZMANN GENERATOR ###### we use the flow already trained (we are in the T loop of BG)
         # sampling the starting config 
         x_start, key = bg.sample(bg_params, bg_static, key, n_samples=1)                
@@ -145,6 +155,11 @@ def main():
     plot.tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.acceptance_vs_T_plot(results_mcmc, results_mcmc_bg)
     plot.total_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
+    plot.plot_loss_vs_T(results_bg)
+    plot.plot_Ess_normalized_vs_T(results_bg)
+    T_R = [Ts[0], Ts[len(Ts)//2], Ts[-1]]
+    for T in T_R:
+        plot.plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T)
     print("All simulations completed and plot saved.")
 
 if __name__ == "__main__":
