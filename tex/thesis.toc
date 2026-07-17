@@ -12,6 +12,7 @@
 \contentsline {section}{\numberline {2.3}Marckov Chain Monte Carlo}{7}{}%
 \contentsline {section}{\numberline {2.4}Algoritmo di Metropolis-Hastings}{7}{}%
 \contentsline {section}{\numberline {2.5}Autocorrelazione}{7}{}%
+\contentsline {section}{\numberline {2.6}Limiti della simulazione Monte Carlo}{7}{}%
 \contentsline {chapter}{\numberline {3}Normalizing flows}{8}{}%
 \contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{8}{}%
 \contentsline {section}{\numberline {3.2}Normalizing flows}{8}{}%

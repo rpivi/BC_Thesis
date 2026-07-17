@@ -3,21 +3,26 @@ import boltzmann_gen as bg
 import mcmc_boltzmann as fmcmc
 import plot as plot
 import observables as obs
+import vsN as vsN
+
 import optax
 import jax
 import jax.numpy as jnp
+import numpy as np
 from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    T_max = 2000.0   # temperatura più alta
-    T_min = 100.0     # temperatura più bassa
-    Ts = jnp.arange(T_max, T_min ,-200)  # from hot to cold
+    T_max = 1000.0   # highest temperature
+    T_min = 100.0    # lowest temperature
+    T_step = 10.0     # temperature step
+    Ts = jnp.arange(T_max, T_min-T_step, -T_step)  # from hot to cold
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
     key = jax.random.PRNGKey(42)
-    n_samples = 200000 # these are the number of samples for the Boltzmann generator and the steps of MCMC
-    n_train_steps = 4000 # number of training steps for the Boltzmann generator at each temperature
+    n_samples = 1000000 # these are the number of samples for the Boltzmann generator and the steps of MCMC (10^6)
+    n_train_steps = 1000 # number of training steps for the Boltzmann generator at each temperature
+    n_samples_training = 500 # number of samples for the training of the Boltzmann generator at each temperature
 
     # potential parameters
     a = 0.1
@@ -32,8 +37,9 @@ def main():
             "E_mean_err": [],
             "acceptance": [],
             "tau_x": [],
-            "total_sign": [],
-            "R_list": []
+            "mean_sign": [],
+            "R_list": [],
+            "trajectory": []
         } 
     
     results_bg = {
@@ -42,10 +48,12 @@ def main():
             "E_mean_err": [],
             "ESS": [], 
             "tau_eff": [],
-            "total_sign": [],
+            "mean_sign": [],
             "loss_last": [],
             "loss_start": [],
-            "ESS_normalized": []
+            "ESS_normalized": [],
+            "positions": [],
+            "log_qx": []
         } 
 
     results_mcmc_bg = {
@@ -54,16 +62,19 @@ def main():
             "E_mean_err": [],
             "acceptance": [],
             "tau_x": [],
-            "total_sign": [],
-            "R_list": []
+            "mean_sign": [],
+            "R_list": [],
+            "trajectory": []
         }   
     
 ####### 0. INITIALIZATION FOR MCMC AND MCMC-BOLTZMANN #######
-    tollerance = 0.1
+    tollerance = 0.1 # tollerance for the blocking analysis, to detect the plateau of R(m)
     window = 3 # number of consecutive values to consider for the plateau detection, in log scale
     c = 5 # Sokal method parameter for tau estimation, tau_int(x, c)
     abs_tol = 0.01 # absolute tolerance for plateau detection, to avoid problems with very small values of R
-    n_thermalization = 1000
+    n_thermalization = 2000 # number of thermalization steps for MCMC to reach equilibrium before starting the production run,
+    #always thermalize, but the first thermalization is longer, to reach equilibrium from a random initial configuration
+    #the other thermalizations are shorter, to reach equilibrium from the last configuration of the previsios T 
     step_size = 0.1
 
     gen_config = metro.make_config_generator(D, "normal")
@@ -111,7 +122,7 @@ def main():
         key, subkey = jax.random.split(key)
         bg_params, opt_state, key, losses = train_T(
             bg_params, bg_static, opt_state, subkey, T,
-            n_samples=500, n_steps=n_train_steps)
+            n_samples=n_samples_training, n_steps=n_train_steps)
 
         # --- Sampling e reweighting ---
         x_bg, key = bg.sample(bg_params, bg_static, key, n_samples=n_samples) 
@@ -128,15 +139,17 @@ def main():
         tau_eff = n_samples / (2.0 * Ess)   # stima effective sample time, 
                                             #per poter confrontare MCMC, che ha autocorrelazioni.
 
+        results_bg["positions"].append(x_bg)
         results_bg["E_mean"].append(E_bg_mean)
         results_bg["E_mean_err"].append(E_bg_mean_err)
         results_bg["ESS"].append(Ess)
         results_bg["ESS_normalized"].append(Ess_normalized)
         results_bg["T"].append(T)
         results_bg["tau_eff"].append(tau_eff)
-        results_bg["total_sign"].append(jnp.sum(jnp.sign(x_bg[:, 0])))
+        results_bg["mean_sign"].append(jnp.mean(jnp.sign(x_bg[:, 0])))
         results_bg["loss_last"].append(losses[-1]) # ultimo valore della loss, per monitorare il training
         results_bg["loss_start"].append(losses[0]) # primo valore della loss, per monitorare il training
+        results_bg["log_qx"].append(log_qx)
 
 ##### 3. MCMC-BOLTZMANN GENERATOR ###### we use the flow already trained (we are in the T loop of BG)
         # sampling the starting config 
@@ -154,13 +167,29 @@ def main():
     plot.E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.acceptance_vs_T_plot(results_mcmc, results_mcmc_bg)
-    plot.total_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
+    plot.mean_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.plot_loss_vs_T(results_bg)
     plot.plot_Ess_normalized_vs_T(results_bg)
     T_R = [Ts[0], Ts[len(Ts)//2], Ts[-1]]
     for T in T_R:
         plot.plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T)
-    print("All simulations completed and plot saved.")
+        plot.plot_x(results_mcmc, results_bg, results_mcmc_bg, T)
+        plot.plot_x_traj(results_mcmc, results_bg, results_mcmc_bg, T)
+    print("Plots for T study completed.")
 
+###### STUDY OF THE EFFECT OF THE NUMBER OF SAMPLES #############
+    T_Ns = [Ts[0], Ts[len(Ts)//2], Ts[-1]] #hot, intermediate and cold temperatures for the study of the effect of the number of samples
+    Ns = np.logspace(2,np.log10(n_samples),15,dtype=int) #number of samples from 100 to n_samples
+
+    for T in tqdm(T_Ns, desc="Studying effect of N", unit="T"):
+        idx = np.argmin(np.abs(np.array(results_mcmc["T"]) - T))
+        results_vsN_mcmc = vsN.res_N_mcmc(results_mcmc["trajectory"][idx], V, Ns, tollerance, window, c, abs_tol)
+        results_vsN_bg = vsN.res_N_bg(results_bg["positions"][idx], results_bg["log_qx"][idx], V, T, kb, Ns)
+        results_vsN_mcmc_bg = vsN.res_N_mcmc(results_mcmc_bg["trajectory"][idx], V, Ns, tollerance, window, c, abs_tol)
+
+        plot.plot_E_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T)
+        plot.plot_tau_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T)
+
+    print("Plots for N study completed.")
 if __name__ == "__main__":
     main()

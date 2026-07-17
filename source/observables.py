@@ -3,7 +3,7 @@ import jax.numpy as jnp
 import numpy as np  
 from typing import Callable
 
-def make_potential(a: float = 1.0, b: float = 1.0,c: float = 0.0, potential_type: str = "simmetric_double_well") -> Callable[[jax.Array], jax.Array]:
+def make_potential(a: float = 1.0, b: float = 1.0,l: float = 0.0, potential_type: str = "simmetric_double_well") -> Callable[[jax.Array], jax.Array]:
     @jax.jit
     def V(x: jax.Array) -> jax.Array:
         if potential_type == "simmetric_double_well":
@@ -11,7 +11,7 @@ def make_potential(a: float = 1.0, b: float = 1.0,c: float = 0.0, potential_type
             harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
             return double_well + harmonic
         elif potential_type == "asymmetric_double_well":
-            double_well = (a/b**4) * (x[0] ** 2 - b) ** 2 + c * x[0]
+            double_well = (a/b**4) * (x[0] ** 2 - b) ** 2 + l * x[0]
             harmonic    = 0.5 * jnp.dot(x[1:], x[1:])
             return double_well + harmonic
         else:
@@ -98,13 +98,14 @@ def append_observables(results,T,trajectory,acceptance_rate,V: Callable,toleranc
 
     # tau for x[0]
     tau_x = tau_int(trajectory[:, 0],c)
-    # total sign
-    tot_sign = jnp.sum(jnp.sign(trajectory[:, 0]))
+    # mean sign
+    mean_sign = jnp.mean(jnp.sign(trajectory[:, 0]))
 
     results["T"].append(T)
     results["E_mean"].append(E_mean)
     results["E_mean_err"].append(E_mean_err)
     results["acceptance"].append(acceptance_rate)
     results["tau_x"].append(tau_x)
-    results["total_sign"].append(tot_sign)
+    results["mean_sign"].append(mean_sign)
     results["R_list"].append(R_list)
+    results["trajectory"].append(trajectory)
