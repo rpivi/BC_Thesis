@@ -2,6 +2,8 @@ import jax
 import jax.numpy as jnp
 import numpy as np  
 from typing import Callable
+from scipy.integrate import quad
+from scipy.optimize import minimize_scalar
 
 def make_potential(a: float = 1.0, b: float = 1.0,l: float = 0.0, potential_type: str = "simmetric_double_well") -> Callable[[jax.Array], jax.Array]:
     @jax.jit
@@ -34,7 +36,7 @@ def find_plateau(R, window=3, tollerance=0.2, abs_tol=1e-3, obs="_"): #there is 
             tau = 0.5 * (R_plateau - 1)
             return R_plateau, tau
 
-    print(f"WARNING: plateau not found for {obs}, using last value.")
+    print(f"\n WARNING: plateau not found for {obs}, using last value.")
     R_plateau = R[-1]
     tau = 0.5 * (R_plateau - 1)
     return R_plateau, tau
@@ -85,27 +87,78 @@ def tau_int(x, c=5):
     for t in range(1, N):
         tau += acf[t]
         if t > c * tau:
+            M = t
             break
-    return tau
+    else:
+        M = N - 1
+    delta_tau = tau * np.sqrt(2 * (2*M + 1) / len(x))
+    return tau, delta_tau
 
-def append_observables(results,T,trajectory,acceptance_rate,V: Callable,tolerance: float = 0.01, window: int = 5,c: int = 5,abs_tol: float = 1e-3, kb: float = 8.617333262145e-5):
+def append_observables(results, T, trajectory, acceptance_rate, V,
+                        tolerance: float = 0.01, window: int = 5, c: int = 5,
+                        abs_tol: float = 1e-3, kb: float = 8.617333262145e-5):
     energies = np.array(jax.vmap(lambda x: V(x))(trajectory))
-    energies2 = energies**2
 
-    # blocking for E
-    E_mean =np.mean(energies)
+    E_mean = np.mean(energies)
     E_mean_err, _, R_list = blocking_analysis(energies, window, tolerance, abs_tol, obs="E_mean")
 
-    # tau for x[0]
-    tau_x = tau_int(trajectory[:, 0],c)
-    # mean sign
+    tau_x, delta_tau = tau_int(trajectory[:, 0], c)
     mean_sign = jnp.mean(jnp.sign(trajectory[:, 0]))
+    Ess_normalized = 1 / (2 * tau_x)
 
     results["T"].append(T)
     results["E_mean"].append(E_mean)
     results["E_mean_err"].append(E_mean_err)
     results["acceptance"].append(acceptance_rate)
     results["tau_x"].append(tau_x)
+    results["delta_tau"].append(delta_tau)      
     results["mean_sign"].append(mean_sign)
     results["R_list"].append(R_list)
-    results["trajectory"].append(trajectory)
+    results["ESS_normalized"].append(Ess_normalized)
+
+def exact_E_mean(T: float, V: Callable, dim: int,
+                  kb: float = 8.617333262145e-5,
+                  x_scan_range: float = 20.0, n_scan: int = 2000,
+                  xlim_sigma: float = 15.0) -> float:
+    """
+    Valore esatto di <V> per quadratura 1D lungo x[0], usando direttamente
+    la funzione V (es. quella da make_potential). Le altre (dim-1) componenti
+    contribuiscono con equipartizione esatta (0.5*kb*T ciascuna), sfruttando
+    il fatto che V è additivo: V(x) = V0(x0) + harmonic(x[1:]).
+
+    dim = dimensionalità totale del vettore x.
+    """
+    beta = 1.0 / (kb * T)
+
+    # sezione 1D: fissa x[1:] = 0 (harmonic(0) = 0, quindi V0(x0) = V([x0,0,...,0]))
+    def V0(x0):
+        x = jnp.zeros(dim).at[0].set(x0)
+        return float(V(x))
+
+    # scansione grezza per trovare il/i minimi (funziona anche per pozzo singolo)
+    grid = np.linspace(-x_scan_range, x_scan_range, n_scan)
+    vals = np.array([V0(x0) for x0 in grid])
+    i_min = np.argmin(vals)
+    x0_guess = grid[i_min]
+
+    # rifinitura locale
+    lo = grid[max(i_min-5, 0)]
+    hi = grid[min(i_min+5, n_scan-1)]
+    res = minimize_scalar(V0, bracket=(lo, x0_guess, hi))
+    Vmin = res.fun
+
+    # range di integrazione adattivo attorno al bulk della distribuzione
+    xlim = x_scan_range  # fallback largo; si può restringere adattivamente sotto
+    # stima ampiezza termica tipica per restringere xlim se serve
+    xlim = min(x_scan_range, abs(x0_guess) + xlim_sigma * np.sqrt(kb * T) + 1.0)
+
+    weight = lambda x0: np.exp(-beta * (V0(x0) - Vmin))
+    num    = lambda x0: V0(x0) * weight(x0)
+
+    Z, _     = quad(weight, -xlim, xlim, limit=400)
+    num_I, _ = quad(num, -xlim, xlim, limit=400)
+
+    V0_mean = num_I / Z
+    harmonic_mean = 0.5 * (dim - 1) * kb * T
+
+    return V0_mean + harmonic_mean

@@ -33,7 +33,7 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.errorbar(results_mcmc_bg["T"], results_mcmc_bg["E_mean"], yerr=results_mcmc_bg["E_mean_err"],
                  fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann', capsize=5)
  
-    plt.xlabel('Temperature (T)')
+    plt.xlabel('Temperature T [K]')
     plt.ylabel('Mean Energy <E>')
     plt.title('Mean Energy vs Temperature')
     plt.legend()
@@ -42,23 +42,18 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.savefig(OUT_DIR / "E_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
  
- 
 def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     """
-    Plotta τ vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    Plotta τ + error vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
     """
     plt.figure(figsize=(8, 6))
-    plt.plot(results_mcmc["T"], results_mcmc["tau_x"], MARKERS["MCMC"] + '-',
-              color=COLORS["MCMC"], label='MCMC')
+    plt.errorbar(results_mcmc["T"], results_mcmc["tau_x"], yerr=results_mcmc["delta_tau"],
+                 fmt=MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC', capsize=5)
     plt.plot(results_bg["T"], results_bg["tau_eff"], MARKERS["BG"] + '-',
               color=COLORS["BG"], label='Boltzmann Generator')
-    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], MARKERS["MCMC-BG"] + '-',
-              color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
- 
-    # scala log: tau tipicamente diverge di ordini di grandezza a bassa T
-    # (il tuo risultato sulla rottura di ergodicità), in lineare si appiattisce tutto
-    plt.yscale('log')
-    plt.xlabel('Temperature (T)')
+    plt.errorbar(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], yerr=results_mcmc_bg["delta_tau"],
+                 fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann', capsize=5)
+    plt.xlabel('Temperature T [K]')
     plt.ylabel(r'Effective Time $\tau$')
     plt.title('Effective Time vs Temperature')
     plt.legend()
@@ -78,7 +73,7 @@ def acceptance_vs_T_plot(results_mcmc, results_mcmc_bg):
     plt.plot(results_mcmc_bg["T"], results_mcmc_bg["acceptance"], MARKERS["MCMC-BG"] + '-',
               color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
  
-    plt.xlabel('Temperature (T)')
+    plt.xlabel('Temperature T [K]')
     plt.ylabel('Acceptance Rate')
     plt.ylim(0, 1)
     plt.title('Acceptance Rate vs Temperature')
@@ -94,14 +89,11 @@ def mean_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     Plotta mean sign vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
     """
     plt.figure(figsize=(8, 6))
-    plt.plot(results_mcmc["T"], results_mcmc["mean_sign"], MARKERS["MCMC"] + '-',
-              color=COLORS["MCMC"], label='MCMC')
-    plt.plot(results_bg["T"], results_bg["mean_sign"], MARKERS["BG"] + '-',
-              color=COLORS["BG"], label='Boltzmann Generator')
-    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["mean_sign"], MARKERS["MCMC-BG"] + '-',
-              color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
+    plt.plot(results_mcmc["T"], results_mcmc["mean_sign"], MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC')
+    plt.plot(results_bg["T"], results_bg["mean_sign"], MARKERS["BG"] + '-', color=COLORS["BG"], label='Boltzmann Generator')
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["mean_sign"], MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
  
-    plt.xlabel('Temperature (T)')
+    plt.xlabel('Temperature T [K]')
     plt.ylabel('Mean Sign')
     plt.title('Mean Sign vs Temperature')
     plt.legend()
@@ -116,12 +108,10 @@ def plot_loss_vs_T(results_bg):
     Plotta la loss del Boltzmann Generator (start vs last) per ogni temperatura.
     """
     plt.figure(figsize=(8, 6))
-    plt.plot(results_bg["T"], results_bg["loss_last"], 'o-', color=COLORS["BG"],
-              label='Loss finale')
-    plt.plot(results_bg["T"], results_bg["loss_start"], 's--', color='tab:gray',
-              label='Loss iniziale')
+    plt.plot(results_bg["T"], results_bg["loss_last"], 'o-', color=COLORS["BG"],label='Loss finale')
+    plt.plot(results_bg["T"], results_bg["loss_start"], 's--', color='tab:gray',label='Loss iniziale')
  
-    plt.xlabel('Temperature (T)')
+    plt.xlabel('Temperature T [K]')
     plt.ylabel('Loss')
     plt.title('Boltzmann Generator Loss vs Temperature')
     plt.legend()
@@ -131,43 +121,41 @@ def plot_loss_vs_T(results_bg):
     plt.close()
  
  
-def plot_Ess_normalized_vs_T(results_bg):
+def plot_Ess_normalized_vs_T(results_mcmc,results_bg, results_mcmc_bg):
     """
     Plotta l'Effective Sample Size (ESS) normalizzata del Boltzmann Generator per ogni T.
     """
     plt.figure(figsize=(8, 6))
-    plt.plot(results_bg["T"], results_bg["ESS_normalized"], 's--', color=COLORS["BG"],
+    plt.plot(results_mcmc["T"], results_mcmc["ESS_normalized"], 'o-', color=COLORS["MCMC"],
+              label='MCMC')
+    plt.plot(results_bg["T"], results_bg["ESS_normalized"], 'o-', color=COLORS["BG"],
               label='Boltzmann Generator')
+    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["ESS_normalized"], 'o-', color=COLORS["MCMC-BG"],
+              label='MCMC-Boltzmann')
  
-    plt.xlabel('Temperature (T)')
+    plt.xlabel('Temperature T [K]')
     plt.ylabel('ESS normalizzata (ESS/N)')
     plt.ylim(0, 1.05)
-    plt.title('Boltzmann Generator ESS vs Temperature')
+    plt.title('ESS/N vs Temperature')
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(OUT_DIR / "bg_ess_normalized_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
  
- 
-def plot_x(results_mcmc, results_bg, results_mcmc_bg, T):
+def plot_x(x_mcmc, x_bg, x_mcmc_bg, T):
     """
-    Plotta la distribuzione delle posizioni x per MCMC, Boltzmann Generator
-    e MCMC-Boltzmann in tre subplot separati
+    x_mcmc, x_bg, x_mcmc_bg: array (N, D) già selezionati dal chiamante per il T richiesto.
     """
-    idx = np.argmin(np.abs(np.array(results_mcmc["T"]) - T))
- 
-    x_mcmc = results_mcmc["trajectory"][idx][:, 0]
-    x_bg = results_bg["positions"][idx][:, 0]
-    x_mcmc_bg = results_mcmc_bg["trajectory"][idx][:, 0]
- 
-    # bin comuni ai tre dataset così le forme sono confrontabili
+    x_mcmc = x_mcmc[:, 0]
+    x_bg = x_bg[:, 0]
+    x_mcmc_bg = x_mcmc_bg[:, 0]
+
     x_min = min(x_mcmc.min(), x_bg.min(), x_mcmc_bg.min())
     x_max = max(x_mcmc.max(), x_bg.max(), x_mcmc_bg.max())
     bins = np.linspace(x_min, x_max, 51)
- 
+
     fig, axes = plt.subplots(3, 1, figsize=(8, 10), sharex=True, sharey=True)
- 
     data = [
         (x_mcmc, "MCMC", COLORS["MCMC"]),
         (x_bg, "Boltzmann Generator", COLORS["BG"]),
@@ -178,46 +166,36 @@ def plot_x(results_mcmc, results_bg, results_mcmc_bg, T):
         ax.set_ylabel('Density')
         ax.set_title(label)
         ax.grid(True)
- 
+
     axes[-1].set_xlabel('Position x[0]')
     fig.suptitle(f'Position Distribution at T={T}')
     plt.tight_layout()
     plt.savefig(OUT_DIR / f"x_distribution_T_{T}.png", dpi=150, bbox_inches="tight")
     plt.close()
- 
- 
-def plot_x_traj(results_mcmc, results_bg, results_mcmc_bg, T):
-    """
-    Plotta la traiettoria delle posizioni x per MCMC, Boltzmann Generator
-    e MCMC-Boltzmann in tre subplot separati (stesso asse y, per vedere
-    chiaramente fenomeni come il mode-trapping dell'MCMC a bassa T,
-    che nella versione sovrapposta era nascosto dalle altre curve).
-    """
-    idx = np.argmin(np.abs(np.array(results_mcmc["T"]) - T))
- 
-    x_mcmc = results_mcmc["trajectory"][idx][:, 0]
-    x_bg = results_bg["positions"][idx][:, 0]
-    x_mcmc_bg = results_mcmc_bg["trajectory"][idx][:, 0]
- 
-    fig, axes = plt.subplots(3, 1, figsize=(10, 9), sharex=True, sharey=True)
- 
+
+
+def plot_x_traj(x_mcmc, x_bg, x_mcmc_bg, T):
+    x_mcmc = x_mcmc[:, 0]
+    x_bg = x_bg[:, 0]
+    x_mcmc_bg = x_mcmc_bg[:, 0]
+
+    fig, axes = plt.subplots(3, 1, figsize=(18, 12), sharex=True, sharey=True)
     data = [
         (x_mcmc, "MCMC", COLORS["MCMC"]),
         (x_bg, "Boltzmann Generator", COLORS["BG"]),
         (x_mcmc_bg, "MCMC-Boltzmann", COLORS["MCMC-BG"]),
     ]
     for ax, (x, label, color) in zip(axes, data):
-        ax.plot(x, color=color, alpha=0.8, label=label)
+        ax.scatter(range(len(x)), x, color=color, alpha=0.8, label=label)
         ax.set_ylabel('Position x[0]')
         ax.set_title(label)
         ax.grid(True)
- 
+
     axes[-1].set_xlabel('Sample Index')
     fig.suptitle(f'Position Trajectory at T={T}')
     plt.tight_layout()
     plt.savefig(OUT_DIR / f"x_trajectory_T_{T}.png", dpi=150, bbox_inches="tight")
     plt.close()
- 
  
 def plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T):
     """
@@ -247,51 +225,59 @@ def plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T):
     plt.close()
  
  
-def plot_E_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T):
+def plot_E_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T, true_E):
     """
-    Plotta E_mean (con errore) vs N per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    Plotta E_mean ± errore come banda colorata.
     """
+
     Ns = results_vsN_mcmc["N"]
- 
+
     plt.figure(figsize=(8, 6))
-    plt.errorbar(Ns, results_vsN_mcmc["E_mean"], yerr=results_vsN_mcmc["E_mean_err"],
-                 fmt=MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC', capsize=5)
-    plt.errorbar(Ns, results_vsN_bg["E_mean"], yerr=results_vsN_bg["E_mean_err"],
-                 fmt=MARKERS["BG"] + '-', color=COLORS["BG"], label='Boltzmann Generator', capsize=5)
-    plt.errorbar(Ns, results_vsN_mcmc_bg["E_mean"], yerr=results_vsN_mcmc_bg["E_mean_err"],
-                 fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann', capsize=5)
- 
+
+    methods = [("MCMC", results_vsN_mcmc),("BG", results_vsN_bg),("MCMC-BG", results_vsN_mcmc_bg)]
+
+    labels = {"MCMC": "MCMC","BG": "Boltzmann Generator","MCMC-BG": "MCMC-Boltzmann"}
+
+    for method, results in methods:
+
+        E = np.asarray(results["E_mean"])
+        err = np.asarray(results["E_mean_err"])
+
+        plt.plot( Ns, E, color=COLORS[method], linestyle='-', linewidth=2, label=labels[method])
+
+        plt.fill_between(Ns,E - err,E + err,color=COLORS[method],alpha=0.25)
+    #true value of E at this T 
+    plt.axhline(y=true_E, color='k', linestyle='--', label='True E')
+
     plt.xscale("log")
-    plt.xlabel('Number of Samples (N)')
-    plt.ylabel('Mean Energy <E>')
-    plt.title(f'Mean Energy vs Number of Samples at T={T}')
+    plt.xlabel("Number of Samples (N)")
+    plt.ylabel(r"Mean Energy $\langle E\rangle$")
+    plt.title(f"Mean Energy vs Number of Samples at T={T}")
+
+    plt.grid(True, which="both", alpha=0.3)
     plt.legend()
-    plt.grid(True)
     plt.tight_layout()
-    plt.savefig(OUT_DIR / f"E_vs_N_plot_T_{T}.png", dpi=150, bbox_inches="tight")
+    plt.savefig(OUT_DIR / f"E_vs_N_plot_T_{T}.png",dpi=150,bbox_inches="tight" )
     plt.close()
- 
- 
-def plot_tau_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T):
+
+def plot_mean_sign_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T):
     """
-    Plotta tau vs N per MCMC, Boltzmann Generator e MCMC-Boltzmann.
+    Plotta mean_sign vs N per MCMC, Boltzmann Generator e MCMC-Boltzmann.
     """
     Ns = results_vsN_mcmc["N"]
  
     plt.figure(figsize=(8, 6))
-    plt.plot(Ns, results_vsN_mcmc["tau_x"], MARKERS["MCMC"] + '-',
-              color=COLORS["MCMC"], label='MCMC')
-    plt.plot(Ns, results_vsN_bg["tau_eff"], MARKERS["BG"] + '-',
-              color=COLORS["BG"], label='Boltzmann Generator')
-    plt.plot(Ns, results_vsN_mcmc_bg["tau_x"], MARKERS["MCMC-BG"] + '-',
-              color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
+    plt.plot(Ns, results_vsN_mcmc["mean_sign"], MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC')
+    plt.plot(Ns, results_vsN_bg["mean_sign"], MARKERS["BG"] + '-',color=COLORS["BG"], label='Boltzmann Generator')
+    plt.plot(Ns, results_vsN_mcmc_bg["mean_sign"], MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann')
+    plt.axhline(y=0, color='k', linestyle='--', label='True Mean Sign = 0')
  
     plt.xscale("log")
     plt.xlabel('Number of Samples (N)')
-    plt.ylabel(r'Effective Time $\tau$')
-    plt.title(f'Effective Time vs Number of Samples at T={T}')
+    plt.ylabel(r'Sign of Mean Position $\langle \text{sgn}(x_0) \rangle$')
+    plt.title(f'Sign of Mean Position vs Number of Samples at T={T}')
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(OUT_DIR / f"tau_vs_N_plot_T_{T}.png", dpi=150, bbox_inches="tight")
+    plt.savefig(OUT_DIR / f"mean_sign_vs_N_plot_T_{T}.png", dpi=150, bbox_inches="tight")
     plt.close()

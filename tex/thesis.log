@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  17 JUL 2026 11:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  18 JUL 2026 18:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -139,50 +139,46 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--41
 
 [1
 
-{C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [1
+{C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [1] [2] [3] (abstract.tex) [4
 
-] [2] (abstract.tex) [3
-
-] (thesis.toc
+] [5] (thesis.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 5.
-)
+ [6
+
+])
 \tf@toc=\write3
 \openout3 = `thesis.toc'.
 
- [4
+ (cap1.tex [7] [8
 
-
-] (cap1.tex [5
-
-
-]
+] [9]
 Capitolo 1.
-) (cap2.tex [6
+) (cap2.tex [10
 
 ]
 Capitolo 2.
-) (cap3.tex [7
+) (cap3.tex [11
 
 ]
 Capitolo 3.
-) (cap4.tex [8
+) (cap4.tex [12
 
 ]
 Capitolo 4.
-) (conclusion.tex [9
+) (conclusion.tex [13
 
-]) (ringraziamenti.tex [10
+]) (ringraziamenti.tex [14
 
-]) (thesis.bbl [11
+]) (thesis.bbl [15
 
 ]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [12
+) [16
 
 ] (thesis.aux)
  ***********
@@ -193,15 +189,15 @@ L3 programming layer <2025-12-24>
 Here is how much of TeX's memory you used:
  2672 strings out of 467871
  45297 string characters out of 5418376
- 464648 words of memory out of 5000000
+ 466648 words of memory out of 5000000
  31536 multiletter control sequences out of 15000+600000
  635588 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 46i,5n,51p,268b,215s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 46i,6n,51p,268b,256s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on thesis.pdf (14 pages, 93621 bytes).
+Output written on thesis.pdf (17 pages, 97639 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
+ 87 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
