@@ -91,11 +91,9 @@ def main():
 
     for T in tqdm(Ts, desc="BG and MCMC-BG", unit="T"):
         key, subkey = jax.random.split(key)
-        n_steps = n_train_steps * 2 if T % 100 == 0 else n_train_steps
         bg_params, opt_state, key, losses = train_T(
             bg_params, bg_static, opt_state, subkey, T,
-            n_samples=n_samples_training, n_steps=n_steps
-        )
+            n_samples=n_samples_training, n_steps=n_train_steps)
 
         x_bg, key = bg.sample(bg_params, bg_static, key, n_samples=n_samples)
         log_qx = bg.flow_ev_probability(bg_params, bg_static, x_bg)
