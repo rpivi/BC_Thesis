@@ -37,7 +37,7 @@ def main():
         "ESS_normalized": []
     }
     results_bg = {
-        "T": [], "E_mean": [], "E_mean_err": [], "ESS": [], "tau_eff": [],
+        "T": [], "E_mean": [], "E_mean_err": [], "tau_eff": [],
         "mean_sign": [], "loss_last": [], "loss_start": [], "ESS_normalized": []
     }
     results_mcmc_bg = {
@@ -111,7 +111,6 @@ def main():
 
         results_bg["E_mean"].append(E_bg_mean)
         results_bg["E_mean_err"].append(E_bg_mean_err)
-        results_bg["ESS"].append(Ess)
         results_bg["ESS_normalized"].append(Ess_normalized)
         results_bg["T"].append(T)
         results_bg["tau_eff"].append(tau_eff)
