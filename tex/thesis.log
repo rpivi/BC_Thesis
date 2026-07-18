@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  18 JUL 2026 18:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  18 JUL 2026 19:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -154,31 +154,31 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  (cap1.tex [7] [8
 
-] [9]
+]
 Capitolo 1.
-) (cap2.tex [10
+) (cap2.tex [9
 
 ]
 Capitolo 2.
-) (cap3.tex [11
+) (cap3.tex [10
 
 ]
 Capitolo 3.
-) (cap4.tex [12
+) (cap4.tex [11
 
 ]
 Capitolo 4.
-) (conclusion.tex [13
+) (conclusion.tex [12
 
-]) (ringraziamenti.tex [14
+]) (ringraziamenti.tex [13
 
-]) (thesis.bbl [15
+]) (thesis.bbl [14
 
 ]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [16
+) [15
 
 ] (thesis.aux)
  ***********
@@ -195,9 +195,9 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  46i,6n,51p,268b,256s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on thesis.pdf (17 pages, 97639 bytes).
+Output written on thesis.pdf (16 pages, 97713 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
+ 84 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

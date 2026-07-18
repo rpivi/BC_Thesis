@@ -1,38 +1,38 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
 \contentsline {chapter}{Introduzione}{8}{}%
-\contentsline {chapter}{\numberline {1}Concetti di probabilità e statistica}{10}{}%
-\contentsline {section}{\numberline {1.1}Distribuzioni di probabilità e campioni}{10}{}%
-\contentsline {section}{\numberline {1.2}Introduzione alla meccanica statistica}{10}{}%
-\contentsline {section}{\numberline {1.3}Obbiettivo della tesi}{10}{}%
-\contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{11}{}%
-\contentsline {section}{\numberline {2.1}Accenni storici}{11}{}%
-\contentsline {section}{\numberline {2.2}Metodi Monte Carlo classici}{11}{}%
-\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{11}{}%
-\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{11}{}%
-\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis-Hastings}{11}{}%
-\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{11}{}%
-\contentsline {subsection}{\numberline {2.4.1}Metodo di Sokal}{11}{}%
-\contentsline {subsection}{\numberline {2.4.2}Blocking Analysis}{11}{}%
-\contentsline {chapter}{\numberline {3}Normalizing Flows}{12}{}%
-\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{12}{}%
-\contentsline {section}{\numberline {3.2}Normalizing Flows}{12}{}%
-\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{12}{}%
-\contentsline {subsection}{\numberline {3.2.2}Utilizzo ed addestramento}{12}{}%
-\contentsline {section}{\numberline {3.3}Costruire un Autoregressive Flow}{12}{}%
-\contentsline {subsection}{\numberline {3.3.1}Affine Transfromers}{12}{}%
-\contentsline {subsection}{\numberline {3.3.2}Real NVP}{12}{}%
-\contentsline {subsection}{\numberline {3.3.3}Coupling Layers}{12}{}%
-\contentsline {subsection}{\numberline {3.3.4}Esempi}{12}{}%
-\contentsline {section}{\numberline {3.4}Boltzmann generators}{12}{}%
-\contentsline {subsection}{\numberline {3.4.1}Flow Markov Chain Monte Carlo}{12}{}%
-\contentsline {chapter}{\numberline {4}Studio del campionamento}{13}{}%
-\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{13}{}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo per distribuzioni multimodali}{13}{}%
-\contentsline {subsection}{\numberline {4.2.1}Dettagli dell'implementazione}{13}{}%
-\contentsline {subsection}{\numberline {4.2.2}Risultati}{13}{}%
-\contentsline {section}{\numberline {4.3}Confronto del campionamento}{13}{}%
-\contentsline {subsection}{\numberline {4.3.1}Dettagli dell'implementazione}{13}{}%
-\contentsline {subsection}{\numberline {4.3.2}Risultati}{13}{}%
-\contentsline {chapter}{Conclusione}{14}{}%
-\contentsline {chapter}{Bibliografia}{16}{}%
+\contentsline {chapter}{\numberline {1}Concetti di probabilità e statistica}{9}{}%
+\contentsline {section}{\numberline {1.1}Distribuzioni di probabilità e campioni}{9}{}%
+\contentsline {section}{\numberline {1.2}Introduzione alla meccanica statistica}{9}{}%
+\contentsline {section}{\numberline {1.3}Obbiettivo della tesi}{9}{}%
+\contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{10}{}%
+\contentsline {section}{\numberline {2.1}Accenni storici}{10}{}%
+\contentsline {section}{\numberline {2.2}Metodi Monte Carlo classici}{10}{}%
+\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{10}{}%
+\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{10}{}%
+\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis-Hastings}{10}{}%
+\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{10}{}%
+\contentsline {subsection}{\numberline {2.4.1}Metodo di Sokal}{10}{}%
+\contentsline {subsection}{\numberline {2.4.2}Blocking Analysis}{10}{}%
+\contentsline {chapter}{\numberline {3}Normalizing Flows}{11}{}%
+\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{11}{}%
+\contentsline {section}{\numberline {3.2}Normalizing Flows}{11}{}%
+\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{11}{}%
+\contentsline {subsection}{\numberline {3.2.2}Utilizzo ed addestramento}{11}{}%
+\contentsline {section}{\numberline {3.3}Costruire un Autoregressive Flow}{11}{}%
+\contentsline {subsection}{\numberline {3.3.1}Affine Transfromers}{11}{}%
+\contentsline {subsection}{\numberline {3.3.2}Real NVP}{11}{}%
+\contentsline {subsection}{\numberline {3.3.3}Coupling Layers}{11}{}%
+\contentsline {subsection}{\numberline {3.3.4}Esempi}{11}{}%
+\contentsline {section}{\numberline {3.4}Boltzmann generators}{11}{}%
+\contentsline {subsection}{\numberline {3.4.1}Flow Markov Chain Monte Carlo}{11}{}%
+\contentsline {chapter}{\numberline {4}Studio del campionamento}{12}{}%
+\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{12}{}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo per distribuzioni multimodali}{12}{}%
+\contentsline {subsection}{\numberline {4.2.1}Dettagli dell'implementazione}{12}{}%
+\contentsline {subsection}{\numberline {4.2.2}Risultati}{12}{}%
+\contentsline {section}{\numberline {4.3}Confronto del campionamento}{12}{}%
+\contentsline {subsection}{\numberline {4.3.1}Dettagli dell'implementazione}{12}{}%
+\contentsline {subsection}{\numberline {4.3.2}Risultati}{12}{}%
+\contentsline {chapter}{Conclusione}{13}{}%
+\contentsline {chapter}{Bibliografia}{15}{}%
