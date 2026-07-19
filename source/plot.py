@@ -112,6 +112,8 @@ def plot_loss_vs_T(results_bg):
     plt.figure(figsize=(8, 6))
     plt.plot(results_bg["T"], results_bg["loss_last"], 'o-', color=COLORS["BG"],label='Loss finale')
     plt.plot(results_bg["T"], results_bg["loss_start"], 's--', color='tab:gray',label='Loss iniziale')
+    # 1/T confronto
+    plt.plot(results_bg["T"], 1/results_bg["T"])
  
     plt.xlabel('Temperature T [K]')
     plt.ylabel('Loss')
@@ -121,7 +123,6 @@ def plot_loss_vs_T(results_bg):
     plt.tight_layout()
     plt.savefig(OUT_DIR / "bg_loss_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
- 
  
 def plot_Ess_normalized_vs_T(results_mcmc,results_bg, results_mcmc_bg):
     """
@@ -253,8 +254,8 @@ def plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T):
     plt.plot(m_bg, R_bg, MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label="MCMC-Boltzmann")
  
     plt.xscale("log", base=2)
-    plt.xlabel("Block size m")
-    plt.ylabel("R(m)")
+    plt.xlabel("Block size")
+    plt.ylabel("R")
     plt.title(f"Blocking analysis at T={T}")
     plt.legend()
     plt.grid(True, which="both")
