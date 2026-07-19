@@ -55,32 +55,31 @@ def make_flow_metropolis_step(V: Callable, kb: float) -> Callable:
     return _step
 
 
-def make_flow_simulation(n_steps: int, V: Callable, kb: float) -> Callable:
-    """
-    Esegue n_steps di Flow-MCMC.
-    Ritorna (trajectory, acceptance_rate, key, x_final) — stessa interfaccia di make_simulation in mcmc.py.
-    """
-    step_fn = make_flow_metropolis_step(V, kb)
-
+def make_flow_simulation_batched(n_steps, V, kb):
     @partial(jax.jit, static_argnames=("static",))
-    def _run(
-        key:       jax.Array,
-        T:         jax.Array,
-        initial_x: jax.Array,        # shape (D,)
-        params:    dict,
-        static:    bg.FlowStatic,
-    ) -> tuple[jax.Array, jax.Array, jax.Array, jax.Array]:
+    def _run(key, T, initial_x, params, static):
+        key, subkey = jax.random.split(key)
+        z_all = jax.random.normal(subkey, (n_steps, static.dim))
+        x_prop_all, log_det_all = bg.forward(params, static, z_all)   # UN SOLO forward batched
+        log_qprop_all = bg.log_pz(z_all) - log_det_all
+        log_pprop_all = -jax.vmap(V)(x_prop_all) / (kb * T)
 
         log_qx_init = bg.flow_ev_probability(params, static, initial_x[None, :])[0]
 
-        def body(carry, _):
+        def body(carry, inp):
             x, log_qx, key, acc = carry
-            x, log_qx, key, accepted = step_fn(x, log_qx, key, T, params, static)
-            return (x, log_qx, key, acc + accepted), x
+            x_prop, log_qprop, log_pprop = inp
+            log_px = -V(x) / (kb * T)
+            log_accept = jnp.minimum(0.0, log_pprop + log_qx - log_px - log_qprop)
+            key, subkey = jax.random.split(key)
+            accept = jnp.log(jax.random.uniform(subkey)) < log_accept
+            x_new = jnp.where(accept, x_prop, x)
+            log_qx_new = jnp.where(accept, log_qprop, log_qx)
+            return (x_new, log_qx_new, key, acc + accept), x_new
 
         (x_final, _, key, total_acc), trajectory = jax.lax.scan(
-            body, (initial_x, log_qx_init, key, jnp.int32(0)), None, length=n_steps
+            body, (initial_x, log_qx_init, key, jnp.int32(0)),
+            (x_prop_all, log_qprop_all, log_pprop_all)
         )
         return trajectory, total_acc / n_steps, key, x_final
-
     return _run

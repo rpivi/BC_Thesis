@@ -9,11 +9,13 @@ def res_N_mcmc(trajectory, V, N_samples, tolerance, window, c, abs_tol):
     results = {"N": [], "E_mean": [], "E_mean_err": [], "mean_sign": []}
     for N in N_samples:
         sub_traj = trajectory[:N]
-        energies = np.array(jax.vmap(V)(sub_traj))
+
+        energies = jax.vmap(V)(sub_traj)    
+        E_mean = float(jnp.mean(energies))
         E_mean_err, _, _ = obs.blocking_analysis(energies, window, tolerance, abs_tol, obs="E_mean")
         mean_sign = float(jnp.mean(jnp.sign(sub_traj[:, 0])))
         results["N"].append(N)
-        results["E_mean"].append(np.mean(energies))
+        results["E_mean"].append(E_mean)
         results["E_mean_err"].append(E_mean_err)
         results["mean_sign"].append(mean_sign)
     return results

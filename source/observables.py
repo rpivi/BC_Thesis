@@ -4,6 +4,7 @@ import numpy as np
 from typing import Callable
 from scipy.integrate import quad
 from scipy.optimize import minimize_scalar
+from scipy.integrate import trapezoid
 
 def make_potential(a: float = 1.0, b: float = 1.0,l: float = 0.0, potential_type: str = "simmetric_double_well") -> Callable[[jax.Array], jax.Array]:
     @jax.jit
@@ -51,8 +52,8 @@ def blocking_analysis(data, window, threshold, abs_tol, obs="_"):
     cur = x.copy()
     m = 1
 
-    # blocling diminuendo di 1 la dimensione ad ogni iterazione, fino a quando non rimangono almeno 2 blocchi
-    while cur.shape[0] >= 2:
+    # blocling diminuendo di 1 la dimensione ad ogni iterazione, fino a quando non rimangono almeno 16 blocchi
+    while len(cur) >= 16:
 
         if cur.shape[0] % 2 == 1:
             cur = cur[:-1]
@@ -74,8 +75,8 @@ def blocking_analysis(data, window, threshold, abs_tol, obs="_"):
 def autocorr_fft(x):
     x = x - np.mean(x)
     N = len(x)
-    f = np.fft.fft(x, n=2*N)
-    acf = np.fft.ifft(f * np.conjugate(f))[:N].real
+    f = jnp.fft.fft(x, n=2*N)
+    acf = jnp.fft.ifft(f * jnp.conjugate(f))[:N].real
     acf /= acf[0]
     return acf
 
@@ -83,23 +84,29 @@ def autocorr_fft(x):
 def tau_int(x, c=5):
     acf = autocorr_fft(x)
     N = len(acf)
-    tau = 0.5
-    for t in range(1, N):
-        tau += acf[t]
-        if t > c * tau:
-            M = t
-            break
-    else:
-        M = N - 1
-    delta_tau = tau * np.sqrt(2 * (2*M + 1) / len(x))
-    return tau, delta_tau
+
+    cum = jnp.cumsum(acf[1:])          # cum[i] = sum(acf[1:i+2])
+    tau_t = 0.5 + cum                  # tau(t) per t = 1..N-1, tau_t[i] <-> t=i+1
+    t_vals = jnp.arange(1, N)
+
+    condition = t_vals > c * tau_t
+    found = jnp.any(condition)
+    idx = jnp.argmax(condition)        # primo True (0 se non trovato mai)
+
+    M = jnp.where(found, t_vals[idx], N - 1)
+    tau = jnp.where(found, tau_t[idx], tau_t[-1])
+
+    if not bool(found):
+        print("\n WARNING: windowing non convergente per tau_int, uso M=N-1.")
+
+    delta_tau = tau * jnp.sqrt(2 * (2*M + 1) / len(x))
+    return float(tau), float(delta_tau)
 
 def append_observables(results, T, trajectory, acceptance_rate, V,
                         tolerance: float = 0.01, window: int = 5, c: int = 5,
                         abs_tol: float = 1e-3, kb: float = 8.617333262145e-5):
-    energies = np.array(jax.vmap(lambda x: V(x))(trajectory))
-
-    E_mean = np.mean(energies)
+    energies = jax.vmap(V)(trajectory)    
+    E_mean = float(jnp.mean(energies))
     E_mean_err, _, R_list = blocking_analysis(energies, window, tolerance, abs_tol, obs="E_mean")
 
     tau_x, delta_tau = tau_int(trajectory[:, 0], c)
@@ -162,3 +169,27 @@ def exact_E_mean(T: float, V: Callable, dim: int,
     harmonic_mean = 0.5 * (dim - 1) * kb * T
 
     return V0_mean + harmonic_mean
+
+def theoretical_density(x_grid, T, V, dim, kb=8.617333262145e-5):
+    """
+    Calcola p(x0) marginale esatta (Boltzmann) su una griglia x_grid,
+    integrando fuori le componenti veloci x[1:] (che contribuiscono
+    solo con una costante di normalizzazione, essendo armoniche e
+    indipendenti da x0 nel potenziale V additivo).
+
+    Ritorna un array della stessa shape di x_grid, normalizzato
+    in modo che integri a 1 su x_grid (quadratura trapezoidale).
+    """
+    beta = 1.0 / (kb * T)
+
+    def V0(x0):
+        x = jnp.zeros(dim).at[0].set(x0)
+        return float(V(x))
+
+    vals = np.array([V0(x0) for x0 in x_grid])
+    Vmin = vals.min()  # per stabilità numerica nell'esponenziale
+
+    unnorm = np.exp(-beta * (vals - Vmin))
+    Z = trapezoid(unnorm, x_grid)  # normalizzazione sull'intervallo mostrato
+
+    return unnorm / Z

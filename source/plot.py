@@ -1,3 +1,4 @@
+import observables as obs
 
 from matplotlib import pyplot as plt
 from pathlib import Path
@@ -20,7 +21,7 @@ MARKERS = {
     "MCMC-BG": "^",
 }
  
- 
+######################## vs T #####################################
 def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     """
     Plotta E_mean vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
@@ -34,7 +35,7 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
                  fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann', capsize=5)
  
     plt.xlabel('Temperature T [K]')
-    plt.ylabel('Mean Energy <E>')
+    plt.ylabel('Mean Energy <E> [eV]')
     plt.title('Mean Energy vs Temperature')
     plt.legend()
     plt.grid(True)
@@ -53,6 +54,7 @@ def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
               color=COLORS["BG"], label='Boltzmann Generator')
     plt.errorbar(results_mcmc_bg["T"], results_mcmc_bg["tau_x"], yerr=results_mcmc_bg["delta_tau"],
                  fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='MCMC-Boltzmann', capsize=5)
+    plt.yscale('symlog', linthresh=10)
     plt.xlabel('Temperature T [K]')
     plt.ylabel(r'Effective Time $\tau$')
     plt.title('Effective Time vs Temperature')
@@ -140,12 +142,14 @@ def plot_Ess_normalized_vs_T(results_mcmc,results_bg, results_mcmc_bg):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(OUT_DIR / "bg_ess_normalized_vs_T_plot.png", dpi=150, bbox_inches="tight")
+    plt.savefig(OUT_DIR / "ess_normalized_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
  
-def plot_x(x_mcmc, x_bg, x_mcmc_bg, T):
+########### Dati per T_analysis ######################
+def plot_x(x_mcmc, x_bg, x_mcmc_bg, T, V, dim, kb=8.617333262145e-5):
     """
     x_mcmc, x_bg, x_mcmc_bg: array (N, D) già selezionati dal chiamante per il T richiesto.
+    V, dim, kb: necessari per calcolare la densità teorica esatta da sovrapporre.
     """
     x_mcmc = x_mcmc[:, 0]
     x_bg = x_bg[:, 0]
@@ -155,6 +159,10 @@ def plot_x(x_mcmc, x_bg, x_mcmc_bg, T):
     x_max = max(x_mcmc.max(), x_bg.max(), x_mcmc_bg.max())
     bins = np.linspace(x_min, x_max, 51)
 
+    # --- densità teorica esatta sulla stessa griglia visualizzata ---
+    x_grid = np.linspace(x_min, x_max, 300)
+    p_theory = obs.theoretical_density(x_grid, T, V, dim, kb)
+
     fig, axes = plt.subplots(3, 1, figsize=(8, 10), sharex=True, sharey=True)
     data = [
         (x_mcmc, "MCMC", COLORS["MCMC"]),
@@ -162,10 +170,12 @@ def plot_x(x_mcmc, x_bg, x_mcmc_bg, T):
         (x_mcmc_bg, "MCMC-Boltzmann", COLORS["MCMC-BG"]),
     ]
     for ax, (x, label, color) in zip(axes, data):
-        ax.hist(x, bins=bins, density=True, color=color, alpha=0.8, label=label)
+        ax.hist(x, bins=bins, density=True, color=color, alpha=0.6, label=label)
+        ax.plot(x_grid, p_theory, 'k--', linewidth=1.8, label='Teorica (Boltzmann)')
         ax.set_ylabel('Density')
         ax.set_title(label)
         ax.grid(True)
+        ax.legend(loc='upper right', fontsize=9)
 
     axes[-1].set_xlabel('Position x[0]')
     fig.suptitle(f'Position Distribution at T={T}')
@@ -174,24 +184,52 @@ def plot_x(x_mcmc, x_bg, x_mcmc_bg, T):
     plt.close()
 
 
-def plot_x_traj(x_mcmc, x_bg, x_mcmc_bg, T):
+def plot_x_traj(x_mcmc, x_bg, x_mcmc_bg, T, n_zoom=3000):
+    """
+    Colonna sinistra: zoom sui primi n_zoom step (mostra la dinamica reale,
+    utile per individuare mode-trapping).
+    Colonna destra: mappa di densità (hexbin) sull'intera traiettoria,
+    sostituisce lo scatter illeggibile su N grandi.
+    """
     x_mcmc = x_mcmc[:, 0]
     x_bg = x_bg[:, 0]
     x_mcmc_bg = x_mcmc_bg[:, 0]
 
-    fig, axes = plt.subplots(3, 1, figsize=(18, 12), sharex=True, sharey=True)
     data = [
         (x_mcmc, "MCMC", COLORS["MCMC"]),
         (x_bg, "Boltzmann Generator", COLORS["BG"]),
         (x_mcmc_bg, "MCMC-Boltzmann", COLORS["MCMC-BG"]),
     ]
-    for ax, (x, label, color) in zip(axes, data):
-        ax.scatter(range(len(x)), x, color=color, alpha=0.8, label=label)
-        ax.set_ylabel('Position x[0]')
-        ax.set_title(label)
-        ax.grid(True)
 
-    axes[-1].set_xlabel('Sample Index')
+    y_min = min(x_mcmc.min(), x_bg.min(), x_mcmc_bg.min())
+    y_max = max(x_mcmc.max(), x_bg.max(), x_mcmc_bg.max())
+
+    fig, axes = plt.subplots(3, 2, figsize=(18, 12), sharey=True)
+
+    for i, (x, label, color) in enumerate(data):
+        ax_zoom, ax_full = axes[i, 0], axes[i, 1]
+
+        # --- colonna sinistra: zoom primi n_zoom step ---
+        n_z = min(n_zoom, len(x))
+        ax_zoom.plot(np.arange(n_z), x[:n_z], color=color, lw=0.7)
+        ax_zoom.set_ylabel('Position x[0]')
+        ax_zoom.set_title(f'{label} — primi {n_z} step')
+        ax_zoom.grid(True)
+
+        # --- colonna destra: densità sull'intera traiettoria ---
+        hb = ax_full.hexbin(
+            np.arange(len(x)), x, gridsize=100, cmap='viridis',
+            mincnt=1, bins='log'
+        )
+        ax_full.set_title(f'{label} — traiettoria completa (densità)')
+        ax_full.grid(True, alpha=0.3)
+        fig.colorbar(hb, ax=ax_full, label='log(conteggio)')
+
+    for ax in axes[-1, :]:
+        ax.set_xlabel('Sample Index')
+
+    axes[0, 0].set_ylim(y_min, y_max)
+
     fig.suptitle(f'Position Trajectory at T={T}')
     plt.tight_layout()
     plt.savefig(OUT_DIR / f"x_trajectory_T_{T}.png", dpi=150, bbox_inches="tight")
@@ -223,8 +261,29 @@ def plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T):
     plt.tight_layout()
     plt.savefig(OUT_DIR / f"blocking_analysis_R_vs_m_T_{T}.png", dpi=150, bbox_inches="tight")
     plt.close()
- 
- 
+
+def plot_loss_curves(losses_bg_full, T_analysis):
+    """
+    Plotta l'andamento della loss durante il training per ciascuna T in T_analysis.
+    """
+    plt.figure(figsize=(8, 6))
+    for T in T_analysis:
+        Tf = float(T)
+        losses = np.asarray(losses_bg_full[Tf])
+        steps = np.arange(len(losses))
+        plt.plot(steps, losses, label=f'T={Tf:.0f} K')
+
+    plt.xlabel('Training step')
+    plt.ylabel('Loss')
+    plt.title('Boltzmann Generator: andamento della loss durante il training')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(OUT_DIR / "bg_loss_curves_vs_step.png", dpi=150, bbox_inches="tight")
+    plt.close()
+
+################### vs N #############################################################
+
 def plot_E_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T, true_E):
     """
     Plotta E_mean ± errore come banda colorata.
@@ -251,7 +310,7 @@ def plot_E_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T, true_E)
 
     plt.xscale("log")
     plt.xlabel("Number of Samples (N)")
-    plt.ylabel(r"Mean Energy $\langle E\rangle$")
+    plt.ylabel(r"Mean Energy $\langle E\rangle$  [eV]")
     plt.title(f"Mean Energy vs Number of Samples at T={T}")
 
     plt.grid(True, which="both", alpha=0.3)

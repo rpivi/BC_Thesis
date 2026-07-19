@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 def main():
     # Simulation parameters
-    T_max = 2000.0   # highest temperature
+    T_max = 1100.0   # highest temperature
     T_min = 100.0    # lowest temperature
     T_step = 10.0     # temperature step
     Ts = jnp.arange(T_max, T_min-T_step, -T_step)  # from hot to cold
@@ -46,11 +46,12 @@ def main():
         "ESS_normalized": []
     }
 
-    # full-dataset (traiettorie/campioni interi), tenuti SOLO per T_analysis
+    # full-dataset for T in T_analysis
     traj_mcmc_full = {}
     pos_bg_full = {}
     logqx_bg_full = {}
     traj_mcmc_bg_full = {}
+    losses_bg_full = {}
 
     ####### 0. INITIALIZATION #######
     tollerance = 0.1
@@ -62,15 +63,18 @@ def main():
 
     gen_config = metro.make_config_generator(D, "normal")
     run_first_therm = metro.make_simulation(D, n_thermalization*10, V, kb)
+    run_low_therm = metro.make_simulation(D,n_thermalization*100, V, kb)
     run_therm  = metro.make_simulation(D, n_thermalization, V, kb)
     run_prod   = metro.make_simulation(D, n_samples, V, kb)
-    run_flow_prod = fmcmc.make_flow_simulation(n_samples, V, kb)
+    run_flow_prod = fmcmc.make_flow_simulation_batched(n_samples, V, kb)
 
     ###### 1. MCMC SIMULATION ######
     x, key = gen_config(key)
     for T in tqdm(Ts, desc="MCMC", unit="T"):
         if T == Ts[0]:
             _, _, key, x = run_first_therm(key, T, step_size, x)
+        if T <= 200:
+            _, _, key, x = run_low_therm(key, T, step_size, x)
         _, _, key, x = run_therm(key, T, step_size, x)
         trajectory, acceptance_rate, key, x = run_prod(key, T, step_size, x)
 
@@ -78,7 +82,7 @@ def main():
                                 tollerance, window, c, abs_tol, kb)
 
         if float(T) in T_analysis:
-            traj_mcmc_full[float(T)] = trajectory   # tenuta solo qui
+            traj_mcmc_full[float(T)] = trajectory  
 
     print("MCMC simulation completed.")
 
@@ -119,6 +123,7 @@ def main():
         if float(T) in T_analysis:
             pos_bg_full[float(T)] = x_bg
             logqx_bg_full[float(T)] = log_qx
+            losses_bg_full[float(T)] = losses
 
         ##### 3. MCMC-BOLTZMANN GENERATOR ######
         x_start, key = bg.sample(bg_params, bg_static, key, n_samples=1)
@@ -140,11 +145,12 @@ def main():
     plot.mean_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg)
     plot.plot_loss_vs_T(results_bg)
     plot.plot_Ess_normalized_vs_T(results_mcmc, results_bg, results_mcmc_bg)
+    plot.plot_loss_curves(losses_bg_full, T_analysis)
 
     for T in T_analysis:
         Tf = float(T)
         plot.plot_R_list_vs_m(results_mcmc, results_mcmc_bg, T)
-        plot.plot_x(traj_mcmc_full[Tf], pos_bg_full[Tf], traj_mcmc_bg_full[Tf], T)
+        plot.plot_x(traj_mcmc_full[Tf], pos_bg_full[Tf], traj_mcmc_bg_full[Tf], T, V, D, kb)
         plot.plot_x_traj(traj_mcmc_full[Tf], pos_bg_full[Tf], traj_mcmc_bg_full[Tf], T)
     print("Plots for T study completed.")
 
