@@ -58,7 +58,7 @@ def main():
     window = 3
     c = 5
     abs_tol = 0.01
-    n_thermalization = 2000
+    n_thermalization = 5000
     step_size = 0.1
 
     gen_config = metro.make_config_generator(D, "normal")

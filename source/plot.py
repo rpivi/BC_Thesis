@@ -44,7 +44,7 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.savefig(OUT_DIR / "E_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
  
-def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg, n_exclude_cold=4):
+def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg, n_exclude_cold=5):
     """
     Plotta τ + error vs T per MCMC, Boltzmann Generator e MCMC-Boltzmann.
 
@@ -128,9 +128,7 @@ def plot_loss_vs_T(results_bg):
     T_arr = np.asarray(results_bg["T"], dtype=float)
     plt.plot(T_arr, results_bg["loss_last"], 'o-', color=COLORS["BG"],label='Loss finale')
     plt.plot(T_arr, results_bg["loss_start"], 's--', color='tab:gray',label='Loss iniziale')
-    # 1/T confronto
-    plt.plot(T_arr, 1 / T_arr, ':', color='tab:red', label='1/T (rif.)')
-    
+
     plt.xlabel('Temperature T [K]')
     plt.ylabel('Loss')
     plt.title('Boltzmann Generator Loss vs Temperature')
