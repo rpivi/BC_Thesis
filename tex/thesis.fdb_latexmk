@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1784395925.54033 "thesis.aux" "thesis.bbl" "thesis" 1784395928.15135 0
+["bibtex thesis"] 1784799842.07445 "thesis.aux" "thesis.bbl" "thesis" 1784799844.38738 0
   "./Bibliografia.bib" 1783368152.66991 165 f3017c022259bc3834b930d3ab704c91 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1784395926.93994 4630 ae99532977668157cfea0263e993a40e "pdflatex"
+  "thesis.aux" 1784799843.42977 4514 2f45c0e5aab4adc6483d786cdb179a5e "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1784395926.16561 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1784395928.15293 0
+["pdflatex"] 1784799842.74787 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1784799844.38858 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1784274972.77429 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
@@ -56,13 +56,13 @@
   "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1784395922.76158 1970 11d08b1abb7a98a4bd1929752a638d15 ""
   "cap1.tex" 1784395881.18202 265 f625d3e2d9cc7b7babf14efd3a604592 ""
   "cap2.tex" 1784388748.78944 320 140ebcd8cb70c3da7256247f5faf638a ""
-  "cap3.tex" 1784390517.50814 437 d6c9f7de4faeae4648a0757ae8dff3c9 ""
+  "cap3.tex" 1784799836.19842 400 3f716a11648d1cf58c5925d6c8adf6b3 ""
   "cap4.tex" 1784390307.55616 331 d934c48e8c782280de23bf7b490ea318 ""
   "conclusion.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
   "ringraziamenti.tex" 1784274049.87161 25 1f9fcc0281a00fc7ebffb4784ab7c8e9 ""
-  "thesis.aux" 1784395926.93994 4630 ae99532977668157cfea0263e993a40e "pdflatex"
-  "thesis.bbl" 1784395925.96526 52 a8d58af1cdd914e1e9801ae0ec600f83 "bibtex thesis"
-  "thesis.toc" 1784395926.94437 2697 a04cacc8286ab93fcfd9f5e3f6046780 "pdflatex"
+  "thesis.aux" 1784799843.42977 4514 2f45c0e5aab4adc6483d786cdb179a5e "pdflatex"
+  "thesis.bbl" 1784799842.61339 52 a8d58af1cdd914e1e9801ae0ec600f83 "bibtex thesis"
+  "thesis.toc" 1784799843.43801 2622 a86648f5e31871460f46907c3699fa7e "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"

@@ -24,8 +24,7 @@
 \contentsline {subsection}{\numberline {3.3.2}Real NVP}{11}{}%
 \contentsline {subsection}{\numberline {3.3.3}Coupling Layers}{11}{}%
 \contentsline {subsection}{\numberline {3.3.4}Esempi}{11}{}%
-\contentsline {section}{\numberline {3.4}Boltzmann generators}{11}{}%
-\contentsline {subsection}{\numberline {3.4.1}Flow Markov Chain Monte Carlo}{11}{}%
+\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{11}{}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{12}{}%
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{12}{}%
 \contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo per distribuzioni multimodali}{12}{}%
