@@ -4,7 +4,7 @@
 \chapter{Concetti di probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità,si discuterà l'importanza del campionamento di una distribuzione. Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann, che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
+Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione. Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann, che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
 
 \section{Variabili aleatorie e distribuzioni di probabilità}
 
@@ -73,7 +73,7 @@ Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspetta
 \int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x})d\mathbf{x}.
 \end{equation}
 
-La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemnte risolvibile analiticamente o numericamente.
+La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemente risolvibile analiticamente o numericamente.
 Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia. Se lo spazio delle configurazioni ha dimensione $D$ e si utilizzano $n$ punti per ciascuna direzione, il numero totale di valutazioni della funzione integranda cresce come $n^D$. Per sistemi con un numero elevato di gradi di libertà, come tipicamente accade in meccanica statistica, questa crescita esponenziale rende i metodi di quadratura del tutto inapplicabili: questo fenomeno è noto come \textit{maledizione della dimensionalità}.
 
 È in questo contesto che il campionamento assume un ruolo centrale. Anziché valutare la funzione integranda su una griglia deterministica, l'idea alla base dei metodi di campionamento consiste nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare il valore di aspettazione mediante la media aritmetica
@@ -93,4 +93,54 @@ Per la legge dei grandi numeri, lo stimatore $\overline{O}_N$ converge, per $N\r
 dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema del campionamento, in questo senso, precede logicamente quello della stima delle osservabili, e sarà l'oggetto centrale dei metodi discussi nei capitoli successivi.
 
 \section{L'ensemble canonico e la distribuzione di Boltzmann}
+Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$
+rappresenta collettivamente i gradi di libertà del sistema: posizioni, impulsi, o in generale le variabili che definiscono uno stato microscopico. L'ensemble canonico permette di descrivere il comportamento termodinamico di un sistema posto a contatto termico con un \textit{reservoir}  a temperatura $T$ fissata, con cui può scambiare energia ma non particelle. L'energia del sistema fluttua attorno a un valore medio $\langle E \rangle$ determinato dall'equilibrio termico con il serbatoio.
 
+Il comportamento del sistema a fissata $T$ è descritto da una distribuzione di probabilità $\rho (\mathbf{x}, T)$ ottenibile attraverso il principio di massima entropia.
+\begin{equation}
+    \mathcal{S} = - \int_{\mathbb{R}^D} \rho (\mathbf{x}, T) \ln(\rho(\mathbf{x}, T)) d\mathbf{x}
+\end{equation}
+
+Per massimizzare l'entropia si utilizza il teorema dei moltiplicatori di Lagrange:
+
+\begin{equation}
+    \mathcal{L}[\rho] = -\int_{\mathbb{R}^D} \rho \ln \rho \, d\mathbf{x} - \alpha \left( \int_{\mathbb{R}^D} \rho \, d\mathbf{x} - 1 \right) - \beta \left( \int_{\mathbb{R}^D} \rho \, \mathcal{H} \, d\mathbf{x} - \langle E \rangle \right),
+\end{equation}
+
+dove $\alpha$ e $\beta$ sono i moltiplicatori di Lagrange associati rispettivamente al vincolo di normalizzazione
+
+\begin{equation}
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \, d\mathbf{x} = 1
+\end{equation}
+
+e al vincolo sul valore medio dell'energia
+
+\begin{equation}
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \, \mathcal{H}(\mathbf{x}) \, d\mathbf{x} = \langle E \rangle .
+\end{equation}
+
+La massimizzazione impone $\delta \mathcal{L}/\delta \rho = 0$ restituendo:
+
+\begin{equation}
+    -\ln\rho(\mathbf{x}, T) - 1 - \alpha - \beta \mathcal{H}(\mathbf{x}) = 0
+\end{equation}
+
+che permette di determinare $\rho (\mathbf{x}, T)$:
+
+\begin{equation}
+    \rho(\mathbf{x}, T) = e^{-1-\alpha} \, e^{-\beta \mathcal{H}(\mathbf{x})}.
+\end{equation}
+
+Il moltiplicatore $\alpha$ è fissato dalla condizione di normalizzazione: definendo la \textit{funzione di partizione}
+
+\begin{equation}
+    Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x},
+\end{equation}
+
+si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textit{la distribuzione di Boltzmann}:
+
+\begin{equation}
+    \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}.
+\end{equation}
+
+Dove è $\beta = 1/(k_B T)$.

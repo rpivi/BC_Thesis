@@ -5,14 +5,23 @@
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \textwidth=450pt\oddsidemargin=0pt
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+\definecolor{accento}{RGB}{20,70,45} % verde scuro
+
+\titleformat{\chapter}[display]
+{\normalfont\Large\filcenter}
+{\titlerule[0.8pt]\vspace{1pt}\titlerule
+ \vspace{1ex}
+ \textcolor{accento}{\Large\textsc{\chaptertitlename\ \thechapter}}}
+{1ex}
+{\centering\Huge\bfseries}
+
+\titlespacing*{\chapter}{0pt}{40pt}{30pt}
 
 \begin{document}
 \begin{titlepage}
-%
-%
-% UNA VOLTA FATTE LE DOVUTE MODIFICHE SOSTITUIRE "RED" CON "BLACK" NEI COMANDI \textcolor
-%
-%
 \begin{center}
 {{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di Bologna}}}} 
 \rule[0.1cm]{15.8cm}{0.1mm}
