@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  29 JUL 2026 13:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  29 JUL 2026 13:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -127,28 +127,51 @@ Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \titlewidth=\dimen154
 \titlewidthlast=\dimen155
 \titlewidthfirst=\dimen156
+) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+ (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen157
+\captionmargin=\dimen158
+\caption@leftmargin=\dimen159
+\caption@rightmargin=\dimen160
+\caption@width=\dimen161
+\caption@indent=\dimen162
+\caption@parindent=\dimen163
+\caption@hangindent=\dimen164
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count290
+\c@continuedfloat=\count291
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count292
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count293
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count290
+\l__color_backend_stack_int=\count294
 ) (thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Info: Redefining \it@ocap on input line 23.
-LaTeX Info: Redefining \it@ccap on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Info: Redefining \it@ocap on input line 25.
+LaTeX Info: Redefining \it@ccap on input line 25.
 
 
 File italian.ldf warning: 
@@ -156,20 +179,20 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting
-italian.ldf    on input line 23.
+italian.ldf    on input line 25.
 
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count291
-\scratchdimen=\dimen157
+\scratchcounter=\count295
+\scratchdimen=\dimen165
 \scratchbox=\box54
-\nofMPsegments=\count292
-\nofMParguments=\count293
+\nofMPsegments=\count296
+\nofMParguments=\count297
 \everyMPshowfont=\toks20
-\MPscratchCnt=\count294
-\MPscratchDim=\dimen158
-\MPnumerator=\count295
-\makeMPintoPDFobject=\count296
+\MPscratchCnt=\count298
+\MPscratchDim=\dimen166
+\MPnumerator=\count299
+\makeMPintoPDFobject=\count300
 \everyMPtoPDFconversion=\toks21
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -177,24 +200,26 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 26.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 28.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 46--52
+Underfull \hbox (badness 10000) in paragraph at lines 48--54
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--52
+Underfull \hbox (badness 10000) in paragraph at lines 48--54
 
  []
 
@@ -230,17 +255,112 @@ Capitolo 3.
 
 ]
 Capitolo 4.
+<images/MCMC/thermalization_energies_D4_T150.00.png, id=72, 489.5088pt x 393.6306pt>
+File: images/MCMC/thermalization_energies_D4_T150.00.png Graphic file (type png)
+<use images/MCMC/thermalization_energies_D4_T150.00.png>
+Package pdftex.def Info: images/MCMC/thermalization_energies_D4_T150.00.png  used on input line 10.
+(pdftex.def)             Requested size: 404.99725pt x 325.67422pt.
+<images/MCMC/acceptance_vs_T.png, id=73, 499.1448pt x 393.6306pt>
+File: images/MCMC/acceptance_vs_T.png Graphic file (type png)
+<use images/MCMC/acceptance_vs_T.png>
+Package pdftex.def Info: images/MCMC/acceptance_vs_T.png  used on input line 19.
+(pdftex.def)             Requested size: 404.99725pt x 319.39162pt.
+<images/MCMC/E_mean_vs_T.png, id=74, 511.6716pt x 393.6306pt>
+File: images/MCMC/E_mean_vs_T.png Graphic file (type png)
+<use images/MCMC/E_mean_vs_T.png>
+Package pdftex.def Info: images/MCMC/E_mean_vs_T.png  used on input line 26.
+(pdftex.def)             Requested size: 404.99725pt x 311.5714pt.
+<images/MCMC/Cv_vs_T.png, id=75, 530.9436pt x 393.6306pt>
+File: images/MCMC/Cv_vs_T.png Graphic file (type png)
+<use images/MCMC/Cv_vs_T.png>
+Package pdftex.def Info: images/MCMC/Cv_vs_T.png  used on input line 33.
+(pdftex.def)             Requested size: 404.99725pt x 300.25551pt.
+<images/MCMC/Tau_vs_T.png, id=76, 501.072pt x 393.6306pt>
+File: images/MCMC/Tau_vs_T.png Graphic file (type png)
+<use images/MCMC/Tau_vs_T.png>
+Package pdftex.def Info: images/MCMC/Tau_vs_T.png  used on input line 40.
+(pdftex.def)             Requested size: 404.99725pt x 318.16032pt.
+<images/acceptance_vs_T_plot.png, id=77, 570.4512pt x 424.4658pt>
+File: images/acceptance_vs_T_plot.png Graphic file (type png)
+<use images/acceptance_vs_T_plot.png>
+Package pdftex.def Info: images/acceptance_vs_T_plot.png  used on input line 53.
+(pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
+<images/E_vs_T_plot.png, id=78, 570.4512pt x 424.4658pt>
+File: images/E_vs_T_plot.png Graphic file (type png)
+<use images/E_vs_T_plot.png>
+Package pdftex.def Info: images/E_vs_T_plot.png  used on input line 60.
+(pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
+<images/tau_vs_T_plot.png, id=79, 569.0058pt x 424.4658pt>
+File: images/tau_vs_T_plot.png Graphic file (type png)
+<use images/tau_vs_T_plot.png>
+Package pdftex.def Info: images/tau_vs_T_plot.png  used on input line 67.
+(pdftex.def)             Requested size: 404.99725pt x 302.11765pt.
+<images/mean_sign_vs_T_plot.png, id=80, 570.4512pt x 424.4658pt>
+File: images/mean_sign_vs_T_plot.png Graphic file (type png)
+<use images/mean_sign_vs_T_plot.png>
+Package pdftex.def Info: images/mean_sign_vs_T_plot.png  used on input line 74.
+(pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
+<images/ess_normalized_vs_T_plot.png, id=81, 570.4512pt x 424.4658pt>
+File: images/ess_normalized_vs_T_plot.png Graphic file (type png)
+<use images/ess_normalized_vs_T_plot.png>
+Package pdftex.def Info: images/ess_normalized_vs_T_plot.png  used on input line 81.
+(pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
+<images/E_vs_N_plot_T_100.0.png, id=82, 569.4876pt x 423.5022pt>
+File: images/E_vs_N_plot_T_100.0.png Graphic file (type png)
+<use images/E_vs_N_plot_T_100.0.png>
+Package pdftex.def Info: images/E_vs_N_plot_T_100.0.png  used on input line 91.
+(pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
+<images/E_vs_N_plot_T_600.0.png, id=83, 569.4876pt x 423.5022pt>
+File: images/E_vs_N_plot_T_600.0.png Graphic file (type png)
+<use images/E_vs_N_plot_T_600.0.png>
+Package pdftex.def Info: images/E_vs_N_plot_T_600.0.png  used on input line 96.
+(pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
+<images/E_vs_N_plot_T_1100.0.png, id=84, 569.4876pt x 423.5022pt>
+File: images/E_vs_N_plot_T_1100.0.png Graphic file (type png)
+<use images/E_vs_N_plot_T_1100.0.png>
+Package pdftex.def Info: images/E_vs_N_plot_T_1100.0.png  used on input line 104.
+(pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
+<images/x_distribution_T_100.0.png, id=85, 570.4512pt x 710.655pt>
+File: images/x_distribution_T_100.0.png Graphic file (type png)
+<use images/x_distribution_T_100.0.png>
+Package pdftex.def Info: images/x_distribution_T_100.0.png  used on input line 115.
+(pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
+<images/x_distribution_T_600.0.png, id=86, 570.4512pt x 710.655pt>
+File: images/x_distribution_T_600.0.png Graphic file (type png)
+<use images/x_distribution_T_600.0.png>
+Package pdftex.def Info: images/x_distribution_T_600.0.png  used on input line 120.
+(pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
+<images/x_distribution_T_1100.0.png, id=87, 570.4512pt x 710.655pt>
+File: images/x_distribution_T_1100.0.png Graphic file (type png)
+<use images/x_distribution_T_1100.0.png>
+Package pdftex.def Info: images/x_distribution_T_1100.0.png  used on input line 128.
+(pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
+<images/x_trajectory_T_100.0.png, id=88, 1251.2346pt x 852.3042pt>
+File: images/x_trajectory_T_100.0.png Graphic file (type png)
+<use images/x_trajectory_T_100.0.png>
+Package pdftex.def Info: images/x_trajectory_T_100.0.png  used on input line 137.
+(pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
+<images/x_trajectory_T_600.0.png, id=89, 1251.2346pt x 852.3042pt>
+File: images/x_trajectory_T_600.0.png Graphic file (type png)
+<use images/x_trajectory_T_600.0.png>
+Package pdftex.def Info: images/x_trajectory_T_600.0.png  used on input line 142.
+(pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
+<images/x_trajectory_T_1100.0.png, id=90, 1250.271pt x 852.3042pt>
+File: images/x_trajectory_T_1100.0.png Graphic file (type png)
+<use images/x_trajectory_T_1100.0.png>
+Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 150.
+(pdftex.def)             Requested size: 202.49863pt x 138.0361pt.
 ) (conclusion.tex [17
 
-]) (thesis.bbl [18
+] [18 <./images/MCMC/thermalization_energies_D4_T150.00.png>] [19 <./images/MCMC/acceptance_vs_T.png>] [20 <./images/MCMC/E_mean_vs_T.png>] [21 <./images/MCMC/Cv_vs_T.png>] [22 <./images/MCMC/Tau_vs_T.png>] [23 <./images/acceptance_vs_T_plot.png>] [24 <./images/E_vs_T_plot.png>] [25 <./images/tau_vs_T_plot.png>] [26 <./images/mean_sign_vs_T_plot.png>] [27 <./images/ess_normalized_vs_T_plot.png>] [28 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>] [29 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>] [30 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (thesis.bbl [31
 
 ]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) (ringraziamenti.tex [19
+) (ringraziamenti.tex [32
 
-]) [20
+]) [33
 
 ] (thesis.aux)
  ***********
@@ -249,17 +369,17 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3903 strings out of 467871
- 64222 string characters out of 5418376
- 494623 words of memory out of 5000000
- 32715 multiletter control sequences out of 15000+600000
+ 5512 strings out of 467871
+ 97636 string characters out of 5418376
+ 519852 words of memory out of 5000000
+ 34315 multiletter control sequences out of 15000+600000
  639158 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,6n,65p,782b,258s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (21 pages, 252655 bytes).
+ 67i,8n,77p,782b,502s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (34 pages, 5389387 bytes).
 PDF statistics:
- 143 PDF objects out of 1000 (max. 8388607)
+ 227 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 
