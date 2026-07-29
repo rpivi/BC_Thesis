@@ -7,7 +7,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 
 # plot.py è in BC_Thesis/source/, quindi .parent.parent = BC_Thesis/
 HERE = Path(__file__).resolve().parent
-OUT_DIR = HERE.parent / "tex" / "immages"
+OUT_DIR = HERE.parent / "tex" / "images"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
  
 # Colori coerenti per metodo in TUTTI i plot della tesi.

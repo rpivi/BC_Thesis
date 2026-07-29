@@ -1,11 +1,96 @@
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
 
-\chapter{Concetti di probabilità e statistica}
+\chapter{Concetti di probabilità e meccanica statistica}
+In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-\section{Distribuzioni di probabilità e campioni}
+Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità,si discuterà l'importanza del campionamento di una distribuzione. Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann, che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
 
-\section{Introduzione alla meccanica statistica}
+\section{Variabili aleatorie e distribuzioni di probabilità}
 
-\section{Obbiettivo della tesi}
+Una variabile aleatoria è una quantità il cui valore non è determinato a priori, ma è associato all'esito di un esperimento o, più in generale, a un fenomeno caratterizzato da un certo grado di incertezza. Formalmente, una variabile aleatoria può essere definita come una funzione che associa agli elementi di uno spazio degli eventi $\Omega$ valori appartenenti a uno spazio misurabile.
+
+Indichiamo con $\chi_i$ un possibile esito e con $\Omega$ lo spazio degli esiti possibili. Una variabile aleatoria $X$ associa a ciascun esito $\chi_i$ un valore $x_i$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi
+\begin{equation}
+X:\Omega \rightarrow \mathbb{R}.
+\end{equation}
+
+Nel seguito si considereranno esclusivamente variabili aleatorie continue. 
+La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$, che determina come la probabilità è distribuita nello spazio dei possibili valori di $X$. La densità di probabilità deve soddisfare la condizione di normalizzazione
+\begin{equation}
+\int_{-\infty}^{+\infty}p_X(x) dx=1.
+\end{equation}
+
+È importante sottolineare che, nel caso continuo, la densità di probabilità non rappresenta direttamente la probabilità che la variabile assuma un determinato valore. Infatti, la probabilità di ottenere esattamente un particolare valore $x_0$ è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
+\begin{equation}
+P(a\leq X\leq b)
+=
+\int_a^b p_X(x) dx.
+\end{equation}
+
+La distribuzione di probabilità può quindi essere interpretata geometricamente: la probabilità associata a un intervallo corrisponde all'area sottesa dalla densità di probabilità nell'intervallo considerato. Una maggiore densità di probabilità in una determinata regione indica quindi una maggiore probabilità di osservare valori della variabile in quella regione.
+
+Nel seguito sarà particolarmente utile considerare variabili aleatorie multidimensionali. Una configurazione microscopica di un sistema fisico può infatti essere rappresentata mediante un vettore
+\begin{equation}
+\mathbf{x}=(x_1,x_2,\ldots,x_D)\in\mathbb{R}^D,
+\end{equation}
+dove $D$ rappresenta il numero di gradi di libertà del sistema. In questo caso la distribuzione di probabilità è descritta da una densità $p(\mathbf{x})$, normalizzata secondo
+\begin{equation}
+\int_{\mathbb{R}^D}p(\mathbf{x})d\mathbf{x}=1.
+\end{equation}
+
+La densità $p(\mathbf{x})$ permette di determinare la probabilità che una configurazione appartenga a una determinata regione $\mathcal{A}$ dello spazio delle configurazioni:
+\begin{equation}
+P(\mathbf{x}\in\mathcal{A})
+=
+\int_{\mathcal{A}}p(\mathbf{x})d\mathbf{x}.
+\end{equation}
+
+Nel caso multidimensionale la probabilità è l'integrale della densità di probabilità su una regione dello spazio delle configurazioni. Analogamente al caso unidimensionale, non è la probabilità associata a una singola configurazione a essere rilevante, ma la probabilità complessiva associata a una regione dello spazio.
+
+Una distribuzione di probabilità può inoltre presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \textit{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \textit{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
+
+Una distribuzione \textit{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/uni_multi.png}
+    \caption{Confronto tra una distribuzione unimodale (gaussiana) e una distribuzione multimodale (bimodale).}
+    \label{fig:uni_multi}
+\end{figure}
+
+La distinzione tra distribuzioni unimodali e multimodali è particolarmente importante nel problema del campionamento. Nel caso di una distribuzione unimodale, un metodo di campionamento che esplori efficacemente la regione attorno al massimo della distribuzione può ottenere un campione rappresentativo dell'intera distribuzione. Nel caso multimodale, invece, il campionamento può risultare più complesso, poiché è necessario esplorare tutte le regioni rilevanti dello spazio delle configurazioni e riprodurre correttamente la probabilità associata a ciascun modo e non esclusivamente a quello di maggiore densità.
+
+Se le diverse regioni ad alta probabilità sono separate da barriere caratterizzate da una probabilità molto bassa, un metodo di campionamento locale può infatti rimanere confinato per lungo tempo all'interno di uno dei modi, esplorando con difficoltà gli altri. Questo fenomeno rappresenta una delle principali difficoltà associate al campionamento di distribuzioni multimodali e costituisce uno degli aspetti centrali affrontati nel seguito della tesi.
+
+\section{Valori di aspettazione e campionamento}
+
+Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione è calcolabile tramite il seguente integrale:
+
+\begin{equation}
+\langle O(\mathbf{x})\rangle
+=
+\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x})d\mathbf{x}.
+\end{equation}
+
+La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemnte risolvibile analiticamente o numericamente.
+Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia. Se lo spazio delle configurazioni ha dimensione $D$ e si utilizzano $n$ punti per ciascuna direzione, il numero totale di valutazioni della funzione integranda cresce come $n^D$. Per sistemi con un numero elevato di gradi di libertà, come tipicamente accade in meccanica statistica, questa crescita esponenziale rende i metodi di quadratura del tutto inapplicabili: questo fenomeno è noto come \textit{maledizione della dimensionalità}.
+
+È in questo contesto che il campionamento assume un ruolo centrale. Anziché valutare la funzione integranda su una griglia deterministica, l'idea alla base dei metodi di campionamento consiste nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare il valore di aspettazione mediante la media aritmetica
+\begin{equation}
+\langle O(\mathbf{x})\rangle
+\approx
+\overline{O}_N
+=
+\frac{1}{N}\sum_{i=1}^{N}O(\mathbf{x}_i).
+\label{eq:mc_estimator}
+\end{equation}
+
+Per la legge dei grandi numeri, lo stimatore $\overline{O}_N$ converge, per $N\rightarrow\infty$, al valore di aspettazione esatto $\langle O(\mathbf{x})\rangle$, a patto che le configurazioni $\mathbf{x}_i$ siano effettivamente distribuite secondo $p(\mathbf{x})$. Un aspetto cruciale di questo approccio è che, se le configurazioni sono indipendenti e identicamente distribuite, l'errore statistico associato allo stimatore decresce come
+\begin{equation}
+\sigma_{\overline{O}_N} \sim \frac{\sigma_O}{\sqrt{N}},
+\end{equation}
+dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema del campionamento, in questo senso, precede logicamente quello della stima delle osservabili, e sarà l'oggetto centrale dei metodi discussi nei capitoli successivi.
+
+\section{L'ensemble canonico e la distribuzione di Boltzmann}
 
