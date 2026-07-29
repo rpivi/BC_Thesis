@@ -8,7 +8,7 @@ Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle
 
 \section{Variabili aleatorie e distribuzioni di probabilità}
 
-Una variabile aleatoria è una quantità il cui valore non è determinato a priori, ma è associato all'esito di un esperimento o, più in generale, a un fenomeno caratterizzato da un certo grado di incertezza. Formalmente, una variabile aleatoria può essere definita come una funzione che associa agli elementi di uno spazio degli eventi $\Omega$ valori appartenenti a uno spazio misurabile.
+Una variabile aleatoria è una quantità il cui valore non è determinato a priori, ma è associato all'esito di un esperimento o, più in generale, a un fenomeno caratterizzato da un certo grado di incertezza. Formalmente, una variabile aleatoria può essere definita come una funzione che associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile.
 
 Indichiamo con $\chi_i$ un possibile esito e con $\Omega$ lo spazio degli esiti possibili. Una variabile aleatoria $X$ associa a ciascun esito $\chi_i$ un valore $x_i$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi
 \begin{equation}
@@ -18,7 +18,7 @@ X:\Omega \rightarrow \mathbb{R}.
 Nel seguito si considereranno esclusivamente variabili aleatorie continue. 
 La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$, che determina come la probabilità è distribuita nello spazio dei possibili valori di $X$. La densità di probabilità deve soddisfare la condizione di normalizzazione
 \begin{equation}
-\int_{-\infty}^{+\infty}p_X(x) dx=1.
+\int_{-\infty}^{+\infty}p_X(x) \ dx=1.
 \end{equation}
 
 È importante sottolineare che, nel caso continuo, la densità di probabilità non rappresenta direttamente la probabilità che la variabile assuma un determinato valore. Infatti, la probabilità di ottenere esattamente un particolare valore $x_0$ è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
@@ -43,7 +43,7 @@ La densità $p(\mathbf{x})$ permette di determinare la probabilità che una conf
 \begin{equation}
 P(\mathbf{x}\in\mathcal{A})
 =
-\int_{\mathcal{A}}p(\mathbf{x})d\mathbf{x}.
+\int_{\mathcal{A}}p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
 Nel caso multidimensionale la probabilità è l'integrale della densità di probabilità su una regione dello spazio delle configurazioni. Analogamente al caso unidimensionale, non è la probabilità associata a una singola configurazione a essere rilevante, ma la probabilità complessiva associata a una regione dello spazio.
@@ -52,7 +52,7 @@ Una distribuzione di probabilità può inoltre presentare una struttura caratter
 
 Una distribuzione \textit{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/uni_multi.png}
     \caption{Confronto tra una distribuzione unimodale (gaussiana) e una distribuzione multimodale (bimodale).}
@@ -70,7 +70,7 @@ Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspetta
 \begin{equation}
 \langle O(\mathbf{x})\rangle
 =
-\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x})d\mathbf{x}.
+\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
 La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemente risolvibile analiticamente o numericamente.
@@ -92,10 +92,15 @@ Per la legge dei grandi numeri, lo stimatore $\overline{O}_N$ converge, per $N\r
 \end{equation}
 dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema del campionamento, in questo senso, precede logicamente quello della stima delle osservabili, e sarà l'oggetto centrale dei metodi discussi nei capitoli successivi.
 
-\section{L'ensemble canonico e la distribuzione di Boltzmann}
+\section{Enseble statistici}
+
+\subsection{L'ensemble canonico}
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$
 rappresenta collettivamente i gradi di libertà del sistema: posizioni, impulsi, o in generale le variabili che definiscono uno stato microscopico. L'ensemble canonico permette di descrivere il comportamento termodinamico di un sistema posto a contatto termico con un \textit{reservoir}  a temperatura $T$ fissata, con cui può scambiare energia ma non particelle. L'energia del sistema fluttua attorno a un valore medio $\langle E \rangle$ determinato dall'equilibrio termico con il serbatoio.
 
+\subsection{La distribuzione di Boltzmann}
+
+\subsection{Principio di massima entropia}
 Il comportamento del sistema a fissata $T$ è descritto da una distribuzione di probabilità $\rho (\mathbf{x}, T)$ ottenibile attraverso il principio di massima entropia.
 \begin{equation}
     \mathcal{S} = - \int_{\mathbb{R}^D} \rho (\mathbf{x}, T) \ln(\rho(\mathbf{x}, T)) d\mathbf{x}
@@ -110,7 +115,7 @@ Per massimizzare l'entropia si utilizza il teorema dei moltiplicatori di Lagrang
 dove $\alpha$ e $\beta$ sono i moltiplicatori di Lagrange associati rispettivamente al vincolo di normalizzazione
 
 \begin{equation}
-    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \, d\mathbf{x} = 1
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \ d\mathbf{x} = 1
 \end{equation}
 
 e al vincolo sul valore medio dell'energia
@@ -145,4 +150,4 @@ si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textit{la distribuzione di Boltzmann
 
 Dove è $\beta = 1/(k_B T)$.
 
-\subsection{Osservabili termodinamiche}
+Nota sul fatto che Z è un integrale multidimensionale e quindi non è sempre calcolabile e di conseguenza non è possibile calcolare il valore della distribuzione, dunque si utilizza il metodo del campionamento.....
