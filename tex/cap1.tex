@@ -1,21 +1,33 @@
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
 
-\chapter{Concetti di probabilità e meccanica statistica}
+\chapter{Probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
 Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione. Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann, che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
 
-\section{Variabili aleatorie e distribuzioni di probabilità}
+\section{Teoria della probabilità}
+\subsection{Spazi di probabilità e variabili aleatorie}
+In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili eventi $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. In particolare è necessario che sia soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi disgiunti $A_1, A_2,  ...$ vale:
 
-Una variabile aleatoria è una quantità il cui valore non è determinato a priori, ma è associato all'esito di un esperimento o, più in generale, a un fenomeno caratterizzato da un certo grado di incertezza. Formalmente, una variabile aleatoria può essere definita come una funzione che associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile.
+\begin{equation}
+    P(A_1 \cup A_2 \ ...) = P(A_1) + P(A_2) + ...
+\end{equation}
 
-Indichiamo con $\chi_i$ un possibile esito e con $\Omega$ lo spazio degli esiti possibili. Una variabile aleatoria $X$ associa a ciascun esito $\chi_i$ un valore $x_i$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi
+\begin{example}{Tiri di un dado}{dice}
+Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P({\chi_i}) = 1/6$ per ogni $\chi_i \in \Omega$ .
+Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilià calcolabile nel seguente modo: $P(A) = P({1}) + P({2}) + P({3}) = 1/2$.
+\end{example}
+
+
+Una \textbf{variabile aleatoria} (reale) $X$ che associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
+Una variabile aleatoria $X$ associa a ciascun esito $\chi$ un valore $x$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi:
 \begin{equation}
 X:\Omega \rightarrow \mathbb{R}.
 \end{equation}
 
-Nel seguito si considereranno esclusivamente variabili aleatorie continue. 
+\subsection{Distribuzioni di probabilità continue}
+
 La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$, che determina come la probabilità è distribuita nello spazio dei possibili valori di $X$. La densità di probabilità deve soddisfare la condizione di normalizzazione
 \begin{equation}
 \int_{-\infty}^{+\infty}p_X(x) \ dx=1.
@@ -63,7 +75,7 @@ La distinzione tra distribuzioni unimodali e multimodali è particolarmente impo
 
 Se le diverse regioni ad alta probabilità sono separate da barriere caratterizzate da una probabilità molto bassa, un metodo di campionamento locale può infatti rimanere confinato per lungo tempo all'interno di uno dei modi, esplorando con difficoltà gli altri. Questo fenomeno rappresenta una delle principali difficoltà associate al campionamento di distribuzioni multimodali e costituisce uno degli aspetti centrali affrontati nel seguito della tesi.
 
-\section{Valori di aspettazione e campionamento}
+\subsection{Valori di aspettazione e campionamento}
 
 Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione è calcolabile tramite il seguente integrale:
 
@@ -92,7 +104,9 @@ Per la legge dei grandi numeri, lo stimatore $\overline{O}_N$ converge, per $N\r
 \end{equation}
 dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema del campionamento, in questo senso, precede logicamente quello della stima delle osservabili, e sarà l'oggetto centrale dei metodi discussi nei capitoli successivi.
 
-\section{Enseble statistici}
+\section{Ensemble statistici}
+
+
 
 \subsection{L'ensemble canonico}
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$
@@ -100,7 +114,7 @@ rappresenta collettivamente i gradi di libertà del sistema: posizioni, impulsi,
 
 \subsection{La distribuzione di Boltzmann}
 
-\subsection{Principio di massima entropia}
+
 Il comportamento del sistema a fissata $T$ è descritto da una distribuzione di probabilità $\rho (\mathbf{x}, T)$ ottenibile attraverso il principio di massima entropia.
 \begin{equation}
     \mathcal{S} = - \int_{\mathbb{R}^D} \rho (\mathbf{x}, T) \ln(\rho(\mathbf{x}, T)) d\mathbf{x}

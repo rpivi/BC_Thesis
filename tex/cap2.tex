@@ -6,7 +6,11 @@ In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte C
 
 \section{Accenni storici}
 
-Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare ottenere campioni virtuali di uno stesso sistema così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono a ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. Il nome "Monte Carlo" è stato scelto, invece, da un altro scienziato Nicholas Constantine Metropolis, la scelta del nome ricadde sulla famosa area della città di Monaco per canzonare Ulam, il quale aveva uno zio col vizio del gioco. 
+Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare ottenere campioni virtuali di uno stesso sistema così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono a ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+Il nome "Monte Carlo" è stato scelto, invece, da un altro scienziato Nicholas Constantine Metropolis, la scelta del nome ricadde sulla famosa area della città di Monaco per canzonare Ulam, il quale aveva uno zio col vizio del gioco. 
+
 Vi è inoltre un precursore del metodo: Enrico Fermi. Metropolis parlando con Emilio Segrè scopre che Fermi aveva già ideato in modo indipendente un metodo basato sul campionameto statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (dei laboratori di Los Alamos) aiutò lo studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC anche denominato il \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
@@ -18,7 +22,7 @@ Vi è inoltre un precursore del metodo: Enrico Fermi. Metropolis parlando con Em
     \hfill
     \begin{subfigure}[b]{0.46\textwidth}
         \includegraphics[width=\textwidth]{images/people/ulam.jpg}
-        \caption{Stanisław Ulam con il FERMIAC.}
+        \caption{Stanisław Ulam e il FERMIAC.}
     \end{subfigure}
     
     \vspace{1em}
@@ -30,7 +34,8 @@ Vi è inoltre un precursore del metodo: Enrico Fermi. Metropolis parlando con Em
     \end{subfigure}
 \end{figure}
 
-\section{Metodi Monte Carlo classici}
+\section{Monte Carlo campionamento diretto}
+
 
 \section{Markov Chain Monte Carlo}
 

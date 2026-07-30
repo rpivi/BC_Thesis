@@ -11,6 +11,14 @@
 \usepackage{subcaption}
 \usepackage{float}
 
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem[number within=section]{theorem}{Teorema}%
+  {colback=blue!5, colframe=blue!40!black, fonttitle=\bfseries}{def}
+
+\newtcbtheorem[number within=section]{example}{Esempio}%
+  {colback=green!5, colframe=green!40!black, fonttitle=\bfseries}{thm}
 
 \definecolor{accento}{RGB}{20,70,45} % verde scuro
 
