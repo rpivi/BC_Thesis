@@ -14,17 +14,24 @@
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{theorems}
 
-\newtcbtheorem[number within=section]{theorem}{Teorema}%
-  {colback=blue!5, colframe=blue!40!black, fonttitle=\bfseries}{def}
+\definecolor{accento}{RGB}{30,75,40} % verde scuro
 
+% Esempio: tono più chiaro, per non pesare troppo sul testo
 \newtcbtheorem[number within=section]{example}{Esempio}%
-  {colback=green!5, colframe=green!40!black, fonttitle=\bfseries}{thm}
+  {colback=accento!5, colframe=accento, fonttitle=\bfseries}{ex}
 
-\definecolor{accento}{RGB}{20,70,45} % verde scuro
+% Definizione: fondo leggermente più marcato, cornice piena
+\newtcbtheorem[number within=section]{definition}{Definizione}%
+  {colback=accento!8, colframe=accento, fonttitle=\bfseries, coltitle=white}{def}
+
+% Teorema: massimo contrasto, per farlo risaltare come i risultati chiave
+\newtcbtheorem[number within=section]{theorem}{Teorema}%
+  {colback=accento!10, colframe=accento, fonttitle=\bfseries, coltitle=white,
+   colbacktitle=accento}{thm}
 
 \titleformat{\chapter}[display]
 {\normalfont\Large\filcenter}
-{\titlerule[0.8pt]\vspace{1pt}\titlerule
+{\titlerule[1 pt]\vspace{1pt}\titlerule
  \vspace{1ex}
  \textcolor{accento}{\Large\textsc{\chaptertitlename\ \thechapter}}}
 {1ex}

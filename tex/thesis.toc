@@ -5,41 +5,44 @@
 \contentsline {section}{\numberline {1.1}Teoria della probabilità}{9}{}%
 \contentsline {subsection}{\numberline {1.1.1}Spazi di probabilità e variabili aleatorie}{9}{}%
 \contentsline {subsection}{\numberline {1.1.2}Distribuzioni di probabilità continue}{10}{}%
-\contentsline {subsection}{\numberline {1.1.3}Valori di aspettazione e campionamento}{12}{}%
-\contentsline {section}{\numberline {1.2}Ensemble statistici}{13}{}%
-\contentsline {subsection}{\numberline {1.2.1}L'ensemble canonico}{13}{}%
-\contentsline {subsection}{\numberline {1.2.2}La distribuzione di Boltzmann}{13}{}%
-\contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{15}{}%
-\contentsline {section}{\numberline {2.1}Accenni storici}{15}{}%
-\contentsline {section}{\numberline {2.2}Monte Carlo campionamento diretto}{18}{}%
-\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{18}{}%
-\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{18}{}%
-\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis-Hastings}{18}{}%
-\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{18}{}%
-\contentsline {subsection}{\numberline {2.4.1}Blocking Analysis}{18}{}%
-\contentsline {subsection}{\numberline {2.4.2}Metodo di Sokal}{18}{}%
-\contentsline {chapter}{\numberline {3}Normalizing Flows}{19}{}%
-\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{19}{}%
-\contentsline {section}{\numberline {3.2}Normalizing Flows}{19}{}%
-\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{19}{}%
-\contentsline {subsection}{\numberline {3.2.2}Campionamento, inferenza ed addestramento}{19}{}%
-\contentsline {subsection}{\numberline {3.2.3}Costruire un Flow tramite composizione finita}{19}{}%
-\contentsline {subsection}{\numberline {3.2.4}Coupling Flow}{19}{}%
-\contentsline {subsection}{\numberline {3.2.5}Trasformazione affine}{19}{}%
-\contentsline {subsection}{\numberline {3.2.6}Coupling layers}{19}{}%
-\contentsline {subsection}{\numberline {3.2.7}Real NVP}{19}{}%
-\contentsline {subsection}{\numberline {3.2.8}Esempi}{19}{}%
-\contentsline {section}{\numberline {3.3}Flow Markov Chain Monte Carlo}{19}{}%
-\contentsline {chapter}{\numberline {4}Studio del campionamento}{20}{}%
-\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{21}{}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{21}{}%
-\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{21}{}%
-\contentsline {subsection}{\numberline {4.2.2}Risultati}{22}{}%
-\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{26}{}%
-\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{26}{}%
-\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{26}{}%
-\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{31}{}%
-\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{33}{}%
-\contentsline {chapter}{Conclusione}{35}{}%
-\contentsline {chapter}{Bibliografia}{36}{}%
-\contentsline {chapter}{Ringraziamenti}{37}{}%
+\contentsline {subsection}{\numberline {1.1.3}Distribuzioni unimodali e multimodali}{11}{}%
+\contentsline {subsection}{\numberline {1.1.4}Valori di aspettazione e campionamento}{12}{}%
+\contentsline {section}{\numberline {1.2}Meccanica statistica}{14}{}%
+\contentsline {subsection}{\numberline {1.2.1}Il concetto di ensemble}{14}{}%
+\contentsline {subsection}{\numberline {1.2.2}L'ensemble canonico}{14}{}%
+\contentsline {subsection}{\numberline {1.2.3}Derivazione della distribuzione di Boltzmann}{14}{}%
+\contentsline {subsection}{\numberline {1.2.4}La distribuzione di Boltzmann}{15}{}%
+\contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{17}{}%
+\contentsline {section}{\numberline {2.1}Accenni storici}{17}{}%
+\contentsline {section}{\numberline {2.2}Monte Carlo campionamento diretto}{20}{}%
+\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{20}{}%
+\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{20}{}%
+\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis-Hastings}{20}{}%
+\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{20}{}%
+\contentsline {subsection}{\numberline {2.4.1}Blocking Analysis}{20}{}%
+\contentsline {subsection}{\numberline {2.4.2}Metodo di Sokal}{20}{}%
+\contentsline {chapter}{\numberline {3}Normalizing Flows}{21}{}%
+\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{21}{}%
+\contentsline {section}{\numberline {3.2}Normalizing Flows}{21}{}%
+\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{21}{}%
+\contentsline {subsection}{\numberline {3.2.2}Campionamento, inferenza ed addestramento}{21}{}%
+\contentsline {subsection}{\numberline {3.2.3}Costruire un Flow tramite composizione finita}{21}{}%
+\contentsline {subsection}{\numberline {3.2.4}Coupling Flow}{21}{}%
+\contentsline {subsection}{\numberline {3.2.5}Trasformazione affine}{21}{}%
+\contentsline {subsection}{\numberline {3.2.6}Coupling layers}{21}{}%
+\contentsline {subsection}{\numberline {3.2.7}Real NVP}{21}{}%
+\contentsline {subsection}{\numberline {3.2.8}Esempi}{21}{}%
+\contentsline {section}{\numberline {3.3}Flow Markov Chain Monte Carlo}{21}{}%
+\contentsline {chapter}{\numberline {4}Studio del campionamento}{22}{}%
+\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{23}{}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{23}{}%
+\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{23}{}%
+\contentsline {subsection}{\numberline {4.2.2}Risultati}{24}{}%
+\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{28}{}%
+\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{28}{}%
+\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{28}{}%
+\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{33}{}%
+\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{35}{}%
+\contentsline {chapter}{Conclusione}{37}{}%
+\contentsline {chapter}{Bibliografia}{38}{}%
+\contentsline {chapter}{Ringraziamenti}{39}{}%

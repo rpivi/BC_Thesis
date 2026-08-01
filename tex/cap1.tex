@@ -8,7 +8,9 @@ Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle
 
 \section{Teoria della probabilità}
 \subsection{Spazi di probabilità e variabili aleatorie}
-In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili eventi $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. In particolare è necessario che sia soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi disgiunti $A_1, A_2,  ...$ vale:
+In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili eventi $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
+
+In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi disgiunti $A_1, A_2,  ...$ valga:
 
 \begin{equation}
     P(A_1 \cup A_2 \ ...) = P(A_1) + P(A_2) + ...
@@ -28,9 +30,13 @@ X:\Omega \rightarrow \mathbb{R}.
 
 \subsection{Distribuzioni di probabilità continue}
 
-La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$, che determina come la probabilità è distribuita nello spazio dei possibili valori di $X$. La densità di probabilità deve soddisfare la condizione di normalizzazione
+La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$ La densità di probabilità deve soddisfare la condizione di normalizzazione ed essere non negativa per ogni valore della variabile aleatoria:
 \begin{equation}
-\int_{-\infty}^{+\infty}p_X(x) \ dx=1.
+\int_{-\infty}^{+\infty}p_X(x) \ dx=1
+\end{equation}
+
+\begin{equation}
+p_X(x) \geq 0 \quad \forall x \in \mathbb{R}.
 \end{equation}
 
 È importante sottolineare che, nel caso continuo, la densità di probabilità non rappresenta direttamente la probabilità che la variabile assuma un determinato valore. Infatti, la probabilità di ottenere esattamente un particolare valore $x_0$ è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
@@ -42,11 +48,19 @@ P(a\leq X\leq b)
 
 La distribuzione di probabilità può quindi essere interpretata geometricamente: la probabilità associata a un intervallo corrisponde all'area sottesa dalla densità di probabilità nell'intervallo considerato. Una maggiore densità di probabilità in una determinata regione indica quindi una maggiore probabilità di osservare valori della variabile in quella regione.
 
-Nel seguito sarà particolarmente utile considerare variabili aleatorie multidimensionali. Una configurazione microscopica di un sistema fisico può infatti essere rappresentata mediante un vettore
+\begin{example}{Variabile aleatoria uniforme}{uniform}
+La variabile aleatoria uniforme $U$ su $(a, b)$, con $a < b$, ha funzione di densità di probabilità
+$f_U(x) = \begin{cases}
+\frac{1}{b-a} & \text{se } a \leq x \leq b \\
+0 & \text{altrimenti}
+\end{cases}$
+\end{example}
+
+Nel seguito sarà particolarmente utile considerare variabili aleatorie multidimensionali. Una configurazione microscopica di un sistema fisico può infatti essere rappresentata mediante un vettore:
 \begin{equation}
 \mathbf{x}=(x_1,x_2,\ldots,x_D)\in\mathbb{R}^D,
 \end{equation}
-dove $D$ rappresenta il numero di gradi di libertà del sistema. In questo caso la distribuzione di probabilità è descritta da una densità $p(\mathbf{x})$, normalizzata secondo
+dove $D$ rappresenta il numero di gradi di libertà del sistema. In questo caso la distribuzione di probabilità è descritta da una densità $p(\mathbf{x})$, normalizzata sulla totalità dello spazio delle configurazioni $\mathbb{R}^D$:
 \begin{equation}
 \int_{\mathbb{R}^D}p(\mathbf{x})d\mathbf{x}=1.
 \end{equation}
@@ -58,11 +72,11 @@ P(\mathbf{x}\in\mathcal{A})
 \int_{\mathcal{A}}p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
-Nel caso multidimensionale la probabilità è l'integrale della densità di probabilità su una regione dello spazio delle configurazioni. Analogamente al caso unidimensionale, non è la probabilità associata a una singola configurazione a essere rilevante, ma la probabilità complessiva associata a una regione dello spazio.
+\subsection{Distribuzioni unimodali e multimodali}
 
-Una distribuzione di probabilità può inoltre presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \textit{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \textit{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
+Una distribuzione di probabilità può presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \textbf{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \textbf{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
 
-Una distribuzione \textit{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa.
+Una distribuzione \textbf{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa. Il caso particolare in cui vi siano due massimi locali è detto distribuzione \textbf{bimodale}. La differenza qualitativa tra le due tipologie di distribuzioni è illustrata in Figura \ref{fig:uni_multi}.
 
 \begin{figure}[H]
     \centering
@@ -73,11 +87,11 @@ Una distribuzione \textit{multimodale}, invece, presenta più regioni distinte d
 
 La distinzione tra distribuzioni unimodali e multimodali è particolarmente importante nel problema del campionamento. Nel caso di una distribuzione unimodale, un metodo di campionamento che esplori efficacemente la regione attorno al massimo della distribuzione può ottenere un campione rappresentativo dell'intera distribuzione. Nel caso multimodale, invece, il campionamento può risultare più complesso, poiché è necessario esplorare tutte le regioni rilevanti dello spazio delle configurazioni e riprodurre correttamente la probabilità associata a ciascun modo e non esclusivamente a quello di maggiore densità.
 
-Se le diverse regioni ad alta probabilità sono separate da barriere caratterizzate da una probabilità molto bassa, un metodo di campionamento locale può infatti rimanere confinato per lungo tempo all'interno di uno dei modi, esplorando con difficoltà gli altri. Questo fenomeno rappresenta una delle principali difficoltà associate al campionamento di distribuzioni multimodali e costituisce uno degli aspetti centrali affrontati nel seguito della tesi.
+Se le diverse regioni ad alta probabilità sono separate da zone di bassa probabilità, un metodo di campionamento locale può infatti rimanere confinato per lungo tempo all'interno di uno dei modi, esplorando con difficoltà gli altri. Il fenomeno è chiamato \textit{intrappolamento in un modo} ed è una delle principali difficoltà associate al campionamento di distribuzioni multimodali ed è il motivo dell'inefficienza dei metodi di campionamento locali. In questi casi, è necessario adottare strategie più sofisticate per garantire un campionamento efficace e rappresentativo dell'intera distribuzione.
 
 \subsection{Valori di aspettazione e campionamento}
 
-Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione è calcolabile tramite il seguente integrale:
+Sia $p(\mathbf{x})$ la densità di probabilità della variabile aleatoria e $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione di $O(\mathbf{x})$ è calcolabile tramite il seguente integrale:
 
 \begin{equation}
 \langle O(\mathbf{x})\rangle
@@ -86,35 +100,53 @@ Sia $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspetta
 \end{equation}
 
 La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemente risolvibile analiticamente o numericamente.
-Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia. Se lo spazio delle configurazioni ha dimensione $D$ e si utilizzano $n$ punti per ciascuna direzione, il numero totale di valutazioni della funzione integranda cresce come $n^D$. Per sistemi con un numero elevato di gradi di libertà, come tipicamente accade in meccanica statistica, questa crescita esponenziale rende i metodi di quadratura del tutto inapplicabili: questo fenomeno è noto come \textit{maledizione della dimensionalità}.
+Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia.
 
-È in questo contesto che il campionamento assume un ruolo centrale. Anziché valutare la funzione integranda su una griglia deterministica, l'idea alla base dei metodi di campionamento consiste nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare il valore di aspettazione mediante la media aritmetica
+\begin{example}{Metodo del trapezio}{trapezoid}
+Nel caso unidimensionale il metodo di quadratura approssima l'integrale di una funzione $f(x)$ su un intervallo $[a,b]$ mediante la formula:
+\begin{equation}
+\int_a^b f(x) \ dx \approx  \sum_{i}^{N} \int_{x_{i}-\epsilon}^{x_{i}+\epsilon} f(x) \ dx
+\end{equation}
+dove $x_i$ sono i punti della griglia e $\epsilon$ è la metà della distanza tra due punti consecutivi.
+Il metodo del trapezio approssima ciascun integrale locale con l'area di un trapezio, sostituendo l'integrale con:
+\begin{equation}
+\int_{x_{i}-\epsilon}^{x_{i}+\epsilon} f(x) \ dx \approx \frac{f(x_{i}-\epsilon) + f(x_{i}+\epsilon)}{2} \cdot 2\epsilon
+\end{equation}
+\end{example}
+
+Se lo spazio delle configurazioni ha dimensione $D$ e si utilizzano $N$ punti per ciascuna direzione, il numero totale di valutazioni della funzione integranda cresce come $N^D$. Per sistemi con un numero elevato di gradi di libertà, come tipicamente accade in meccanica statistica, questa crescita esponenziale rende i metodi di quadratura del tutto inapplicabili. In questi casi, il problema del calcolo di valori di aspettazione può essere affrontato in maniera più efficiente mediante metodi di campionamento, che permettono di stimare l'integrale senza la necessità di discretizzare lo spazio delle configurazioni.
+
+L'idea alla base dei metodi di campionamento consiste - anziché valutare la funzione integranda su una griglia deterministica - nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare i valori di aspettazione mediante la media aritmetica:
+
 \begin{equation}
 \langle O(\mathbf{x})\rangle
 \approx
-\overline{O}_N
-=
 \frac{1}{N}\sum_{i=1}^{N}O(\mathbf{x}_i).
 \label{eq:mc_estimator}
 \end{equation}
 
-Per la legge dei grandi numeri, lo stimatore $\overline{O}_N$ converge, per $N\rightarrow\infty$, al valore di aspettazione esatto $\langle O(\mathbf{x})\rangle$, a patto che le configurazioni $\mathbf{x}_i$ siano effettivamente distribuite secondo $p(\mathbf{x})$. Un aspetto cruciale di questo approccio è che, se le configurazioni sono indipendenti e identicamente distribuite, l'errore statistico associato allo stimatore decresce come
+Per la legge dei grandi numeri la stima converge, per $N\rightarrow\infty$, al valore di aspettazione esatto $\langle O(\mathbf{x})\rangle$, a patto che le configurazioni campionate $\mathbf{x}_i$ siano effettivamente distribuite secondo $p(\mathbf{x})$. Un aspetto cruciale di questo approccio è che, se le configurazioni sono indipendenti, l'errore statistico associato allo stimatore decresce col numero di campioni $N$ come:
+
 \begin{equation}
-\sigma_{\overline{O}_N} \sim \frac{\sigma_O}{\sqrt{N}},
+\sigma_{\langle O \rangle} \sim \frac{\sigma_O}{\sqrt{N}},
 \end{equation}
-dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema del campionamento, in questo senso, precede logicamente quello della stima delle osservabili, e sarà l'oggetto centrale dei metodi discussi nei capitoli successivi.
 
-\section{Ensemble statistici}
+dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. 
 
+Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ di modo da poter stimare i valori di aspettazione. I metodi, per cui sarà possibile creare questi campioni, saranno oggetto dei capitoli successivi.
+
+\section{Meccanica statistica}
+
+\subsection{Il concetto di ensemble}
 
 
 \subsection{L'ensemble canonico}
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$
 rappresenta collettivamente i gradi di libertà del sistema: posizioni, impulsi, o in generale le variabili che definiscono uno stato microscopico. L'ensemble canonico permette di descrivere il comportamento termodinamico di un sistema posto a contatto termico con un \textit{reservoir}  a temperatura $T$ fissata, con cui può scambiare energia ma non particelle. L'energia del sistema fluttua attorno a un valore medio $\langle E \rangle$ determinato dall'equilibrio termico con il serbatoio.
 
-\subsection{La distribuzione di Boltzmann}
+...
 
-
+\subsection{Derivazione della distribuzione di Boltzmann}
 Il comportamento del sistema a fissata $T$ è descritto da una distribuzione di probabilità $\rho (\mathbf{x}, T)$ ottenibile attraverso il principio di massima entropia.
 \begin{equation}
     \mathcal{S} = - \int_{\mathbb{R}^D} \rho (\mathbf{x}, T) \ln(\rho(\mathbf{x}, T)) d\mathbf{x}
@@ -129,7 +161,7 @@ Per massimizzare l'entropia si utilizza il teorema dei moltiplicatori di Lagrang
 dove $\alpha$ e $\beta$ sono i moltiplicatori di Lagrange associati rispettivamente al vincolo di normalizzazione
 
 \begin{equation}
-    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \ d\mathbf{x} = 1
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \ d\mathbf{x} = 1 \ ,
 \end{equation}
 
 e al vincolo sul valore medio dell'energia
@@ -150,13 +182,13 @@ che permette di determinare $\rho (\mathbf{x}, T)$:
     \rho(\mathbf{x}, T) = e^{-1-\alpha} \, e^{-\beta \mathcal{H}(\mathbf{x})}.
 \end{equation}
 
-Il moltiplicatore $\alpha$ è fissato dalla condizione di normalizzazione: definendo la \textit{funzione di partizione}
+Il moltiplicatore $\alpha$ è fissato dalla condizione di normalizzazione: definendo la \textbf{funzione di partizione}
 
 \begin{equation}
     Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x},
 \end{equation}
 
-si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textit{la distribuzione di Boltzmann}:
+si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textbf{la distribuzione di Boltzmann}:
 
 \begin{equation}
     \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}.
@@ -164,4 +196,33 @@ si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textit{la distribuzione di Boltzmann
 
 Dove è $\beta = 1/(k_B T)$.
 
-Nota sul fatto che Z è un integrale multidimensionale e quindi non è sempre calcolabile e di conseguenza non è possibile calcolare il valore della distribuzione, dunque si utilizza il metodo del campionamento.....
+\subsection{La distribuzione di Boltzmann}
+
+La distribuzione di Boltzmann descrive la probabilità di osservare il sistema in una configurazione microscopica quando esso si trova all'equilibrio termico con un serbatoio a temperatura $T$ fissata.
+
+Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione della distribuzione e di valore medio dell'energia costante, si ottiene
+\begin{equation}
+    \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}
+\end{equation}
+,
+
+dove $\beta = \frac{1}{k_B T}$ e $Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x}$ è la funzione di partizione.
+
+Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina la probabilità di ciascuna configurazione e si può facilemente comprendere come all'aumentare della temperatura la probabilità permette probabilisticamente una gamma più ampia di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e contiene tutta l'informazione termodinamica del sistema. Infatti, una volta nota $Z(\beta)$, è possibile ricavare grandezze quali energia libera, energia media, entropia e capacità termica.
+
+Formule delle osservabili termodinamiche in funzione della funzione di partizione ....
+
+Nella maggior parte dei sistemi di interesse fisico la funzione di partizione non può essere calcolata in forma chiusa. Essa richiede infatti l'integrazione della quantità:
+\begin{equation}
+    e^{-\beta \mathcal{H}(\mathbf{x})}
+\end{equation}
+su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle.
+Di conseguenza, anche il valore assoluto della distribuzione di Boltzmann non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le probabilità di due configurazioni,
+
+\begin{equation}
+    \frac{\rho(\mathbf{x}_2, T)}{\rho(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
+\end{equation}
+
+nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica, oppure è possibile valutare solo il fattore di Boltzmann $e^{-\beta \mathcal{H}(\mathbf{x})}$.
+
+Questa osservazione è importante poichè per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione conoscendola a meno della costante di normalizzazione.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  30 JUL 2026 10:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  1 AUG 2026 17:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -532,30 +532,31 @@ File: pgflibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ))) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbposter.code.tex
 Library (tcolorbox): 'tcbposter.code.tex' version '6.9.0'
 ))
-\c@tcb@cnt@theorem=\count345
-\c@tcb@cnt@example=\count346
+\c@tcb@cnt@example=\count345
+\c@tcb@cnt@definition=\count346
+\c@tcb@cnt@theorem=\count347
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count347
+\l__color_backend_stack_int=\count348
 ) (thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Info: Redefining \it@ocap on input line 35.
-LaTeX Info: Redefining \it@ccap on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Info: Redefining \it@ocap on input line 42.
+LaTeX Info: Redefining \it@ccap on input line 42.
 
 
 File italian.ldf warning: 
@@ -563,20 +564,20 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting
-italian.ldf    on input line 35.
+italian.ldf    on input line 42.
 
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count348
+\scratchcounter=\count349
 \scratchdimen=\dimen290
 \scratchbox=\box84
-\nofMPsegments=\count349
-\nofMParguments=\count350
+\nofMPsegments=\count350
+\nofMParguments=\count351
 \everyMPshowfont=\toks43
-\MPscratchCnt=\count351
+\MPscratchCnt=\count352
 \MPscratchDim=\dimen291
-\MPnumerator=\count352
-\makeMPintoPDFobject=\count353
+\MPnumerator=\count353
+\makeMPintoPDFobject=\count354
 \everyMPtoPDFconversion=\toks44
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -588,30 +589,30 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count354
+\c@lstlisting=\count355
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks45
 \inpenc@posthook=\toks46
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 38.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 45.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 45.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 45.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 58--64
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--64
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
 
  []
 
@@ -635,173 +636,173 @@ Capitolo 1.
 <images/uni_multi.png, id=87, 638.8668pt x 277.5168pt>
 File: images/uni_multi.png Graphic file (type png)
 <use images/uni_multi.png>
-Package pdftex.def Info: images/uni_multi.png  used on input line 69.
+Package pdftex.def Info: images/uni_multi.png  used on input line 83.
 (pdftex.def)             Requested size: 404.99725pt x 175.92902pt.
- [11 <./images/uni_multi.png>] [12] [13]) (cap2.tex [14]
+ [11] [12 <./images/uni_multi.png>] [13] [14] [15]) (cap2.tex [16]
 Capitolo 2.
-[15
+[17
 
 ]
-<images/people/fermi.jpg, id=108, 403.5075pt x 498.86375pt>
+<images/people/fermi.jpg, id=115, 403.5075pt x 498.86375pt>
 File: images/people/fermi.jpg Graphic file (type jpg)
 <use images/people/fermi.jpg>
 Package pdftex.def Info: images/people/fermi.jpg  used on input line 19.
 (pdftex.def)             Requested size: 193.4967pt x 239.22351pt.
-<images/people/ulam.jpg, id=109, 501.875pt x 573.14125pt>
+<images/people/ulam.jpg, id=116, 501.875pt x 573.14125pt>
 File: images/people/ulam.jpg Graphic file (type jpg)
 <use images/people/ulam.jpg>
 Package pdftex.def Info: images/people/ulam.jpg  used on input line 24.
 (pdftex.def)             Requested size: 207.00302pt x 236.39745pt.
-<images/people/Von-Neumann-1000.jpg, id=110, 1003.75pt x 1003.75pt>
+<images/people/Von-Neumann-1000.jpg, id=117, 1003.75pt x 1003.75pt>
 File: images/people/Von-Neumann-1000.jpg Graphic file (type jpg)
 <use images/people/Von-Neumann-1000.jpg>
 Package pdftex.def Info: images/people/Von-Neumann-1000.jpg  used on input line 32.
 (pdftex.def)             Requested size: 193.4967pt x 193.48666pt.
- [16]) (cap3.tex [17 <./images/people/fermi.jpg> <./images/people/ulam.jpg> <./images/people/Von-Neumann-1000.jpg>] [18]
+ [18]) (cap3.tex [19 <./images/people/fermi.jpg> <./images/people/ulam.jpg> <./images/people/Von-Neumann-1000.jpg>] [20]
 Capitolo 3.
-) (cap4.tex [19
+) (cap4.tex [21
 
 ]
 Capitolo 4.
-<images/MCMC/thermalization_energies_D4_T150.00.png, id=125, 489.5088pt x 393.6306pt>
+<images/MCMC/thermalization_energies_D4_T150.00.png, id=132, 489.5088pt x 393.6306pt>
 File: images/MCMC/thermalization_energies_D4_T150.00.png Graphic file (type png)
 <use images/MCMC/thermalization_energies_D4_T150.00.png>
 Package pdftex.def Info: images/MCMC/thermalization_energies_D4_T150.00.png  used on input line 10.
 (pdftex.def)             Requested size: 404.99725pt x 325.67422pt.
-[20
+[22
 
 ]
-Overfull \vbox (18.1687pt too high) has occurred while \output is active []
+Overfull \vbox (18.3687pt too high) has occurred while \output is active []
 
- [21 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
-<images/MCMC/acceptance_vs_T.png, id=133, 499.1448pt x 393.6306pt>
+ [23 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
+<images/MCMC/acceptance_vs_T.png, id=140, 499.1448pt x 393.6306pt>
 File: images/MCMC/acceptance_vs_T.png Graphic file (type png)
 <use images/MCMC/acceptance_vs_T.png>
 Package pdftex.def Info: images/MCMC/acceptance_vs_T.png  used on input line 19.
 (pdftex.def)             Requested size: 404.99725pt x 319.39162pt.
-<images/MCMC/E_mean_vs_T.png, id=134, 511.6716pt x 393.6306pt>
+<images/MCMC/E_mean_vs_T.png, id=141, 511.6716pt x 393.6306pt>
 File: images/MCMC/E_mean_vs_T.png Graphic file (type png)
 <use images/MCMC/E_mean_vs_T.png>
 Package pdftex.def Info: images/MCMC/E_mean_vs_T.png  used on input line 26.
 (pdftex.def)             Requested size: 404.99725pt x 311.5714pt.
- [22 <./images/MCMC/acceptance_vs_T.png>]
-<images/MCMC/Cv_vs_T.png, id=139, 530.9436pt x 393.6306pt>
+ [24 <./images/MCMC/acceptance_vs_T.png>]
+<images/MCMC/Cv_vs_T.png, id=147, 530.9436pt x 393.6306pt>
 File: images/MCMC/Cv_vs_T.png Graphic file (type png)
 <use images/MCMC/Cv_vs_T.png>
 Package pdftex.def Info: images/MCMC/Cv_vs_T.png  used on input line 33.
 (pdftex.def)             Requested size: 404.99725pt x 300.25551pt.
- [23 <./images/MCMC/E_mean_vs_T.png>]
-<images/MCMC/Tau_vs_T.png, id=144, 501.072pt x 393.6306pt>
+ [25 <./images/MCMC/E_mean_vs_T.png>]
+<images/MCMC/Tau_vs_T.png, id=152, 501.072pt x 393.6306pt>
 File: images/MCMC/Tau_vs_T.png Graphic file (type png)
 <use images/MCMC/Tau_vs_T.png>
 Package pdftex.def Info: images/MCMC/Tau_vs_T.png  used on input line 40.
 (pdftex.def)             Requested size: 404.99725pt x 318.16032pt.
- [24 <./images/MCMC/Cv_vs_T.png>]
-<images/acceptance_vs_T_plot.png, id=150, 570.4512pt x 424.4658pt>
+ [26 <./images/MCMC/Cv_vs_T.png>]
+<images/acceptance_vs_T_plot.png, id=157, 570.4512pt x 424.4658pt>
 File: images/acceptance_vs_T_plot.png Graphic file (type png)
 <use images/acceptance_vs_T_plot.png>
 Package pdftex.def Info: images/acceptance_vs_T_plot.png  used on input line 53.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [25 <./images/MCMC/Tau_vs_T.png>]
-<images/E_vs_T_plot.png, id=155, 570.4512pt x 424.4658pt>
+ [27 <./images/MCMC/Tau_vs_T.png>]
+<images/E_vs_T_plot.png, id=162, 570.4512pt x 424.4658pt>
 File: images/E_vs_T_plot.png Graphic file (type png)
 <use images/E_vs_T_plot.png>
 Package pdftex.def Info: images/E_vs_T_plot.png  used on input line 60.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [26 <./images/acceptance_vs_T_plot.png>]
-<images/tau_vs_T_plot.png, id=160, 569.0058pt x 424.4658pt>
+ [28 <./images/acceptance_vs_T_plot.png>]
+<images/tau_vs_T_plot.png, id=167, 569.0058pt x 424.4658pt>
 File: images/tau_vs_T_plot.png Graphic file (type png)
 <use images/tau_vs_T_plot.png>
 Package pdftex.def Info: images/tau_vs_T_plot.png  used on input line 67.
 (pdftex.def)             Requested size: 404.99725pt x 302.11765pt.
- [27 <./images/E_vs_T_plot.png>]
-<images/mean_sign_vs_T_plot.png, id=165, 570.4512pt x 424.4658pt>
+ [29 <./images/E_vs_T_plot.png>]
+<images/mean_sign_vs_T_plot.png, id=172, 570.4512pt x 424.4658pt>
 File: images/mean_sign_vs_T_plot.png Graphic file (type png)
 <use images/mean_sign_vs_T_plot.png>
 Package pdftex.def Info: images/mean_sign_vs_T_plot.png  used on input line 74.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [28 <./images/tau_vs_T_plot.png>]
-<images/ess_normalized_vs_T_plot.png, id=170, 570.4512pt x 424.4658pt>
+ [30 <./images/tau_vs_T_plot.png>]
+<images/ess_normalized_vs_T_plot.png, id=178, 570.4512pt x 424.4658pt>
 File: images/ess_normalized_vs_T_plot.png Graphic file (type png)
 <use images/ess_normalized_vs_T_plot.png>
 Package pdftex.def Info: images/ess_normalized_vs_T_plot.png  used on input line 81.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [29 <./images/mean_sign_vs_T_plot.png>]
-<images/E_vs_N_plot_T_100.0.png, id=175, 569.4876pt x 423.5022pt>
+ [31 <./images/mean_sign_vs_T_plot.png>]
+<images/E_vs_N_plot_T_100.0.png, id=183, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_100.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_100.0.png  used on input line 91.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/E_vs_N_plot_T_600.0.png, id=176, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_600.0.png, id=184, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_600.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_600.0.png  used on input line 96.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/E_vs_N_plot_T_1100.0.png, id=177, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_1100.0.png, id=185, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_1100.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_1100.0.png  used on input line 104.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
- [30 <./images/ess_normalized_vs_T_plot.png>]
-<images/mean_sign_vs_N_plot_T_100.0.png, id=183, 569.4876pt x 423.5022pt>
+ [32 <./images/ess_normalized_vs_T_plot.png>]
+<images/mean_sign_vs_N_plot_T_100.0.png, id=190, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_100.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_100.0.png  used on input line 113.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/mean_sign_vs_N_plot_T_600.0.png, id=184, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_600.0.png, id=191, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_600.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_600.0.png  used on input line 118.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/mean_sign_vs_N_plot_T_1100.0.png, id=185, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_1100.0.png, id=192, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_1100.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_1100.0.png  used on input line 126.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
- [31 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
-<images/x_distribution_T_100.0.png, id=192, 570.4512pt x 710.655pt>
+ [33 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
+<images/x_distribution_T_100.0.png, id=199, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_100.0.png Graphic file (type png)
 <use images/x_distribution_T_100.0.png>
 Package pdftex.def Info: images/x_distribution_T_100.0.png  used on input line 137.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
-<images/x_distribution_T_600.0.png, id=193, 570.4512pt x 710.655pt>
+<images/x_distribution_T_600.0.png, id=200, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_600.0.png Graphic file (type png)
 <use images/x_distribution_T_600.0.png>
 Package pdftex.def Info: images/x_distribution_T_600.0.png  used on input line 142.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
-<images/x_distribution_T_1100.0.png, id=194, 570.4512pt x 710.655pt>
+<images/x_distribution_T_1100.0.png, id=201, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_1100.0.png Graphic file (type png)
 <use images/x_distribution_T_1100.0.png>
 Package pdftex.def Info: images/x_distribution_T_1100.0.png  used on input line 150.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
- [32 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>]
+ [34 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>]
 Overfull \vbox (25.73589pt too high) has occurred while \output is active []
 
- [33 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
-<images/x_trajectory_T_100.0.png, id=207, 1251.2346pt x 852.3042pt>
+ [35 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
+<images/x_trajectory_T_100.0.png, id=214, 1251.2346pt x 852.3042pt>
 File: images/x_trajectory_T_100.0.png Graphic file (type png)
 <use images/x_trajectory_T_100.0.png>
 Package pdftex.def Info: images/x_trajectory_T_100.0.png  used on input line 159.
 (pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
-<images/x_trajectory_T_600.0.png, id=208, 1251.2346pt x 852.3042pt>
+<images/x_trajectory_T_600.0.png, id=215, 1251.2346pt x 852.3042pt>
 File: images/x_trajectory_T_600.0.png Graphic file (type png)
 <use images/x_trajectory_T_600.0.png>
 Package pdftex.def Info: images/x_trajectory_T_600.0.png  used on input line 164.
 (pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
-<images/x_trajectory_T_1100.0.png, id=209, 1250.271pt x 852.3042pt>
+<images/x_trajectory_T_1100.0.png, id=216, 1250.271pt x 852.3042pt>
 File: images/x_trajectory_T_1100.0.png Graphic file (type png)
 <use images/x_trajectory_T_1100.0.png>
 Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 172.
 (pdftex.def)             Requested size: 202.49863pt x 138.0361pt.
-) (conclusion.tex [34 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (thesis.bbl [35
+) (conclusion.tex [36 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (thesis.bbl [37
 
 ]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) (ringraziamenti.tex [36
+) (ringraziamenti.tex [38
 
-]) [37
+]) [39
 
 ] (thesis.aux)
  ***********
@@ -810,17 +811,17 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 23401 strings out of 467871
- 510630 string characters out of 5418376
- 925864 words of memory out of 5000000
- 51861 multiletter control sequences out of 15000+600000
+ 23434 strings out of 467871
+ 511344 string characters out of 5418376
+ 926873 words of memory out of 5000000
+ 51894 multiletter control sequences out of 15000+600000
  639158 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,8n,108p,998b,671s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (38 pages, 5872075 bytes).
+ 98i,12n,108p,998b,667s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (40 pages, 5889628 bytes).
 PDF statistics:
- 290 PDF objects out of 1000 (max. 8388607)
+ 301 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  287 words of extra memory for PDF output out of 10000 (max. 10000000)
 
