@@ -4,9 +4,10 @@
 \chapter{Probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione. Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann, che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
+Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione (\ref{sec:probabilita}). Infine, si introdurrà l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi.
 
 \section{Teoria della probabilità}
+\label{sec:probabilita}
 \subsection{Spazi di probabilità e variabili aleatorie}
 In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili eventi $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
 
@@ -136,6 +137,7 @@ dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\math
 Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ di modo da poter stimare i valori di aspettazione. I metodi, per cui sarà possibile creare questi campioni, saranno oggetto dei capitoli successivi.
 
 \section{Meccanica statistica}
+\label{sec:meccanica-statistica}
 
 \subsection{Il concetto di ensemble}
 
@@ -225,4 +227,4 @@ Di conseguenza, anche il valore assoluto della distribuzione di Boltzmann non è
 
 nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica, oppure è possibile valutare solo il fattore di Boltzmann $e^{-\beta \mathcal{H}(\mathbf{x})}$.
 
-Questa osservazione è importante poichè per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione conoscendola a meno della costante di normalizzazione.
+Questa osservazione è importante per i capitoli successivi poichè per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione seppur conoscendola a meno della costante di normalizzazione.

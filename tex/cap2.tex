@@ -2,48 +2,69 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte Carlo. Si parte da un'introduzione ai metodi Monte Carlo classici (Sezione 2.2), per poi affrontare il campionamento tramite catene di Markov (Sezione 2.3), e poi verrà presentato l'algoritmo di Metropolis-Hastings. Infine si discueterà di un aspetto cruciale per Markov Chain Monte Carlo: la presenza di correlazione tra i campioni successivi generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione 2.4).
+In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte Carlo. Si parte da un'introduzione ai metodi Monte Carlo classici (\ref{sec:monte-carlo-classico}), per poi affrontare il campionamento tramite catene di Markov (\ref{sec:mcmc}), e poi verrà presentato l'algoritmo di Metropolis-Hastings. Infine si discueterà di un aspetto cruciale per Markov Chain Monte Carlo: la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
 
 \section{Accenni storici}
 
-Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam (\ref{fig:ulam})- fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare ottenere campioni virtuali di uno stesso sistema così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono a ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare ottenere campioni virtuali di uno stesso sistema così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (\ref{fig:von-neumann})presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono a ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
 Il nome "Monte Carlo" è stato scelto, invece, da un altro scienziato Nicholas Constantine Metropolis, la scelta del nome ricadde sulla famosa area della città di Monaco per canzonare Ulam, il quale aveva uno zio col vizio del gioco. 
 
-Vi è inoltre un precursore del metodo: Enrico Fermi. Metropolis parlando con Emilio Segrè scopre che Fermi aveva già ideato in modo indipendente un metodo basato sul campionameto statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (dei laboratori di Los Alamos) aiutò lo studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC anche denominato il \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scopre che Fermi aveva già ideato in modo indipendente un metodo basato sul campionameto statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (dei laboratori di Los Alamos) aiutò lo studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC anche denominato il \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.43\textwidth}
-        \includegraphics[width=\textwidth]{images/people/fermi.jpg}
-        \caption{Enrico Fermi.}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.46\textwidth}
+    \begin{subfigure}[b]{0.29\textwidth}
         \includegraphics[width=\textwidth]{images/people/ulam.jpg}
         \caption{Stanisław Ulam e il FERMIAC.}
+        \label{fig:ulam}
     \end{subfigure}
-    
-    \vspace{1em}
-    
-    \begin{subfigure}[b]{0.43\textwidth}
-        \centering
+    \hfill
+    \begin{subfigure}[b]{0.36\textwidth}
         \includegraphics[width=\textwidth]{images/people/Von-Neumann-1000.jpg}
         \caption{Von Neumann.}
+        \label{fig:von-neumann}
     \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.29\textwidth}
+        \includegraphics[width=\textwidth]{images/people/fermi.jpg}
+        \caption{Enrico Fermi.}
+        \label{fig:fermi}
+    \end{subfigure}
+    \caption{I pionieri del metodo Monte Carlo.}
+    \label{fig:pionieri-mc}
 \end{figure}
 
-\section{Monte Carlo campionamento diretto}
+\section{Monte Carlo classico}
+\label{sec:monte-carlo-classico}
 
+\subsection{Campionamento per accettazione-rifiuto}
+Un metodo semplice, generale, ma spesso non molto efficiente è il campionamento per accettazione-rifiuto. Supponiamo due variabili aleatorie $X$ e $Z$ con densità di probabilità $f_X(x)$ e $f_Z(x)$, rispettivamente. Supponiamo di voler campionare $f_X(x)$ e di saper facilmente campionare $f_Z(x)$. Inoltre supponiamo che esista $c \ge 1$ tale che $ f_X(x) \le c \ f_Z(x) \forall x \in \mathbb{R} $. Allora possiamo campionare $X$ con un semplice algoritmo:
+\\
+\begin{algorithm}[H]
+\caption{Rejection sampling (accettazione-rifiuto)}
+\label{alg:rejection}
+\KwIn{Densità target $f_X(x)$ (anche non normalizzata); densità proposal $f_Z(x)$ facile da campionare; costante $M$ tale che $f_X(x) \le M\,f_Z(x)$ per ogni $x$}
+\KwOut{Un campione $x \sim f_X$}
+\Repeat{$u \le \dfrac{f_X(x)}{M\,f_Z(x)}$}{
+    Campiona $x \sim f_Z$\;
+    Campiona $u \sim \mathcal{U}(0,1)$\;
+}
+\Return{$x$}\;
+\end{algorithm}
+
+\subsection{Metodo dell'inversa}
 
 \section{Markov Chain Monte Carlo}
+\label{sec:mcmc}
 
 \subsection{Catene di Markov}
 
 \subsection{Algoritmo di Metropolis-Hastings}
 
 \section{Campioni autocorrelati}
+\label{sec:campioni-autocorrelati}
 
 \subsection{Blocking Analysis}
 
