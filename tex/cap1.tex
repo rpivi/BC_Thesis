@@ -31,7 +31,15 @@ X:\Omega \rightarrow \mathbb{R}.
 
 \subsection{Distribuzioni di probabilità continue}
 
-La distribuzione di probabilità associata a una variabile aleatoria continua $X$ è descritta da una densità di probabilità $p_X(x)$ La densità di probabilità deve soddisfare la condizione di normalizzazione ed essere non negativa per ogni valore della variabile aleatoria:
+Data una variabile aleatoria $X$ essa ha associata una funzione \textbf{distribuzione cumulativa} $F_X(x)$, definita da: 
+\begin{equation}
+    P (a < X \le b) = F_X(b) - F_X(a).
+\end{equation}
+$F_X(x)$ è una funzione di $x$ non negativa, monotona, nondecrescente function e definita su tutto l'asse reale con con le proprietà: $F_X(- \inf) = 0$ e $ F_X(+ \inf) = 1$. Se $F_X(x)$ è ovunque differenziabile, la variabile aleatoria $X$ è continua. Dunque una densità di probabilità $p_X(x)$ associata ad $X$ esiste e soddisfa
+\begin{equation}
+    p_X(x) = \frac{d\ F_X(x)}{dx}
+\end{equation}
+La densità di probabilità deve inoltre soddisfare la condizione di normalizzazione ed essere non negativa per ogni valore della variabile aleatoria:
 \begin{equation}
 \int_{-\infty}^{+\infty}p_X(x) \ dx=1
 \end{equation}
@@ -40,11 +48,9 @@ La distribuzione di probabilità associata a una variabile aleatoria continua $X
 p_X(x) \geq 0 \quad \forall x \in \mathbb{R}.
 \end{equation}
 
-È importante sottolineare che, nel caso continuo, la densità di probabilità non rappresenta direttamente la probabilità che la variabile assuma un determinato valore. Infatti, la probabilità di ottenere esattamente un particolare valore $x_0$ è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
+È importante sottolineare che la densità di probabilità non rappresenta direttamente la probabilità che la variabile assuma un determinato valore. Infatti, la probabilità di ottenere esattamente un particolare valore $x_0$ è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
 \begin{equation}
-P(a\leq X\leq b)
-=
-\int_a^b p_X(x) dx.
+P(a\leq X\leq b) = \int_a^b p_X(x) dx.
 \end{equation}
 
 La distribuzione di probabilità può quindi essere interpretata geometricamente: la probabilità associata a un intervallo corrisponde all'area sottesa dalla densità di probabilità nell'intervallo considerato. Una maggiore densità di probabilità in una determinata regione indica quindi una maggiore probabilità di osservare valori della variabile in quella regione.
@@ -140,7 +146,7 @@ Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamen
 \label{sec:meccanica-statistica}
 
 \subsection{Il concetto di ensemble}
-
+...
 
 \subsection{L'ensemble canonico}
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$

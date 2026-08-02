@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1785607489.08628 "thesis.aux" "thesis.bbl" "thesis" 1785607524.96652 0
+["bibtex thesis"] 1785663350.90174 "thesis.aux" "thesis.bbl" "thesis" 1785663728.72652 0
   "./Bibliografia.bib" 1783368152.66991 165 f3017c022259bc3834b930d3ab704c91 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1785607523.39103 10570 7ac6c6f609f7e82948193880d98b91d6 "pdflatex"
+  "thesis.aux" 1785663727.30142 10774 c2bde4b54d2d66eceb5a4e965445269c "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1785607513.82048 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1785607524.9678 0
+["pdflatex"] 1785663717.47784 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1785663728.72834 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1785607307.67745 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
@@ -196,9 +196,9 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/trimspaces/trimspaces.sty" 1253169183 1380 971a51b00a14503ddf754cab24c3f209 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "abstract.tex" 1784275408.46122 138 f4847178a92669b6d943f16fc393a970 ""
-  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1785607287.83286 3096 052815984c37936a984465dcaf3a714c ""
-  "cap1.tex" 1785607477.06834 17288 d8a3b6561f0a7aa5fed96c065f069df4 ""
-  "cap2.tex" 1785607512.86174 6054 eb9a5ba1808f669f1a33ccbfe008c36d ""
+  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1785663019.66943 3029 0f78c7d4d26f5ebb4e5d7ecbe1946c1a ""
+  "cap1.tex" 1785662819.09848 17744 88838b4b5a74a1f2f2ff9b75e9ea4ab8 ""
+  "cap2.tex" 1785663725.5638 7432 5265e22d96a44f76546aa0e54630679f ""
   "cap3.tex" 1785320073.52474 464 b7bbf8da91df2924c61c586f2119f31f ""
   "cap4.tex" 1785359379.89573 4633 7803c2d8982894e8030fdbffcd3e9075 ""
   "conclusion.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
@@ -210,6 +210,7 @@
   "images/MCMC/E_mean_vs_T.png" 1784805581.00147 62362 d47e8a52381ade3a210e6590b204be1b ""
   "images/MCMC/Tau_vs_T.png" 1784805581.66442 66727 1c4257c07b98cc001120e3756f4f93a2 ""
   "images/MCMC/acceptance_vs_T.png" 1784805581.37437 59003 fe1d26dfa496c0504b26463e0f3a873c ""
+  "images/MCMC/mcmc_algo.png" 1785663330.91336 139712 c04b9068c4debd71be33111852fb1108 ""
   "images/MCMC/thermalization_energies_D4_T150.00.png" 1784798693.33043 53820 af3b14760c5b099f1edcda9014ab08b1 ""
   "images/acceptance_vs_T_plot.png" 1784804610.67952 52675 52498d86dd254a4f5d0963d48a737f53 ""
   "images/ess_normalized_vs_T_plot.png" 1784804611.62811 65731 4e067e211e64698f3f8c9913ae2ffff6 ""
@@ -229,9 +230,9 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1785319865.58574 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1785607523.39103 10570 7ac6c6f609f7e82948193880d98b91d6 "pdflatex"
-  "thesis.bbl" 1785607489.43965 52 a8d58af1cdd914e1e9801ae0ec600f83 "bibtex thesis"
-  "thesis.toc" 1785607523.42269 3701 c903bcb104d3e79a331db67d2b0b7e3d "pdflatex"
+  "thesis.aux" 1785663727.30142 10774 c2bde4b54d2d66eceb5a4e965445269c "pdflatex"
+  "thesis.bbl" 1785663351.41187 52 a8d58af1cdd914e1e9801ae0ec600f83 "bibtex thesis"
+  "thesis.toc" 1785663727.32126 3701 316bdecc5292e57bf19eed2a96e0ba12 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"

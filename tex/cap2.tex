@@ -39,29 +39,56 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropol
 \section{Monte Carlo classico}
 \label{sec:monte-carlo-classico}
 
+\subsection{Metodo dell'inversa}
+...
+
+
 \subsection{Campionamento per accettazione-rifiuto}
-Un metodo semplice, generale, ma spesso non molto efficiente è il campionamento per accettazione-rifiuto. Supponiamo due variabili aleatorie $X$ e $Z$ con densità di probabilità $f_X(x)$ e $f_Z(x)$, rispettivamente. Supponiamo di voler campionare $f_X(x)$ e di saper facilmente campionare $f_Z(x)$. Inoltre supponiamo che esista $c \ge 1$ tale che $ f_X(x) \le c \ f_Z(x) \forall x \in \mathbb{R} $. Allora possiamo campionare $X$ con un semplice algoritmo:
+Un metodo semplice, generale, ma spesso non molto efficiente è il campionamento per accettazione-rifiuto. Supponiamo due variabili aleatorie $X$ e $Z$ con densità di probabilità $f_X(x)$ e $f_Z(x)$, rispettivamente. Supponiamo di voler campionare $f_X(x)$ e di saper facilmente campionare $f_Z(x)$. Inoltre supponiamo che esista $c \ge 1$ tale che $ f_X(x) \le c \ f_Z(x) \forall x \in \mathbb{R} $. 
+
+Allora possiamo campionare $X$ con un semplice algoritmo:
 \\
 \begin{algorithm}[H]
-\caption{Rejection sampling (accettazione-rifiuto)}
+\caption{Campionamento per accettazione-rifiuto}
 \label{alg:rejection}
-\KwIn{Densità target $f_X(x)$ (anche non normalizzata); densità proposal $f_Z(x)$ facile da campionare; costante $M$ tale che $f_X(x) \le M\,f_Z(x)$ per ogni $x$}
+\KwIn{Densità target $f_X(x)$ (anche non normalizzata); densità proposal $f_Z(x)$ facile da campionare; costante $c$ tale che $f_X(x) \le c\,f_Z(x)$ per ogni $x$}
 \KwOut{Un campione $x \sim f_X$}
-\Repeat{$u \le \dfrac{f_X(x)}{M\,f_Z(x)}$}{
+\Repeat{$u \le \dfrac{f_X(x)}{c\,f_Z(x)}$}{
     Campiona $x \sim f_Z$\;
     Campiona $u \sim \mathcal{U}(0,1)$\;
 }
 \Return{$x$}\;
 \end{algorithm}
 
-\subsection{Metodo dell'inversa}
-
 \section{Markov Chain Monte Carlo}
 \label{sec:mcmc}
-
 \subsection{Catene di Markov}
 
+Sia ${X_1,..., X_N}$ una sequenza di variabili aleatorie in $\mathbb{R}^D$, questa sequenza è una catena di Markov se la probabilità condizionata di ogni $X_i$ soddisfa:
+
+\begin{equation}
+P(X_i |X_{i-1},..., X_{1}) = P(X_i | X_{i-1}).
+\end{equation}
+
+Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che la catena di Markov è \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato. 
+Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
+
+...
+
+Dove è possibile notare che le quantità $P_{ij}$, non dipendono dalle variabili nella sequenza che stiamo utilizzando grazie alle proprietà markoviane della catena. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}$ che per $P$, in quanto $\forall i$ esse soddisfano:
+
+...
+
+
 \subsection{Algoritmo di Metropolis-Hastings}
+...
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/MCMC/mcmc_algo.png}
+    \caption{}
+    \label{fig:metropolis-hastings}
+\end{figure}
+...
 
 \section{Campioni autocorrelati}
 \label{sec:campioni-autocorrelati}
