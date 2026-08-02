@@ -60,6 +60,9 @@ Allora possiamo campionare $X$ con un semplice algoritmo:
 \Return{$x$}\;
 \end{algorithm}
 
+...
+
+
 \section{Markov Chain Monte Carlo}
 \label{sec:mcmc}
 \subsection{Catene di Markov}
@@ -72,13 +75,47 @@ P(X_i |X_{i-1},..., X_{1}) = P(X_i | X_{i-1}).
 
 Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che la catena di Markov è \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato. 
 Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
-
-...
+\begin{equation}
+P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
+\quad
+P(X_j|X_i) = P_{ij} = 
+\begin{pmatrix}
+P(x_1|x_1)  & \cdots & P(x_j|x_1) & \cdots \\
+P(x_1|x_2) & \cdots & P(x_j|x_2) & \cdots \\
+\vdots & \ddots & \vdots & \\
+P(x_1|x_i) & \cdots & P(x_j|x_i) & \cdots \\
+\vdots   & \vdots & \ddots
+\end{pmatrix}
+\end{equation}
 
 Dove è possibile notare che le quantità $P_{ij}$, non dipendono dalle variabili nella sequenza che stiamo utilizzando grazie alle proprietà markoviane della catena. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}$ che per $P$, in quanto $\forall i$ esse soddisfano:
+\begin{equation}
+\sum_{j} p^{(i)}_j = 1, \quad \sum_{j} P_{ij} =1.
+\label{ev_prob}
+\end{equation}
 
-...
+Una catena di Markov è definita da una probabilità iniziale $p^{(0)}_i$ e da una matrice $P_{ij}$ detta \textbb{matrice di tranzione}, poichè essa permette di generare la catena in modo ricorsivo:
+\begin{equation}
+    p^{(k+1)}_i = \sum_{j} P_{ij} p^{(k)}_j con \ k \in \mathbb{N}.
+\end{equation}
 
+Questa evoluzione della distribuzione di probabilità della catena conserva la normalizzazione della distribuzione, infatti:
+\begin{equation}
+\sum_{i} p^{(k+1)}_i = \sum_{i} \sum_{j} P_{ij} p^{(k)}_j = \sum_{j} p^{(k)}_j \sum_{i} P_{ij} = \sum_{j} p^{(k)}_j = 1.
+\end{equation}
+
+Inoltre l'equazione \ref{ev_prob} assicura che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge uno stato stazionario $p_i$ tale che:
+\begin{equation}
+    p_i = \sum_{j} P_{ij} p_j.
+\end{equation}
+Ovvero si raggiunge una distribuzione di probabilità che non cambia più iterando il procedimento (per questo detta stazionaria) che è in particolare l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
+L'obbiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che vogliamo campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
+
+Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione di simmetria detta \textit{bilancio dettagliato}: 
+\begin{equation}
+    P_{ij} p_j = P_{ji} p_i.
+\end{equation}
+Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings, che permette di costruire una matrice di transizione $P_{ij}$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p_i$.
 
 \subsection{Algoritmo di Metropolis-Hastings}
 ...
