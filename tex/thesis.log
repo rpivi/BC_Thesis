@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  3 AUG 2026 15:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  3 AUG 2026 18:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -304,6 +304,14 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
 \Hy@SectionHShift=\skip72
+) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count311
+\c@ALC@line=\count312
+\c@ALC@rem=\count313
+\c@ALC@depth=\count314
+\ALC@tlm=\skip73
+\algorithmicindent=\skip74
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcolorbox.sty
 Package: tcolorbox 2025/11/28 version 6.9.0 text color boxes
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
@@ -336,14 +344,14 @@ Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@yd=\dimen186
 \w@pgf@writea=\write3
 \r@pgf@reada=\read3
-\c@pgf@counta=\count311
-\c@pgf@countb=\count312
-\c@pgf@countc=\count313
-\c@pgf@countd=\count314
+\c@pgf@counta=\count315
+\c@pgf@countb=\count316
+\c@pgf@countc=\count317
+\c@pgf@countd=\count318
 \t@pgf@toka=\toks26
 \t@pgf@tokb=\toks27
 \t@pgf@tokc=\toks28
-\pgf@sys@id@count=\count315
+\pgf@sys@id@count=\count319
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
 File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
 )
@@ -354,21 +362,21 @@ File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
 File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
 ))) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfsyssoftpath@smallbuffer@items=\count316
-\pgfsyssoftpath@bigbuffer@items=\count317
+\pgfsyssoftpath@smallbuffer@items=\count320
+\pgfsyssoftpath@bigbuffer@items=\count321
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
 Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex
 \pgfmath@dimen=\dimen187
-\pgfmath@count=\count318
+\pgfmath@count=\count322
 \pgfmath@box=\box65
 \pgfmath@toks=\toks29
 \pgfmath@stack@operand=\toks30
 \pgfmath@stack@operation=\toks31
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count319
+\c@pgfmathroundto@lastzeros=\count323
 )) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.tex) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@picminx=\dimen188
@@ -398,7 +406,7 @@ File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfpic=\box66
 \pgf@hbox=\box67
 \pgf@layerbox@main=\box68
-\pgf@picture@serial@count=\count320
+\pgf@picture@serial@count=\count324
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgflinewidth=\dimen262
@@ -419,8 +427,8 @@ File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@max=\dimen267
-\pgf@sys@shading@range@num=\count321
-\pgf@shadingcount=\count322
+\pgf@sys@shading@range@num=\count325
+\pgf@shadingcount=\count326
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
@@ -451,12 +459,12 @@ Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
 \pgffor@skip=\dimen271
 \pgffor@stack=\toks32
 \pgffor@toks=\toks33
-)) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+))
+(C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
 Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
-
-(C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
+ (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@plot@mark@count=\count323
+\pgf@plot@mark@count=\count327
 \pgfplotmarksize=\dimen272
 )
 \tikz@lastx=\dimen273
@@ -471,17 +479,17 @@ File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \tikz@figbox@bg=\box72
 \tikz@tempbox=\box73
 \tikz@tempbox@bg=\box74
-\tikztreelevel=\count324
-\tikznumberofchildren=\count325
-\tikznumberofcurrentchild=\count326
-\tikz@fig@count=\count327
+\tikztreelevel=\count328
+\tikznumberofchildren=\count329
+\tikznumberofcurrentchild=\count330
+\tikz@fig@count=\count331
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfmatrixcurrentrow=\count328
-\pgfmatrixcurrentcolumn=\count329
-\pgf@matrix@numberofcolumns=\count330
+\pgfmatrixcurrentrow=\count332
+\pgfmatrixcurrentcolumn=\count333
+\pgf@matrix@numberofcolumns=\count334
 )
-\tikz@expandcount=\count331
+\tikz@expandcount=\count335
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ))) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty
@@ -500,9 +508,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \tcb@upperbox=\box76
 \tcb@lowerbox=\box77
 \tcb@phantombox=\box78
-\c@tcbbreakpart=\count332
-\c@tcblayer=\count333
-\c@tcolorbox@number=\count334
+\c@tcbbreakpart=\count336
+\c@tcblayer=\count337
+\c@tcolorbox@number=\count338
 \l__tcobox_tmpa_box=\box79
 \l__tcobox_tmpa_dim=\dimen281
 \tcb@temp=\box80
@@ -511,10 +519,10 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \tcb@temp=\box83
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbraster.code.tex
 Library (tcolorbox): 'tcbraster.code.tex' version '6.9.0'
-\c@tcbrastercolumn=\count335
-\c@tcbrasterrow=\count336
-\c@tcbrasternum=\count337
-\c@tcbraster=\count338
+\c@tcbrastercolumn=\count339
+\c@tcbrasterrow=\count340
+\c@tcbrasternum=\count341
+\c@tcbraster=\count342
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskins.code.tex
 Library (tcolorbox): 'tcbskins.code.tex' version '6.9.0'
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill.image.sty
@@ -541,7 +549,7 @@ Library (tcolorbox): 'tcbhooks.code.tex' version '6.9.0'
 Library (tcolorbox): 'tcbtheorems.code.tex' version '6.9.0'
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
 Package: amsmath 2025/07/09 v2.17z AMS math features
-\@mathmargin=\skip73
+\@mathmargin=\skip75
 
 For additional information on amsmath, use the `?' option.
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
@@ -556,14 +564,14 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count339
+\inf@bad=\count343
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count340
-\leftroot@=\count341
+\uproot@=\count344
+\leftroot@=\count345
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count342
-\DOTSCASE@=\count343
+\classnum@=\count346
+\DOTSCASE@=\count347
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -576,20 +584,20 @@ LaTeX Info: Redefining \Bigg on input line 724.
 \big@size=\dimen286
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count344
+\macc@depth=\count348
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count345
+\c@MaxMatrixCols=\count349
 \dotsspace@=\muskip18
-\c@parentequation=\count346
-\dspbrk@lvl=\count347
+\c@parentequation=\count350
+\dspbrk@lvl=\count351
 \tag@help=\toks38
-\row@=\count348
-\column@=\count349
-\maxfields@=\count350
+\row@=\count352
+\column@=\count353
+\maxfields@=\count354
 \andhelp@=\toks39
 \eqnshift@=\dimen287
 \alignsep@=\dimen288
@@ -598,8 +606,8 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \totwidth@=\dimen291
 \lineht@=\dimen292
 \@envbody=\toks40
-\multlinegap=\skip74
-\multlinetaggap=\skip75
+\multlinegap=\skip76
+\multlinetaggap=\skip77
 \mathdisplay@stack=\toks41
 LaTeX Info: Redefining \[ on input line 2950.
 LaTeX Info: Redefining \] on input line 2951.
@@ -608,30 +616,30 @@ Library (tcolorbox): 'tcbfitting.code.tex' version '6.9.0'
 \tcbfitdim=\dimen293
 \tcb@lowerfitdim=\dimen294
 \tcb@upperfitdim=\dimen295
-\tcb@cur@hbadness=\count351
+\tcb@cur@hbadness=\count355
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcblistingsutf8.code.tex
 Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.9.0'
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcblistings.code.tex
 Library (tcolorbox): 'tcblistings.code.tex' version '6.9.0'
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-\lst@mode=\count352
+\lst@mode=\count356
 \lst@gtempboxa=\box90
 \lst@token=\toks42
-\lst@length=\count353
+\lst@length=\count357
 \lst@currlwidth=\dimen296
-\lst@column=\count354
-\lst@pos=\count355
+\lst@column=\count358
+\lst@pos=\count359
 \lst@lostspace=\dimen297
 \lst@width=\dimen298
-\lst@newlines=\count356
-\lst@lineno=\count357
+\lst@newlines=\count360
+\lst@lineno=\count361
 \lst@maxwidth=\dimen299
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstpatch.sty
 File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
-\c@lstnumber=\count358
-\lst@skipnumbers=\count359
+\c@lstnumber=\count362
+\lst@skipnumbers=\count363
 \lst@framebox=\box91
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
 File: listings.cfg 2025/11/14 1.11b listings configuration
@@ -649,7 +657,7 @@ Library (tcolorbox): 'tcblistingscore.code.tex' version '6.9.0'
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbprocessing.code.tex
 Library (tcolorbox): 'tcbprocessing.code.tex' version '6.9.0'
 )
-\c@tcblisting=\count360
+\c@tcblisting=\count364
 )) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/listingsutf8\listingsutf8.sty
 Package: listingsutf8 2019-12-10 v1.5 Allow UTF-8 in listings input (HO)
 )) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbexternal.code.tex
@@ -665,35 +673,35 @@ File: pgflibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ))) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbposter.code.tex
 Library (tcolorbox): 'tcbposter.code.tex' version '6.9.0'
 ))
-\c@tcb@cnt@example=\count361
-\c@tcb@cnt@definition=\count362
-\c@tcb@cnt@theorem=\count363
+\c@tcb@cnt@example=\count365
+\c@tcb@cnt@definition=\count366
+\c@tcb@cnt@theorem=\count367
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count364
+\l__color_backend_stack_int=\count368
 ) (thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Info: Redefining \it@ocap on input line 44.
-LaTeX Info: Redefining \it@ccap on input line 44.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Info: Redefining \it@ocap on input line 45.
+LaTeX Info: Redefining \it@ccap on input line 45.
 
 
 File italian.ldf warning: 
@@ -701,20 +709,20 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting
-italian.ldf    on input line 44.
+italian.ldf    on input line 45.
 
 (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count365
+\scratchcounter=\count369
 \scratchdimen=\dimen300
 \scratchbox=\box92
-\nofMPsegments=\count366
-\nofMParguments=\count367
+\nofMPsegments=\count370
+\nofMParguments=\count371
 \everyMPshowfont=\toks43
-\MPscratchCnt=\count368
+\MPscratchCnt=\count372
 \MPscratchDim=\dimen301
-\MPnumerator=\count369
-\makeMPintoPDFobject=\count370
+\MPnumerator=\count373
+\makeMPintoPDFobject=\count374
 \everyMPtoPDFconversion=\toks44
 ) (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -727,35 +735,35 @@ Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 44.
+Package hyperref Info: Link coloring OFF on input line 45.
  (thesis.out) (thesis.out)
 \@outlinefile=\write4
 \openout4 = `thesis.out'.
 
-\c@lstlisting=\count371
+\c@lstlisting=\count375
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks45
 \inpenc@posthook=\toks46
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 47.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 48.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
  (C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 67--73
+Underfull \hbox (badness 10000) in paragraph at lines 68--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--73
+Underfull \hbox (badness 10000) in paragraph at lines 68--74
 
  []
 
@@ -765,7 +773,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 67--73
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.94 \newpage
+l.95 \newpage
               [1] [2] [3] (abstract.tex) [4
 
 ] [5] (thesis.toc [6
@@ -781,7 +789,7 @@ Capitolo 1.
 [9
 
 ] [10]
-<images/uni_multi.png, id=346, 638.8668pt x 277.5168pt>
+<images/uni_multi.png, id=347, 638.8668pt x 277.5168pt>
 File: images/uni_multi.png Graphic file (type png)
 <use images/uni_multi.png>
 Package pdftex.def Info: images/uni_multi.png  used on input line 90.
@@ -791,7 +799,7 @@ Capitolo 2.
 [17
 
 ]
-<images/people/ulam.jpg, id=410, 501.875pt x 573.14125pt>
+<images/people/ulam.jpg, id=417, 501.875pt x 573.14125pt>
 File: images/people/ulam.jpg Graphic file (type jpg)
 <use images/people/ulam.jpg>
 Package pdftex.def Info: images/people/ulam.jpg  used on input line 19.
@@ -801,167 +809,167 @@ Underfull \hbox (badness 1968) in paragraph at lines 20--20
 []\OT1/cmr/m/n/10.95 (a) |Sta-nis law Ulam e il
  []
 
-<images/people/Von-Neumann-1000.jpg, id=411, 1003.75pt x 1003.75pt>
+<images/people/Von-Neumann-1000.jpg, id=418, 1003.75pt x 1003.75pt>
 File: images/people/Von-Neumann-1000.jpg Graphic file (type jpg)
 <use images/people/Von-Neumann-1000.jpg>
 Package pdftex.def Info: images/people/Von-Neumann-1000.jpg  used on input line 25.
 (pdftex.def)             Requested size: 162.00027pt x 161.99702pt.
-<images/people/fermi.jpg, id=412, 403.5075pt x 498.86375pt>
+<images/people/fermi.jpg, id=419, 403.5075pt x 498.86375pt>
 File: images/people/fermi.jpg Graphic file (type jpg)
 <use images/people/fermi.jpg>
 Package pdftex.def Info: images/people/fermi.jpg  used on input line 31.
 (pdftex.def)             Requested size: 130.49698pt x 161.33714pt.
 [18 <./images/people/ulam.jpg> <./images/people/Von-Neumann-1000.jpg> <./images/people/fermi.jpg>] [19] [20]
-<images/MCMC/mcmc_algo.png, id=439, 469.00218pt x 310.15875pt>
+Underfull \hbox (badness 10000) in paragraph at lines 119--140
+
+ []
+
+<images/MCMC/mcmc_algo.png, id=448, 469.00218pt x 310.15875pt>
 File: images/MCMC/mcmc_algo.png Graphic file (type png)
 <use images/MCMC/mcmc_algo.png>
-Package pdftex.def Info: images/MCMC/mcmc_algo.png  used on input line 130.
+Package pdftex.def Info: images/MCMC/mcmc_algo.png  used on input line 146.
 (pdftex.def)             Requested size: 404.99725pt x 267.82928pt.
- [21 <./images/MCMC/mcmc_algo.png>]) (cap3.tex [22]
+[21]) (cap3.tex [22 <./images/MCMC/mcmc_algo.png>] [23]
 Capitolo 3.
-) (cap4.tex [23
+) (cap4.tex [24
 
 ]
 Capitolo 4.
-<images/MCMC/thermalization_energies_D4_T150.00.png, id=456, 489.5088pt x 393.6306pt>
+<images/MCMC/thermalization_energies_D4_T150.00.png, id=472, 489.5088pt x 393.6306pt>
 File: images/MCMC/thermalization_energies_D4_T150.00.png Graphic file (type png)
 <use images/MCMC/thermalization_energies_D4_T150.00.png>
 Package pdftex.def Info: images/MCMC/thermalization_energies_D4_T150.00.png  used on input line 10.
 (pdftex.def)             Requested size: 404.99725pt x 325.67422pt.
-[24
+[25
 
 ]
 Overfull \vbox (18.3687pt too high) has occurred while \output is active []
 
- [25 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
-<images/MCMC/acceptance_vs_T.png, id=468, 499.1448pt x 393.6306pt>
+ [26 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
+<images/MCMC/acceptance_vs_T.png, id=483, 499.1448pt x 393.6306pt>
 File: images/MCMC/acceptance_vs_T.png Graphic file (type png)
 <use images/MCMC/acceptance_vs_T.png>
 Package pdftex.def Info: images/MCMC/acceptance_vs_T.png  used on input line 19.
 (pdftex.def)             Requested size: 404.99725pt x 319.39162pt.
-<images/MCMC/E_mean_vs_T.png, id=469, 511.6716pt x 393.6306pt>
+<images/MCMC/E_mean_vs_T.png, id=484, 511.6716pt x 393.6306pt>
 File: images/MCMC/E_mean_vs_T.png Graphic file (type png)
 <use images/MCMC/E_mean_vs_T.png>
 Package pdftex.def Info: images/MCMC/E_mean_vs_T.png  used on input line 26.
 (pdftex.def)             Requested size: 404.99725pt x 311.5714pt.
- [26 <./images/MCMC/acceptance_vs_T.png>]
-<images/MCMC/Cv_vs_T.png, id=476, 530.9436pt x 393.6306pt>
+ [27 <./images/MCMC/acceptance_vs_T.png>]
+<images/MCMC/Cv_vs_T.png, id=491, 530.9436pt x 393.6306pt>
 File: images/MCMC/Cv_vs_T.png Graphic file (type png)
 <use images/MCMC/Cv_vs_T.png>
 Package pdftex.def Info: images/MCMC/Cv_vs_T.png  used on input line 33.
 (pdftex.def)             Requested size: 404.99725pt x 300.25551pt.
- [27 <./images/MCMC/E_mean_vs_T.png>]
-<images/MCMC/Tau_vs_T.png, id=483, 501.072pt x 393.6306pt>
+ [28 <./images/MCMC/E_mean_vs_T.png>]
+<images/MCMC/Tau_vs_T.png, id=498, 501.072pt x 393.6306pt>
 File: images/MCMC/Tau_vs_T.png Graphic file (type png)
 <use images/MCMC/Tau_vs_T.png>
 Package pdftex.def Info: images/MCMC/Tau_vs_T.png  used on input line 40.
 (pdftex.def)             Requested size: 404.99725pt x 318.16032pt.
- [28 <./images/MCMC/Cv_vs_T.png>]
-<images/acceptance_vs_T_plot.png, id=490, 570.4512pt x 424.4658pt>
+ [29 <./images/MCMC/Cv_vs_T.png>]
+<images/acceptance_vs_T_plot.png, id=505, 570.4512pt x 424.4658pt>
 File: images/acceptance_vs_T_plot.png Graphic file (type png)
 <use images/acceptance_vs_T_plot.png>
 Package pdftex.def Info: images/acceptance_vs_T_plot.png  used on input line 53.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [29 <./images/MCMC/Tau_vs_T.png>]
-<images/E_vs_T_plot.png, id=497, 570.4512pt x 424.4658pt>
+ [30 <./images/MCMC/Tau_vs_T.png>]
+<images/E_vs_T_plot.png, id=513, 570.4512pt x 424.4658pt>
 File: images/E_vs_T_plot.png Graphic file (type png)
 <use images/E_vs_T_plot.png>
 Package pdftex.def Info: images/E_vs_T_plot.png  used on input line 60.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [30 <./images/acceptance_vs_T_plot.png>]
-<images/tau_vs_T_plot.png, id=505, 569.0058pt x 424.4658pt>
+ [31 <./images/acceptance_vs_T_plot.png>]
+<images/tau_vs_T_plot.png, id=520, 569.0058pt x 424.4658pt>
 File: images/tau_vs_T_plot.png Graphic file (type png)
 <use images/tau_vs_T_plot.png>
 Package pdftex.def Info: images/tau_vs_T_plot.png  used on input line 67.
 (pdftex.def)             Requested size: 404.99725pt x 302.11765pt.
- [31 <./images/E_vs_T_plot.png>]
-<images/mean_sign_vs_T_plot.png, id=512, 570.4512pt x 424.4658pt>
+ [32 <./images/E_vs_T_plot.png>]
+<images/mean_sign_vs_T_plot.png, id=527, 570.4512pt x 424.4658pt>
 File: images/mean_sign_vs_T_plot.png Graphic file (type png)
 <use images/mean_sign_vs_T_plot.png>
 Package pdftex.def Info: images/mean_sign_vs_T_plot.png  used on input line 74.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [32 <./images/tau_vs_T_plot.png>]
-<images/ess_normalized_vs_T_plot.png, id=519, 570.4512pt x 424.4658pt>
+ [33 <./images/tau_vs_T_plot.png>]
+<images/ess_normalized_vs_T_plot.png, id=534, 570.4512pt x 424.4658pt>
 File: images/ess_normalized_vs_T_plot.png Graphic file (type png)
 <use images/ess_normalized_vs_T_plot.png>
 Package pdftex.def Info: images/ess_normalized_vs_T_plot.png  used on input line 81.
 (pdftex.def)             Requested size: 404.99725pt x 301.35986pt.
- [33 <./images/mean_sign_vs_T_plot.png>]
-<images/E_vs_N_plot_T_100.0.png, id=526, 569.4876pt x 423.5022pt>
+ [34 <./images/mean_sign_vs_T_plot.png>]
+<images/E_vs_N_plot_T_100.0.png, id=541, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_100.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_100.0.png  used on input line 91.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/E_vs_N_plot_T_600.0.png, id=527, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_600.0.png, id=542, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_600.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_600.0.png  used on input line 96.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/E_vs_N_plot_T_1100.0.png, id=528, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_1100.0.png, id=543, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_1100.0.png>
 Package pdftex.def Info: images/E_vs_N_plot_T_1100.0.png  used on input line 104.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
- [34 <./images/ess_normalized_vs_T_plot.png>]
-<images/mean_sign_vs_N_plot_T_100.0.png, id=535, 569.4876pt x 423.5022pt>
+ [35 <./images/ess_normalized_vs_T_plot.png>]
+<images/mean_sign_vs_N_plot_T_100.0.png, id=550, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_100.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_100.0.png  used on input line 113.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/mean_sign_vs_N_plot_T_600.0.png, id=536, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_600.0.png, id=551, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_600.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_600.0.png  used on input line 118.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
-<images/mean_sign_vs_N_plot_T_1100.0.png, id=537, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_1100.0.png, id=552, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_1100.0.png>
 Package pdftex.def Info: images/mean_sign_vs_N_plot_T_1100.0.png  used on input line 126.
 (pdftex.def)             Requested size: 202.49863pt x 150.58665pt.
- [35 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
-<images/x_distribution_T_100.0.png, id=546, 570.4512pt x 710.655pt>
+ [36 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
+<images/x_distribution_T_100.0.png, id=562, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_100.0.png Graphic file (type png)
 <use images/x_distribution_T_100.0.png>
 Package pdftex.def Info: images/x_distribution_T_100.0.png  used on input line 137.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
-<images/x_distribution_T_600.0.png, id=547, 570.4512pt x 710.655pt>
+<images/x_distribution_T_600.0.png, id=563, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_600.0.png Graphic file (type png)
 <use images/x_distribution_T_600.0.png>
 Package pdftex.def Info: images/x_distribution_T_600.0.png  used on input line 142.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
-<images/x_distribution_T_1100.0.png, id=548, 570.4512pt x 710.655pt>
+<images/x_distribution_T_1100.0.png, id=564, 570.4512pt x 710.655pt>
 File: images/x_distribution_T_1100.0.png Graphic file (type png)
 <use images/x_distribution_T_1100.0.png>
 Package pdftex.def Info: images/x_distribution_T_1100.0.png  used on input line 150.
 (pdftex.def)             Requested size: 202.49863pt x 252.26802pt.
- [36 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>] [37]
+ [37 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>] [38]
 Overfull \vbox (25.73589pt too high) has occurred while \output is active []
 
- [38 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
-<images/x_trajectory_T_100.0.png, id=570, 1251.2346pt x 852.3042pt>
+ [39 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
+<images/x_trajectory_T_100.0.png, id=585, 1251.2346pt x 852.3042pt>
 File: images/x_trajectory_T_100.0.png Graphic file (type png)
 <use images/x_trajectory_T_100.0.png>
 Package pdftex.def Info: images/x_trajectory_T_100.0.png  used on input line 159.
 (pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
-<images/x_trajectory_T_600.0.png, id=571, 1251.2346pt x 852.3042pt>
+<images/x_trajectory_T_600.0.png, id=586, 1251.2346pt x 852.3042pt>
 File: images/x_trajectory_T_600.0.png Graphic file (type png)
 <use images/x_trajectory_T_600.0.png>
 Package pdftex.def Info: images/x_trajectory_T_600.0.png  used on input line 164.
 (pdftex.def)             Requested size: 202.49863pt x 137.93207pt.
-<images/x_trajectory_T_1100.0.png, id=572, 1250.271pt x 852.3042pt>
+<images/x_trajectory_T_1100.0.png, id=587, 1250.271pt x 852.3042pt>
 File: images/x_trajectory_T_1100.0.png Graphic file (type png)
 <use images/x_trajectory_T_1100.0.png>
 Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 172.
 (pdftex.def)             Requested size: 202.49863pt x 138.0361pt.
-) (conclusion.tex [39 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (thesis.bbl [40
+) (conclusion.tex [40 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (thesis.bbl [41
 
-]
+]) (ringraziamenti.tex [42
 
-LaTeX Warning: Empty `thebibliography' environment on input line 3.
-
-) (ringraziamenti.tex [41
-
-]) [42
+]) [43
 
 ] (thesis.aux)
  ***********
@@ -969,20 +977,20 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 0B60B7BEC858E1CC06935897CB5FDD7C;8695.
+(rerunfilecheck)             Checksum: A70CCF9D9688EDB9F591222E78187B94;8708.
  ) 
 Here is how much of TeX's memory you used:
- 30849 strings out of 467871
- 627393 string characters out of 5418376
- 1057707 words of memory out of 5000000
- 59074 multiletter control sequences out of 15000+600000
+ 30986 strings out of 467871
+ 629498 string characters out of 5418376
+ 1060246 words of memory out of 5000000
+ 59200 multiletter control sequences out of 15000+600000
  639158 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,12n,108p,1021b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (43 pages, 6036571 bytes).
+<C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (44 pages, 6052820 bytes).
 PDF statistics:
- 695 PDF objects out of 1000 (max. 8388607)
- 149 named destinations out of 1000 (max. 500000)
+ 715 PDF objects out of 1000 (max. 8388607)
+ 156 named destinations out of 1000 (max. 500000)
  668 words of extra memory for PDF output out of 10000 (max. 10000000)
 

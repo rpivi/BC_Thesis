@@ -9,7 +9,7 @@ Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle
 \section{Teoria della probabilità}
 \label{sec:probabilita}
 \subsection{Spazi di probabilità e variabili aleatorie}
-In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili eventi $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
+In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili esiti $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
 
 In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi disgiunti $A_1, A_2,  ...$ valga:
 
@@ -19,11 +19,11 @@ In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyse
 
 \begin{example}{Tiri di un dado}{dice}
 Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P({\chi_i}) = 1/6$ per ogni $\chi_i \in \Omega$ .
-Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilià calcolabile nel seguente modo: $P(A) = P({1}) + P({2}) + P({3}) = 1/2$.
+Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilià calcolabile nel seguente modo: $P(A) = P({2}) + P({4}) + P({6}) = 1/2$.
 \end{example}
 
 
-Una \textbf{variabile aleatoria} (reale) $X$ che associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
+Una \textbf{variabile aleatoria} (reale) $X$ associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
 Una variabile aleatoria $X$ associa a ciascun esito $\chi$ un valore $x$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi:
 \begin{equation}
 X:\Omega \rightarrow \mathbb{R}.
@@ -35,7 +35,7 @@ Data una variabile aleatoria $X$ essa ha associata una funzione \textbf{distribu
 \begin{equation}
     P (a < X \le b) = F_X(b) - F_X(a).
 \end{equation}
-$F_X(x)$ è una funzione di $x$ non negativa, monotona, nondecrescente function e definita su tutto l'asse reale con con le proprietà: $F_X(- \inf) = 0$ e $ F_X(+ \inf) = 1$. Se $F_X(x)$ è ovunque differenziabile, la variabile aleatoria $X$ è continua. Dunque una densità di probabilità $p_X(x)$ associata ad $X$ esiste e soddisfa
+$F_X(x)$ è una funzione di $x$ monotona, nondecrescente e definita su tutto l'asse reale con con le proprietà: $F_X(- \inf) = 0$ e $ F_X(+ \inf) = 1$. Se $F_X(x)$ è ovunque differenziabile, la variabile aleatoria $X$ è continua. Dunque una densità di probabilità $p_X(x)$ associata ad $X$ esiste e soddisfa
 \begin{equation}
     p_X(x) = \frac{d\ F_X(x)}{dx}
 \end{equation}
@@ -53,7 +53,7 @@ p_X(x) \geq 0 \quad \forall x \in \mathbb{R}.
 P(a\leq X\leq b) = \int_a^b p_X(x) dx.
 \end{equation}
 
-La distribuzione di probabilità può quindi essere interpretata geometricamente: la probabilità associata a un intervallo corrisponde all'area sottesa dalla densità di probabilità nell'intervallo considerato. Una maggiore densità di probabilità in una determinata regione indica quindi una maggiore probabilità di osservare valori della variabile in quella regione.
+La distribuzione di probabilità può quindi essere interpretata geometricamente: la probabilità associata a un intervallo corrisponde all'area sottesa dalla densità di probabilità nell'intervallo considerato. Una maggiore densità di probabilità in una determinata regione indica quindi una maggiore probabilità di osservare valori della variabile in quella regione \cite{budd2025monte}.
 
 \begin{example}{Variabile aleatoria uniforme}{uniform}
 La variabile aleatoria uniforme $U$ su $(a, b)$, con $a < b$, ha funzione di densità di probabilità
@@ -107,7 +107,7 @@ Sia $p(\mathbf{x})$ la densità di probabilità della variabile aleatoria e $O(\
 \end{equation}
 
 La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilemente risolvibile analiticamente o numericamente.
-Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia.
+Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica \cite{marinari2023calcolo}, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia.
 
 \begin{example}{Metodo del trapezio}{trapezoid}
 Nel caso unidimensionale il metodo di quadratura approssima l'integrale di una funzione $f(x)$ su un intervallo $[a,b]$ mediante la formula:
@@ -145,8 +145,8 @@ Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamen
 \section{Meccanica statistica}
 \label{sec:meccanica-statistica}
 
-\subsection{Il concetto di ensemble}
-...
+\subsection{Il concetto di ensemble statistico}
+... \cite{kennett2020essential}
 
 \subsection{L'ensemble canonico}
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$ dove $\mathbf{x}$

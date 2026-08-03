@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1785761866.38458 "thesis.aux" "thesis.bbl" "thesis" 1785762537.3163 0
-  "./Bibliografia.bib" 1783368152.66991 165 f3017c022259bc3834b930d3ab704c91 ""
+["bibtex thesis"] 1785775560.5103 "thesis.aux" "thesis.bbl" "thesis" 1785775567.49096 0
+  "./Bibliografia.bib" 1785772651.25036 2133 6a671cad0097106dff50b2d0f386a129 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1785762535.41314 11570 6b5e1b6d5bfcb223d2a330d8359f9fa2 "pdflatex"
+  "thesis.aux" 1785775566.32599 12125 c1cdc90e215923644472a6c8952a10fe "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1785762522.94893 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1785762537.31787 0
-  "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1785607307.67745 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
+["pdflatex"] 1785775560.89149 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1785775567.49159 0
+  "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1785773101.70782 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -50,6 +50,7 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1247596667 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1247596667 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247596667 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1247596667 36118 fad905eba93cff5bce1e185fe980a177 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1247596673 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
@@ -126,6 +127,7 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/generic/uniquecounter/uniquecounter.sty" 1576434012 7008 f92eaa0a3872ed622bbf538217cd2ab7 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/00miktex/epstopdf-sys.cfg" 1616067285 584 2a1075dd71571459f59146da9f7502ad ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/algorithm2e/algorithm2e.sty" 1500391604 167160 d91cee26d3ef5727644d2110445741dd ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/algorithms/algorithmic.sty" 1251549064 9550 ce01bb529235d2febc14da01b8e452c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/amsfonts.sty" 1358197772 5949 3f3fd50a8cc94c3d4cbf4fc66cd3df1c ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsa.fd" 1358197772 961 6518c6525a34feb5e8250ffa91731cff ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsb.fd" 1358197772 961 d02606146ba5601b5645f987c92e6193 ""
@@ -213,9 +215,9 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "abstract.tex" 1784275408.46122 138 f4847178a92669b6d943f16fc393a970 ""
-  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1785664076.21039 3052 164fc84fb5ec7ef8470eec92eee78508 ""
-  "cap1.tex" 1785662819.09848 17744 88838b4b5a74a1f2f2ff9b75e9ea4ab8 ""
-  "cap2.tex" 1785762524.24814 12098 74c7a7b56ed10de4ef2c22fef487339f ""
+  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1785773370.45919 3077 2ded15771744c2afd0fa94a880eae400 ""
+  "cap1.tex" 1785772692.76645 17803 f36ffaadb2279369f35598c5d169f8ae ""
+  "cap2.tex" 1785775547.23299 12935 4a16373146393bb297fce2d1cf1f071e ""
   "cap3.tex" 1785320073.52474 464 b7bbf8da91df2924c61c586f2119f31f ""
   "cap4.tex" 1785359379.89573 4633 7803c2d8982894e8030fdbffcd3e9075 ""
   "conclusion.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
@@ -247,10 +249,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1785319865.58574 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1785762535.41314 11570 6b5e1b6d5bfcb223d2a330d8359f9fa2 "pdflatex"
-  "thesis.bbl" 1785761866.8988 52 a8d58af1cdd914e1e9801ae0ec600f83 "bibtex thesis"
-  "thesis.out" 1785762535.44898 8695 0b60b7bec858e1cc06935897cb5fdd7c "pdflatex"
-  "thesis.toc" 1785762535.46913 4251 c6eae4f34efc397d2da2065e5e278c02 "pdflatex"
+  "thesis.aux" 1785775566.32599 12125 c1cdc90e215923644472a6c8952a10fe "pdflatex"
+  "thesis.bbl" 1785775560.79629 944 65990a146ec9ab121e4d5bd26281dc67 "bibtex thesis"
+  "thesis.out" 1785775566.35545 8708 a70ccf9d9688edb9f591222e78187b94 "pdflatex"
+  "thesis.toc" 1785775566.37132 4253 4056d32871518bd5627ede5b51f3985b "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
