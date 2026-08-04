@@ -2,16 +2,16 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte Carlo. Si parte da un'introduzione ai metodi Monte Carlo classici (\ref{sec:monte-carlo-classico}), per poi affrontare il campionamento tramite catene di Markov (\ref{sec:mcmc}), e poi verrà presentato l'algoritmo di Metropolis. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo: la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
+In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte Carlo. Si parte all'introduzione ai metodi Monte Carlo diretti (\ref{sec:monte-carlo-diretto}), per poi affrontare il campionamento tramite catene di Markov (\ref{sec:mcmc}), e poi verrà presentato l'algoritmo di Metropolis. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo: la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
 
 \section{Accenni storici}
 
-Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam (\ref{fig:ulam})- fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam (\ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare ottenere campioni virtuali di uno stesso sistema così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (\ref{fig:von-neumann})presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono a ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
-Il nome "Monte Carlo" è stato scelto, invece, da un altro scienziato Nicholas Constantine Metropolis \cite{metropolis1987beginning}, la scelta del nome ricadde sulla famosa area della città di Monaco per canzonare Ulam, il quale aveva uno zio col vizio del gioco. 
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+l nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scopre che Fermi aveva già ideato in modo indipendente un metodo basato sul campionameto statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (dei laboratori di Los Alamos) aiutò lo studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC anche denominato il \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
@@ -36,11 +36,90 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropol
     \label{fig:pionieri-mc}
 \end{figure}
 
-\section{Monte Carlo classico}
-\label{sec:monte-carlo-classico}
+\section{Monte Carlo diretto}
+\label{sec:monte-carlo-diretto}
 
 \subsection{Metodo dell'inversa}
-...
+\label{subsec:metodo-inversa}
+Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento diretto più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$.
+
+Sia $X$ una variabile aleatoria continua con funzione di distribuzione cumulativa $F_X(x) = P(X \leq x)$ strettamente monotona e continua, tale da ammettere una funzione inversa $F_X^{-1}: (0,1) \to \mathbb{R}$. Sia inoltre $U \sim \mathcal{U}(0,1)$ una variabile aleatoria uniforme sull'intervallo $(0,1)$.
+
+Si consideri la variabile aleatoria definita dalla trasformazione inversa:
+\begin{equation}
+Y = F_X^{-1}(U).
+\end{equation}
+
+Per determinare la funzione di distribuzione cumulativa di $Y$, valutiamo $F_Y(y) = P(Y \leq y)$:
+\begin{equation}
+F_Y(y) = P\left(F_X^{-1}(U) \leq y\right).
+\end{equation}
+
+Poiché la funzione $F_X(x)$ è monotona strettamente crescente, applicando $F_X$ ad entrambi i membri della disuguaglianza si ottiene:
+\begin{equation}
+P\left(F_X^{-1}(U) \leq y\right) = P\left(U \leq F_X(y)\right).
+\end{equation}
+
+Ricordando che per una variabile aleatoria uniforme $U \sim \mathcal{U}(0,1)$ vale la proprietà $P(U \leq u) = u$ per ogni $u \in [0, 1]$, si ha direttamente:
+\begin{equation}
+F_Y(y) = F_X(y).
+\end{equation}
+
+Di conseguenza, la variabile aleatoria $Y$ possiede la medesima distribuzione cumulativa di $X$ e la sua densità di probabilità coincide con $p_X(x)$.
+
+L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente algoritmo:
+
+\vspace{3mm}
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwIn{Numero di campioni $N$; funzione di distribuzione cumulativa inversa $F_X^{-1}(u)$.}
+    Inizializza l'insieme dei campioni $\mathcal{S} = \emptyset$\;
+    \For{$i = 1$ \KwTo $N$}{
+        Genera $u_i \sim \mathcal{U}(0,1)$\;
+        Calcola $x_i = F_X^{-1}(u_i)$\;
+        Aggiungi $x_i$ all'insieme $\mathcal{S}$\;
+    }
+\KwOut{Insieme di campioni $\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_N\}$ distribuiti secondo $p_X(x)$.}
+\caption{Metodo dell'Inversa (Inverse Transform Sampling)}
+\label{alg:inverse_transform}
+\end{algorithm}
+\vspace{3mm}
+
+Si mostra un esempio pratico di applicazione del metodo dell'inversa per il campionamento della distribuzione esponenziale, che illustra chiaramente i passaggi descritti nell'algoritmo precedente.
+
+\begin{example}{Campionamento della distribuzione esponenziale}{esponenziale}
+Si consideri la distribuzione di probabilità esponenziale con parametro $\lambda > 0$:
+\begin{equation}
+p_X(x) = \begin{cases} 
+\lambda e^{-\lambda x} & \text{se } x \geq 0, \\
+0 & \text{se } x < 0.
+\end{cases}
+\end{equation}
+
+La relativa funzione di distribuzione cumulativa per $x \geq 0$ è data da:
+\begin{equation}
+F_X(x) = \int_{0}^{x} \lambda e^{-\lambda t} \, dt = 1 - e^{-\lambda x}.
+\end{equation}
+
+Uguagliando $F_X(x)$ a una variabile uniforme $u \in (0,1)$ ed invertendo la relazione:
+\begin{equation}
+u = 1 - e^{-\lambda x} \implies 1 - u = e^{-\lambda x} \implies x = -\frac{1}{\lambda} \ln(1 - u).
+\end{equation}
+
+Poiché se $U \sim \mathcal{U}(0,1)$ anche $(1 - U) \sim \mathcal{U}(0,1)$, la formula generatrice si semplifica spesso in:
+\begin{equation}
+x = -\frac{1}{\lambda} \ln(u).
+\end{equation}
+\end{example}
+
+Il principale vantaggio del metodo dell'inversa risiede nella sua efficienza e semplicità: ciascun campione generato è perfettamente indipendente dagli altri e non vi è alcuna probabilità di rifiuto (a differenza dei metodi di Acceptance-Rejection o dei metodi Markov Chain Monte Carlo).
+
+Tuttavia, il metodo presenta forti limitazioni pratiche, che ne riducono l'applicabilità a distribuzioni di probabilità complesse o multidimensionali:
+\begin{itemize}
+    \item \textbf{Invertibilità analitica}: Richiede che la funzione di distribuzione cumulativa $F_X(x)$ sia integrabile ed invertibile in forma chiusa (o approssimabile numericamente con elevata precisione). Ad esempio, per la distribuzione gaussiana $F_X(x)$ coinvolge la funzione di errore ($\text{erf}$), la cui inversione richiede approssimazioni numeriche.
+    \item \textbf{Costante di normalizzazione}: È applicabile solo se la densità di probabilità $p_X(x)$ è perfettamente normalizzata.
+    \item \textbf{Dimensionalità}: Risulta di difficile estensione a distribuzioni ad alta dimensionalità $D \gg 1$, rendendolo di fatto inutilizzabile per il campionamento della distribuzione di Boltzmann in fisica statistica.
+\end{itemize}
 
 \section{Markov Chain Monte Carlo}
 \label{sec:mcmc}
@@ -52,28 +131,28 @@ Sia ${X_1,..., X_N}$ una sequenza di variabili aleatorie in $\mathbb{R}^D$, ques
 P(X_i |X_{i-1},..., X_{1}) = P(X_i | X_{i-1}).
 \end{equation}
 
-Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che la catena di Markov sono catene \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato \cite{quantum_monte_carlo_methods}. 
+Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che le catene di Markov sono catene \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato \cite{quantum_monte_carlo_methods}. 
 Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
 \begin{equation}
 P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
 \quad
-P(X_j|X_i) = P_{ij} = 
+P(X_i|X_j) = P_{ij} = 
 \begin{pmatrix}
-P(x_1|x_1)  & \cdots & P(x_j|x_1) & \cdots \\
-P(x_1|x_2) & \cdots & P(x_j|x_2) & \cdots \\
+P(x_1|x_1)  & \cdots & P(x_1|x_j) & \cdots \\
+P(x_2|x_1) & \cdots & P(x_2|x_j) & \cdots \\
 \vdots & \ddots & \vdots & \\
-P(x_1|x_i) & \cdots & P(x_j|x_i) & \cdots \\
-\vdots   & \vdots & \ddots
+P(x_i|x_1) & \cdots & P(x_i|x_j) & \cdots \\
+\vdots   & \vdots& \vdots & \ddots
 \end{pmatrix}
 \end{equation}
 
-Dove è possibile notare che le quantità $P_{ij}$, non dipendono dalle variabili nella sequenza che stiamo utilizzando grazie alle proprietà markoviane della catena. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
+La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
 \begin{equation}
-\sum_{j} p^{(i)}_j = 1, \quad \sum_{j} P_{ij} =1.
+\sum_{j} p^{(i)}_j = 1, \quad \sum_{i} P_{ij} =1.
 \label{ev_prob}
 \end{equation}
 
-Una catena di Markov è definita da una probabilità iniziale $p^{(0)}_i$ e da una matrice stocastica $P_{ij}$ detta \textbf{matrice di transizione}, poichè essa permette di generare la catena in modo ricorsivo:
+Data una distribuzione iniziale $p^{(0)}_i$ e la matrice stocastica $P_{ij}$ detta \textbf{matrice di transizione}, si può evolvere la distribuzione in modo ricorsivo:
 \begin{equation}
     p^{(k+1)}_i = \sum_{j} P_{ij} p^{(k)}_j  \ \text{con } k \in \mathbb{N}.
 \end{equation}
@@ -83,7 +162,7 @@ Questa evoluzione della distribuzione di probabilità della catena conserva la n
 \sum_{i} p^{(k+1)}_i = \sum_{i} \sum_{j} P_{ij} p^{(k)}_j = \sum_{j} p^{(k)}_j \sum_{i} P_{ij} = \sum_{j} p^{(k)}_j = 1.
 \end{equation}
 
-Inoltre considerando una matrice di transizione ergodica(ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge una \textbf{distribuzione stazionaria} $p_i$ tale che:
+Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge una \textbf{distribuzione stazionaria} $p_i$ tale che:
 \begin{equation}
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
@@ -117,12 +196,13 @@ Queste condizioni assicurando che la matrice di transizione rispetti il bilancio
 \begin{equation}
  P_{ij} = T_{ij}A_{ij} = T_{ji} \frac{p_i}{p_j} = P_{ji} \frac{p_i}{p_j} \implies P_{ij} p_j = P_{ji} p_i.
 \end{equation}
+
 L'algoritmo di Metropolis è quindi un metodo per costruire una catena di Markov che campiona una distribuzione target $p_i$ senza la necessità di conoscere la costante di normalizzazione della distribuzione, il seguente pseudocodice descrive l'operazione base dell'algoritmo di Metropolis:
 \\
 \newline
 \begin{algorithm}[H]
 \SetAlgoLined
-\KwIn{Configurazione $X^{(i)}$; distribuzione target $p(x)$ nota a meno della costante di normalizzazione; distribuzione di proposta simmetrica $T$.}
+\KwIn{Configurazione $X^{(k)}$; distribuzione target $p(x)$ nota a meno della costante di normalizzazione; distribuzione di proposta simmetrica $T$.}
     Genera uno stato proposto $X' \sim T(X^{(k)})$\;
 
     Calcola la probabilità di accettazione \ \ $ A=\min (1,\frac{p(X')}{p(X^{(k)})}); $
@@ -132,9 +212,9 @@ L'algoritmo di Metropolis è quindi un metodo per costruire una catena di Markov
     \eIf{$u\le A$}{
         \Return $X'$\;
     }{
-        \Return $X^{(i)}$\;
+        \Return $X^{(k)}$\;
     }
-\KwOut{Configurazione $X^{(i+1)}$.}
+\KwOut{Configurazione $X^{(k+1)}$.}
 \caption{Operazione base dell'algoritmo di Metropolis}
 \label{alg:metropolis}
 \end{algorithm}
@@ -148,7 +228,7 @@ L'iterazione di questa operazione è l'algoritmo di Metropolis, che è possibile
     \label{fig:metropolis}
 \end{figure}
 
-Dalla definizione della matrice di accettazione $A_{ij}$ è possibile notare che gli elementi di $P_{ij}$ dipendano esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile da calcolare analiticamente o numericamente.
+Dalla definizione della matrice di accettazione $A_{ij}$ è possibile notare che gli elementi di $P_{ij}$ dipendono esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.
 
 Infine l'algoritmo di Metropolis trasferisce la responsabilità dell'ergodicità di $P_{ij}$ alla matrice $T_{ij}$. Se in un numero finito di passi $T_{ij}$ permette di raggiungere tutto lo spazio delle fasi, allora l'algoritmo di Metropolis è ergodico. Questo è un aspetto cruciale per il corretto funzionamento dell'algoritmo, in quanto la catena di Markov deve essere in grado di esplorare tutto lo spazio delle configurazioni per garantire che la distribuzione stazionaria sia effettivamente raggiunta. In altre parole, se la matrice di proposta $T_{ij}$ non consente di visitare tutte le configurazioni possibili, l'algoritmo potrebbe rimanere intrappolato in una regione dello spazio delle fasi, portando a stime errate delle quantità termodinamiche.
 \section{Campioni autocorrelati}

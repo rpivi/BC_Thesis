@@ -14,36 +14,36 @@
 \contentsline {subsection}{\numberline {1.2.4}La distribuzione di Boltzmann}{15}{subsection.1.2.4}%
 \contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{17}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Accenni storici}{17}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Monte Carlo classico}{18}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Metodo dell'inversa}{18}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{19}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{19}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis}{20}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{23}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Blocking Analysis}{23}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Metodo di Sokal}{23}{subsection.2.4.2}%
-\contentsline {chapter}{\numberline {3}Normalizing Flows}{24}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{24}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Normalizing Flows}{24}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{24}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Campionamento, inferenza ed addestramento}{24}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Costruire un Flow tramite composizione finita}{24}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Coupling Flow}{24}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Trasformazione affine}{24}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Coupling layers}{24}{subsection.3.2.6}%
-\contentsline {subsection}{\numberline {3.2.7}Real NVP}{24}{subsection.3.2.7}%
-\contentsline {subsection}{\numberline {3.2.8}Esempi}{24}{subsection.3.2.8}%
-\contentsline {section}{\numberline {3.3}Flow Markov Chain Monte Carlo}{24}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Studio del campionamento}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{26}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{26}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{26}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Risultati}{27}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{31}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{31}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{31}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{36}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{39}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusione}{41}{chapter*.20}%
-\contentsline {chapter}{Bibliografia}{42}{chapter*.21}%
-\contentsline {chapter}{Ringraziamenti}{43}{chapter*.22}%
+\contentsline {section}{\numberline {2.2}Monte Carlo diretto}{19}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Metodo dell'inversa}{19}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{21}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{21}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Algoritmo di Metropolis}{22}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{25}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Blocking Analysis}{25}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Metodo di Sokal}{25}{subsection.2.4.2}%
+\contentsline {chapter}{\numberline {3}Normalizing Flows}{26}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{26}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Normalizing Flows}{26}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{26}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Campionamento, inferenza ed addestramento}{26}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Costruire un Flow tramite composizione finita}{26}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Coupling Flow}{26}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Trasformazione affine}{26}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Coupling layers}{26}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Real NVP}{26}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}Esempi}{26}{subsection.3.2.8}%
+\contentsline {section}{\numberline {3.3}Flow Markov Chain Monte Carlo}{26}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Studio del campionamento}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{28}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{28}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{28}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Risultati}{29}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{33}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{33}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{33}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{38}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{41}{subsection.4.3.4}%
+\contentsline {chapter}{Conclusione}{43}{chapter*.20}%
+\contentsline {chapter}{Bibliografia}{44}{chapter*.21}%
+\contentsline {chapter}{Ringraziamenti}{45}{chapter*.22}%

@@ -1,6 +1,8 @@
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
 
+\newpage
+
 \chapter{Probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
@@ -9,17 +11,17 @@ Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle
 \section{Teoria della probabilità}
 \label{sec:probabilita}
 \subsection{Spazi di probabilità e variabili aleatorie}
-In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità} ($ \Omega, P$): dove $\Omega$ è l'insieme di tutti i possibili esiti $\chi$ e $P$ è una misura di probabilità su $\Omega$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ogni evento è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
+In teoria della probabilità ha un ruolo fondamentale \textbf{lo spazio di probabilità}($ \Omega, \mathcal{A}, P$): dove $\Omega$ è l'insieme di tutti i possibili esiti $\chi$, $\mathcal{A}$ è la sigma-algebra su $\Omega$ e $P$ è una misura di probabilità su $\mathcal{A}$. Un sottoinsieme $A \subset \Omega$ è chiamato evento ed ad ognuno di essi è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
 
-In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi disgiunti $A_1, A_2,  ...$ valga:
+In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi numerabili disgiunti ${A_i}$ valga:
 
 \begin{equation}
-    P(A_1 \cup A_2 \ ...) = P(A_1) + P(A_2) + ...
+    P\left(\bigcup_{i=1} A_i\right) = \sum_{i=1} P(A_i).
 \end{equation}
 
 \begin{example}{Tiri di un dado}{dice}
 Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P({\chi_i}) = 1/6$ per ogni $\chi_i \in \Omega$ .
-Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilià calcolabile nel seguente modo: $P(A) = P({2}) + P({4}) + P({6}) = 1/2$.
+Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P({2}) + P({4}) + P({6}) = 1/2$.
 \end{example}
 
 
@@ -33,9 +35,13 @@ X:\Omega \rightarrow \mathbb{R}.
 
 Data una variabile aleatoria $X$ essa ha associata una funzione \textbf{distribuzione cumulativa} $F_X(x)$, definita da: 
 \begin{equation}
+    F_X(x) = P(X \leq x).
+\end{equation}
+Dunque la probabilità che $X$ assuma un valore compreso tra due estremi $a$ e $b$ è data da:
+\begin{equation}
     P (a < X \le b) = F_X(b) - F_X(a).
 \end{equation}
-$F_X(x)$ è una funzione di $x$ monotona, nondecrescente e definita su tutto l'asse reale con con le proprietà: $F_X(- \inf) = 0$ e $ F_X(+ \inf) = 1$. Se $F_X(x)$ è ovunque differenziabile, la variabile aleatoria $X$ è continua. Dunque una densità di probabilità $p_X(x)$ associata ad $X$ esiste e soddisfa
+$F_X(x)$ è una funzione di $x$ monotona, nondecrescente e definita su tutto l'asse reale con con le proprietà: $ \lim_{x \to - \infty }F_X(x) = 0$ e $ \lim_{x \to + \infty }F_X(x) = 1$. Se $F_X(x)$ è ovunque differenziabile, la variabile aleatoria $X$ è continua. Dunque una densità di probabilità $p_X(x)$ associata ad $X$ esiste e soddisfa
 \begin{equation}
     p_X(x) = \frac{d\ F_X(x)}{dx}
 \end{equation}
@@ -202,7 +208,7 @@ si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textbf{la distribuzione di Boltzmann
     \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}.
 \end{equation}
 
-Dove è $\beta = 1/(k_B T)$.
+Dove $\beta = 1/(k_B T)$.
 
 \subsection{La distribuzione di Boltzmann}
 
@@ -216,7 +222,7 @@ Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione dell
 
 dove $\beta = \frac{1}{k_B T}$ e $Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x}$ è la funzione di partizione.
 
-Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina la probabilità di ciascuna configurazione e si può facilemente comprendere come all'aumentare della temperatura la probabilità permette probabilisticamente una gamma più ampia di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e contiene tutta l'informazione termodinamica del sistema. Infatti, una volta nota $Z(\beta)$, è possibile ricavare grandezze quali energia libera, energia media, entropia e capacità termica.
+Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina la probabilità di ciascuna configurazione e si può facilemente comprendere come all'aumentare della temperatura sono probabilisticamente permessi una gamma più ampia di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e contiene tutta l'informazione termodinamica del sistema. Infatti, una volta nota $Z(\beta)$, è possibile ricavare grandezze quali energia libera, energia media, entropia e capacità termica.
 
 Formule delle osservabili termodinamiche in funzione della funzione di partizione ....
 
@@ -233,4 +239,4 @@ Di conseguenza, anche il valore assoluto della distribuzione di Boltzmann non è
 
 nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica, oppure è possibile valutare solo il fattore di Boltzmann $e^{-\beta \mathcal{H}(\mathbf{x})}$.
 
-Questa osservazione è importante per i capitoli successivi poichè per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione seppur conoscendola a meno della costante di normalizzazione.
+Questa osservazione è importante per i capitoli successivi poiché per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione seppur conoscendola a meno della costante di normalizzazione.

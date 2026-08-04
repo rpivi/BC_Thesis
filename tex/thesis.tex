@@ -17,14 +17,14 @@
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{theorems}
 
-\definecolor{accento}{RGB}{30,75,40} % verde scuro
+\definecolor{accento}{RGB}{30,80,30} % verde scuro
 
 % Esempio: tono più chiaro, per non pesare troppo sul testo
 \newtcbtheorem[number within=section]{example}{Esempio}%
   {colback=accento!5, colframe=accento, fonttitle=\bfseries}{ex}
 
-% Definizione: fondo leggermente più marcato, cornice piena
-\newtcbtheorem[number within=section]{definition}{Definizione}%
+% Dimostrazione: fondo leggermente più marcato, cornice piena
+\newtcbtheorem[number within=section]{dimost}{Dimostrazione}%
   {colback=accento!8, colframe=accento, fonttitle=\bfseries, coltitle=white}{def}
 
 % Teorema: massimo contrasto, per farlo risaltare come i risultati chiave
@@ -116,6 +116,7 @@ per essere stati il mio faro e il mio porto sicuro.
 
 \tableofcontents
 
+\newpage
 \input{cap1.tex}
 \input{cap2.tex}
 \input{cap3.tex}

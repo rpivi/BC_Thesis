@@ -397,6 +397,7 @@ INPUT .\images\people\fermi.jpg
 INPUT .\images\people\fermi.jpg
 INPUT .\images\people\fermi.jpg
 INPUT .\images\people\fermi.jpg
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT .\images\MCMC\mcmc_algo.png
 INPUT .\images\MCMC\mcmc_algo.png
 INPUT .\images\MCMC\mcmc_algo.png
@@ -576,6 +577,8 @@ INPUT ringraziamenti.tex
 INPUT thesis.aux
 INPUT .\thesis.out
 INPUT .\thesis.out
+INPUT C:\Users\rickp\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
+INPUT C:\Users\rickp\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
