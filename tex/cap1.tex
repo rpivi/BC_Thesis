@@ -265,7 +265,7 @@ Quando il campionamento diretto non è una scelta possibile per il problema che 
 
 Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ anche a meno della costante di normalizzazione, condizione tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
 \newline
-Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis nella sua forma standard (Sezione \ref{subsec:metropolis}). Un passo locale è semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.
+Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis-Hastings (Sezione \ref{subsec:metropolis}). Un passo locale è una scelta semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.
 \newline
 Si parla invece di \textbf{passo globale} quando la configurazione candidata può discostarsi significativamente da quella corrente, fino al caso limite in cui è generata indipendentemente da essa, attingendo a un'intera distribuzione di proposta definita su tutto lo spazio delle configurazioni. Una catena costruita in questo modo non soffre per costruzione dell'intrappolamento nei modi, poiché ogni proposta esplora potenzialmente l'intero spazio indipendentemente da dove si trovi la catena. La sua efficienza dipende però interamente dalla qualità della distribuzione di proposta: se questa è troppo diversa dalla distribuzione target, la probabilità che una proposta venga accettata può essere troppo bassa, vanificando il vantaggio teorico del passo globale. La Figura \ref{fig:local_vs_global} illustra qualitativamente la differenza fra passo locale e passo globale su una distribuzione bimodale: nel primo caso il camminatore esplora un modo alla volta, nel secondo può spostarsi direttamente da un modo all'altro.
 
@@ -278,11 +278,17 @@ Si parla invece di \textbf{passo globale} quando la configurazione candidata pu�
 
 Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un Normalizing Flow (Capitolo 3) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti una candidata naturale come distribuzione di proposta per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - il \textbf{Flow-MCMC}, che verrà discusso nella Sezione \ref{sec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
 
+In tutto il lavoro, utilizzeremo la notazione 
+\begin{equation}
+mathbf{x} \sim p(\mathbf{x}), 
+\end{equation}
+per indicare il campionamento di una configurazione $\mathbf{x}$ estratta dalla distribuzione di probabilità $p(\mathbf{x})$.
+
 I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel campionamento markoviano a mosse locali (MCMC, Capitolo \ref{sec:mcmc}), nel campionamento diretto approssimato (Normalizing Flow, Capitolo \ref{sec:flows}), e nel campionamento markoviano a mosse globali (Flow-MCMC, Sezione \ref{sec:flow-mcmc}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.2\textwidth]{images/MCMC/map_methods.png}
+    \includegraphics[width=1.1\textwidth]{images/MCMC/map_methods.png}
     \caption{Mappa concettuale dei vari metodi di campionamento e quali sono presentati in questa tesi ed in che capitoli.}
     \label{fig:map_methods}
 \end{figure}

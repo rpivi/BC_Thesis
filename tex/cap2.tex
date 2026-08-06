@@ -131,7 +131,7 @@ Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla v
 Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
 \begin{equation}
 P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
-\ \ 
+\ 
 P(X_i|X_j) = P_{ij} = 
 \begin{pmatrix}
 P(x_1|x_1)  & \cdots & P(x_1|x_j) & \cdots \\
@@ -170,59 +170,76 @@ Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica di
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
 
-Questa struttura matematica è molto flessibile e può essere generalizzata al caso di variabili continue, sostituendo le somme cin integrali e la ${p}_i$ con una funzione densità di probabilità $p(\mathbf{x})$ e $P_{ij}$ con un kernel $\pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^{+} $ \cite{leoni2023enhancing}.
-La catena e la condizione di bilancio dettagliato nel caso continuo vengono definite nel seguente modo :
+Il formalismo matematico delle Catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
 \begin{equation}
-    p^{(i+1)}(\mathbf{x})=\int_{\mathbb{R}^D} \pi (\mathbf{x}, \mathbf{y}) \ p^{(i)}(\mathbf{y}) \ d \mathbf{y}, \ \ \ \pi(\mathbf{x}, \mathbf{y})p(\mathbf{y})= \pi(\mathbf{y}, \mathbf{x})p(\mathbf{x}) 
+p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf{x}},
 \end{equation}
-Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings \cite{metropolis1953equation} \cite{hastings1970monte}, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$.
+e la matrice di transizione $P_{ij}$ viene sostituita da un kernel di transizione continuo:
+\begin{equation}
+    \pi \colon \mathbb{R}^N \times \mathbb{R}^N \to \mathbb{R}^+
+\end{equation}
+che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
+\begin{equation}
+p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^N} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
+\end{equation}
 
-\subsection{Algoritmo di Metropolis-Hastings}
+Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la \emph{condizione di bilancio dettagliato} (detailed balance condition):
+\begin{equation}
+\pi(\mathbf{x}, \mathbf{y}) p(\mathbf{y}) = \pi(\mathbf{y}, \mathbf{x}) p(\mathbf{x})
+\end{equation}
+
+Sotto condizioni di ergodicità, facendo evolvere gli elementi della catena attraverso tale kernel, si ottiene una sequenza di campioni $\{\mathbf{x}_i\}_{i=1}^N$. Dopo un certo tempo $t$ sufficientemente grande, detto \emph{tempo di termalizzazione} (o \emph{burn-in time}), i campioni generati risulteranno distribuiti secondo la distribuzione target $p(\mathbf{x})$:
+\begin{equation}
+\mathbf{x}_i \sim p(\mathbf{x})= \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} \quad \text{per } i > t
+\end{equation}
+
+Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$,  conoscendone anche soltanto la forma non normalizzata $f(\mathbf{x})$.
+
+\subsection{L'Algoritmo di Metropolis-Hastings}
 \label{subsec:metropolis}
-
-Dunque per poter calcolare le quantità termodinamiche di interesse è necessaria un kernel che soddisfi il bilancio dettagliato per la distribuzione di Boltzmann.
-
-Metropolis et al. proposero di costruire il kernel $\pi$ come prodotto di due elementi:
-
+Il problema di costruire un opportuno kernel $\pi(\mathbf{x}, \mathbf{y})$ che garantisca la convergenza a una data distribuzione target $p(\mathbf{x})$ è stato studiato da Metropolis \cite{metropolis1953equation}  e successivamente generalizzato da Hastings \cite{hastings1970monte}. La soluzione generale esprime il kernel di transizione come prodotto di due termini:
 \begin{equation}
-\pi (\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \mathrm{A} (\mathbf{x}, \mathbf{y})
+\pi(\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \ \mathcal{A}(\mathbf{x}, \mathbf{y})
 \end{equation}
-dove $\Gamma(\mathbf{x} \to \mathbf{y})$ è la funzione di proposta, che rappresenta la probabilità di proporre una transizione dallo stato $j$ allo stato $i$, e $A_{ij}$ è la matrice di accettazione, che rappresenta la probabilità di accettare la transizione proposta. Gli elementi della matrice di proposta $T_{ij}$ devono soddisfare le seguenti condizioni:
+dove:
+\begin{itemize}
+    \item $\Gamma(\mathbf{x} \to \mathbf{y})$ è la \emph{funzione di aggiornamento} (proposal distribution), che definisce la probabilità di proporre uno spostamento dallo stato $\mathbf{x}$ allo stato $\mathbf{y}$;
+    \item $\mathcal{A}(\mathbf{x}, \mathbf{y})$ è il \emph{tasso di accettazione} (acceptance ratio), definito come:
+    \begin{equation}
+    \mathcal{A}(\mathbf{x}, \mathbf{y}) = \min \left\{ 1, \, \frac{\Gamma(\mathbf{y} \to \mathbf{x}) \, f(\mathbf{y})}{\Gamma(\mathbf{x} \to \mathbf{y}) \, f(\mathbf{x})} \right\}
+    \end{equation}
+\end{itemize}
+
+Assumendo che la distribuzione di proposta sia normalizzata e strettamente positiva:
 \begin{equation}
-T_{ij} \ge 0, \quad \sum_{i} T_{ij} = 1 \quad \forall j, \quad T_{ij} = T_{ji}.
+    \int \Gamma(\mathbf{x} \to \mathbf{y})d\mathbf{y} = 1,\ \ \ \Gamma(\mathbf{x} \to \mathbf{y}) > 0
 \end{equation}
-Mentre gli elementi della matrice di accettazione $A_{ij}$ sono costruiti in modo che:
+Si dimostra che il kernel così costruito soddisfa la condizione di bilancio dettagliato:
 \begin{equation}
-    A_{ij} = \min\left(1, \frac{p_i}{p_j}\right).
-\end{equation}
-Queste condizioni assicurando che la matrice di transizione rispetti il bilancio dettagliato, e quindi che la distribuzione stazionaria della catena di Markov sia la distribuzione target $p_i$, infatti (assumendo $p_i \le p_j$ senza perdita di generalità):
-\begin{equation}
- P_{ij} = T_{ij}A_{ij} = T_{ji} \frac{p_i}{p_j} = P_{ji} \frac{p_i}{p_j} \implies P_{ij} p_j = P_{ji} p_i.
+\pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}
 \end{equation}
 
-L'algoritmo di Metropolis-Hastings è quindi un metodo per costruire una catena di Markov che campiona una distribuzione target $p_i$ senza la necessità di conoscere la costante di normalizzazione della distribuzione, il seguente pseudocodice descrive l'operazione base dell'algoritmo:
-\\
-\newline
+A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la descritta nell'algoritmo \ref{alg:metropolis_hastings}.
+
+\vspace{3mm}
 \begin{algorithm}[H]
 \SetAlgoLined
-\KwIn{Configurazione $X^{(k)}$; distribuzione target $p(x)$ nota a meno della costante di normalizzazione; distribuzione di proposta simmetrica $T$.}
-    Genera uno stato proposto $X' \sim T(X^{(k)})$\;
-
-    Calcola la probabilità di accettazione \ \ $ A=\min (1,\frac{p(X')}{p(X^{(k)})}); $
-
-    Genera $u\sim\mathcal U(0,1)$\;
-
-    \eIf{$u\le A$}{
-        \Return $X'$\;
+\KwIn{Stato corrente $\mathbf{x}_i$; distribuzione target non normalizzata $f(\mathbf{x})$; distribuzione di proposta $\Gamma(\mathbf{x} \to \mathbf{y})$.}
+    Genera un candidato $\mathbf{y} \sim \Gamma(\mathbf{x}_i \to \mathbf{y})$\;
+    Genera $u \sim \mathcal{U}(0,1)$\;
+    Calcola il tasso di accettazione $\mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min\left(1, \frac{\Gamma(\mathbf{y} \to \mathbf{x}_i) f(\mathbf{y})}{\Gamma(\mathbf{x}_i \to \mathbf{y}) f(\mathbf{x}_i)}\right)$\;
+    \eIf{$u < \mathcal{A}(\mathbf{x}_i, \mathbf{y})$}{
+        Imposta $\mathbf{x}_{i+1} = \mathbf{y}$ \tcp*{Proposta accettata}
     }{
-        \Return $X^{(k)}$\;
+        Imposta $\mathbf{x}_{i+1} = \mathbf{x}_i$ \tcp*{Proposta rifiutata}
     }
-\KwOut{Configurazione $X^{(k+1)}$.}
-\caption{Operazione base dell'algoritmo di Metropolis-Hastings}
-\label{alg:metropolis}
+\KwOut{Nuovo stato $\mathbf{x}_{i+1}$.}
+\caption{Algoritmo di Metropolis-Hastings}
+\label{alg:metropolis_hastings}
 \end{algorithm}
-\vspace{5mm}
-L'iterazione di questa operazione è l'algoritmo Metropolis-Hastings, che è possibile vedere rappresentato graficamente in figura \ref{fig:metropolis-hastings}, dove si osservano i passi del camminatore randomico, una distribuzione proposta, una distribuzione target e i campioni generati dal metodo.
+\vspace{3mm}
+
+L'iterazione di questa operazione permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in figura \ref{fig:metropolis-hastings}.
 
 \begin{figure}[H]
     \centering
@@ -231,9 +248,21 @@ L'iterazione di questa operazione è l'algoritmo Metropolis-Hastings, che è pos
     \label{fig:metropolis-hastings}
 \end{figure}
 
-Dalla definizione della matrice di accettazione $A_{ij}$ è possibile notare che gli elementi di $P_{ij}$ dipendono esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.
+Un caso comune prevede l'uso di uno spostamento gaussiano simmetrico, in cui :
+\begin{equation}
+\mathbf{y} = \mathbf{x}_i + \mathbf{\epsilon}, \ \ \ \mathbf{\epsilon} \sim \mathcal{N}(0, \sigma^2)
+\end{equation}
+Poiché la proposta è simmetrica ($\Gamma(\mathbf{x} \to \mathbf{y}) = \Gamma(\mathbf{y} \to \mathbf{x})$), la percentuale di accettazione si semplifica nel rapporto diretto tra le densità di target:
+\begin{equation}
+\mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min \left\{ 1, \, \frac{f(\mathbf{y})}{f(\mathbf{x}_i)} \right\}
+\end{equation}
 
-Infine l'algoritmo di Metropolis trasferisce la responsabilità dell'ergodicità di $P_{ij}$ alla matrice $T_{ij}$. Se in un numero finito di passi $T_{ij}$ permette di raggiungere tutto lo spazio delle fasi, allora l'algoritmo di Metropolis è ergodico. Questo è un aspetto cruciale per il corretto funzionamento dell'algoritmo, in quanto la catena di Markov deve essere in grado di esplorare tutto lo spazio delle configurazioni per garantire che la distribuzione stazionaria sia effettivamente raggiunta. In altre parole, se la matrice di proposta $T_{ij}$ non consente di visitare tutte le configurazioni possibili, l'algoritmo potrebbe rimanere intrappolato in una regione dello spazio delle fasi, portando a stime errate delle quantità termodinamiche.
+E' possibile notare che gli elementi i valori di $\pi$ in questo caso simmetrico dipendono esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.
+Sostituendo la distribuzione di Boltzmann come distribuzione target otteniamo un tasso di accettazione della forma:
+\begin{equation}
+    \mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min \left\{ 1, \, \frac{e^{-\beta \mathcal{H}(\mathbf{y})}}{e^{-\beta \mathcal{H}(\mathbf{x}_i)}} \right\}.
+\end{equation}
+
 \section{Campioni autocorrelati}
 \label{sec:campioni-autocorrelati}
 
