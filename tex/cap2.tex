@@ -177,7 +177,7 @@ La catena e la condizione di bilancio dettagliato nel caso continuo vengono defi
 \end{equation}
 Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings \cite{metropolis1953equation} \cite{hastings1970monte}, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$.
 
-\subsection{Algoritmo di Metropolis}
+\subsection{Algoritmo di Metropolis-Hastings}
 \label{subsec:metropolis}
 
 Dunque per poter calcolare le quantità termodinamiche di interesse è necessaria un kernel che soddisfi il bilancio dettagliato per la distribuzione di Boltzmann.
@@ -185,7 +185,7 @@ Dunque per poter calcolare le quantità termodinamiche di interesse è necessari
 Metropolis et al. proposero di costruire il kernel $\pi$ come prodotto di due elementi:
 
 \begin{equation}
-\pi = \Gamma(\mathbf{x} \to \mathbf{y}) \mathscr{A} (\mathbf{x}, \mathbf{y})
+\pi (\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \mathrm{A} (\mathbf{x}, \mathbf{y})
 \end{equation}
 dove $\Gamma(\mathbf{x} \to \mathbf{y})$ è la funzione di proposta, che rappresenta la probabilità di proporre una transizione dallo stato $j$ allo stato $i$, e $A_{ij}$ è la matrice di accettazione, che rappresenta la probabilità di accettare la transizione proposta. Gli elementi della matrice di proposta $T_{ij}$ devono soddisfare le seguenti condizioni:
 \begin{equation}
@@ -200,7 +200,7 @@ Queste condizioni assicurando che la matrice di transizione rispetti il bilancio
  P_{ij} = T_{ij}A_{ij} = T_{ji} \frac{p_i}{p_j} = P_{ji} \frac{p_i}{p_j} \implies P_{ij} p_j = P_{ji} p_i.
 \end{equation}
 
-L'algoritmo di Metropolis è quindi un metodo per costruire una catena di Markov che campiona una distribuzione target $p_i$ senza la necessità di conoscere la costante di normalizzazione della distribuzione, il seguente pseudocodice descrive l'operazione base dell'algoritmo di Metropolis:
+L'algoritmo di Metropolis-Hastings è quindi un metodo per costruire una catena di Markov che campiona una distribuzione target $p_i$ senza la necessità di conoscere la costante di normalizzazione della distribuzione, il seguente pseudocodice descrive l'operazione base dell'algoritmo:
 \\
 \newline
 \begin{algorithm}[H]
@@ -218,17 +218,17 @@ L'algoritmo di Metropolis è quindi un metodo per costruire una catena di Markov
         \Return $X^{(k)}$\;
     }
 \KwOut{Configurazione $X^{(k+1)}$.}
-\caption{Operazione base dell'algoritmo di Metropolis}
+\caption{Operazione base dell'algoritmo di Metropolis-Hastings}
 \label{alg:metropolis}
 \end{algorithm}
 \vspace{5mm}
-L'iterazione di questa operazione è l'algoritmo di Metropolis, che è possibile vedere rappresentato graficamente in figura \ref{fig:metropolis}, dove si osservano i passi del camminatore randomico, una distribuzione proposta (prior), una distribuzione target (posterior) e i campioni generati dal metodo.
+L'iterazione di questa operazione è l'algoritmo Metropolis-Hastings, che è possibile vedere rappresentato graficamente in figura \ref{fig:metropolis-hastings}, dove si osservano i passi del camminatore randomico, una distribuzione proposta, una distribuzione target e i campioni generati dal metodo.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/MCMC/mcmc_algo.png}
     \caption{}
-    \label{fig:metropolis}
+    \label{fig:metropolis-hastings}
 \end{figure}
 
 Dalla definizione della matrice di accettazione $A_{ij}$ è possibile notare che gli elementi di $P_{ij}$ dipendono esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.

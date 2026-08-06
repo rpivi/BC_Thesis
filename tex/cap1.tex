@@ -6,7 +6,7 @@
 \chapter{Probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione (\ref{sec:probabilita}). Si introdurrà poi l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si introdurrà la distinzione fra campionamento diretto e markoviano (\ref{sec:tassonomia_campionamento}) necessaria per comprendere le differenze nei vari metodi di campionamento presentati nei capitoli successivi. 
+Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione (Sezione \ref{sec:probabilita}). Si introdurrà poi l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (Sezione \ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si introdurrà la distinzione fra campionamento diretto e markoviano (Sezione \ref{sec:tassonomia_campionamento}) necessaria per comprendere le differenze nei vari metodi di campionamento presentati nei capitoli successivi. 
 
 \section{Teoria della probabilità}
 \label{sec:probabilita}
@@ -175,7 +175,7 @@ Per comprendere il comportamento di un sistema fisico, è fondamentale scegliere
 
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$, dove $\mathbf{x}$ rappresenta collettivamente i gradi di libertà del sistema, quali posizioni, impulsi o, più in generale, tutte le variabili necessarie a identificarne uno stato microscopico.
 
-Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico} (o bagno termico), cioè un sistema macroscopico molto più grande del sistema in esame. I due sistemi possono scambiare energia, mentre il numero di particelle rimane costante. Una rappresentazione grafica di questa situazione fisica è la \ref{fig:canonical}. Grazie alle dimensioni macroscopiche del serbatoio, gli scambi di energia producono variazioni trascurabili del suo stato, cosicché esso può essere considerato in equilibrio ad una temperatura costante $T$. 
+Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico} (o bagno termico), cioè un sistema macroscopico molto più grande del sistema in esame. I due sistemi possono scambiare energia, mentre il numero di particelle rimane costante. Una rappresentazione grafica della situazione fisica è la Figura \ref{fig:canonical}. Grazie alle dimensioni macroscopiche del serbatoio, gli scambi di energia producono variazioni trascurabili del suo stato, cosicché esso può essere considerato in equilibrio ad una temperatura costante $T$. 
 
 \begin{figure}[H]
     \centering
@@ -186,7 +186,7 @@ Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico}
 
 In queste condizioni il sistema non possiede un'energia fissata: i suoi microstati vengono continuamente modificati dagli scambi di calore con il serbatoio e l'energia assume valori differenti con una certa probabilità, a condizione che l'energia media del sistemas sia costante, ovvero una quantità ben definita. L'insieme di copie ideali del sistema, tutte caratterizzate dallo stesso numero di particelle e dalla medesima temperatura, prende il nome di \textbf{ensemble canonico}.
 
-L'obiettivo della meccanica statistica è determinare la probabilità che il sistema si trovi in un determinato stato microscopico di energia $E$. Tale probabilità è descritta dalla \textbf{distribuzione di Boltzmann} ricavabile tramite il principio di massima entropia \ref{sec:a_boltzm_der}. 
+L'obiettivo della meccanica statistica è determinare la probabilità che il sistema si trovi in un determinato stato microscopico di energia $E$. Tale probabilità è descritta dalla \textbf{distribuzione di Boltzmann} ricavabile tramite il principio di massima entropia Appendice \ref{sec:a_boltzm_der}. 
 
 \subsection{La distribuzione di Boltzmann}
 La distribuzione di Boltzmann descrive la probabilità di osservare il sistema in una configurazione microscopica quando esso si trova all'equilibrio termico con un serbatoio a temperatura $T$ fissata.

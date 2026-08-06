@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{budd2025monte}
+B.~Timothy.
+\newblock {\em Monte Carlo Techniques}.
+\newblock Radboud University, Nijmegen, The Netherlands, 2025.
+\newblock Lecture notes for the course NWI-NM042B Monte Carlo Techniques.
+
+\bibitem{marinari2023calcolo}
+L.~Leuzzi E.~Marinari, G.~Parisi.
+\newblock {\em Calcolo delle probabilità. Un trattatello per principianti
+  volenterosi}.
+\newblock Zanichelli, 2023.
+
+\bibitem{kennett2020essential}
+M.~P. Kennett.
+\newblock {\em Essential Statistical Physics}.
+\newblock Cambridge University Press, 2020.
+
+\bibitem{metropolis1987beginning}
+N.~Metropolis.
+\newblock The beginning of the monte carlo method.
+\newblock {\em Los Alamos Science}, Special Issue, 1987.
+
+\bibitem{quantum_monte_carlo_methods}
+P.~Werner J.~E.~Gubernatis, N.~Kawashima.
+\newblock {\em Quantum Monte Carlo Methods}.
+\newblock Cambridge University Press, 2016.
+
+\bibitem{leoni2023enhancing}
+L.~Leoni.
+\newblock Enhancing diagrammatic monte carlo via machine learning.
+\newblock Master's thesis, University of Bologna, Department of Physics and
+  Astronomy, Bologna, Italy, 2023.
+\newblock Supervisor: Prof. Cesare Franchini. Academic Year 2022/2023.
+
+\bibitem{metropolis1953equation}
+N.~Metropolis et~al.
+\newblock Equation of state calculations by fast computing machines.
+\newblock {\em The Journal of Chemical Physics}, 21(6), 1953.
+
+\bibitem{hastings1970monte}
+W.~K. Hastings.
+\newblock Monte carlo sampling methods using {Markov} chains and their
+  applications.
+\newblock {\em Biometrika}, 57(1), 1970.
+
+\end{thebibliography}
