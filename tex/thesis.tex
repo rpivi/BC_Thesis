@@ -1,37 +1,65 @@
-\documentclass[12pt, a4paper]{report}
+\documentclass[12pt, a4paper, twoside, openright]{report}
+
+% --- Codifica e lingua ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[italian]{babel}
-\usepackage{newlfont}
-\usepackage{color}
+
+% --- Matematica ---
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsfonts}
-\usepackage{graphicx}
-\textwidth=450pt\oddsidemargin=0pt
+\usepackage{etoolbox}
+
+% --- Colori e grafica ---
 \usepackage{xcolor}
-\usepackage{titlesec}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{float}
-\usepackage[ruled,vlined]{algorithm2e}
-\usepackage{hyperref}
-\usepackage{algorithmic}
 
+% --- Layout pagina ---
+\usepackage[a4paper, margin=2.8cm, bindingoffset=1cm]{geometry}
+\usepackage[expansion=false]{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{emptypage}
+
+% --- Tabelle e unità di misura ---
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+% --- Algoritmi e codice ---
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{listings}
+
+% --- tcolorbox per teoremi/definizioni/esempi ---
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{theorems}
 
+% --- Hyperref: va caricato quasi per ultimo ---
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+
+% ============================================================
+% Colore principale della tesi
+% ============================================================
 \definecolor{accento}{RGB}{30,80,30} % verde scuro
 
-% Esempio: tono più chiaro, per non pesare troppo sul testo
+% ============================================================
+% tcolorbox: esempio, dimostrazione, teorema
+% ============================================================
 \newtcbtheorem[number within=section]{example}{Esempio}%
   {colback=accento!5, colframe=accento, fonttitle=\bfseries}{ex}
 
-% Dimostrazione: fondo leggermente più marcato, cornice piena
 \newtcbtheorem[number within=section]{dimost}{Dimostrazione}%
   {colback=accento!8, colframe=accento, fonttitle=\bfseries, coltitle=white}{def}
 
-% Teorema: massimo contrasto, per farlo risaltare come i risultati chiave
 \newtcbtheorem[number within=section]{theorem}{Teorema}%
   {colback=accento!10, colframe=accento, fonttitle=\bfseries, coltitle=white,
    colbacktitle=accento}{thm}
 
+% ============================================================
+% Formattazione capitoli
+% ============================================================
 \titleformat{\chapter}[display]
 {\normalfont\Large\filcenter}
 {\titlerule[1 pt]\vspace{1pt}\titlerule
@@ -42,7 +70,48 @@
 
 \titlespacing*{\chapter}{0pt}{40pt}{30pt}
 
+% ============================================================
+% Intestazioni/piè di pagina
+% ============================================================
+\pagestyle{fancy}
+\setlength{\headheight}{14.5pt}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[LE,RO]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% Profondità indice / numerazione sezioni
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+% Ogni sezione inizia in una nuova pagina, tranne la prima di ogni capitolo
+% (che resta sulla stessa pagina del titolo del capitolo)
+\newif\iffirstsectionofchapter
+\firstsectionofchaptertrue
+\pretocmd{\chapter}{\firstsectionofchaptertrue}{}{}
+\pretocmd{\section}{%
+  \iffirstsectionofchapter
+    \firstsectionofchapterfalse
+  \else
+    \clearpage
+  \fi
+}{}{}
+
+% Comando comodo per pagine bianche
+\newcommand{\blankpage}{\newpage\thispagestyle{empty}\null\newpage}
+
 \begin{document}
+
+% ============================================================
+% FRONTESPIZIO
+% ============================================================
 \begin{titlepage}
 \begin{center}
 {{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di Bologna}}}} 
@@ -89,45 +158,48 @@ Anno Accademico \textcolor{black}{ 2025/2026}
 \end{center}
 \end{titlepage}
 
-\newpage
-\thispagestyle{empty}
-\null
-\newpage
-\vspace{90mm}
+% ============================================================
+% Front matter: numerazione romana
+% ============================================================
+\pagenumbering{roman}
+
+\blankpage
+
+\vspace*{90mm}
 \begin{flushright}
 \itshape
 A mio fratello e ai miei genitori,\\
 per essere stati il mio faro e il mio porto sicuro.
 \end{flushright}
-
 \vspace*{\fill}
 
-\newpage
-\thispagestyle{empty}
-\null
-\newpage
+\blankpage
 
 \input{abstract.tex}
 
-\newpage
-\thispagestyle{empty}
-\null
-\newpage
+\blankpage
 
 \tableofcontents
 
 \newpage
+
+% ============================================================
+% Main matter: numerazione araba da qui
+% ============================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
 \input{cap1.tex}
 \input{cap2.tex}
 \input{cap3.tex}
 \input{cap4.tex}
 \input{conclusion.tex}
+\input{appendix.tex}
 
 \bibliographystyle{unsrt}
 \bibliography{Bibliografia}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
 \input{ringraziamenti.tex}
-
 
 \end{document}

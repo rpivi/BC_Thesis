@@ -2,12 +2,11 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo vengono introdotti i concetti fondamentali dei metodi Monte Carlo. Si parte all'introduzione ai metodi Monte Carlo diretti (\ref{sec:monte-carlo-diretto}), per poi affrontare il campionamento tramite catene di Markov (\ref{sec:mcmc}), e poi verrà presentato l'algoritmo di Metropolis. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo: la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
+In questo capitolo vengono introdotti i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introdurrà il contesto storico in cui è nato il metodo (\ref{sec:storia}), per poi discuetere un metodo Monte Carlo di campionaento diretto (\ref{sec:metodo-inversa})e uno markoviano (\ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
 
-\section{Accenni storici}
-
+\section{Cenni storici}
+\label{sec:storia}
 Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam (\ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
-
 Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
 l nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
@@ -36,12 +35,9 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropol
     \label{fig:pionieri-mc}
 \end{figure}
 
-\section{Monte Carlo diretto}
-\label{sec:monte-carlo-diretto}
-
-\subsection{Metodo dell'inversa}
-\label{subsec:metodo-inversa}
-Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento diretto più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$.
+\section{Metodo dell'inversa}
+\label{sec:metodo-inversa}
+Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento \textit{diretto} più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$.
 
 Sia $X$ una variabile aleatoria continua con funzione di distribuzione cumulativa $F_X(x) = P(X \leq x)$ strettamente monotona e continua, tale da ammettere una funzione inversa $F_X^{-1}: (0,1) \to \mathbb{R}$. Sia inoltre $U \sim \mathcal{U}(0,1)$ una variabile aleatoria uniforme sull'intervallo $(0,1)$.
 
@@ -176,6 +172,7 @@ Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica di
 Nella sezione successiva verrà presentato l'algoritmo di Metropolis, che permette di costruire una matrice di transizione $P_{ij}$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p_i$.
 
 \subsection{Algoritmo di Metropolis}
+\label{subsec:metropolis}
 
 Dunque per poter calcolare le quantità termodinamiche di interesse è necessaria una matrice di transizione che soddisfi il bilancio dettagliato per la distribuzione di Boltzmann.
 

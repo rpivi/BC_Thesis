@@ -1,0 +1,51 @@
+\appendix
+\chapter{Derivazione della distribuzione di Boltzmann}
+\label{sec:a_boltzm_der}
+Il comportamento del sistema a fissata $T$ è descritto da una distribuzione di probabilità $\rho (\mathbf{x}, T)$ ottenibile attraverso il principio di massima entropia.
+\begin{equation}
+    \mathcal{S} = - \int_{\mathbb{R}^D} \rho (\mathbf{x}, T) \ln(\rho(\mathbf{x}, T)) d\mathbf{x}
+\end{equation}
+
+Per massimizzare l'entropia si utilizza il teorema dei moltiplicatori di Lagrange:
+
+\begin{equation}
+    \mathcal{L}[\rho] = -\int_{\mathbb{R}^D} \rho \ln \rho \, d\mathbf{x} - \alpha \left( \int_{\mathbb{R}^D} \rho \, d\mathbf{x} - 1 \right) - \beta \left( \int_{\mathbb{R}^D} \rho \, \mathcal{H} \, d\mathbf{x} - \langle E \rangle \right),
+\end{equation}
+
+dove $\alpha$ e $\beta$ sono i moltiplicatori di Lagrange associati rispettivamente al vincolo di normalizzazione
+
+\begin{equation}
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \ d\mathbf{x} = 1 \ ,
+\end{equation}
+
+e al vincolo sul valore medio dell'energia
+
+\begin{equation}
+    \int_{\mathbb{R}^D} \rho(\mathbf{x}, T) \, \mathcal{H}(\mathbf{x}) \, d\mathbf{x} = \langle E \rangle .
+\end{equation}
+
+La massimizzazione impone $\delta \mathcal{L}/\delta \rho = 0$ restituendo:
+
+\begin{equation}
+    -\ln\rho(\mathbf{x}, T) - 1 - \alpha - \beta \mathcal{H}(\mathbf{x}) = 0
+\end{equation}
+
+che permette di determinare $\rho (\mathbf{x}, T)$:
+
+\begin{equation}
+    \rho(\mathbf{x}, T) = e^{-1-\alpha} \, e^{-\beta \mathcal{H}(\mathbf{x})}.
+\end{equation}
+
+Il moltiplicatore $\alpha$ è fissato dalla condizione di normalizzazione: definendo la \textbf{funzione di partizione}
+
+\begin{equation}
+    Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x},
+\end{equation}
+
+si ha $e^{-1-\alpha} = 1/Z(\beta)$, da cui \textbf{la distribuzione di Boltzmann}:
+
+\begin{equation}
+    \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}.
+\end{equation}
+
+Dove $\beta = 1/(k_B T)$.
