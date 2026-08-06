@@ -112,7 +112,7 @@ Il principale vantaggio del metodo dell'inversa risiede nella sua efficienza e s
 
 Tuttavia, il metodo presenta forti limitazioni pratiche, che ne riducono l'applicabilità a distribuzioni di probabilità complesse o multidimensionali:
 \begin{itemize}
-    \item \textbf{Invertibilità analitica}: Richiede che la funzione di distribuzione cumulativa $F_X(x)$ sia integrabile ed invertibile in forma chiusa (o approssimabile numericamente con elevata precisione). Ad esempio, per la distribuzione gaussiana $F_X(x)$ coinvolge la funzione di errore ($\text{erf}$), la cui inversione richiede approssimazioni numeriche.
+    \item \textbf{Invertibilità analitica}: Richiede che la funzione di distribuzione cumulativa $F_X(x)$ sia integrabile ed invertibile in forma chiusa (o approssimabile numericamente con elevata precisione). 
     \item \textbf{Costante di normalizzazione}: È applicabile solo se la densità di probabilità $p_X(x)$ è perfettamente normalizzata.
     \item \textbf{Dimensionalità}: Risulta di difficile estensione a distribuzioni ad alta dimensionalità $D \gg 1$, rendendolo di fatto inutilizzabile per il campionamento della distribuzione di Boltzmann in fisica statistica.
 \end{itemize}
@@ -131,7 +131,7 @@ Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla v
 Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
 \begin{equation}
 P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
-\quad
+\ \ 
 P(X_i|X_j) = P_{ij} = 
 \begin{pmatrix}
 P(x_1|x_1)  & \cdots & P(x_1|x_j) & \cdots \\
@@ -142,7 +142,7 @@ P(x_i|x_1) & \cdots & P(x_i|x_j) & \cdots \\
 \end{pmatrix}
 \end{equation}
 
-La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
+La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per ${p^{(i)}}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
 \begin{equation}
 \sum_{j} p^{(i)}_j = 1, \quad \sum_{i} P_{ij} =1.
 \label{ev_prob}
@@ -158,7 +158,7 @@ Questa evoluzione della distribuzione di probabilità della catena conserva la n
 \sum_{i} p^{(k+1)}_i = \sum_{i} \sum_{j} P_{ij} p^{(k)}_j = \sum_{j} p^{(k)}_j \sum_{i} P_{ij} = \sum_{j} p^{(k)}_j = 1.
 \end{equation}
 
-Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge una \textbf{distribuzione stazionaria} $p_i$ tale che:
+Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge un \textbf{distribuzione stazionaria} $p_i$ tale che:
 \begin{equation}
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
@@ -169,19 +169,25 @@ Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica di
 \begin{equation}
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
-Nella sezione successiva verrà presentato l'algoritmo di Metropolis, che permette di costruire una matrice di transizione $P_{ij}$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p_i$.
+
+Questa struttura matematica è molto flessibile e può essere generalizzata al caso di variabili continue, sostituendo le somme cin integrali e la ${p}_i$ con una funzione densità di probabilità $p(\mathbf{x})$ e $P_{ij}$ con un kernel $\pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^{+} $ \cite{leoni2023enhancing}.
+La catena e la condizione di bilancio dettagliato nel caso continuo vengono definite nel seguente modo :
+\begin{equation}
+    p^{(i+1)}(\mathbf{x})=\int_{\mathbb{R}^D} \pi (\mathbf{x}, \mathbf{y}) \ p^{(i)}(\mathbf{y}) \ d \mathbf{y}, \ \ \ \pi(\mathbf{x}, \mathbf{y})p(\mathbf{y})= \pi(\mathbf{y}, \mathbf{x})p(\mathbf{x}) 
+\end{equation}
+Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings \cite{metropolis1953equation} \cite{hastings1970monte}, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$.
 
 \subsection{Algoritmo di Metropolis}
 \label{subsec:metropolis}
 
-Dunque per poter calcolare le quantità termodinamiche di interesse è necessaria una matrice di transizione che soddisfi il bilancio dettagliato per la distribuzione di Boltzmann.
+Dunque per poter calcolare le quantità termodinamiche di interesse è necessaria un kernel che soddisfi il bilancio dettagliato per la distribuzione di Boltzmann.
 
-Metropolis et al. proposero di costruire la matrice di transizione $P_{ij}$ come prodotto di due matrici:
+Metropolis et al. proposero di costruire il kernel $\pi$ come prodotto di due elementi:
 
 \begin{equation}
-P_{ij}=T_{ij}A_{ij},
+\pi = \Gamma(\mathbf{x} \to \mathbf{y}) \mathscr{A} (\mathbf{x}, \mathbf{y})
 \end{equation}
-dove $T_{ij}$ è la matrice di proposta, che rappresenta la probabilità di proporre una transizione dallo stato $j$ allo stato $i$, e $A_{ij}$ è la matrice di accettazione, che rappresenta la probabilità di accettare la transizione proposta. Gli elementi della matrice di proposta $T_{ij}$ devono soddisfare le seguenti condizioni:
+dove $\Gamma(\mathbf{x} \to \mathbf{y})$ è la funzione di proposta, che rappresenta la probabilità di proporre una transizione dallo stato $j$ allo stato $i$, e $A_{ij}$ è la matrice di accettazione, che rappresenta la probabilità di accettare la transizione proposta. Gli elementi della matrice di proposta $T_{ij}$ devono soddisfare le seguenti condizioni:
 \begin{equation}
 T_{ij} \ge 0, \quad \sum_{i} T_{ij} = 1 \quad \forall j, \quad T_{ij} = T_{ji}.
 \end{equation}

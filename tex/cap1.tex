@@ -6,7 +6,7 @@
 \chapter{Probabilità e meccanica statistica}
 In questo capitolo vengono introdotti alcuni concetti fondamentali di probabilità necessari per comprendere il problema del campionamento: esso consiste nel generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione (\ref{sec:probabilita}). Si introdurrà poi l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si introdurrà la distinzione fra campionamento diretto e markoviano (\ref{sec:tassonomia_campionamento}) che sarà necessario per comprendere le differenze nei vari metodi di campionamento. 
+Dopo aver introdotto le nozioni di base relative alle variabili aleatorie e alle distribuzioni di probabilità, si discuterà l'importanza del campionamento di una distribuzione (\ref{sec:probabilita}). Si introdurrà poi l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si introdurrà la distinzione fra campionamento diretto e markoviano (\ref{sec:tassonomia_campionamento}) necessaria per comprendere le differenze nei vari metodi di campionamento presentati nei capitoli successivi. 
 
 \section{Teoria della probabilità}
 \label{sec:probabilita}
@@ -23,7 +23,6 @@ In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyse
 Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P({\chi_i}) = 1/6$ per ogni $\chi_i \in \Omega$ .
 Un esempio di evento è il caso in cui risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P({2}) + P({4}) + P({6}) = 1/2$.
 \end{example}
-
 
 Una \textbf{variabile aleatoria} (reale) $X$ associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
 Una variabile aleatoria $X$ associa a ciascun esito $\chi$ un valore $x$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi:
@@ -152,7 +151,7 @@ Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamen
 \label{sec:meccanica-statistica}
 
 \subsection{Microstato, macrostato e ensemble statistico}
-Noi come esseri umani percepiamo il modo circostante ad un livello macroscopico, adoperiamo oggetti coposti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo conoscere il comportamento del sistema in modo completo, sarebbe necessario seguire l'evoluzione temporale di ogni particella, ovvero risolvere l'equazione di Schrödinger per ciascuna di esse ($\sim 10^{23}$ per una mole di gas). Ovviamente il problema appena descritto è inaffrontabile e sopratutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico del sistema. La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche delle particelle che lo costituiscono. In particolare, si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
+Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico, adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo conoscere il comportamento del sistema in modo completo, sarebbe necessario seguire l'evoluzione temporale di ogni particella, ovvero risolvere l'equazione di Schrödinger per ciascuna di esse ($\sim 10^{23}$ per una mole di gas). Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle. La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche dei singoli elementi che lo costituiscono. In particolare, si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
 
 In meccanica statistica, un \textbf{microstato} rappresenta una configurazione specifica del sistema, descritta da tutte le variabili microscopiche necessarie per caratterizzarlo completamente. Ad esempio, per un gas ideale, un microstato può essere definito dalle posizioni e dai momenti di tutte le particelle che lo compongono. Un \textbf{macrostato}, invece, è una descrizione più generale del sistema, caratterizzata da grandezze macroscopiche come energia, numero di particelle e volume. Un macrostato può corrispondere a molti microstati diversi: ad esempio, due configurazioni microscopiche diverse di un gas possono avere la stessa temperatura e pressione. 
 
@@ -163,15 +162,13 @@ In meccanica statistica, un \textbf{microstato} rappresenta una configurazione s
     \label{fig:micro_macro}
 \end{figure}
 
-Josiah Willard Gibbs (1839-1903) introdusse il concetto di \textbf{ensemble statistico}, che rappresenta un insieme di copie delsistema di interesse, ciascuna delle quali può trovarsi in uno dei possibili microstati compatibili con un dato macrostato. Se l'ensemble è sufficientemente grande, allora la probabilità di trovare il sistema in un particolare microstato è la frazione di copie dell'ensemble che si trovano in quel microstato. 
-
+Josiah Willard Gibbs (1839-1903) introdusse il concetto di \textbf{ensemble statistico}, che rappresenta un insieme di copie del sistema di interesse, ciascuna delle quali può trovarsi in uno dei possibili microstati compatibili con un dato macrostato. Se l'ensemble è sufficientemente grande, allora la probabilità di trovare il sistema in un particolare microstato è la frazione di copie dell'ensemble che si trovano in quel microstato. 
 Vi sono diversi tipi di ensemble statistici, ognuno dei quali è adatto a descrivere sistemi con diversi vincoli. I principali ensemble sono:
 \begin{itemize}
 \item \textbf{Ensemble microcanonico}: Descrive un sistema isolato con energia, volume e numero di particelle costanti. Tutti i microstati compatibili con questi vincoli hanno la stessa probabilità.
 \item \textbf{Ensemble canonico}: Descrive un sistema a contatto termico con un serbatoio a temperatura fissa, in cui l'energia può fluttuare ma il numero di particelle è costante. La probabilità di un microstato è data dalla distribuzione di Boltzmann.
 \item \textbf{Ensemble grand-canonico}: Descrive un sistema a contatto con un serbatoio che può scambiare sia energia che particelle. La probabilità di un microstato è data dalla distribuzione Grand Canonica.
 \end{itemize}
-
 Per comprendere il comportamento di un sistema fisico, è fondamentale scegliere l'ensemble statistico appropriato in base alle condizioni sperimentali e ai vincoli imposti sul sistema. Questa tesi ha l'obiettivo di presentare metodi di campionamento per la distribuzione di Boltzmann, dunque nelle prossime sezioni si discuterà più nel dettaglio l'ensemble canonico e la relativa distribuzione.
 
 \subsection{L'ensemble canonico}
@@ -183,7 +180,7 @@ Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/stat_mec/canonical.png}
-    \caption{Rappresentazione schematica dell'ensemble canonico: sistema, serbatoio termico e flusso di calore fra i due sistemi.}
+    \caption{Rappresentazione schematica dell'ensemble canonico: sistema (System), serbatoio termico (Bath) e flusso di calore fra i due sistemi(Heat Flow).}
     \label{fig:canonical}
 \end{figure}
 
@@ -196,7 +193,7 @@ La distribuzione di Boltzmann descrive la probabilità di osservare il sistema i
 
 Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione della distribuzione e di valore medio dell'energia costante, si ottiene
 \begin{equation}
-    \rho(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}
+    p(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}
 \end{equation}
 ,
 
@@ -248,39 +245,44 @@ Nella maggior parte dei sistemi di interesse fisico la funzione di partizione no
     e^{-\beta \mathcal{H}(\mathbf{x})}
 \end{equation}
 su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle.
+
 Di conseguenza, anche il valore assoluto della distribuzione di Boltzmann non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le probabilità di due configurazioni,
 
 \begin{equation}
-    \frac{\rho(\mathbf{x}_2, T)}{\rho(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
+    \frac{p(\mathbf{x}_2, T)}{p(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
 \end{equation}
 
-nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica, oppure è possibile valutare solo il fattore di Boltzmann $e^{-\beta \mathcal{H}(\mathbf{x})}$.
-
-Questa osservazione è importante per i capitoli successivi poiché per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione seppur conoscendola a meno della costante di normalizzazione.
+nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica. Questa osservazione è importante per i capitoli successivi, poiché per poter campionare la distribuzione di Boltzmann sarà necessario avere metodi che possono generare configurazioni distribuite secondo una distribuzione seppur conoscendola a meno della costante di normalizzazione.
 
 \section{Campionamento: diretto e markoviano}
 \label{sec:tassonomia_campionamento}
 
-Il problema centrale di questa tesi -- generare configurazioni distribuite secondo la densità di Boltzmann $p(\mathbf{x}) \propto e^{-\beta V(\mathbf{x})}$ -- non ammette un'unica strategia algoritmica. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
+Il problema centrale di questa tesi - generare configurazioni distribuite secondo la densità di Boltzmann - non ammette un'unica strategia algoritmica. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
+\newline
+La prima distinzione riguarda \emph{come} viene prodotta una configurazione. Si parla di \textbf{campionamento diretto} quando una configurazione distribuita secondo $p(\mathbf{x})$ può essere ottenuta a partire da una variabile aleatoria uniforme. Ogni configurazione così prodotta è per costruzione indipendente dalle altre. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo 2 si mostrerà un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa (Sezione \ref{sec:metodo-inversa}),che è un metodo esatto di campionamento diretto.
+\newline
+Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda \emph{solo} dalla precedente. Una successione con questa proprietà è una \textbf{catena di Markov}, ed è alla base dei metodi \textbf{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \textbf{termalizzazione}. Inoltre ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \textbf{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
 
-La prima distinzione riguarda \emph{come} viene prodotta una configurazione. Si parla di \textbf{campionamento diretto} quando una configurazione distribuita secondo $p(\mathbf{x})$ può essere ottenuta in un unico passo, a partire da variabili aleatorie semplici da generare (tipicamente uniformi in $[0,1]$). Ogni configurazione così prodotta è per costruzione indipendente dalle altre. Il prezzo da pagare è che questa strategia richiede di conoscere, in una forma o nell'altra, l'intera struttura della distribuzione target: nel Capitolo 2 si mostrerà come questo sia possibile per distribuzioni unidimensionali semplici (metodo dell'inversa, Sezione \ref{sec:metodo-inversa}).
-
-Quando il campionamento diretto non è una scelta possibile per il problema da affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda \emph{solo} dalla precedente. Una successione con questa proprietà è una \textbf{catena di Markov}, ed è alla base dei metodi \textbf{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La differenza concettuale rispetto al campionamento diretto è duplice. Da un lato, la catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto (approssimativamente) la propria distribuzione stazionaria, una fase detta \textbf{termalizzazione}. Dall'altro, poiché ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \textbf{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte a caso dalla distribuzione, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
-
-Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ soltanto a meno della costante di normalizzazione -- condizione, come visto nella Sezione \ref{sec:meccanica-statistica}, tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
-
-Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis nella sua forma standard (Sezione \ref{subsec:metropolis}). Una passo locale è semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità (Sezione \ref{sec:probabilita}), una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata} in uno di essi.
-
-Si parla invece di \textbf{passo globale} quando la configurazione candidata può discostarsi significativamente da quella corrente, fino al caso limite in cui è generata indipendentemente da essa, attingendo a un'intera distribuzione di proposta definita su tutto lo spazio delle configurazioni. Una catena costruita in questo modo non soffre per costruzione dell'intrappolamento nei modi, poiché ogni proposta esplora potenzialmente l'intero spazio indipendentemente da dove si trovi la catena. La sua efficienza dipende però interamente dalla qualità della distribuzione di proposta: se questa è troppo diversa dalla distribuzione target, la probabilità che una proposta venga accettata può essere troppo bassa, vanificando il vantaggio teorico della passo globale. La Figura \ref{fig:local_vs_global} illustra qualitativamente la differenza fra passo locale e passo globale su una distribuzione bimodale: nel primo caso il camminatore esplora un modo alla volta, nel secondo può spostarsi direttamente da un modo all'altro.
-
+Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ anche a meno della costante di normalizzazione, condizione tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
+\newline
+Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis nella sua forma standard (Sezione \ref{subsec:metropolis}). Un passo locale è semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.
+\newline
+Si parla invece di \textbf{passo globale} quando la configurazione candidata può discostarsi significativamente da quella corrente, fino al caso limite in cui è generata indipendentemente da essa, attingendo a un'intera distribuzione di proposta definita su tutto lo spazio delle configurazioni. Una catena costruita in questo modo non soffre per costruzione dell'intrappolamento nei modi, poiché ogni proposta esplora potenzialmente l'intero spazio indipendentemente da dove si trovi la catena. La sua efficienza dipende però interamente dalla qualità della distribuzione di proposta: se questa è troppo diversa dalla distribuzione target, la probabilità che una proposta venga accettata può essere troppo bassa, vanificando il vantaggio teorico del passo globale. La Figura \ref{fig:local_vs_global} illustra qualitativamente la differenza fra passo locale e passo globale su una distribuzione bimodale: nel primo caso il camminatore esplora un modo alla volta, nel secondo può spostarsi direttamente da un modo all'altro.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/MCMC/local_vs_global_mixture.png}
-    \caption{}
+    \caption{Rappresentazione della differenza fra passo locale e globale per un MCMC con obiettivo il campionamento di una mistura di due gaussiane. L'immagine in alto mostra in blu cinque passi locali, mentre l'immagine in basso mostra in verde lo stesso numero di passi globali.}
     \label{fig:local_vs_global}
 \end{figure}
 
-Le due strategie discusse in questa sezione possono però non essere alternative e diventare complementari. Un Normalizing Flow (Capitolo 3) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti una candidata naturale come distribuzione di proposta per un MCMC: pur non fornendo, in generale, un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto -- il \textbf{Flow-MCMC}, che verrà discusso nella Sezione \ref{sec:flow-mcmc} -- combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
+Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un Normalizing Flow (Capitolo 3) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti una candidata naturale come distribuzione di proposta per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - il \textbf{Flow-MCMC}, che verrà discusso nella Sezione \ref{sec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
 
- I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel campionamento markoviano a mosse locali (MCMC, Capitolo \ref{sec:mcmc}), nel campionamento diretto approssimato (Normalizing Flow, Capitolo \ref{sec:flows}), e nel campionamento markoviano a mosse globali (Flow-MCMC, Sezione \ref{sec:flow-mcmc}).
+I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel campionamento markoviano a mosse locali (MCMC, Capitolo \ref{sec:mcmc}), nel campionamento diretto approssimato (Normalizing Flow, Capitolo \ref{sec:flows}), e nel campionamento markoviano a mosse globali (Flow-MCMC, Sezione \ref{sec:flow-mcmc}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.2\textwidth]{images/MCMC/map_methods.png}
+    \caption{Mappa concettuale dei vari metodi di campionamento e quali sono presentati in questa tesi ed in che capitoli.}
+    \label{fig:map_methods}
+\end{figure}
