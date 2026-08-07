@@ -31,7 +31,7 @@ Pierre-Simon~de Laplace.
 \bibitem{metropolis1987beginning}
 Nicholas Metropolis.
 \newblock The beginning of the monte carlo method.
-\newblock {\em Los Alamos Science}, Special Issue:125--130, 1987.
+\newblock {\em Los Alamos Science}, Special Issue, 1987.
 
 \bibitem{kalos2008montecarlo}
 Malvin~H. Kalos and Paula~A. Whitlock.
@@ -54,12 +54,24 @@ Luca Leoni.
 Nicholas Metropolis, Arianna~W. Rosenbluth, Marshall~N. Rosenbluth, Augusta~H.
   Teller, and Edward Teller.
 \newblock Equation of state calculations by fast computing machines.
-\newblock {\em The Journal of Chemical Physics}, 21(6):1087--1092, 1953.
+\newblock {\em The Journal of Chemical Physics}, 21(6), 1953.
 
 \bibitem{hastings1970monte}
 W.~Keith Hastings.
 \newblock Monte carlo sampling methods using {Markov} chains and their
   applications.
-\newblock {\em Biometrika}, 57(1):97--109, 1970.
+\newblock {\em Biometrika}, 57(1), 1970.
+
+\bibitem{flyvbjerg1989error}
+H.~Flyvbjerg and H.~G. Petersen.
+\newblock Error estimates on averages of correlated data.
+\newblock {\em The Journal of Chemical Physics}, 91(1), 1989.
+
+\bibitem{sokal1996monte}
+Alan~D. Sokal.
+\newblock Monte carlo methods in statistical mechanics: Foundations and new
+  algorithms.
+\newblock In {\em Lectures at the Cargèse Summer School on ``Functional
+  Integration: Basics and Applications''}, Cargèse, France, September 1996.
 
 \end{thebibliography}

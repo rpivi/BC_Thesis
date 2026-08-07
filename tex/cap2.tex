@@ -19,7 +19,7 @@ Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori ettronici, c
 Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (Figura \ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
 Il nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Mantan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
@@ -322,17 +322,17 @@ che per un processo stazionario dipende solo dalla distanza temporale $|i-j|$ (e
     \sigma^2_{\bar{O}} = \frac{1}{N^2} \left[ N \chi_0 + 2\sum_{k=1}^{N-1} (N-k)\,\chi_k \right] = \frac{\chi_0}{N}\left[ 1 + 2\sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0} \right].
 \end{equation}
 
-Definendo il \textbf{tempo di autocorrelazione integrato} $\tau_O$ come
+Definendo il \textbf{tempo di autocorrelazione integrato} $\tau_{int \ O}$ come
 
 \begin{equation}
     \label{eq:tau_int}
-    \tau_O = \frac{1}{2} + \sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0},
+    \tau_{int \ O} = \frac{1}{2} + \sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0},
 \end{equation}
 
 la varianza dello stimatore assume la forma compatta
 
 \begin{equation}
-    \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau_O \right).
+    \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau_{int \ O} \right).
 \end{equation}
 
 Questo risultato è generale e vale anche per campioni correlati, come nel caso di un campionamento markoviano. Se invece il campionamento fosse diretto, i campioni sarebbero statisticamente indipendenti e la funzione di correlazione si annullerebbe per $k \neq 0$:
@@ -341,31 +341,31 @@ Questo risultato è generale e vale anche per campioni correlati, come nel caso 
     \chi_{|i-j|} = 0 \ \ \forall\, i\neq j \implies \sigma^2_{\bar{O}} = \frac{\sigma^2_{O}}{N}.
 \end{equation}
 
-Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau_O)$ per un metodo markoviano.
+Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau_{int \ O})$ per un metodo markoviano.
 
-Rimane tuttavia da affrontare un problema pratico: $\tau_O$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalemte costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_O$, e il \textbf{metodo del windowing automatico di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_O$ direttamente ma con un criterio di troncamento autoconsistente.
+Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalemte costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
 
 \subsection{Blocking Analysis}
 \label{subsec:block}
 
-Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario presentare alcune proprietà della varianza, siano $X$ e $Y$ due variabili aleatorie e $a$ una costante: 
+Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario presentare alcune proprietà della varianza, siano $X$ e $Y$ due variabili aleatorie e $a$ una costante:
 \begin{equation}
     \label{eq:prop_var}
-    \sigma^2_aX= a^2 \sigma^2_X, \quad \sigma^2_X+Y= \sigma^2_X + \sigma^2_Y
+    \sigma^2_{aX} = a^2 \sigma^2_X, \quad \sigma^2_{X+Y} = \sigma^2_X + \sigma^2_Y
 \end{equation}
 
-La media campionaria $\bar(X)$ è una variabile casuale:
+La media campionaria $\bar{X}$ è una variabile casuale:
 
 \begin{equation}
-\sigma^2_{\bar{X}} = var \left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = var \left( \frac{1}{N_{bloks}} \sum_{N_{blocks}}^{j=1}\left(  \frac{1}{m} \sum_{jm}^{i=(j-1)m +1 } x_i\right)\right)
+\sigma^2_{\bar{X}} = var \left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = var \left( \frac{1}{N_{blocks}} \sum_{j=1}^{N_{blocks}}\left(  \frac{1}{m} \sum_{i=(j-1)m +1 }^{jm} x_i\right)\right)
 \end{equation}
 
-Dove è stata usata la notazione di varianza $var( \ )$ per semplicià di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$. 
+Dove è stata usata la notazione di varianza $var(\ )$ per semplicità di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$.
 
 Utilizzando le proprietà della varianza (Equazione \ref{eq:prop_var}):
 
 \begin{equation}
-    \sigma^2_{\bar{X}} = \frac{1}{N_{bloks}^2} var \left( \sum_{N_{blocks}}^{j=1}\bar{x}_j \right), \quad \bar{x}_j = \frac{1}{m} \sum_{jm}^{i=(j-1)m +1 } x_i
+    \sigma^2_{\bar{X}} = \frac{1}{N_{blocks}^2} var \left( \sum_{j=1}^{N_{blocks}}\bar{x}_j \right), \quad \bar{x}_j = \frac{1}{m} \sum_{i=(j-1)m +1 }^{jm} x_i
 \end{equation}
 
 Assumiamo che per blocchi sufficientemente lunghi la varianza abbia lo stesso valore:
@@ -374,12 +374,61 @@ Assumiamo che per blocchi sufficientemente lunghi la varianza abbia lo stesso va
     var(\bar{X})=\frac{1}{N_{blocks}} var(\bar{X}_{block}),
 \end{equation}
 
-dove $var(\bar{X}_block)$ è la variabile aleatoria che rappresenta la media del blocco.
-Per determinare $var(\bar{X})$ calcoliamo $R(X)$ utilizzando una stima di $var(\bar{X}_block)$:
+dove $var(\bar{X}_{block})$ è la varianza della media di un singolo blocco.
+Per determinare $var(\bar{X})$ calcoliamo $R_X(m)$ utilizzando una stima di $var(\bar{X}_{block})$:
 \begin{equation}
-    R_X = \frac{m var(\bar{X}_block)}{var(X)},  \quad var(\bar{X}_block) = \frac{1}{N_{bloks}-1} 
+    R_X (m) = \frac{m \ var(\bar{X}_{block})}{var(X)},  \quad var(\bar{X}_{block}) \approx \frac{1}{N_{blocks}-1} \sum_{j=1}^{N_{blocks}} (\bar{x}_j-\bar{x})^2
 \end{equation}
 
+Che permette di stimare $var(\bar{X})$ con la formula:
+\begin{equation}
+    var(\bar{X}) = R_X(m^*)\ \frac{var(X)}{N},
+\end{equation}
+dove $m^*$ è il valore della lunghezza di blocco per cui si raggiunge il limite di blocchi indipendenti. Per trovare tale valore si cerca per quale $m$ la funzione $R_X(m)$ presenta un plateau, ovvero una regione in cui diventa approssimativamente costante.
+
+Inoltre esiste anche una formula per il calcolo del tempo di autocorrelazione integrato $\tau_{int \ X}$, direttamente legata alla funzione $R_X(m)$ appena introdotta. Ricordando che, per un campione di $N$ osservazioni correlate e nel limite $N \to \infty$, la varianza della media campionaria si scrive
+
+\begin{equation}
+    \label{eq:var_tau_int}
+    var(\bar{X}) = \frac{2\tau_{int \ X}}{N}\ var(X),
+\end{equation}
+
+e confrontando questa espressione con la stima ottenuta dal blocking,
+
+\begin{equation}
+    var(\bar{X}) = R_X(m^*)\, \frac{var(X)}{N},
+\end{equation}
+
+si ottiene immediatamente la relazione tra il plateau di $R_X(m)$ e il tempo di autocorrelazione integrato:
+
+\begin{equation}
+    \label{eq:tau_int_blocking}
+    \tau_{int \ X} = \frac{1}{2}\, R_X(m^*).
+\end{equation}
+
+In pratica, il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando la regione in cui $R_X(m)$ smette di crescere apprezzabilmente al variare di $m$, ovvero il plateau descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}.
 
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
+
+Una stima diretta di $\tau_{\mathrm{int},\, O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$, operazione che con la definizione diretta
+
+\begin{equation}
+    \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right)
+\end{equation}
+
+ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
+
+Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau_{int \ O}$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini fa divergere la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
+
+\begin{equation}
+    \tau_{int \ O}(M) = \frac{1}{2} + \sum_{k=1}^{M}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}.
+\end{equation}
+
+La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M$ troppo piccolo introduce un bias sistematico (poiché si trascura parte del segnale), mentre un $M$ troppo grande fa esplodere la varianza (includendo troppo rumore). Il metodo delle \emph{finestre automatiche} di Sokal risolve questo compromesso in modo autoconsistente: si sceglie $M$ come il più piccolo intero tale che
+
+\begin{equation}
+    M \ge c\, \tau_{int \ O}(M),
+\end{equation}
+
+con $c$ una costante tipicamente compresa tra $4$ e $10$. Questo criterio richiede di calcolare $\tau_{int\ O}(M)$ per valori crescenti di $M$ finché la condizione non è soddisfatta, ottenendo così sia una stima di $\tau_{int \ O}$ sia il criterio di arresto in un'unica procedura, senza dover fissare arbitrariamente $M$.
