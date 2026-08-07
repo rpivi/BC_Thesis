@@ -33,6 +33,11 @@ Nicholas Metropolis.
 \newblock The beginning of the monte carlo method.
 \newblock {\em Los Alamos Science}, Special Issue:125--130, 1987.
 
+\bibitem{kalos2008montecarlo}
+Malvin~H. Kalos and Paula~A. Whitlock.
+\newblock {\em Monte Carlo Methods}.
+\newblock Wiley-VCH, Weinheim, 2nd edition, 2008.
+
 \bibitem{gubernatis2016quantum}
 James~E. Gubernatis, Naoki Kawashima, and Philipp Werner.
 \newblock {\em Quantum Monte Carlo Methods}.

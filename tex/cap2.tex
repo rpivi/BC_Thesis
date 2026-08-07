@@ -46,7 +46,7 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). M
 
 \section{Metodo dell'inversa}
 \label{sec:metodo-inversa}
-Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento \textit{diretto} più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$.
+Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento \textit{diretto} più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$ \cite{kalos2008montecarlo}.
 
 Sia $X$ una variabile aleatoria continua con funzione di distribuzione cumulativa $F_X(x) = P(X \leq x)$ strettamente monotona e continua, tale da ammettere una funzione inversa $F_X^{-1}: (0,1) \to \mathbb{R}$. Sia inoltre $U \sim \mathcal{U}(0,1)$ una variabile aleatoria uniforme sull'intervallo $(0,1)$.
 
@@ -347,6 +347,39 @@ Rimane tuttavia da affrontare un problema pratico: $\tau_O$ non è noto a priori
 
 \subsection{Blocking Analysis}
 \label{subsec:block}
+
+Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario presentare alcune proprietà della varianza, siano $X$ e $Y$ due variabili aleatorie e $a$ una costante: 
+\begin{equation}
+    \label{eq:prop_var}
+    \sigma^2_aX= a^2 \sigma^2_X, \quad \sigma^2_X+Y= \sigma^2_X + \sigma^2_Y
+\end{equation}
+
+La media campionaria $\bar(X)$ è una variabile casuale:
+
+\begin{equation}
+\sigma^2_{\bar{X}} = var \left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = var \left( \frac{1}{N_{bloks}} \sum_{N_{blocks}}^{j=1}\left(  \frac{1}{m} \sum_{jm}^{i=(j-1)m +1 } x_i\right)\right)
+\end{equation}
+
+Dove è stata usata la notazione di varianza $var( \ )$ per semplicià di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$. 
+
+Utilizzando le proprietà della varianza (Equazione \ref{eq:prop_var}):
+
+\begin{equation}
+    \sigma^2_{\bar{X}} = \frac{1}{N_{bloks}^2} var \left( \sum_{N_{blocks}}^{j=1}\bar{x}_j \right), \quad \bar{x}_j = \frac{1}{m} \sum_{jm}^{i=(j-1)m +1 } x_i
+\end{equation}
+
+Assumiamo che per blocchi sufficientemente lunghi la varianza abbia lo stesso valore:
+
+\begin{equation}
+    var(\bar{X})=\frac{1}{N_{blocks}} var(\bar{X}_{block}),
+\end{equation}
+
+dove $var(\bar{X}_block)$ è la variabile aleatoria che rappresenta la media del blocco.
+Per determinare $var(\bar{X})$ calcoliamo $R(X)$ utilizzando una stima di $var(\bar{X}_block)$:
+\begin{equation}
+    R_X = \frac{m var(\bar{X}_block)}{var(X)},  \quad var(\bar{X}_block) = \frac{1}{N_{bloks}-1} 
+\end{equation}
+
 
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
