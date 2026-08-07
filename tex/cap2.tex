@@ -2,15 +2,24 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo vengono introdotti i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introdurrà il contesto storico in cui è nato il metodo (\ref{sec:storia}), per poi discuetere un metodo Monte Carlo di campionaento diretto (\ref{sec:metodo-inversa})e uno markoviano (\ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (\ref{sec:campioni-autocorrelati}).
+In questo capitolo vengono introdotti i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introdurrà il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discuetere un metodo Monte Carlo di campionaento diretto (Sezione \ref{sec:metodo-inversa})e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni-autocorrelati}).
 
 \section{Cenni storici}
 \label{sec:storia}
-Il metodo Monte Carlo si basa su un'idea semplice, ma potente. L'idea nacque da Stanisław Ulam (\ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, allora centro di ricerca segreto per lo sviluppo della prima bomba nucleare, qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
-l nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+L'idea che un processo casuale possa essere utilizzato per stimare una quantità analitica non è nuova al Novecento. Il primo esempio documentato risale al 1777, quando Georges-Louis Leclerc, conte di Buffon, propose il celebre esperimento dell'ago \cite{buffon1777}: un ago di lunghezza $L$ viene lanciato a caso su un piano rigato da linee parallele equidistanti di $d > L$, e si chiede
+la probabilità che l'ago intersechi una delle linee. Buffon non solo condusse l'esperimento fisicamente, lanciando l'ago numerose volte, ma ne derivò anche la soluzione analitica
+\begin{equation}
+    P = \frac{2L}{\pi d}.
+\end{equation}
+
+Alcuni anni dopo, Laplace osservò che questa stessa relazione poteva essere invertita per stimare $\pi$ a partire dalla frequenza empirica delle intersezioni: un primo esempio, seppur rudimentale e a convergenza lenta, di determinazione stocastica di una costante analitica a partire da un esperimento casuale \cite{laplace1886}.
+
+Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori ettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura \ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (Figura \ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+Il nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
+
+Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
@@ -46,26 +55,35 @@ Si consideri la variabile aleatoria definita dalla trasformazione inversa:
 Y = F_X^{-1}(U).
 \end{equation}
 
-Per determinare la funzione di distribuzione cumulativa di $Y$, valutiamo $F_Y(y) = P(Y \leq y)$:
+Per definizione di funzione di distribuzione cumulativa:
 \begin{equation}
-F_Y(y) = P\left(F_X^{-1}(U) \leq y\right).
+F_Y(y) = P(Y \leq y) = P\left(F_X^{-1}(U) \leq y\right).
 \end{equation}
 
-Poiché la funzione $F_X(x)$ è monotona strettamente crescente, applicando $F_X$ ad entrambi i membri della disuguaglianza si ottiene:
+Poiché $F_X(x)$ è per ipotesi strettamente monotona crescente, essa è una funzione biettiva sul suo codominio e preserva il verso delle disuguaglianze: applicando $F_X$ ad entrambi i membri della disuguaglianza $F_X^{-1}(U) \leq y$ si ottiene una disuguaglianza equivalente,
 \begin{equation}
-P\left(F_X^{-1}(U) \leq y\right) = P\left(U \leq F_X(y)\right).
+F_X^{-1}(U) \leq y \quad \Longleftrightarrow \quad F_X\!\left(F_X^{-1}(U)\right) \leq F_X(y).
 \end{equation}
 
-Ricordando che per una variabile aleatoria uniforme $U \sim \mathcal{U}(0,1)$ vale la proprietà $P(U \leq u) = u$ per ogni $u \in [0, 1]$, si ha direttamente:
+Per definizione di funzione inversa, $F_X\!\left(F_X^{-1}(U)\right) = U$; sostituendo questa identità nella probabilità si ha dunque:
+\begin{equation}
+F_Y(y) = P\left(F_X^{-1}(U) \leq y\right) = P\left(U \leq F_X(y)\right).
+\end{equation}
+
+Ricordando che per una variabile aleatoria uniforme $U \sim \mathcal{U}(0,1)$ vale la proprietà $P(U \leq u) = u$ per ogni $u \in [0, 1]$, e osservando che $F_X(y) \in [0,1]$ per definizione di funzione di distribuzione cumulativa, si ha direttamente:
+\begin{equation}
+P\left(U \leq F_X(y)\right) = F_X(y),
+\end{equation}
+e dunque
 \begin{equation}
 F_Y(y) = F_X(y).
 \end{equation}
 
-Di conseguenza, la variabile aleatoria $Y$ possiede la medesima distribuzione cumulativa di $X$ e la sua densità di probabilità coincide con $p_X(x)$.
+Di conseguenza, la variabile aleatoria $Y$ possiede la medesima distribuzione cumulativa di $X$ e, derivando entrambi i membri rispetto a $y$, la sua densità di probabilità coincide con $p_X(x)$.
 
-L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente algoritmo:
+L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente Algoritmo \ref{alg:inverse_transform}:
 
-\vspace{3mm}
+\vspace{5mm}
 \begin{algorithm}[H]
 \SetAlgoLined
 \KwIn{Numero di campioni $N$; funzione di distribuzione cumulativa inversa $F_X^{-1}(u)$.}
@@ -79,7 +97,7 @@ L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campion
 \caption{Metodo dell'Inversa (Inverse Transform Sampling)}
 \label{alg:inverse_transform}
 \end{algorithm}
-\vspace{3mm}
+\vspace{5mm}
 
 Si mostra un esempio pratico di applicazione del metodo dell'inversa per il campionamento della distribuzione esponenziale, che illustra chiaramente i passaggi descritti nell'algoritmo precedente.
 
@@ -127,7 +145,7 @@ Sia ${X_1,..., X_N}$ una sequenza di variabili aleatorie in $\mathbb{R}^D$, ques
 P(X_i |X_{i-1},..., X_{1}) = P(X_i | X_{i-1}).
 \end{equation}
 
-Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che le catene di Markov sono catene \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato \cite{quantum_monte_carlo_methods}. 
+Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che le catene di Markov sono catene \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato \cite{gubernatis2016quantum}. 
 Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
 \begin{equation}
 P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
@@ -170,7 +188,7 @@ Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica di
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
 
-Il formalismo matematico delle Catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
+Il formalismo matematico delle catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
 \begin{equation}
 p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf{x}},
 \end{equation}
@@ -219,9 +237,9 @@ Si dimostra che il kernel così costruito soddisfa la condizione di bilancio det
 \pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}
 \end{equation}
 
-A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la descritta nell'algoritmo \ref{alg:metropolis_hastings}.
+A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la descritta nell'Algoritmo \ref{alg:metropolis_hastings}.
 
-\vspace{3mm}
+\vspace{5mm}
 \begin{algorithm}[H]
 \SetAlgoLined
 \KwIn{Stato corrente $\mathbf{x}_i$; distribuzione target non normalizzata $f(\mathbf{x})$; distribuzione di proposta $\Gamma(\mathbf{x} \to \mathbf{y})$.}
@@ -237,14 +255,14 @@ A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1
 \caption{Algoritmo di Metropolis-Hastings}
 \label{alg:metropolis_hastings}
 \end{algorithm}
-\vspace{3mm}
+\vspace{5mm}
 
-L'iterazione di questa operazione permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in figura \ref{fig:metropolis-hastings}.
+L'iterazione di questa operazione permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura \ref{fig:metropolis-hastings}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/MCMC/mcmc_algo.png}
-    \caption{}
+    \caption{Leggendo la figura da sinistra verso destra: si estrae da una distribuzione uniforme il primo campione della catena, successivamente si utilizza l'algoritmo di Metropolis-Hastings di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata.}
     \label{fig:metropolis-hastings}
 \end{figure}
 
@@ -266,6 +284,69 @@ Sostituendo la distribuzione di Boltzmann come distribuzione target otteniamo un
 \section{Campioni autocorrelati}
 \label{sec:campioni-autocorrelati}
 
+\subsection{Autocorrelazione}
+
+Essendo MCMC un metodo di campionamento non diretto, i campioni generati sono correlati fra loro. Questo impone una stima dell'errore più complicata del caso semplice di campioni indipendenti. Considerando un osservabile $O(\mathbf{x})$ siamo interessati al valore medio e alla varianza di quest'ultimo:
+
+\begin{equation}
+    \langle O \rangle = \int_{\mathbb{R}^D} p(\mathbf{x}) O(\mathbf{x}) \ d \mathbf{x}, \quad \sigma^2_O = \langle O^2\rangle - \langle O \rangle ^2 .
+\end{equation}
+Possiamo stimare entrambe le quantità - come detto in precedenza - con il campionamento della distribuzione target $p(\mathbf{x})$. Utilizzando come stima la media aritmetica $\bar{O}$ per $N$ campioni estratti:
+
+\begin{equation}
+    \bar{O} = \frac{1}{N}\sum_{i=1}^{N} O(\mathbf{x}_i), \quad  \sigma^2_{\bar{O}} = \langle {\bar{O}}^2\rangle - \langle \bar{O} \rangle ^2
+\end{equation}
+
+Per la legge dei grandi numeri, $\bar{O}$ converge a $\langle O \rangle$ per $N \to +\infty$. Il calcolo della varianza può essere riscritto, sviluppando il quadrato della media come doppia somma sugli indici $i,j$ e usando la linearità del valore atteso,
+\begin{equation}
+    \sigma^2_{\bar{O}} =
+    \left\langle \left( \frac{1}{N}\sum_{i=1}^N O(\mathbf{x}_i) \right) \left( \frac{1}{N}\sum_{j=1}^N O(\mathbf{x}_j) \right)\right\rangle
+    - \left( \frac{1}{N}\sum_{i=1}^N \langle O(\mathbf{x}_i) \rangle \right) \left( \frac{1}{N}\sum_{j=1}^N \langle O(\mathbf{x}_j) \rangle \right) .
+\end{equation}
+
+Sviluppando il quadrato di entrambe le somme come doppie somme sugli indici $i,j$, e usando la linearità del valore atteso per il primo termine e raccogliendo i due termini sotto lo stesso segno di somma:
+
+\begin{equation}
+    \sigma^2_{\bar{O}} = \frac{1}{N^2} \sum_{i=1}^{N}\sum_{j=1}^{N} \left( \langle O(\mathbf{x}_i) O(\mathbf{x}_j) \rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle \right).
+\end{equation}
+
+Definendo \textbf{funzione di correlazione}:
+
+\begin{equation}
+    \chi_{|i-j|} = \langle O(\mathbf{x}_i) O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle,
+\end{equation}
+
+che per un processo stazionario dipende solo dalla distanza temporale $|i-j|$ (e per cui vale $\chi_0 = \sigma^2_O$), la doppia somma può essere riscritta raggruppando i termini a parità di $k=|i-j|$. Poiché per ogni $k \geq 1$ esistono $2(N-k)$ coppie $(i,j)$ con $|i-j|=k$, si ottiene:
+
+\begin{equation}
+    \sigma^2_{\bar{O}} = \frac{1}{N^2} \left[ N \chi_0 + 2\sum_{k=1}^{N-1} (N-k)\,\chi_k \right] = \frac{\chi_0}{N}\left[ 1 + 2\sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0} \right].
+\end{equation}
+
+Definendo il \textbf{tempo di autocorrelazione integrato} $\tau_O$ come
+
+\begin{equation}
+    \label{eq:tau_int}
+    \tau_O = \frac{1}{2} + \sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0},
+\end{equation}
+
+la varianza dello stimatore assume la forma compatta
+
+\begin{equation}
+    \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau_O \right).
+\end{equation}
+
+Questo risultato è generale e vale anche per campioni correlati, come nel caso di un campionamento markoviano. Se invece il campionamento fosse diretto, i campioni sarebbero statisticamente indipendenti e la funzione di correlazione si annullerebbe per $k \neq 0$:
+
+\begin{equation}
+    \chi_{|i-j|} = 0 \ \ \forall\, i\neq j \implies \sigma^2_{\bar{O}} = \frac{\sigma^2_{O}}{N}.
+\end{equation}
+
+Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau_O)$ per un metodo markoviano.
+
+Rimane tuttavia da affrontare un problema pratico: $\tau_O$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalemte costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_O$, e il \textbf{metodo del windowing automatico di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_O$ direttamente ma con un criterio di troncamento autoconsistente.
+
 \subsection{Blocking Analysis}
+\label{subsec:block}
 
 \subsection{Metodo di Sokal}
+\label{subsec:sokal}

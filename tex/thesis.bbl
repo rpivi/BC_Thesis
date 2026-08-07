@@ -1,48 +1,60 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{budd2025monte}
-B.~Timothy.
-\newblock {\em Monte Carlo Techniques}.
-\newblock Radboud University, Nijmegen, The Netherlands, 2025.
-\newblock Lecture notes for the course NWI-NM042B Monte Carlo Techniques.
+Timothy Budd.
+\newblock Monte carlo techniques.
+\newblock Lecture notes for the course NWI-NM042B, Radboud University, 2025.
 
 \bibitem{marinari2023calcolo}
-L.~Leuzzi E.~Marinari, G.~Parisi.
+Enzo Marinari, Giorgio Parisi, and Luca Leuzzi.
 \newblock {\em Calcolo delle probabilità. Un trattatello per principianti
   volenterosi}.
-\newblock Zanichelli, 2023.
+\newblock Zanichelli, Bologna, 2023.
 
 \bibitem{kennett2020essential}
-M.~P. Kennett.
+Malcolm~P. Kennett.
 \newblock {\em Essential Statistical Physics}.
-\newblock Cambridge University Press, 2020.
+\newblock Cambridge University Press, Cambridge, UK, 2020.
+
+\bibitem{buffon1777}
+Comte~de Buffon, Georges-Louis~Leclerc.
+\newblock Essai d'arithmétique morale, 1777.
+\newblock Supplément à l'Histoire Naturelle, vol.~4, Paris: de l'Imprimerie
+  Royale.
+
+\bibitem{laplace1886}
+Pierre-Simon~de Laplace.
+\newblock {\em Théorie analytique des probabilités}.
+\newblock L'Académie des Sciences, Paris, 1886.
+\newblock Oeuvres Complètes de Laplace, Vol.~7, Part 2.
 
 \bibitem{metropolis1987beginning}
-N.~Metropolis.
+Nicholas Metropolis.
 \newblock The beginning of the monte carlo method.
-\newblock {\em Los Alamos Science}, Special Issue, 1987.
+\newblock {\em Los Alamos Science}, Special Issue:125--130, 1987.
 
-\bibitem{quantum_monte_carlo_methods}
-P.~Werner J.~E.~Gubernatis, N.~Kawashima.
+\bibitem{gubernatis2016quantum}
+James~E. Gubernatis, Naoki Kawashima, and Philipp Werner.
 \newblock {\em Quantum Monte Carlo Methods}.
-\newblock Cambridge University Press, 2016.
+\newblock Cambridge University Press, Cambridge, UK, 2016.
 
 \bibitem{leoni2023enhancing}
-L.~Leoni.
-\newblock Enhancing diagrammatic monte carlo via machine learning.
+Luca Leoni.
+\newblock Enhancing diagrammatic {Monte Carlo} via machine learning.
 \newblock Master's thesis, University of Bologna, Department of Physics and
   Astronomy, Bologna, Italy, 2023.
 \newblock Supervisor: Prof. Cesare Franchini. Academic Year 2022/2023.
 
 \bibitem{metropolis1953equation}
-N.~Metropolis et~al.
+Nicholas Metropolis, Arianna~W. Rosenbluth, Marshall~N. Rosenbluth, Augusta~H.
+  Teller, and Edward Teller.
 \newblock Equation of state calculations by fast computing machines.
-\newblock {\em The Journal of Chemical Physics}, 21(6), 1953.
+\newblock {\em The Journal of Chemical Physics}, 21(6):1087--1092, 1953.
 
 \bibitem{hastings1970monte}
-W.~K. Hastings.
+W.~Keith Hastings.
 \newblock Monte carlo sampling methods using {Markov} chains and their
   applications.
-\newblock {\em Biometrika}, 57(1), 1970.
+\newblock {\em Biometrika}, 57(1):97--109, 1970.
 
 \end{thebibliography}

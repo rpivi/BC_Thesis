@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1786041488.27674 "thesis.aux" "thesis.bbl" "thesis" 1786043005.04323 0
-  "./Bibliografia.bib" 1786032383.46771 3058 6fd6f367e03e39eaa202fe79f5b804dd ""
+["bibtex thesis"] 1786095121.86534 "thesis.aux" "thesis.bbl" "thesis" 1786095671.49176 0
+  "./Bibliografia.bib" 1786087463.27834 3914 17aa8284c23b8e265fd20394ea49a308 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1786043003.61984 15465 da9ed5560534ee8dbcb3dc673e5778a4 "pdflatex"
+  "thesis.aux" 1786095670.42895 16514 2b0ecee5b41c791aa7928d2ccf74aadd "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1786042995.01061 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786043005.04512 0
+["pdflatex"] 1786095664.01877 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786095671.4935 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786005416.94312 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1095.pk" 1786006008.66325 28976 475fc2c676782adfef9608dad2c07746 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1786005998.46945 31952 635dea08e2eb0bb1ee2ffcf00ccd39cf ""
@@ -248,8 +248,8 @@
   "abstract.tex" 1784275408.46122 138 f4847178a92669b6d943f16fc393a970 ""
   "appendix.tex" 1786028146.62761 1975 882b9f4ffd1a2bdbcbba75ed06ae71d7 ""
   "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1786008315.37673 5496 23e51bf407ef73a0d153273725178afb ""
-  "cap1.tex" 1786042994.43758 28208 fe8c6d43aecfbc375625c3121f36383d ""
-  "cap2.tex" 1786042860.89705 19825 fed1918ac35c1047ff38baa5c99fe9fc ""
+  "cap1.tex" 1786094999.11434 28209 923a8bffd02bc40892496c249d980fb6 ""
+  "cap2.tex" 1786095663.34204 26613 1c55c0bc0be9242082e460b9e6e66b75 ""
   "cap3.tex" 1786012627.73629 496 2cbcf646b23b8ad6ea4c26c0f2c79b6e ""
   "cap4.tex" 1785359379.89573 4633 7803c2d8982894e8030fdbffcd3e9075 ""
   "conclusion.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
@@ -285,10 +285,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1786007970.27406 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1786043003.61984 15465 da9ed5560534ee8dbcb3dc673e5778a4 "pdflatex"
-  "thesis.bbl" 1786041488.62273 1610 44025f674ccdc419907331ece8b38bc0 "bibtex thesis"
-  "thesis.out" 1786043003.64422 8821 a9327a41989f4c645a281a8646138269 "pdflatex"
-  "thesis.toc" 1786043003.66188 4247 cdfd5ec0509eb7f8bcaa4ec8c9a423ca "pdflatex"
+  "thesis.aux" 1786095670.42895 16514 2b0ecee5b41c791aa7928d2ccf74aadd "pdflatex"
+  "thesis.bbl" 1786095122.1134 2160 af459cbe3a2fa021d215fb7767866aa0 "bibtex thesis"
+  "thesis.out" 1786095670.46963 8963 89fc645b322abb2f5363ef1accc42daf "pdflatex"
+  "thesis.toc" 1786095670.50277 4334 98faa9b29379f34cbed4e4ee4b20cbfb "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"

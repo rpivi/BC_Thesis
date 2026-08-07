@@ -43,6 +43,8 @@
 \newlabel{fig:local_vs_global}{{1.4}{13}{Rappresentazione della differenza fra passo locale e globale per un MCMC con obiettivo il campionamento di una mistura di due gaussiane. L'immagine in alto mostra in blu cinque passi locali, mentre l'immagine in basso mostra in verde lo stesso numero di passi globali}{figure.caption.6}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Mappa concettuale dei vari metodi di campionamento e quali sono presentati in questa tesi ed in che capitoli.}}{14}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:map_methods}{{1.5}{14}{Mappa concettuale dei vari metodi di campionamento e quali sono presentati in questa tesi ed in che capitoli}{figure.caption.7}{}}
+\citation{buffon1777}
+\citation{laplace1886}
 \citation{metropolis1987beginning}
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{15}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -60,97 +62,103 @@
 \newlabel{fig:pionieri-mc}{{2.1}{16}{I pionieri del metodo Monte Carlo}{figure.caption.8}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Metodo dell'inversa}{17}{section.2.2}\protected@file@percent }
 \newlabel{sec:metodo-inversa}{{2.2}{17}{Metodo dell'inversa}{section.2.2}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Metodo dell'Inversa (Inverse Transform Sampling)}}{17}{algocf.1}\protected@file@percent }
-\newlabel{alg:inverse_transform}{{1}{17}{Metodo dell'inversa}{algocf.1}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Metodo dell'Inversa (Inverse Transform Sampling)}}{18}{algocf.1}\protected@file@percent }
+\newlabel{alg:inverse_transform}{{1}{18}{Metodo dell'inversa}{algocf.1}{}}
 \newlabel{ex:esponenziale}{{2.2.1}{18}{Campionamento della distribuzione esponenziale}{tcb@cnt@example.2.2.1}{}}
-\citation{quantum_monte_carlo_methods}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{19}{section.2.3}\protected@file@percent }
-\newlabel{sec:mcmc}{{2.3}{19}{Markov Chain Monte Carlo}{section.2.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{19}{subsection.2.3.1}\protected@file@percent }
-\newlabel{ev_prob}{{2.11}{19}{Catene di Markov}{equation.2.11}{}}
+\citation{gubernatis2016quantum}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Markov Chain Monte Carlo}{20}{section.2.3}\protected@file@percent }
+\newlabel{sec:mcmc}{{2.3}{20}{Markov Chain Monte Carlo}{section.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Catene di Markov}{20}{subsection.2.3.1}\protected@file@percent }
+\newlabel{ev_prob}{{2.14}{20}{Catene di Markov}{equation.2.14}{}}
 \citation{leoni2023enhancing}
 \citation{metropolis1953equation}
 \citation{hastings1970monte}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}L'Algoritmo di Metropolis-Hastings}{21}{subsection.2.3.2}\protected@file@percent }
-\newlabel{subsec:metropolis}{{2.3.2}{21}{L'Algoritmo di Metropolis-Hastings}{subsection.2.3.2}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Algoritmo di Metropolis-Hastings}}{21}{algocf.2}\protected@file@percent }
-\newlabel{alg:metropolis_hastings}{{2}{21}{L'Algoritmo di Metropolis-Hastings}{algocf.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces \relax }}{22}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:metropolis-hastings}{{2.2}{22}{\relax }{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{23}{section.2.4}\protected@file@percent }
-\newlabel{sec:campioni-autocorrelati}{{2.4}{23}{Campioni autocorrelati}{section.2.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Blocking Analysis}{23}{subsection.2.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Metodo di Sokal}{23}{subsection.2.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Normalizing Flows}{25}{chapter.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}L'Algoritmo di Metropolis-Hastings}{22}{subsection.2.3.2}\protected@file@percent }
+\newlabel{subsec:metropolis}{{2.3.2}{22}{L'Algoritmo di Metropolis-Hastings}{subsection.2.3.2}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Algoritmo di Metropolis-Hastings}}{22}{algocf.2}\protected@file@percent }
+\newlabel{alg:metropolis_hastings}{{2}{22}{L'Algoritmo di Metropolis-Hastings}{algocf.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Leggendo la figura da sinistra verso destra: si estrae da una distribuzione uniforme il primo campione della catena, successivamente si utilizza l'algoritmo di Metropolis-Hastings di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata.}}{23}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:metropolis-hastings}{{2.2}{23}{Leggendo la figura da sinistra verso destra: si estrae da una distribuzione uniforme il primo campione della catena, successivamente si utilizza l'algoritmo di Metropolis-Hastings di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{24}{section.2.4}\protected@file@percent }
+\newlabel{sec:campioni-autocorrelati}{{2.4}{24}{Campioni autocorrelati}{section.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Autocorrelazione}{24}{subsection.2.4.1}\protected@file@percent }
+\newlabel{eq:tau_int}{{2.37}{24}{Autocorrelazione}{equation.2.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Blocking Analysis}{25}{subsection.2.4.2}\protected@file@percent }
+\newlabel{subsec:block}{{2.4.2}{25}{Blocking Analysis}{subsection.2.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}Metodo di Sokal}{25}{subsection.2.4.3}\protected@file@percent }
+\newlabel{subsec:sokal}{{2.4.3}{25}{Metodo di Sokal}{subsection.2.4.3}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Normalizing Flows}{27}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{25}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Normalizing Flows}{26}{section.3.2}\protected@file@percent }
-\newlabel{sec:flows}{{3.2}{26}{Normalizing Flows}{section.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{26}{subsection.3.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Campionamento e inferenza}{26}{subsection.3.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Addestramento del Flow}{26}{subsection.3.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Costruire un Flow: composizione finita}{27}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Coupling Flow}{27}{subsection.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Trasformazione affine}{27}{subsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Coupling layers}{27}{subsection.3.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}Real NVP}{27}{subsection.3.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{28}{section.3.4}\protected@file@percent }
-\newlabel{sec:flow-mcmc}{{3.4}{28}{Flow Markov Chain Monte Carlo}{section.3.4}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{29}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cambio di variabili e funzioni invertibili}{27}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Normalizing Flows}{28}{section.3.2}\protected@file@percent }
+\newlabel{sec:flows}{{3.2}{28}{Normalizing Flows}{section.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Espressività del Flow}{28}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Campionamento e inferenza}{28}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Addestramento del Flow}{28}{subsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Costruire un Flow: composizione finita}{29}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Coupling Flow}{29}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Trasformazione affine}{29}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Coupling layers}{29}{subsection.3.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}Real NVP}{29}{subsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{30}{section.3.4}\protected@file@percent }
+\newlabel{sec:flow-mcmc}{{3.4}{30}{Flow Markov Chain Monte Carlo}{section.3.4}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{31}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{29}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{30}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{30}{subsection.4.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{30}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:therm_T_D}{{4.1}{30}{\relax }{figure.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{31}{subsection.4.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{31}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:acc_T_D}{{4.2}{31}{\relax }{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{31}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:E_T_D}{{4.3}{31}{\relax }{figure.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{32}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:Cv_T_D}{{4.4}{32}{\relax }{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{32}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:tau_T_D}{{4.5}{32}{\relax }{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{33}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{33}{subsection.4.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{33}{subsection.4.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{33}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:acc_T_all}{{4.6}{33}{\relax }{figure.caption.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{34}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:E_T_all}{{4.7}{34}{\relax }{figure.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{34}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:tau_T_all}{{4.8}{34}{\relax }{figure.caption.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{35}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:msig_T_all}{{4.9}{35}{\relax }{figure.caption.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{35}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:essn_T_all}{{4.10}{35}{\relax }{figure.caption.19}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{36}{subsection.4.3.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{36}{figure.caption.20}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{37}{figure.caption.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{38}{subsection.4.3.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{38}{figure.caption.22}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces \relax }}{39}{figure.caption.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Conclusione}{41}{chapter*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{31}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{32}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{32}{subsection.4.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{32}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:therm_T_D}{{4.1}{32}{\relax }{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{33}{subsection.4.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{33}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:acc_T_D}{{4.2}{33}{\relax }{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{33}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:E_T_D}{{4.3}{33}{\relax }{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{34}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:Cv_T_D}{{4.4}{34}{\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{34}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:tau_T_D}{{4.5}{34}{\relax }{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{35}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{35}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{35}{subsection.4.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{35}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:acc_T_all}{{4.6}{35}{\relax }{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{36}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:E_T_all}{{4.7}{36}{\relax }{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{36}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:tau_T_all}{{4.8}{36}{\relax }{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{37}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:msig_T_all}{{4.9}{37}{\relax }{figure.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{37}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:essn_T_all}{{4.10}{37}{\relax }{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{38}{subsection.4.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{38}{figure.caption.20}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{39}{figure.caption.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{40}{subsection.4.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{40}{figure.caption.22}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces \relax }}{41}{figure.caption.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Conclusione}{43}{chapter*.24}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{Bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{43}{appendix.Alph1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{45}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{sec:a_boltzm_der}{{A}{43}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
+\newlabel{sec:a_boltzm_der}{{A}{45}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
 \bibcite{budd2025monte}{1}
 \bibcite{marinari2023calcolo}{2}
 \bibcite{kennett2020essential}{3}
-\bibcite{metropolis1987beginning}{4}
-\bibcite{quantum_monte_carlo_methods}{5}
-\bibcite{leoni2023enhancing}{6}
-\bibcite{metropolis1953equation}{7}
-\bibcite{hastings1970monte}{8}
-\@writefile{toc}{\contentsline {chapter}{Bibliografia}{45}{appendix*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{47}{appendix*.26}\protected@file@percent }
-\gdef \@abspage@last{56}
+\bibcite{buffon1777}{4}
+\bibcite{laplace1886}{5}
+\bibcite{metropolis1987beginning}{6}
+\bibcite{gubernatis2016quantum}{7}
+\bibcite{leoni2023enhancing}{8}
+\bibcite{metropolis1953equation}{9}
+\bibcite{hastings1970monte}{10}
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{47}{appendix*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{49}{appendix*.26}\protected@file@percent }
+\gdef \@abspage@last{58}
