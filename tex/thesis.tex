@@ -3,6 +3,7 @@
 % --- Codifica e lingua ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[italian]{babel}
 
 % --- Matematica ---
@@ -59,16 +60,18 @@
 
 % ============================================================
 % Formattazione capitoli
+% "Capitolo N" ora sopra le due righe, e più grande (\Huge)
 % ============================================================
 \titleformat{\chapter}[display]
-{\normalfont\Large\filcenter}
-{\titlerule[1 pt]\vspace{1pt}\titlerule
+{\normalfont\filcenter}
+{\textcolor{accento}{\Huge\textsc{\chaptertitlename\ \thechapter}}
  \vspace{1ex}
- \textcolor{accento}{\Large\textsc{\chaptertitlename\ \thechapter}}}
+ \titlerule[1 pt]\vspace{1pt}\titlerule}
 {1ex}
 {\centering\Huge\bfseries}
 
-\titlespacing*{\chapter}{0pt}{40pt}{30pt}
+\titlespacing*{\chapter}{0pt}{40pt}{15pt}
+\titlespacing*{\section}{0pt}{*2}{*1}
 
 % ============================================================
 % Intestazioni/piè di pagina
@@ -91,21 +94,31 @@
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
-% Ogni sezione inizia in una nuova pagina, tranne la prima di ogni capitolo
-% (che resta sulla stessa pagina del titolo del capitolo)
-\newif\iffirstsectionofchapter
-\firstsectionofchaptertrue
-\pretocmd{\chapter}{\firstsectionofchaptertrue}{}{}
-\pretocmd{\section}{%
-  \iffirstsectionofchapter
-    \firstsectionofchapterfalse
-  \else
-    \clearpage
+% ============================================================
+% Pagina bianca "vera" prima di ogni capitolo
+% openright + \cleardoublepage inseriscono già una pagina vuota
+% quando serve, ma di default mostrano comunque il numero di
+% pagina nell'intestazione. Questa ridefinizione forza lo stile
+% "empty" (nessun numero, nessuna intestazione) su quella pagina.
+% ============================================================
+\makeatletter
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\else
+      \hbox{}
+      \thispagestyle{plain}
+      \newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
   \fi
-}{}{}
+}
+\makeatother
 
-% Comando comodo per pagine bianche
-\newcommand{\blankpage}{\newpage\thispagestyle{empty}\null\newpage}
+% Comando comodo per pagine bianche (stesso trattamento delle pagine
+% bianche automatiche prima dei capitoli: stile "plain", solo numero
+% di pagina, nessuna intestazione testuale)
+\newcommand{\blankpage}{\newpage\thispagestyle{plain}\null\newpage}
 
 \begin{document}
 

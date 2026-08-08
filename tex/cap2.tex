@@ -1,13 +1,14 @@
 \chapter{Metodi Monte Carlo}
+\label{ch:mc}
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo vengono introdotti i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introdurrà il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discuetere un metodo Monte Carlo di campionaento diretto (Sezione \ref{sec:metodo-inversa})e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni-autocorrelati}).
+In questo capitolo vengono introdotti i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introdurrà il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discutere un metodo Monte Carlo di campionamento diretto (Sezione \ref{sec:metodo-inversa}) e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discuterà di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni-autocorrelati}).
 
 \section{Cenni storici}
 \label{sec:storia}
 
-L'idea che un processo casuale possa essere utilizzato per stimare una quantità analitica non è nuova al Novecento. Il primo esempio documentato risale al 1777, quando Georges-Louis Leclerc, conte di Buffon, propose il celebre esperimento dell'ago \cite{buffon1777}: un ago di lunghezza $L$ viene lanciato a caso su un piano rigato da linee parallele equidistanti di $d > L$, e si chiede
+L'idea che un processo casuale possa essere utilizzato per stimare una quantità analitica non è nuova al Novecento. Il primo esempio documentato risale al 1777, quando Georges-Louis Leclerc, conte di Buffon, propose il celebre esperimento dell'ago \cite{buffon1777}: un ago di lunghezza $L$ viene lanciato a caso su un piano rigato da linee parallele distanti $d > L$, e si chiede
 la probabilità che l'ago intersechi una delle linee. Buffon non solo condusse l'esperimento fisicamente, lanciando l'ago numerose volte, ma ne derivò anche la soluzione analitica
 \begin{equation}
     P = \frac{2L}{\pi d}.
@@ -15,11 +16,11 @@ la probabilità che l'ago intersechi una delle linee. Buffon non solo condusse l
 
 Alcuni anni dopo, Laplace osservò che questa stessa relazione poteva essere invertita per stimare $\pi$ a partire dalla frequenza empirica delle intersezioni: un primo esempio, seppur rudimentale e a convergenza lenta, di determinazione stocastica di una costante analitica a partire da un esperimento casuale \cite{laplace1886}.
 
-Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori ettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura \ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a Von Neumann (Figura \ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic numerical integrator and computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori elettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura \ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a John von Neumann (Figura \ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic Numerical Integrator And Computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
 Il nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Mantan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC o anche denominato \textit{Il carrello Monte Carlo}: un computer analogico che permetteva - data una distribuzione iniziale di neutroni - di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, spargimenti, e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC. Noto anche con il nome \textit{Il carrello Monte Carlo}, il FERMIAC era un computer analogico che permetteva di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, diffusione e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
@@ -46,7 +47,7 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). M
 
 \section{Metodo dell'inversa}
 \label{sec:metodo-inversa}
-Il metodo dell'inversa (o \textit{inverse transform sampling}) è la tecnica di campionamento \textit{diretto} più utilizzata: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$ \cite{kalos2008montecarlo}.
+Il metodo dell'inversa (o \textit{inverse transform sampling}) è una tecnica di campionamento \textit{diretto}: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$ \cite{kalos2008montecarlo}.
 
 Sia $X$ una variabile aleatoria continua con funzione di distribuzione cumulativa $F_X(x) = P(X \leq x)$ strettamente monotona e continua, tale da ammettere una funzione inversa $F_X^{-1}: (0,1) \to \mathbb{R}$. Sia inoltre $U \sim \mathcal{U}(0,1)$ una variabile aleatoria uniforme sull'intervallo $(0,1)$.
 
@@ -60,7 +61,7 @@ Per definizione di funzione di distribuzione cumulativa:
 F_Y(y) = P(Y \leq y) = P\left(F_X^{-1}(U) \leq y\right).
 \end{equation}
 
-Poiché $F_X(x)$ è per ipotesi strettamente monotona crescente, essa è una funzione biettiva sul suo codominio e preserva il verso delle disuguaglianze: applicando $F_X$ ad entrambi i membri della disuguaglianza $F_X^{-1}(U) \leq y$ si ottiene una disuguaglianza equivalente,
+Poiché $F_X(x)$ è per ipotesi strettamente monotona crescente,$F_X(x)$ preserva il verso delle disuguaglianze: applicando $F_X$ ad entrambi i membri della disuguaglianza $F_X^{-1}(U) \leq y$ si ottiene una disuguaglianza equivalente,
 \begin{equation}
 F_X^{-1}(U) \leq y \quad \Longleftrightarrow \quad F_X\!\left(F_X^{-1}(U)\right) \leq F_X(y).
 \end{equation}
@@ -70,7 +71,7 @@ Per definizione di funzione inversa, $F_X\!\left(F_X^{-1}(U)\right) = U$; sostit
 F_Y(y) = P\left(F_X^{-1}(U) \leq y\right) = P\left(U \leq F_X(y)\right).
 \end{equation}
 
-Ricordando che per una variabile aleatoria uniforme $U \sim \mathcal{U}(0,1)$ vale la proprietà $P(U \leq u) = u$ per ogni $u \in [0, 1]$, e osservando che $F_X(y) \in [0,1]$ per definizione di funzione di distribuzione cumulativa, si ha direttamente:
+Ricordando che per una variabile aleatoria uniforme $U \sim \mathcal{U}(0,1)$ vale la proprietà $P(U \leq u) = u \ \ \forall u \in [0, 1]$, e osservando che $F_X(y) \in [0,1]$ per definizione di funzione di distribuzione cumulativa, si ha direttamente:
 \begin{equation}
 P\left(U \leq F_X(y)\right) = F_X(y),
 \end{equation}
@@ -79,7 +80,7 @@ e dunque
 F_Y(y) = F_X(y).
 \end{equation}
 
-Di conseguenza, la variabile aleatoria $Y$ possiede la medesima distribuzione cumulativa di $X$ e, derivando entrambi i membri rispetto a $y$, la sua densità di probabilità coincide con $p_X(x)$.
+Pertanto $Y$ e $X$ hanno la stessa distribuzione.
 
 L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente Algoritmo \ref{alg:inverse_transform}:
 
@@ -115,7 +116,7 @@ La relativa funzione di distribuzione cumulativa per $x \geq 0$ è data da:
 F_X(x) = \int_{0}^{x} \lambda e^{-\lambda t} \, dt = 1 - e^{-\lambda x}.
 \end{equation}
 
-Uguagliando $F_X(x)$ a una variabile uniforme $u \in (0,1)$ ed invertendo la relazione:
+Uguagliando $F_X(x)$ a una variabile uniforme $u \in (0,1)$ e invertendo la relazione:
 \begin{equation}
 u = 1 - e^{-\lambda x} \implies 1 - u = e^{-\lambda x} \implies x = -\frac{1}{\lambda} \ln(1 - u).
 \end{equation}
@@ -130,9 +131,9 @@ Il principale vantaggio del metodo dell'inversa risiede nella sua efficienza e s
 
 Tuttavia, il metodo presenta forti limitazioni pratiche, che ne riducono l'applicabilità a distribuzioni di probabilità complesse o multidimensionali:
 \begin{itemize}
-    \item \textbf{Invertibilità analitica}: Richiede che la funzione di distribuzione cumulativa $F_X(x)$ sia integrabile ed invertibile in forma chiusa (o approssimabile numericamente con elevata precisione). 
+    \item \textbf{Invertibilità analitica}: Richiede che la funzione di distribuzione cumulativa $F_X(x)$ sia invertibile in forma chiusa (o approssimabile numericamente con elevata precisione). 
     \item \textbf{Costante di normalizzazione}: È applicabile solo se la densità di probabilità $p_X(x)$ è perfettamente normalizzata.
-    \item \textbf{Dimensionalità}: Risulta di difficile estensione a distribuzioni ad alta dimensionalità $D \gg 1$, rendendolo di fatto inutilizzabile per il campionamento della distribuzione di Boltzmann in fisica statistica.
+    \item \textbf{Dimensionalità}: Risulta di difficile estensione a distribuzioni ad alta dimensionalità $D \gg 1$, rendendolo generalmente impraticabile per il campionamento diretto della distribuzione di Boltzmann di sistemi ad alta dimensionalità.
 \end{itemize}
 
 \section{Markov Chain Monte Carlo}
@@ -176,14 +177,14 @@ Questa evoluzione della distribuzione di probabilità della catena conserva la n
 \sum_{i} p^{(k+1)}_i = \sum_{i} \sum_{j} P_{ij} p^{(k)}_j = \sum_{j} p^{(k)}_j \sum_{i} P_{ij} = \sum_{j} p^{(k)}_j = 1.
 \end{equation}
 
-Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento si raggiunge un \textbf{distribuzione stazionaria} $p_i$ tale che:
+Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento converge una \textbf{distribuzione stazionaria} $p_i$ tale che:
 \begin{equation}
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
-Ovvero si raggiunge una distribuzione di probabilità che non viene più modificata iterando il procedimento (per questo detta stazionaria), inoltre essa è l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
-L'obbiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che vogliamo campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
+Ovvero una distribuzione di probabilità che non viene più modificata iterando il procedimento (per questo detta stazionaria), inoltre essa è l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
+L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che vogliamo campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
 
-Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione di simmetria detta \textbf{bilancio dettagliato}: 
+Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione detta di \textbf{bilancio dettagliato}: 
 \begin{equation}
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
@@ -194,11 +195,11 @@ p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf
 \end{equation}
 e la matrice di transizione $P_{ij}$ viene sostituita da un kernel di transizione continuo:
 \begin{equation}
-    \pi \colon \mathbb{R}^N \times \mathbb{R}^N \to \mathbb{R}^+
+    \pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^+
 \end{equation}
 che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
 \begin{equation}
-p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^N} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
+p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
 \end{equation}
 
 Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la \emph{condizione di bilancio dettagliato} (detailed balance condition):
@@ -215,14 +216,15 @@ Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings, c
 
 \subsection{L'Algoritmo di Metropolis-Hastings}
 \label{subsec:metropolis}
-Il problema di costruire un opportuno kernel $\pi(\mathbf{x}, \mathbf{y})$ che garantisca la convergenza a una data distribuzione target $p(\mathbf{x})$ è stato studiato da Metropolis \cite{metropolis1953equation}  e successivamente generalizzato da Hastings \cite{hastings1970monte}. La soluzione generale esprime il kernel di transizione come prodotto di due termini:
+Il problema di costruire un opportuno kernel $\pi(\mathbf{x}, \mathbf{y})$ che garantisca la convergenza a una data distribuzione target $p(\mathbf{x})$ è stato studiato da Metropolis \cite{metropolis1953equation}  e successivamente generalizzato da Hastings \cite{hastings1970monte}. La soluzione generalizzata esprime il kernel di transizione come prodotto di due termini:
 \begin{equation}
-\pi(\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \ \mathcal{A}(\mathbf{x}, \mathbf{y})
+\pi(\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \ \mathcal{A}(\mathbf{x}, \mathbf{y}).
 \end{equation}
-dove:
+\
+Di seguito si indicano il signficato dei termini che definiscono il kernel $\pi(\mathbf{x}, \mathbf{y})$:
 \begin{itemize}
-    \item $\Gamma(\mathbf{x} \to \mathbf{y})$ è la \emph{funzione di aggiornamento} (proposal distribution), che definisce la probabilità di proporre uno spostamento dallo stato $\mathbf{x}$ allo stato $\mathbf{y}$;
-    \item $\mathcal{A}(\mathbf{x}, \mathbf{y})$ è il \emph{tasso di accettazione} (acceptance ratio), definito come:
+    \item $\Gamma(\mathbf{x} \to \mathbf{y})$ è la \textbf{distribuzione di proposta} (proposal distribution), che definisce la probabilità di proporre uno spostamento dallo stato $\mathbf{x}$ allo stato $\mathbf{y}$;
+    \item $\mathcal{A}(\mathbf{x}, \mathbf{y})$ è il \textbf{tasso di accettazione} (acceptance ratio), definito come:
     \begin{equation}
     \mathcal{A}(\mathbf{x}, \mathbf{y}) = \min \left\{ 1, \, \frac{\Gamma(\mathbf{y} \to \mathbf{x}) \, f(\mathbf{y})}{\Gamma(\mathbf{x} \to \mathbf{y}) \, f(\mathbf{x})} \right\}
     \end{equation}
@@ -237,7 +239,7 @@ Si dimostra che il kernel così costruito soddisfa la condizione di bilancio det
 \pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}
 \end{equation}
 
-A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la descritta nell'Algoritmo \ref{alg:metropolis_hastings}.
+A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la procedura descritta nell'Algoritmo \ref{alg:metropolis_hastings}.
 
 \vspace{5mm}
 \begin{algorithm}[H]
@@ -257,7 +259,7 @@ A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1
 \end{algorithm}
 \vspace{5mm}
 
-L'iterazione di questa operazione permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura \ref{fig:metropolis-hastings}.
+L'iterazione di questa operazione, dopo la necessaria termalizzazione, permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura \ref{fig:metropolis-hastings}.
 
 \begin{figure}[H]
     \centering
@@ -270,12 +272,12 @@ Un caso comune prevede l'uso di uno spostamento gaussiano simmetrico, in cui :
 \begin{equation}
 \mathbf{y} = \mathbf{x}_i + \mathbf{\epsilon}, \ \ \ \mathbf{\epsilon} \sim \mathcal{N}(0, \sigma^2)
 \end{equation}
-Poiché la proposta è simmetrica ($\Gamma(\mathbf{x} \to \mathbf{y}) = \Gamma(\mathbf{y} \to \mathbf{x})$), la percentuale di accettazione si semplifica nel rapporto diretto tra le densità di target:
+Poiché la proposta è simmetrica ($\Gamma(\mathbf{x} \to \mathbf{y}) = \Gamma(\mathbf{y} \to \mathbf{x})$), il tasso di accettazione si semplifica nel rapporto diretto tra le densità di target:
 \begin{equation}
 \mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min \left\{ 1, \, \frac{f(\mathbf{y})}{f(\mathbf{x}_i)} \right\}
 \end{equation}
 
-E' possibile notare che gli elementi i valori di $\pi$ in questo caso simmetrico dipendono esclusivamente dal rapporto della probabilità target nelle due configurzioni considerate (attuale e proposta), dunque sono indipendenti dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.
+È possibile osservare che, nel caso di una distribuzione di proposta simmetrica, il valore di $\pi$ dipende esclusivamente dal rapporto tra i pesi delle due configurazioni considerate. Essa è quindi indipendente dalla costante di normalizzazione della distribuzione target. Come già espresso nel capitolo precedente, questo è un aspetto cruciale per il campionamento della distribuzione di Boltzmann, in quanto la costante di normalizzazione della distribuzione è proprio la funzione di partizione, di cui non è sempre possibile calcolare analiticamente o numericamente.
 Sostituendo la distribuzione di Boltzmann come distribuzione target otteniamo un tasso di accettazione della forma:
 \begin{equation}
     \mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min \left\{ 1, \, \frac{e^{-\beta \mathcal{H}(\mathbf{y})}}{e^{-\beta \mathcal{H}(\mathbf{x}_i)}} \right\}.
@@ -316,7 +318,7 @@ Definendo \textbf{funzione di correlazione}:
     \chi_{|i-j|} = \langle O(\mathbf{x}_i) O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle,
 \end{equation}
 
-che per un processo stazionario dipende solo dalla distanza temporale $|i-j|$ (e per cui vale $\chi_0 = \sigma^2_O$), la doppia somma può essere riscritta raggruppando i termini a parità di $k=|i-j|$. Poiché per ogni $k \geq 1$ esistono $2(N-k)$ coppie $(i,j)$ con $|i-j|=k$, si ottiene:
+che per un processo stazionario dipende solo dalla distanza temporale $|i-j|$ (e per cui vale $\chi_0 = \sigma^2_O$), la doppia somma può essere riscritta raggruppando i termini a parità di $k=|i-j|$. Poiché $\forall \ k \geq 1$ esistono $2(N-k)$ coppie $(i,j)$ con $|i-j|=k$, si ottiene:
 
 \begin{equation}
     \sigma^2_{\bar{O}} = \frac{1}{N^2} \left[ N \chi_0 + 2\sum_{k=1}^{N-1} (N-k)\,\chi_k \right] = \frac{\chi_0}{N}\left[ 1 + 2\sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0} \right].
@@ -343,12 +345,12 @@ Questo risultato è generale e vale anche per campioni correlati, come nel caso 
 
 Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau_{int \ O})$ per un metodo markoviano.
 
-Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalemte costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
+Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalmete costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
 
 \subsection{Blocking Analysis}
 \label{subsec:block}
 
-Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario presentare alcune proprietà della varianza, siano $X$ e $Y$ due variabili aleatorie e $a$ una costante:
+Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario richiamare alcune proprietà della varianza. Siano X e Y due variabili aleatorie e a una costante. Allora:
 \begin{equation}
     \label{eq:prop_var}
     \sigma^2_{aX} = a^2 \sigma^2_X, \quad \sigma^2_{X+Y} = \sigma^2_X + \sigma^2_Y
@@ -360,7 +362,7 @@ La media campionaria $\bar{X}$ è una variabile casuale:
 \sigma^2_{\bar{X}} = var \left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = var \left( \frac{1}{N_{blocks}} \sum_{j=1}^{N_{blocks}}\left(  \frac{1}{m} \sum_{i=(j-1)m +1 }^{jm} x_i\right)\right)
 \end{equation}
 
-Dove è stata usata la notazione di varianza $var(\ )$ per semplicità di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$.
+Dove è stata usata la notazione di varianza $var(\ )$ per semplicità di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$ (dunque vale $N = N_{blocks}m$).
 
 Utilizzando le proprietà della varianza (Equazione \ref{eq:prop_var}):
 
@@ -384,7 +386,7 @@ Che permette di stimare $var(\bar{X})$ con la formula:
 \begin{equation}
     var(\bar{X}) = R_X(m^*)\ \frac{var(X)}{N},
 \end{equation}
-dove $m^*$ è il valore della lunghezza di blocco per cui si raggiunge il limite di blocchi indipendenti. Per trovare tale valore si cerca per quale $m$ la funzione $R_X(m)$ presenta un plateau, ovvero una regione in cui diventa approssimativamente costante.
+dove $m^*$ è il valore della lunghezza di blocco oltre il quale i blocchi possono essere considerati approssimativamente indipendenti. Per trovare tale valore si cerca per quale $m$ la funzione $R_X(m)$ presenta un plateau, ovvero una regione in cui diventa approssimativamente costante.
 
 Inoltre esiste anche una formula per il calcolo del tempo di autocorrelazione integrato $\tau_{int \ X}$, direttamente legata alla funzione $R_X(m)$ appena introdotta. Ricordando che, per un campione di $N$ osservazioni correlate e nel limite $N \to \infty$, la varianza della media campionaria si scrive
 
@@ -411,15 +413,15 @@ In pratica, il valore $m^*$ non è mai noto a priori: viene determinato a poster
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
 
-Una stima diretta di $\tau_{\mathrm{int},\, O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$, operazione che con la definizione diretta
+Una stima diretta di $\tau_{\mathrm{int} \ O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite la seguente equazione
 
 \begin{equation}
-    \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right)
+    \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right),
 \end{equation}
 
-ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
+che ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
 
-Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau_{int \ O}$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini fa divergere la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
+Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau_{int \ O}$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
 
 \begin{equation}
     \tau_{int \ O}(M) = \frac{1}{2} + \sum_{k=1}^{M}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}.
