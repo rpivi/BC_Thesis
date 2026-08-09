@@ -21,8 +21,8 @@ In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyse
 \end{equation}
 
 \begin{example}{Tiri di un dado}{dice}
-Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P({\chi_i}) = 1/6$ per ogni $\chi_i \in \Omega$ .
-Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P({2}) + P({4}) + P({6}) = 1/2$.
+Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P(\chi_i) = 1/6$ per ogni $\chi_i \in \Omega$ .
+Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
 \end{example}
 
 Una \textbf{variabile aleatoria} (reale) $X$ associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
@@ -184,7 +184,7 @@ Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/stat_mec/canonical.png}
-    \caption{Rappresentazione schematica dell'ensemble canonico: sistema (System), serbatoio termico (Bath) e flusso di calore fra i due sistemi(Heat Flow).}
+    \caption{Rappresentazione schematica dell'ensemble canonico: sistema (System), serbatoio termico (Bath) e flusso di calore fra i due sistemi (Heat Flow).}
     \label{fig:canonical}
 \end{figure}
 
@@ -264,7 +264,7 @@ Il problema centrale di questa tesi - generare configurazioni distribuite second
 La prima distinzione riguarda \emph{come} viene prodotta una configurazione. Si parla di \textbf{campionamento diretto} quando è possibile generare direttamente campioni indipendenti distribuiti secondo $p(\mathbf{x})$. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo \ref{ch:mc} si mostra un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa (Sezione \ref{sec:metodo-inversa}),che è un metodo esatto di campionamento diretto.
 \newline
 Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda \emph{solo} dalla precedente. Una successione con questa proprietà è una \textbf{catena di Markov}, ed è alla base dei metodi \textbf{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \textbf{termalizzazione}. Inoltre ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \textbf{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
-
+\newline
 Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ anche a meno della costante di normalizzazione, condizione tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
 \newline
 Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis-Hastings (Sezione \ref{subsec:metropolis}). Un passo locale è una scelta semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.

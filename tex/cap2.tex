@@ -164,8 +164,8 @@ P(\mathbf{x}_i|\mathbf{x}_1) & \cdots & P(\mathbf{x}_i|\mathbf{x}_j) & \cdots \\
 
 La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
 \begin{equation}
+    \label{eq:normaliz}
 \sum_{j} p^{(i)}_j = 1, \quad \sum_{i} P_{ij} =1.
-\label{ev_prob}
 \end{equation}
 
 Data una distribuzione iniziale $p^{(0)}_i$ e la matrice stocastica $P_{ij}$ detta \textbf{matrice di transizione}, si può evolvere la distribuzione in modo ricorsivo:
@@ -179,17 +179,18 @@ Questa evoluzione della distribuzione di probabilità della catena conserva la n
 \sum_{i} p^{(k+1)}_i = \sum_{i} \sum_{j} P_{ij} p^{(k)}_j = \sum_{j} p^{(k)}_j \sum_{i} P_{ij} = \sum_{j} p^{(k)}_j = 1.
 \end{equation}
 
-Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ iterando il procedimento converge una \textbf{distribuzione stazionaria} $p_i$ tale che:
+Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e aperiodica) è assicurato che a prescindere dalla distribuzione iniziale $p^{(0)}_i$ - iterando il procedimento di evoluzione - si converge ad una \textbf{distribuzione stazionaria} $p_i$ tale che:
 \begin{equation}
+    \label{eq:staz}
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
 Ovvero una distribuzione di probabilità che non viene più modificata iterando il procedimento (per questo detta stazionaria), inoltre essa è l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
-L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che si vuole campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
-
+L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che si vuole campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo, garantendo la validità dell'Equazione \ref{eq:staz}.
 Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione detta di \textbf{bilancio dettagliato} (detailed balance condition): 
 \begin{equation}
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
+Sommando entrambi i membri su $i$ e sfruttando la stocasticità delle colonne di $P_{ij}$ (Equazione \ref{eq:normaliz}), si verifica facilmente che il bilancio dettagliato garantisce la stazionarietà ed è dunque una condizione \emph{sufficiente} ma non \emph{necessaria}.
 
 \begin{example}{Catena di Markov meteo a tre stati}{markov-meteo}
 Consideriamo tre stati possibili: $x_1=$Sole, $x_2=$Nuvoloso e $x_3=$Pioggia; che rappresentano le tre condizioni meteorologiche possibili in un giorno. Sia $X_i$ la variabile aleatoria discreta che descrive la condizione meteorologica osservata al giorno $i$.
@@ -209,12 +210,11 @@ P(x_3 \mid x_1) & P(x_3 \mid x_2) & P(x_3 \mid x_3)
 0.1 & 0.3 & 0.5
 \end{pmatrix}.
 \end{equation}
-
+La matrice d'esempio rispetta l'Equazione \ref{eq:normaliz}, ovvero che ogni colonna somma ad 1.
 Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
 
 \begin{center}
-\includegraphics[width=0.65\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
-\captionof{figure}{Diagramma degli stati e delle probabilità di transizione per la catena di Markov meteo a tre stati.}
+\includegraphics[width=0.55\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
 \label{fig:markov_meteo}
 \end{center}
 
@@ -379,54 +379,54 @@ Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto 
 \subsection{Blocking Analysis}
 \label{subsec:block}
 
-Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Nel seguito, con lieve abuso di notazione, $X$ denota genericamente l'osservabile di interesse ($O(\mathbf{x})$ come definito in precedenza) e $x_i$ il suo valore lungo la $i$-esima configurazione della catena ($O(\mathbf{x}_i)$). Siano $X$ e $Y$ due variabili aleatorie e $a$ una costante, allora valgono le suegueti proprietà per la varianza:
+Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Siano $O_1$ e $O_2$ due variabili aleatorie e $a$ una costante, allora valgono le seguenti proprietà per la varianza:
 \begin{equation}
     \label{eq:prop_var}
-    \mathrm{Var}(aX) = a^2\, \mathrm{Var}(X), \qquad \mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
+    \mathrm{Var}(aO_1) = a^2\, \mathrm{Var}(O_1), \qquad \mathrm{Var}(O_1+O_2) = \mathrm{Var}(O_1) + \mathrm{Var}(O_2).
 \end{equation}
 
-La media campionaria $\bar X$ è essa stessa una variabile aleatoria, la cui varianza può essere riscritta suddividendo la somma su $N$ campioni in una somma su $N_{\mathrm{blocks}}$ blocchi consecutivi di lunghezza $m$ (con $N = N_{\mathrm{blocks}}\, m$):
+La media campionaria $\bar O$ è essa stessa una variabile aleatoria, la cui varianza può essere riscritta suddividendo la somma sugli $N$ valori $O(\mathbf{x}_i)$ in una somma su $N_{\mathrm{blocks}}$ blocchi consecutivi di lunghezza $m$ (con $N = N_{\mathrm{blocks}}\, m$):
 \begin{equation}
-    \sigma^2_{\bar X} = \mathrm{Var}\!\left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = \mathrm{Var}\!\left( \frac{1}{N_{\mathrm{blocks}}} \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{x}_j \right), \qquad \bar{x}_j = \frac{1}{m} \sum_{i=(j-1)m+1}^{jm} x_i,
+    \sigma^2_{\bar O} = \mathrm{Var}\!\left( \frac{1}{N} \sum_{i=1}^{N} O(\mathbf{x}_i)\right) = \mathrm{Var}\!\left( \frac{1}{N_{\mathrm{blocks}}} \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{O}_j \right), \ \ \bar{O}_j = \frac{1}{m} \sum_{i=(j-1)m+1}^{jm} O(\mathbf{x}_i),
 \end{equation}
-dove $\bar x_j$ è la media del $j$-esimo blocco.
+dove $\bar O_j$ è la media del $j$-esimo blocco.
 
 Applicando le proprietà della varianza (Equazione \ref{eq:prop_var}):
 \begin{equation}
-    \sigma^2_{\bar X} = \frac{1}{N_{\mathrm{blocks}}^2}\, \mathrm{Var}\!\left( \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{x}_j \right).
+    \sigma^2_{\bar O} = \frac{1}{N_{\mathrm{blocks}}^2}\, \mathrm{Var}\!\left( \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{O}_j \right).
 \end{equation}
 
 Se la lunghezza di blocco $m$ è sufficientemente grande, le medie di blocchi distinti possono essere considerate approssimativamente indipendenti; in questo limite la varianza della somma coincide con la somma delle varianze:
 \begin{equation}
-    \mathrm{Var}(\bar X) = \frac{1}{N_{\mathrm{blocks}}}\, \mathrm{Var}(\bar X_{\mathrm{block}}),
+    \mathrm{Var}(\bar O) = \frac{1}{N_{\mathrm{blocks}}}\, \mathrm{Var}(\bar O_{\mathrm{block}}),
 \end{equation}
-dove $\mathrm{Var}(\bar X_{\mathrm{block}})$ è la varianza della media di un singolo blocco, stimabile empiricamente dalla dispersione delle medie di blocco:
+dove $\mathrm{Var}(\bar O_{\mathrm{block}})$ è la varianza della media di un singolo blocco, stimabile empiricamente dalla dispersione delle medie di blocco:
 \begin{equation}
-    \mathrm{Var}(\bar X_{\mathrm{block}}) \approx \frac{1}{N_{\mathrm{blocks}}-1} \sum_{j=1}^{N_{\mathrm{blocks}}} \left(\bar x_j - \bar x\right)^2.
+    \mathrm{Var}(\bar O_{\mathrm{block}}) \approx \frac{1}{N_{\mathrm{blocks}}-1} \sum_{j=1}^{N_{\mathrm{blocks}}} \left(\bar O_j - \bar O\right)^2.
 \end{equation}
 
 Si definisce quindi la funzione di blocking
 \begin{equation}
-    R_X(m) = \frac{m\, \mathrm{Var}(\bar X_{\mathrm{block}})}{\mathrm{Var}(X)},
+    R_O(m) = \frac{m\, \mathrm{Var}(\bar O_{\mathrm{block}})}{\mathrm{Var}(O)},
 \end{equation}
 che permette di stimare la varianza della media campionaria come
 \begin{equation}
-    \mathrm{Var}(\bar X) = R_X(m^*)\, \frac{\mathrm{Var}(X)}{N},
+    \mathrm{Var}(\bar O) = R_O(m^*)\, \frac{\mathrm{Var}(O)}{N},
 \end{equation}
-dove $m^*$ è la lunghezza di blocco oltre la quale i blocchi possono essere considerati approssimativamente indipendenti: in pratica si individua cercando la regione in cui $R_X(m)$ smette di crescere apprezzabilmente al variare di $m$, ovvero un \emph{plateau}.
+dove $m^*$ è la lunghezza di blocco oltre la quale i blocchi possono essere considerati approssimativamente indipendenti: in pratica si individua cercando la regione in cui $R_O(m)$ smette di crescere apprezzabilmente al variare di $m$, ovvero un \emph{plateau}.
 
 Confrontando questa stima con la relazione generale tra varianza della media campionaria e tempo di autocorrelazione integrato, valida per $N\to\infty$,
 \begin{equation}
     \label{eq:var_tau_int}
-    \mathrm{Var}(\bar X) = \frac{2\,\tau_{\mathrm{int} \ X}}{N}\, \mathrm{Var}(X),
+    \mathrm{Var}(\bar O) = \frac{2\,\tau_{\mathrm{int} \ O}}{N}\, \mathrm{Var}(O),
 \end{equation}
-si ottiene la relazione tra il plateau di $R_X(m)$ e il tempo di autocorrelazione integrato:
+si ottiene la relazione tra il plateau di $R_O(m)$ e il tempo di autocorrelazione integrato:
 \begin{equation}
     \label{eq:tau_int_blocking}
-    \tau_{\mathrm{int} \ X} = \frac{1}{2}\, R_X(m^*).
+    \tau_{\mathrm{int} \ O} = \frac{1}{2}\, R_O(m^*).
 \end{equation}
 
-Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando il plateau di $R_X(m)$ descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}, e ha il vantaggio di fornire una stima di $\tau_{\mathrm{int},\,X}$ senza richiedere il calcolo esplicito della funzione di correlazione $\chi_k$ a ogni ritardo $k$.
+Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando il plateau di $R_O(m)$ descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}, e ha il vantaggio di fornire una stima di $\tau_{\mathrm{int} \ O}$ senza richiedere il calcolo esplicito della funzione di correlazione $\chi_k$ a ogni ritardo $k$.
 
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
