@@ -121,7 +121,7 @@ Uguagliando $F_X(x)$ a una variabile uniforme $u \in (0,1)$ e invertendo la rela
 u = 1 - e^{-\lambda x} \implies 1 - u = e^{-\lambda x} \implies x = -\frac{1}{\lambda} \ln(1 - u).
 \end{equation}
 
-Poiché se $U \sim \mathcal{U}(0,1)$ anche $(1 - U) \sim \mathcal{U}(0,1)$, la formula generatrice si semplifica spesso in:
+Poiché se $u \sim \mathcal{U}(0,1)$ anche $(1 - u) \sim \mathcal{U}(0,1)$, la formula generatrice si semplifica spesso in:
 \begin{equation}
 x = -\frac{1}{\lambda} \ln(u).
 \end{equation}
@@ -140,28 +140,29 @@ Tuttavia, il metodo presenta forti limitazioni pratiche, che ne riducono l'appli
 \label{sec:mcmc}
 \subsection{Catene di Markov}
 
-Sia ${X_1,..., X_N}$ una sequenza di variabili aleatorie in $\mathbb{R}^D$, questa sequenza è una catena di Markov se la probabilità condizionata di ogni $X_i$ soddisfa:
+Sia $\{X_1,\dots, X_N\}$ una sequenza di variabili aleatorie in $\mathbb{R}^D$, questa sequenza è una catena di Markov se la probabilità condizionata di ogni $X_i$ soddisfa:
 
 \begin{equation}
+    \label{eq:markov}
 P(X_i |X_{i-1},..., X_{1}) = P(X_i | X_{i-1}).
 \end{equation}
 
 Dunque la probabilità di ottenere un certo valore di $X_i$ dipende solo dalla variabile aleatoria precedente della catena e non dalle altre, questa richiesta equivale a dire che le catene di Markov sono catene \textit{senza memoria}, ovvero che solo l'ultimo stato della catena influenza il prossimo stato \cite{gubernatis2016quantum}. 
-Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{x_1, ..., x_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
+Considerando il caso che la variabile aleatoria $X_i$ possa assumere un numero discreto di valori, ovvero che $X_i \in \{\mathbf{x}_1, ..., \mathbf{x}_j, ...\}$, in questo modo possiamo descrivere la distribuzione di probabilità e le probabilità condizionate di tali variabili utilizzando un vettore e una matrice rispettivamente:
 \begin{equation}
-P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(x_1) \\ \vdots \\ p^{(i)}(x_j) \\ \vdots \end{pmatrix}, 
+P(X_i) = p^{(i)}_j = \begin{pmatrix} p^{(i)}(\mathbf{x}_1) \\ \vdots \\ p^{(i)}(\mathbf{x}_j) \\ \vdots \end{pmatrix}, 
 \ 
 P(X_i|X_j) = P_{ij} = 
 \begin{pmatrix}
-P(x_1|x_1)  & \cdots & P(x_1|x_j) & \cdots \\
-P(x_2|x_1) & \cdots & P(x_2|x_j) & \cdots \\
+P(\mathbf{x}_1|\mathbf{x}_1)  & \cdots & P(\mathbf{x}_1|\mathbf{x}_j) & \cdots \\
+P(\mathbf{x}_2|\mathbf{x}_1) & \cdots & P(\mathbf{x}_2|\mathbf{x}_j) & \cdots \\
 \vdots & \ddots & \vdots & \\
-P(x_i|x_1) & \cdots & P(x_i|x_j) & \cdots \\
+P(\mathbf{x}_i|\mathbf{x}_1) & \cdots & P(\mathbf{x}_i|\mathbf{x}_j) & \cdots \\
 \vdots   & \vdots& \vdots & \ddots
 \end{pmatrix}
 \end{equation}
 
-La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per ${p^{(i)}}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
+La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
 \begin{equation}
 \sum_{j} p^{(i)}_j = 1, \quad \sum_{i} P_{ij} =1.
 \label{ev_prob}
@@ -169,6 +170,7 @@ La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ a
 
 Data una distribuzione iniziale $p^{(0)}_i$ e la matrice stocastica $P_{ij}$ detta \textbf{matrice di transizione}, si può evolvere la distribuzione in modo ricorsivo:
 \begin{equation}
+    \label{eq:evol}
     p^{(k+1)}_i = \sum_{j} P_{ij} p^{(k)}_j  \ \text{con } k \in \mathbb{N}.
 \end{equation}
 
@@ -182,12 +184,45 @@ Inoltre considerando una matrice di transizione ergodica (ovvero irriducibile e 
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
 Ovvero una distribuzione di probabilità che non viene più modificata iterando il procedimento (per questo detta stazionaria), inoltre essa è l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
-L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che vogliamo campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
+L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che si vuole campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo. 
 
-Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione detta di \textbf{bilancio dettagliato}: 
+Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione detta di \textbf{bilancio dettagliato} (detailed balance condition): 
 \begin{equation}
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
+
+\begin{example}{Catena di Markov meteo a tre stati}{markov-meteo}
+Consideriamo tre stati possibili: $x_1=$Sole, $x_2=$Nuvoloso e $x_3=$Pioggia; che rappresentano le tre condizioni meteorologiche possibili in un giorno. Sia $X_i$ la variabile aleatoria discreta che descrive la condizione meteorologica osservata al giorno $i$.
+
+Si assume che la sequenza $X_1, X_2, \dots, X_N$ costituisca una catena di Markov secondo la definizione data in Equazione \ref{eq:markov}: il tempo che farà domani dipende soltanto dal tempo di oggi. Questa è chiaramente un'approssimazione della realtà fisica.
+
+La matrice di transizione, che fornisce la probabilità di osservare lo stato $x_i$ il giorno successivo dato lo stato $x_j$ nel giorno corrente, è data da:
+\begin{equation}
+P_{ij} = \begin{pmatrix}
+P(x_1\mid x_1) & P(x_1 \mid x_2) & P(x_1 \mid x_3) \\
+P(x_2 \mid x_1) & P(x_2 \mid x_2) & P(x_2 \mid x_3) \\
+P(x_3 \mid x_1) & P(x_3 \mid x_2) & P(x_3 \mid x_3)
+\end{pmatrix}
+= \begin{pmatrix}
+0.7 & 0.3 & 0.2 \\
+0.2 & 0.4 & 0.3 \\
+0.1 & 0.3 & 0.5
+\end{pmatrix}.
+\end{equation}
+
+Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
+
+\begin{center}
+\includegraphics[width=0.65\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
+\captionof{figure}{Diagramma degli stati e delle probabilità di transizione per la catena di Markov meteo a tre stati.}
+\label{fig:markov_meteo}
+\end{center}
+
+Se oggi è nuvoloso, la distribuzione iniziale è $p^{(0)} = (0,\,1,\,0)^{\mathsf{T}}$, e la distribuzione di probabilità sul tempo di domani si ottiene applicando l'Equazione \ref{eq:evol}:
+\begin{equation}
+p^{(1)}_i = \sum_j P_{ij}\, p^{(0)}_j = \begin{pmatrix} 0.3 \\ 0.4 \\ 0.3 \end{pmatrix}.
+\end{equation}
+\end{example}
 
 Il formalismo matematico delle catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
 \begin{equation}
@@ -202,7 +237,7 @@ che definisce la probabilità di transizione tra stati dello spazio continuo  \c
 p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
 \end{equation}
 
-Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la \emph{condizione di bilancio dettagliato} (detailed balance condition):
+Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la condizione di bilancio dettagliato:
 \begin{equation}
 \pi(\mathbf{x}, \mathbf{y}) p(\mathbf{y}) = \pi(\mathbf{y}, \mathbf{x}) p(\mathbf{x})
 \end{equation}
@@ -220,15 +255,11 @@ Il problema di costruire un opportuno kernel $\pi(\mathbf{x}, \mathbf{y})$ che g
 \begin{equation}
 \pi(\mathbf{x}, \mathbf{y}) = \Gamma(\mathbf{x} \to \mathbf{y}) \ \mathcal{A}(\mathbf{x}, \mathbf{y}).
 \end{equation}
-\
-Di seguito si indicano il signficato dei termini che definiscono il kernel $\pi(\mathbf{x}, \mathbf{y})$:
-\begin{itemize}
-    \item $\Gamma(\mathbf{x} \to \mathbf{y})$ è la \textbf{distribuzione di proposta} (proposal distribution), che definisce la probabilità di proporre uno spostamento dallo stato $\mathbf{x}$ allo stato $\mathbf{y}$;
-    \item $\mathcal{A}(\mathbf{x}, \mathbf{y})$ è il \textbf{tasso di accettazione} (acceptance ratio), definito come:
-    \begin{equation}
-    \mathcal{A}(\mathbf{x}, \mathbf{y}) = \min \left\{ 1, \, \frac{\Gamma(\mathbf{y} \to \mathbf{x}) \, f(\mathbf{y})}{\Gamma(\mathbf{x} \to \mathbf{y}) \, f(\mathbf{x})} \right\}
-    \end{equation}
-\end{itemize}
+
+Il termine $\Gamma(\mathbf{x} \to \mathbf{y})$ è la \textbf{distribuzione di proposta} (\textit{proposal distribution}), che definisce la probabilità di proporre uno spostamento dallo stato $\mathbf{x}$ allo stato $\mathbf{y}$, mentre $\mathcal{A}(\mathbf{x}, \mathbf{y})$ è il \textbf{tasso di accettazione} (\textit{acceptance ratio}), definito come:
+\begin{equation}
+    \mathcal{A}(\mathbf{x}, \mathbf{y}) = \min \left\{ 1, \, \frac{\Gamma(\mathbf{y} \to \mathbf{x}) \, f(\mathbf{y})}{\Gamma(\mathbf{x} \to \mathbf{y}) \, f(\mathbf{x})} \right\}.
+\end{equation}
 
 Assumendo che la distribuzione di proposta sia normalizzata e strettamente positiva:
 \begin{equation}
@@ -236,12 +267,11 @@ Assumendo che la distribuzione di proposta sia normalizzata e strettamente posit
 \end{equation}
 Si dimostra che il kernel così costruito soddisfa la condizione di bilancio dettagliato:
 \begin{equation}
-\pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}
+\pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}.
 \end{equation}
 
 A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la procedura descritta nell'Algoritmo \ref{alg:metropolis_hastings}.
 
-\vspace{5mm}
 \begin{algorithm}[H]
 \SetAlgoLined
 \KwIn{Stato corrente $\mathbf{x}_i$; distribuzione target non normalizzata $f(\mathbf{x})$; distribuzione di proposta $\Gamma(\mathbf{x} \to \mathbf{y})$.}
@@ -257,7 +287,6 @@ A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1
 \caption{Algoritmo di Metropolis-Hastings}
 \label{alg:metropolis_hastings}
 \end{algorithm}
-\vspace{5mm}
 
 L'iterazione di questa operazione, dopo la necessaria termalizzazione, permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura \ref{fig:metropolis-hastings}.
 
@@ -345,70 +374,59 @@ Questo risultato è generale e vale anche per campioni correlati, come nel caso 
 
 Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau_{int \ O})$ per un metodo markoviano.
 
-Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalmete costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
+Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalmente costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen (Sezione \ref{subsec:block}), che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal} (Sezione \ref{subsec:sokal}), che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
 
 \subsection{Blocking Analysis}
 \label{subsec:block}
 
-Per poter comprendere questo metodo per la stima dell'errore da associare alla media di un osservabile è necessario richiamare alcune proprietà della varianza. Siano X e Y due variabili aleatorie e a una costante. Allora:
+Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Nel seguito, con lieve abuso di notazione, $X$ denota genericamente l'osservabile di interesse ($O(\mathbf{x})$ come definito in precedenza) e $x_i$ il suo valore lungo la $i$-esima configurazione della catena ($O(\mathbf{x}_i)$). Siano $X$ e $Y$ due variabili aleatorie e $a$ una costante, allora valgono le suegueti proprietà per la varianza:
 \begin{equation}
     \label{eq:prop_var}
-    \sigma^2_{aX} = a^2 \sigma^2_X, \quad \sigma^2_{X+Y} = \sigma^2_X + \sigma^2_Y
+    \mathrm{Var}(aX) = a^2\, \mathrm{Var}(X), \qquad \mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
 \end{equation}
 
-La media campionaria $\bar{X}$ è una variabile casuale:
-
+La media campionaria $\bar X$ è essa stessa una variabile aleatoria, la cui varianza può essere riscritta suddividendo la somma su $N$ campioni in una somma su $N_{\mathrm{blocks}}$ blocchi consecutivi di lunghezza $m$ (con $N = N_{\mathrm{blocks}}\, m$):
 \begin{equation}
-\sigma^2_{\bar{X}} = var \left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = var \left( \frac{1}{N_{blocks}} \sum_{j=1}^{N_{blocks}}\left(  \frac{1}{m} \sum_{i=(j-1)m +1 }^{jm} x_i\right)\right)
+    \sigma^2_{\bar X} = \mathrm{Var}\!\left( \frac{1}{N} \sum_{i=1}^{N} x_i\right) = \mathrm{Var}\!\left( \frac{1}{N_{\mathrm{blocks}}} \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{x}_j \right), \qquad \bar{x}_j = \frac{1}{m} \sum_{i=(j-1)m+1}^{jm} x_i,
 \end{equation}
+dove $\bar x_j$ è la media del $j$-esimo blocco.
 
-Dove è stata usata la notazione di varianza $var(\ )$ per semplicità di scrittura e abbiamo separato la somma su $N$ in una somma su un numero $N_{blocks}$ di blocchi di lunghezza $m$ (dunque vale $N = N_{blocks}m$).
-
-Utilizzando le proprietà della varianza (Equazione \ref{eq:prop_var}):
-
+Applicando le proprietà della varianza (Equazione \ref{eq:prop_var}):
 \begin{equation}
-    \sigma^2_{\bar{X}} = \frac{1}{N_{blocks}^2} var \left( \sum_{j=1}^{N_{blocks}}\bar{x}_j \right), \quad \bar{x}_j = \frac{1}{m} \sum_{i=(j-1)m +1 }^{jm} x_i
+    \sigma^2_{\bar X} = \frac{1}{N_{\mathrm{blocks}}^2}\, \mathrm{Var}\!\left( \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{x}_j \right).
 \end{equation}
 
-Assumiamo che per blocchi sufficientemente lunghi la varianza abbia lo stesso valore:
-
+Se la lunghezza di blocco $m$ è sufficientemente grande, le medie di blocchi distinti possono essere considerate approssimativamente indipendenti; in questo limite la varianza della somma coincide con la somma delle varianze:
 \begin{equation}
-    var(\bar{X})=\frac{1}{N_{blocks}} var(\bar{X}_{block}),
+    \mathrm{Var}(\bar X) = \frac{1}{N_{\mathrm{blocks}}}\, \mathrm{Var}(\bar X_{\mathrm{block}}),
 \end{equation}
-
-dove $var(\bar{X}_{block})$ è la varianza della media di un singolo blocco.
-Per determinare $var(\bar{X})$ calcoliamo $R_X(m)$ utilizzando una stima di $var(\bar{X}_{block})$:
+dove $\mathrm{Var}(\bar X_{\mathrm{block}})$ è la varianza della media di un singolo blocco, stimabile empiricamente dalla dispersione delle medie di blocco:
 \begin{equation}
-    R_X (m) = \frac{m \ var(\bar{X}_{block})}{var(X)},  \quad var(\bar{X}_{block}) \approx \frac{1}{N_{blocks}-1} \sum_{j=1}^{N_{blocks}} (\bar{x}_j-\bar{x})^2
+    \mathrm{Var}(\bar X_{\mathrm{block}}) \approx \frac{1}{N_{\mathrm{blocks}}-1} \sum_{j=1}^{N_{\mathrm{blocks}}} \left(\bar x_j - \bar x\right)^2.
 \end{equation}
 
-Che permette di stimare $var(\bar{X})$ con la formula:
+Si definisce quindi la funzione di blocking
 \begin{equation}
-    var(\bar{X}) = R_X(m^*)\ \frac{var(X)}{N},
+    R_X(m) = \frac{m\, \mathrm{Var}(\bar X_{\mathrm{block}})}{\mathrm{Var}(X)},
 \end{equation}
-dove $m^*$ è il valore della lunghezza di blocco oltre il quale i blocchi possono essere considerati approssimativamente indipendenti. Per trovare tale valore si cerca per quale $m$ la funzione $R_X(m)$ presenta un plateau, ovvero una regione in cui diventa approssimativamente costante.
+che permette di stimare la varianza della media campionaria come
+\begin{equation}
+    \mathrm{Var}(\bar X) = R_X(m^*)\, \frac{\mathrm{Var}(X)}{N},
+\end{equation}
+dove $m^*$ è la lunghezza di blocco oltre la quale i blocchi possono essere considerati approssimativamente indipendenti: in pratica si individua cercando la regione in cui $R_X(m)$ smette di crescere apprezzabilmente al variare di $m$, ovvero un \emph{plateau}.
 
-Inoltre esiste anche una formula per il calcolo del tempo di autocorrelazione integrato $\tau_{int \ X}$, direttamente legata alla funzione $R_X(m)$ appena introdotta. Ricordando che, per un campione di $N$ osservazioni correlate e nel limite $N \to \infty$, la varianza della media campionaria si scrive
-
+Confrontando questa stima con la relazione generale tra varianza della media campionaria e tempo di autocorrelazione integrato, valida per $N\to\infty$,
 \begin{equation}
     \label{eq:var_tau_int}
-    var(\bar{X}) = \frac{2\tau_{int \ X}}{N}\ var(X),
+    \mathrm{Var}(\bar X) = \frac{2\,\tau_{\mathrm{int} \ X}}{N}\, \mathrm{Var}(X),
 \end{equation}
-
-e confrontando questa espressione con la stima ottenuta dal blocking,
-
-\begin{equation}
-    var(\bar{X}) = R_X(m^*)\, \frac{var(X)}{N},
-\end{equation}
-
-si ottiene immediatamente la relazione tra il plateau di $R_X(m)$ e il tempo di autocorrelazione integrato:
-
+si ottiene la relazione tra il plateau di $R_X(m)$ e il tempo di autocorrelazione integrato:
 \begin{equation}
     \label{eq:tau_int_blocking}
-    \tau_{int \ X} = \frac{1}{2}\, R_X(m^*).
+    \tau_{\mathrm{int} \ X} = \frac{1}{2}\, R_X(m^*).
 \end{equation}
 
-In pratica, il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando la regione in cui $R_X(m)$ smette di crescere apprezzabilmente al variare di $m$, ovvero il plateau descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}.
+Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando il plateau di $R_X(m)$ descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}, e ha il vantaggio di fornire una stima di $\tau_{\mathrm{int},\,X}$ senza richiedere il calcolo esplicito della funzione di correlazione $\chi_k$ a ogni ritardo $k$.
 
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
@@ -421,7 +439,7 @@ Una stima diretta di $\tau_{\mathrm{int} \ O}$ tramite l'Equazione \ref{eq:tau_i
 
 che ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
 
-Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau_{int \ O}$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
+Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau_{\mathrm{int} \ O}$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
 
 \begin{equation}
     \tau_{int \ O}(M) = \frac{1}{2} + \sum_{k=1}^{M}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}.
@@ -430,7 +448,7 @@ Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ri
 La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M$ troppo piccolo introduce un bias sistematico (poiché si trascura parte del segnale), mentre un $M$ troppo grande fa esplodere la varianza (includendo troppo rumore). Il metodo delle \emph{finestre automatiche} di Sokal risolve questo compromesso in modo autoconsistente: si sceglie $M$ come il più piccolo intero tale che
 
 \begin{equation}
-    M \ge c\, \tau_{int \ O}(M),
+    M \ge c\, \tau_{\mathrm{int} \ O}(M),
 \end{equation}
 
-con $c$ una costante tipicamente compresa tra $4$ e $10$. Questo criterio richiede di calcolare $\tau_{int\ O}(M)$ per valori crescenti di $M$ finché la condizione non è soddisfatta, ottenendo così sia una stima di $\tau_{int \ O}$ sia il criterio di arresto in un'unica procedura, senza dover fissare arbitrariamente $M$.
+con $c$ una costante tipicamente compresa tra $4$ e $10$. Questo criterio richiede di calcolare $\tau_{\mathrm{int}\ O}(M)$ per valori crescenti di $M$ finché la condizione non è soddisfatta, ottenendo così sia una stima di $\tau_{\mathrm{int} \ O}$ sia il criterio di arresto in un'unica procedura, senza dover fissare arbitrariamente $M$.
