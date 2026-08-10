@@ -278,7 +278,7 @@ Si parla invece di \textbf{passo globale} quando la configurazione candidata pu�
     \label{fig:local_vs_global}
 \end{figure}
 
-Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un \textbf{Normalizing Flows (NF)} (Capitolo \ref{ch:nf}) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti una candidata naturale come \textbf{distribuzione di proposta} per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - \textbf{Flow-MCMC}, discusso nella Sezione \ref{sec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
+Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un \textbf{Normalizing Flow (NF)} (Capitolo \ref{ch:nf}) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti un candidato naturale come \textbf{distribuzione di proposta} per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - \textbf{Flow-MCMC}, discusso nella Sezione \ref{sec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
 
 Nei seguenti capitoli si utilizza la seguente notazione 
 \begin{equation}

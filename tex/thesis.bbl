@@ -74,4 +74,15 @@ Alan~D. Sokal.
 \newblock In {\em Lectures at the Cargèse Summer School on ``Functional
   Integration: Basics and Applications''}, Cargèse, France, September 1996.
 
+\bibitem{papamakarios2021normalizing}
+George Papamakarios, Eric Nalisnick, Danilo~Jimenez Rezende, Shakir Mohamed,
+  and Balaji Lakshminarayanan.
+\newblock Normalizing flows for probabilistic modeling and inference.
+\newblock {\em Journal of Machine Learning Research}, 22(57), 2021.
+
+\bibitem{rudin2006real}
+Walter Rudin.
+\newblock {\em Real and Complex Analysis}.
+\newblock Tata McGraw-Hill Education, 2006.
+
 \end{thebibliography}

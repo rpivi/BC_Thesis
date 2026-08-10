@@ -2,17 +2,63 @@
 \label{ch:nf}
 
 \section{Cambio di variabili e funzioni invertibili}
-
-\section{Normalizing Flows}
 \label{sec:flows}
 
+Il Normalizing Flow è una trasformazione $T$ che permette di esprire una variabile attraverso un altra variabile aleatoria:
+\begin{equation}
+    \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
+\end{equation}
+dove si è espresso $\mathbf{x}$ come risultato della trasformazione $T$ su $\mathbf{z}$ campionata da $p_Z(\mathbf{z})$. Vengono chiamate in letteratura ...
+
+La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow. $T$ deve essere un diffeormorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
+\begin{equation}
+   \mathbf{x} \underset{T^{-1}}{\overset{T}{\rightleftarrows}} \mathbf{z}, \qquad \mathbf{x}, \mathbf{z} \in \mathbb{R}^D.
+\end{equation}
+
+In questo modo la distribuzione di probabilità di $\mathbf{x}$ è ben definita e ottenibile tramite il cambio di variabile \cite{rudin2006real}:
+\begin{equation}
+p_X(\mathbf{x}) = p_Z(x) | \text{det} J_T(\mathbf{z})|^{-1} \quad \text{dove} \ \ \mathbf{z}=T^{-1}(\mathbf{x})
+\end{equation}
+o equivalentemente
+\begin{equation}
+p_X(\mathbf{x})= p_z(T^{-1}(\mathbf{x})) |\text{det} J_{T^{-1}}(\mathbf{x})|.
+\end{equation}
+
+\begin{equation}
+    J_T(\mathbf{z}) =
+    \begin{pmatrix}
+    \dfrac{\partial T_1}{\partial z_1} & \cdots & \dfrac{\partial T_1}{\partial z_D} \\[1em]
+    \vdots & \ddots & \vdots \\[0.5em]
+    \dfrac{\partial T_D}{\partial z_1} & \cdots & \dfrac{\partial T_D}{\partial z_D}
+    \end{pmatrix}
+\end{equation}
+
 \subsection{Espressività del Flow}
+
+Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. E' possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la 
 
 \subsection{Campionamento e inferenza}
 
 \subsection{Addestramento del Flow}
 
 \section{Costruire un Flow: composizione finita}
+
+Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasfromazione invertibile e differenziabile. 
+
+\begin{equation}
+    (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \text{det} J_{T_2 \circ T_1}(\mathbf{z})=\text{det} J_{T_2}(T_1(\mathbf{z})) \text{det} J_{T_1}(\mathbf{z}) 
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/NF/Composizione.png}
+    \caption{Esempio di una trasformazione composizone di 4 trasformazioni. Si mostra l'effetto sui campioni: da una gaussiana standard a una distribuzione a forma di croce.}
+    \label{fig:composizione}
+\end{figure}
+
+\begin{equation}
+    T = T_K \circ \dots \circ T_1
+\end{equation}
 
 \subsection{Coupling Flow}
 
