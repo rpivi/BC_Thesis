@@ -379,7 +379,7 @@ Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto 
 \subsection{Blocking Analysis}
 \label{subsec:block}
 
-Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Siano $O_1$ e $O_2$ due variabili aleatorie e $a$ una costante, allora valgono le seguenti proprietà per la varianza:
+Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Siano $O_1$ e $O_2$ due variabili aleatorie indipendenti e $a$ una costante, allora valgono le seguenti proprietà per la varianza:
 \begin{equation}
     \label{eq:prop_var}
     \mathrm{Var}(aO_1) = a^2\, \mathrm{Var}(O_1), \qquad \mathrm{Var}(O_1+O_2) = \mathrm{Var}(O_1) + \mathrm{Var}(O_2).
@@ -431,7 +431,7 @@ Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individ
 \subsection{Metodo di Sokal}
 \label{subsec:sokal}
 
-Una stima diretta di $\tau_{\mathrm{int} \ O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite la seguente equazione
+Una stima diretta di $\tau_{\mathrm{int} \ O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite il seguente stimatore
 
 \begin{equation}
     \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right),
@@ -445,7 +445,7 @@ Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ri
     \tau_{int \ O}(M) = \frac{1}{2} + \sum_{k=1}^{M}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}.
 \end{equation}
 
-La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M$ troppo piccolo introduce un bias sistematico (poiché si trascura parte del segnale), mentre un $M$ troppo grande fa esplodere la varianza (includendo troppo rumore). Il metodo delle \emph{finestre automatiche} di Sokal risolve questo compromesso in modo autoconsistente: si sceglie $M$ come il più piccolo intero tale che
+La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M$ troppo piccolo introduce un bias sistematico (poiché si trascura parte del segnale), mentre un $M$ troppo grande fa esplodere la varianza (includendo troppo rumore). Il metodo della \emph{finestra automatica} di Sokal risolve questo compromesso in modo autoconsistente: si sceglie $M$ come il più piccolo intero tale che
 
 \begin{equation}
     M \ge c\, \tau_{\mathrm{int} \ O}(M),

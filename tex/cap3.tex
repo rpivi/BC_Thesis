@@ -4,11 +4,12 @@
 \section{Cambio di variabili e funzioni invertibili}
 \label{sec:flows}
 
-Il Normalizing Flow è una trasformazione $T$ che permette di esprire una variabile attraverso un altra variabile aleatoria:
+Un Normalizing Flow è una trasformazione $T$ che permette di esprire una variabile aleatoria attraverso un altra variabile aleatoria:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
-dove si è espresso $\mathbf{x}$ come risultato della trasformazione $T$ su $\mathbf{z}$ campionata da $p_Z(\mathbf{z})$. Vengono chiamate in letteratura ...
+dove si è espresso $\mathbf{x}$ come risultato della trasformazione $T$ su $\mathbf{z}$ campionata da $p_Z(\mathbf{z})$. 
+Chiameremo $T$ \textbf{flow}, mentre la variabile $\mathbf{z}$ - con distribuzione \textbf{base} (o prior) $p_Z(\mathbf{z})$ - è detta \textbf{variabile latente}; $\mathbf{x} = T(\mathbf{z})$, con distribuzione \textbf{target} $p_X(\mathbf{x})$, è detta \textbf{variabile osservata}. 
 
 La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow. $T$ deve essere un diffeormorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
 \begin{equation}
@@ -17,31 +18,88 @@ La trasformazione $T$ deve avere alcune proprietà particolari per essere un Nor
 
 In questo modo la distribuzione di probabilità di $\mathbf{x}$ è ben definita e ottenibile tramite il cambio di variabile \cite{rudin2006real}:
 \begin{equation}
-p_X(\mathbf{x}) = p_Z(x) | \text{det} J_T(\mathbf{z})|^{-1} \quad \text{dove} \ \ \mathbf{z}=T^{-1}(\mathbf{x})
+p_X(\mathbf{x}) = p_Z(\mathbf{z}) | \text{det} J_T(\mathbf{z})|^{-1} \quad \text{dove} \ \ \mathbf{z}=T^{-1}(\mathbf{x})
 \end{equation}
-o equivalentemente
+o equivalentemente espressa per $\mathbf{x}$:
 \begin{equation}
-p_X(\mathbf{x})= p_z(T^{-1}(\mathbf{x})) |\text{det} J_{T^{-1}}(\mathbf{x})|.
+p_X(\mathbf{x})= p_Z(T^{-1}(\mathbf{x})) |\text{det} J_{T^{-1}}(\mathbf{x})|.
 \end{equation}
 
+Dove con $J_T(\mathbf{z})$ si indica la matrice jacobiana di $T$, ovvero la matrice $D \times D$  delle derivate parziali:
 \begin{equation}
     J_T(\mathbf{z}) =
     \begin{pmatrix}
     \dfrac{\partial T_1}{\partial z_1} & \cdots & \dfrac{\partial T_1}{\partial z_D} \\[1em]
     \vdots & \ddots & \vdots \\[0.5em]
     \dfrac{\partial T_D}{\partial z_1} & \cdots & \dfrac{\partial T_D}{\partial z_D}
-    \end{pmatrix}
+    \end{pmatrix}.
 \end{equation}
 
-\subsection{Espressività del Flow}
+\subsection{Espressività del flow}
 
-Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. E' possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la 
+Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. E' possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi tipo distribuzione target $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
+
+Supponiamo che $p_X(\mathbf{x}) > 0$ per ogni $\mathbf{x} \in \mathbb{R}^D$, e assumiamo che tutte le probabilità condizionate $\Pr(x_i' \le x_i \mid \mathbf{x}_{<i})$ — dove $x_i'$ è la variabile aleatoria a cui questa probabilità fa riferimento — siano differenziabili rispetto a $(x_i, \mathbf{x}_{<i})$. Usando la regola della catena della probabilità, possiamo decomporre $p_X(\mathbf{x})$ in un prodotto di densità condizionate:
+\begin{equation}
+    p_X(\mathbf{x}) = \prod_{i=1}^{D} p_X(x_i \mid \mathbf{x}_{<i}).
+\end{equation}
+
+Poiché $p_X(\mathbf{x})$ è non nulla ovunque, si ha $p_X(x_i \mid \mathbf{x}_{<i}) > 0$ per ogni $i$ e $\mathbf{x}$. Definiamo quindi la trasformazione $F : \mathbf{x} \mapsto \mathbf{z} \in (0,1)^D$, il cui $i$-esimo elemento è dato dalla \emph{funzione di ripartizione} (cumulative distribution function) della $i$-esima condizionata:
+\begin{equation}
+    z_i = F_i(x_i, \mathbf{x}_{<i}) = \int_{-\infty}^{x_i} p_X(x_i' \mid \mathbf{x}_{<i}) \, dx_i' = \Pr(x_i' \le x_i \mid \mathbf{x}_{<i}).
+\end{equation}
+
+Poiché ciascuna $F_i$ è differenziabile rispetto ai propri argomenti, $F$ è differenziabile. Inoltre, ciascuna $F_i(\cdot, \mathbf{x}_{<i}) : \mathbb{R} \to (0,1)$ è invertibile, dato che la sua derivata $\partial F_i / \partial x_i = p_X(x_i \mid \mathbf{x}_{<i})$ è positiva ovunque. Poiché $z_i$ non dipende da $x_j$ per $j \ne i$, possiamo invertire $F$, con l'inversa data elemento per elemento da:
+\begin{equation}
+    x_i = \big(F_i(\cdot, \mathbf{x}_{<i})\big)^{-1}(z_i) \quad \text{per } i = 1, \dots, D.
+\end{equation}
+
+Lo Jacobiano di $F$ è triangolare inferiore, poiché $\partial F_i / \partial x_j = 0$ per $i < j$. Quindi il determinante Jacobiano di $F$ è uguale al prodotto dei suoi elementi diagonali:
+\begin{equation}
+    \det J_F(\mathbf{x}) = \prod_{i=1}^{D} \frac{\partial F_i}{\partial x_i} = \prod_{i=1}^{D} p_X(x_i \mid \mathbf{x}_{<i}) = p_X(\mathbf{x}).
+\end{equation}
+
+Poiché $p_X(\mathbf{x}) > 0$, il determinante Jacobiano è non nullo ovunque. Esiste dunque l'inversa di $J_F(\mathbf{x})$, ed è uguale allo Jacobiano di $F^{-1}$; pertanto $F$ è un diffeomorfismo. Tramite il cambio di variabile, possiamo calcolare la densità di $\mathbf{z}$ nel modo seguente:
+\begin{equation}
+    p_Z(\mathbf{z}) = p_X(\mathbf{x}) \, |\det J_F(\mathbf{x})|^{-1} = p_X(\mathbf{x}) \, |p_X(\mathbf{x})|^{-1} = 1,
+\end{equation}
+il che implica che $\mathbf{z}$ è distribuita uniformemente nel cubo aperto unitario $(0,1)^D$.
+
+L'argomento sopra riportato mostra che un modello basato su flow può esprimere qualsiasi distribuzione $p_X(\mathbf{x})$ (che soddisfi le condizioni sopra indicate), anche restringendo la distribuzione base a essere uniforme in $(0,1)^D$. Possiamo estendere questo risultato a qualsiasi distribuzione base $p_U(\mathbf{u})$, trasformando dapprima $\mathbf{u}$ in una $\mathbf{z}$ uniforme in $(0,1)^D$ come passaggio intermedio. In particolare, data una qualsiasi $p_U(\mathbf{u})$ che soddisfi le condizioni sopra indicate (analoghe a quelle di $p_X(\mathbf{x})$), definiamo $G$ come la seguente trasformazione:
+\begin{equation}
+    z_i = G_i(u_i, \mathbf{u}_{<i}) = \int_{-\infty}^{u_i} p_U(u_i' \mid \mathbf{u}_{<i}) \, du_i' = \Pr(u_i' \le u_i \mid \mathbf{u}_{<i}).
+\end{equation}
+
+Con lo stesso argomento esposto sopra, $G$ è un diffeomorfismo e $\mathbf{z}$ è distribuita uniformemente in $(0,1)^D$. Dunque, un flow con trasformazione $T = F^{-1} \circ G$ può trasformare $p_U(\mathbf{u})$ in $p_X(\mathbf{x})$.
+
+Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite un'integrale. Questo metodo però non è praticabile, poichè numericamente difficile in generale. Una soluzione più agevole è cercare di approssimare la trasformazione con una rete neurale.
 
 \subsection{Campionamento e inferenza}
 
-\subsection{Addestramento del Flow}
+Un NF può essere impiegato in due modalità operative distinte, a seconda che si voglia \emph{generare} nuovi campioni dalla distribuzione target oppure \emph{valutare} la densità di probabilità di un campione dato. Queste due operazioni corrispondono rispettivamente alla direzione diretta e alla direzione inversa della trasformazione $T$.
 
-\section{Costruire un Flow: composizione finita}
+\paragraph{Campionamento.} Per generare un campione $\mathbf{x}$ distribuito secondo $p_X(\mathbf{x})$ è sufficiente:
+\begin{enumerate}
+    \item campionare $\mathbf{z} \sim p_Z(\mathbf{z})$ dalla distribuzione base, tipicamente semplice da campionare (ad esempio una gaussiana standard);
+    \item applicare la trasformazione diretta $\mathbf{x} = T(\mathbf{z})$.
+\end{enumerate}
+Questa procedura richiede unicamente la valutazione di $T$ nella direzione diretta, e non necessita né dell'inversa $T^{-1}$ né del calcolo dello Jacobiano.
+
+\paragraph{Inferenza.} Al contrario, per valutare la densità $p_X(\mathbf{x})$ in un punto $\mathbf{x}$ dato è necessario:
+\begin{enumerate}
+    \item calcolare $\mathbf{z} = T^{-1}(\mathbf{x})$, ovvero applicare la trasformazione inversa;
+    \item valutare $p_Z(\mathbf{z})$ e il determinante Jacobiano $|\text{det} J_{T^{-1}}(\mathbf{x})|$, secondo la formula di cambio di variabile già ricavata:
+    \begin{equation}
+        p_X(\mathbf{x}) = p_Z(T^{-1}(\mathbf{x})) \, |\text{det} J_{T^{-1}}(\mathbf{x})|.
+    \end{equation}
+\end{enumerate}
+Questa seconda operazione richiede quindi non solo che $T^{-1}$ sia calcolabile esplicitamente, ma anche che il determinante del suo Jacobiano sia efficientemente calcolabile: un requisito tutt'altro che scontato, dato che per una generica matrice $D \times D$ il calcolo del determinante scala come $\mathcal{O}(D^3)$.
+
+Nel contesto di questa tesi, entrambe le direzioni risultano necessarie: il campionamento diretto approssimato è svolto tramite un NF di cui è sufficiente implementare la trasformazione $T$ , mentre la valutazione della densità è indispensabile per il calcolo dei tassi di accettazione nello schema Flow-MCMC (Sez.~\ref{sec:flow-mcmc}). 
+
+\subsection{Addestramento del flow}
+
+\section{Costruire un flow: composizione finita}
 
 Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasfromazione invertibile e differenziabile. 
 
@@ -49,6 +107,7 @@ Una proprietà delle trasformazioni invertibili e differenziabili è che sono \e
     (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \text{det} J_{T_2 \circ T_1}(\mathbf{z})=\text{det} J_{T_2}(T_1(\mathbf{z})) \text{det} J_{T_1}(\mathbf{z}) 
 \end{equation}
 
+Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ T_1$ essendo invertibile e differenziabile può essere composta con una terza trasformazione $T_3$ e così via. Si può dunque creare un flow $T$ più complesso proprio tramite la consecutiva composizione di più trasformazioni. Un esempio è mostrato in Figura \ref{fig:composizione}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/Composizione.png}
@@ -56,9 +115,24 @@ Una proprietà delle trasformazioni invertibili e differenziabili è che sono \e
     \label{fig:composizione}
 \end{figure}
 
+In generale potremmo creare un flow $T$ come composizione di $K$ trasformazioni invertibili e differenziabili
+
 \begin{equation}
-    T = T_K \circ \dots \circ T_1
+    T = T_K \circ \dots \circ T_1,
 \end{equation}
+
+Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} k=1,2,\dots,K$ e considerando $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
+Il logaritmo del determinante del jacobiano di $T$ sarà dunque calcolabile nel seguente modo:
+\begin{equation}
+    \log |\text{det}J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\text{det} J_{T_k}(\mathbf{z}_{k-1})|.
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/NF/T1_Tk.png}
+    \caption{Rappresentazione di un flow composto da $K$ trasformazioni. }
+    \label{fig:T1_Tk}
+\end{figure}
 
 \subsection{Coupling Flow}
 
