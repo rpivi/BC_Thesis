@@ -517,6 +517,12 @@ INPUT .\images\MCMC\mcmc_algo.png
 INPUT .\cap3.tex
 INPUT .\cap3.tex
 INPUT cap3.tex
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib7.tfm
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmbsy10.tfm
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmbsy10.tfm
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmbsy7.tfm
 INPUT .\images\NF\Composizione.png
 INPUT .\images\NF\Composizione.png
 INPUT .\images\NF\Composizione.png
@@ -719,6 +725,10 @@ INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi6.p
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi6.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi8.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi8.pfb
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib10.pfb
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib10.pfb
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib7.pfb
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib7.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr10.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr10.pfb
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr12.pfb

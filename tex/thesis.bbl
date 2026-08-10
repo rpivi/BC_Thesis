@@ -85,4 +85,9 @@ Walter Rudin.
 \newblock {\em Real and Complex Analysis}.
 \newblock Tata McGraw-Hill Education, 2006.
 
+\bibitem{kullback1951information}
+Solomon Kullback and Richard~A. Leibler.
+\newblock On information and sufficiency.
+\newblock {\em The Annals of Mathematical Statistics}, 22(1), 1951.
+
 \end{thebibliography}
