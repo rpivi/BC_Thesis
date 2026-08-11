@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  11 AUG 2026 19:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  11 AUG 2026 19:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1291,7 +1291,7 @@ Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 17
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [47 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]) (conclusion.tex [48 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (appendix.tex [49
+ [47 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]) (conclusione.tex [48 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (appendix.tex [49
 
 ] [50
 
@@ -1311,7 +1311,7 @@ Package rerunfilecheck Info: File `thesis.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  38705 strings out of 467871
- 811334 string characters out of 5418376
+ 811340 string characters out of 5418376
  1240222 words of memory out of 5000000
  66679 multiletter control sequences out of 15000+600000
  721541 words of font info for 102 fonts, out of 8000000 for 9000
