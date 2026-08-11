@@ -85,6 +85,11 @@ Walter Rudin.
 \newblock {\em Real and Complex Analysis}.
 \newblock Tata McGraw-Hill Education, 2006.
 
+\bibitem{dinh2017density}
+Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio.
+\newblock Density estimation using real {NVP}.
+\newblock In {\em International Conference on Learning Representations}, 2017.
+
 \bibitem{kullback1951information}
 Solomon Kullback and Richard~A. Leibler.
 \newblock On information and sufficiency.
