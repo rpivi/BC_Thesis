@@ -103,7 +103,7 @@ L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campion
 Si mostra un esempio pratico di applicazione del metodo dell'inversa per il campionamento della distribuzione esponenziale, che illustra chiaramente i passaggi descritti nell'algoritmo precedente.
 
 \begin{example}{Campionamento della distribuzione esponenziale}{esponenziale}
-Si consideri la distribuzione di probabilità esponenziale con parametro $\lambda > 0$:
+Si consideri la distribuzione esponenziale con parametro $\lambda > 0$:
 \begin{equation}
 p_X(x) = \begin{cases} 
 \lambda e^{-\lambda x} & \text{se } x \geq 0, \\
@@ -162,10 +162,10 @@ P(\mathbf{x}_i|\mathbf{x}_1) & \cdots & P(\mathbf{x}_i|\mathbf{x}_j) & \cdots \\
 \end{pmatrix}
 \end{equation}
 
-La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, in quanto $\forall i$ esse soddisfano:
+La matrice $P_{ij}$ rappresenta la probabilità di transizione dallo stato $j$ allo stato $i$. Inoltre possiamo notare alcune proprietà interessanti sia per $p^{(i)}_j$ che per $P_{ij}$, esse soddisfano:
 \begin{equation}
     \label{eq:normaliz}
-\sum_{j} p^{(i)}_j = 1, \quad \sum_{i} P_{ij} =1.
+\sum_{j} p^{(i)}_j = 1 \ \forall i, \qquad \sum_{i} P_{ij} =1 \ \forall j.
 \end{equation}
 
 Data una distribuzione iniziale $p^{(0)}_i$ e la matrice stocastica $P_{ij}$ detta \textbf{matrice di transizione}, si può evolvere la distribuzione in modo ricorsivo:

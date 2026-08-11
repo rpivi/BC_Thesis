@@ -11,7 +11,7 @@ Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formaliz
 \label{sec:flows}
 \subsection{Cambio di variabili e funzioni invertibili}
 
-Un Normalizing Flow è una trasformazione $T$ che permette di esprire una variabile aleatoria attraverso un altra variabile aleatoria:
+Un Normalizing Flow è una trasformazione $T$ che permette di esprimere una variabile aleatoria attraverso un'altra variabile aleatoria:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
@@ -25,11 +25,11 @@ La trasformazione $T$ deve avere alcune proprietà particolari per essere un Nor
 
 In questo modo la distribuzione di probabilità di $\mathbf{x}$ è ben definita e ottenibile tramite il cambio di variabile \cite{rudin2006real}:
 \begin{equation}
-p_X(\mathbf{x}) = p_Z(\mathbf{z}) | \text{det} J_T(\mathbf{z})|^{-1} \quad \text{dove} \ \ \mathbf{z}=T^{-1}(\mathbf{x})
+p_X(\mathbf{x}) = p_Z(\mathbf{z}) | \det J_T(\mathbf{z})|^{-1} \quad \text{dove} \ \ \mathbf{z}=T^{-1}(\mathbf{x})
 \end{equation}
 o equivalentemente espressa per $\mathbf{x}$:
 \begin{equation}
-p_X(\mathbf{x})= p_Z(T^{-1}(\mathbf{x})) |\text{det} J_{T^{-1}}(\mathbf{x})|.
+p_X(\mathbf{x})= p_Z(T^{-1}(\mathbf{x})) |\det J_{T^{-1}}(\mathbf{x})|.
 \end{equation}
 
 Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matrice $D \times D$  delle derivate parziali:
@@ -42,9 +42,32 @@ Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matr
     \end{pmatrix}.
 \end{equation}
 
+\begin{example}{Trasformazione affine unidimensionale}{affine}
+Consideriamo un cambio di variabile unidimensionale definito da una trasformazione affine $T: \mathbb{R} \to \mathbb{R}$:
+\begin{equation}
+x = T(z) = a \, z + b,
+\end{equation}
+con parametri del flow $\boldsymbol{\theta} = \{a, b\}$ e $a \neq 0$.
+
+Sia $z \sim \mathcal{N}(0, 1)$ una variabile aleatoria estratta da una distribuzione base gaussiana standard con densità $p_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$. Poiché la derivata della trasformazione è semplicemente $T'(z) = a$, il valore assoluto del deterimante dello Jacobiano è costante $|\det J_T(z)| = |a|$. 
+
+Applicando la formula del cambio di variabile, la densità di probabilità della variabile trasformata $x$ è data da:
+\begin{equation}
+p_X(x) = p_Z(T^{-1}(x)) \cdot \left| \frac{\mathrm{d}T^{-1}(x)}{\mathrm{d}x} \right| = \frac{1}{|a| \, \sqrt{2\pi}} \exp\left( -\frac{(x - b)^2}{2 a^2} \right),
+\end{equation}
+che corrisponde ancora a una distribuzione gaussiana $\mathcal{N}(b, a^2)$.
+
+In Figura~\ref{fig:affine} è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
+
+\begin{center}
+    \includegraphics[width=0.60\textwidth]{images/NF/change_of_var.png}
+    \label{fig:affine}
+\end{center}
+\end{example}
+
 \subsection{Espressività del flow}
 
-Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. E' possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi tipo distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
+Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. È possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi tipo distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
 
 Supponiamo che $p_X(\mathbf{x}) > 0$ per ogni $\mathbf{x} \in \mathbb{R}^D$, e assumiamo che tutte le probabilità condizionate $\Pr(x_i' \le x_i \mid \mathbf{x}_{<i})$ — dove $x_i'$ è la variabile aleatoria a cui questa probabilità fa riferimento — siano differenziabili rispetto a $(x_i, \mathbf{x}_{<i})$. Usando la regola della catena della probabilità, possiamo decomporre $p_X(\mathbf{x})$ in un prodotto di densità condizionate:
 \begin{equation}
@@ -95,9 +118,9 @@ Questa procedura richiede unicamente la valutazione di $T$ nella direzione diret
 \paragraph{Inferenza.} Al contrario, per valutare la densità $p_X(\mathbf{x})$ in un punto $\mathbf{x}$ dato è necessario:
 \begin{enumerate}
     \item calcolare $\mathbf{z} = T^{-1}(\mathbf{x})$, ovvero applicare la trasformazione inversa;
-    \item valutare $p_Z(\mathbf{z})$ e il determinante Jacobiano $|\text{det} J_{T^{-1}}(\mathbf{x})|$, secondo la formula di cambio di variabile già ricavata:
+    \item valutare $p_Z(\mathbf{z})$ e il determinante Jacobiano $|\det J_{T^{-1}}(\mathbf{x})|$, secondo la formula di cambio di variabile già ricavata:
     \begin{equation}
-        p_X(\mathbf{x}) = p_Z(T^{-1}(\mathbf{x})) \, |\text{det} J_{T^{-1}}(\mathbf{x})|.
+        p_X(\mathbf{x}) = p_Z(T^{-1}(\mathbf{x})) \, |\det J_{T^{-1}}(\mathbf{x})|.
     \end{equation}
 \end{enumerate}
 Questa seconda operazione richiede quindi non solo che $T^{-1}$ sia calcolabile esplicitamente, ma anche che il determinante del suo Jacobiano sia efficientemente calcolabile: un requisito tutt'altro che scontato, dato che per una generica matrice $D \times D$ il calcolo del determinante scala come $\mathcal{O}(D^3)$.
@@ -110,7 +133,7 @@ Nel contesto di questa tesi, entrambe le direzioni risultano necessarie: il camp
 Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasfromazione invertibile e differenziabile. 
 
 \begin{equation}
-    (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \text{det} J_{T_2 \circ T_1}(\mathbf{z})=\text{det} J_{T_2}(T_1(\mathbf{z})) \text{det} J_{T_1}(\mathbf{z}) 
+    (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \det J_{T_2 \circ T_1}(\mathbf{z})=\det J_{T_2}(T_1(\mathbf{z})) \det J_{T_1}(\mathbf{z}) 
 \end{equation}
 
 Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ T_1$ essendo invertibile e differenziabile può essere composta con una terza trasformazione $T_3$ e così via. Si può dunque creare un flow $T$ più complesso proprio tramite la consecutiva composizione di più trasformazioni. Un esempio è mostrato in Figura \ref{fig:composizione}.
@@ -124,13 +147,13 @@ Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ 
 In generale potremmo creare un flow $T$ come composizione di $K$ trasformazioni invertibili e differenziabili
 
 \begin{equation}
-    T = T_K \circ \dots \circ T_1,
+    T = T_K \circ \dots \circ T_1.
 \end{equation}
 
 Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
-Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile nel seguente modo:
+Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come somma di determinanti nel seguente modo:
 \begin{equation}
-    \log |\text{det}J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\text{det} J_{T_k}(\mathbf{z}_{k-1})|.
+    \log |\det J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\det J_{T_k}(\mathbf{z}_{k-1})|.
 \end{equation}
 
 \begin{figure}[H]
@@ -140,7 +163,73 @@ Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile nel 
     \label{fig:T1_Tk}
 \end{figure}
 
-\subsection{Real NVP}
+Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima e l'\textbf{invertibilità}, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
+
+Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione invertibile e differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni, un costo computazionale proibitivo se va ripetuto ad ogni valutazione della densità, come accade tipicamente a ogni passo dell'addestramento (Sezione \ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico.
+
+Infine, l'\textbf{espressività} è utile per poter limitare il numero di calcoli. Infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili, questo anche per facilitare l'addestramento e ridurre il numero di parametri $\boldsymbol{\theta}$ del flow.
+
+Le sottosezioni seguenti presentano alcune delle famiglie di trasformazioni più diffuse in letteratura che soddisfano questi tre requisiti.
+
+Le possibili scelte per $T_k$ sono molteplici, per completezza si riportano i nomi dei metodi di costruzione di un flow tramite composizione finita (Tabella \ref{tab:method_nf}):
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} l l l @{}}
+\toprule
+\textbf{Autoregressive flows} &
+\begin{tabular}[t]{@{}l@{}}
+Transformer type:\\
+\quad -- Affine\\
+\quad -- Combination-based\\
+\quad -- Integration-based\\
+\quad -- Spline-based
+\end{tabular}
+&
+\begin{tabular}[t]{@{}l@{}}
+Conditioner type:\\
+\quad -- Recurrent\\
+\quad -- Masked\\
+\quad -- Coupling layer
+\end{tabular}
+\\
+\midrule
+\textbf{Linear flows} &
+\multicolumn{2}{l}{
+\begin{tabular}[t]{@{}l@{}}
+Permutations\\[4pt]
+Decomposition-based:\\
+\quad -- PLU\\
+\quad -- QR\\[4pt]
+Orthogonal:\\
+\quad -- Exponential map\\
+\quad -- Cayley map\\
+\quad -- Householder
+\end{tabular}
+} \\
+\midrule
+\textbf{Residual flows} &
+\multicolumn{2}{l}{
+\begin{tabular}[t]{@{}l@{}}
+Contractive residual\\[4pt]
+Based on matrix determinant lemma:\\
+\quad -- Planar\\
+\quad -- Sylvester\\
+\quad -- Radial
+\end{tabular}
+} \\
+\bottomrule
+\end{tabular}
+\caption{Panoramica dei metodi per la costruzione di flow basati su composizioni finite.}
+ \label{tab:method_nf}
+\end{table}
+
+In questa tesi si discuteranno nelle prossime sezioni gli Autoregressive flow e in particolare un tipo di Coupling layers chiamato Real NVP.
+
+\subsection{Autoregressive flows}
+
+
+\subsection{Coupling layers and Real NVP}
 
 
 \section{Addestramento del flow}
@@ -148,7 +237,7 @@ Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile nel 
 
 L'obiettivo dell'addestramento è determinare i parametri $\boldsymbol{\theta}$ della trasformazione $T_{\boldsymbol{\theta}}$ in modo che il modello $p_X(\mathbf{x};\boldsymbol{\theta})$, ottenuto tramite la formula di cambio di variabile
 \begin{equation}
-    p_X(\mathbf{x};\boldsymbol{\theta}) = p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x})\big)\,\big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x})\big|,
+    p_X(\mathbf{x};\boldsymbol{\theta}) = p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x})\big)\,\big|\det J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x})\big|,
 \end{equation}
 approssimi il più fedelmente possibile una distribuzione target $p_X^*(\mathbf{x})$.
 Per farlo è necessario innanzitutto scegliere una misura di distanza tra le due distribuzioni. La scelta più comune, che adotteremo anche in questo lavoro, è la \textbf{divergenza di Kullback-Leibler} (KL) \cite{kullback1951information}, definita per due densità $p$ e $q$ come
@@ -163,7 +252,7 @@ Sebbene non sia una distanza in senso stretto, poiché non è simmetrica, la div
 \end{equation}
 Sostituendo l'espressione di $p_X(\mathbf{x};\boldsymbol{\theta})$ e approssimando il valore atteso con una media Monte Carlo sui campioni disponibili, si ottiene
 \begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) \approx -\frac{1}{N} \sum_{n=1}^{N} \Big[ \log p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x}_n)\big) + \log \big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x}_n)\big| \Big] + \mathrm{cost.},
+    \mathcal{L}(\boldsymbol{\theta}) \approx -\frac{1}{N} \sum_{n=1}^{N} \Big[ \log p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x}_n)\big) + \log \big|\det J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x}_n)\big| \Big] + \mathrm{cost.},
 \end{equation}
 da cui si può notare che minimizzare la KL forward equivale a effettuare \emph{stima di massima verosimiglianza}. Questo approccio richiede di poter calcolare $T_{\boldsymbol{\theta}}^{-1}$ e il relativo determinante Jacobiano, ma non necessita mai di campionare dal modello durante l'addestramento. Si utilizza dunque la  KL forward per un NF addestrato per poter fare inferenza statistica su dei dati con distribuzione.
 
@@ -181,17 +270,17 @@ in cui il valore atteso è ora calcolato rispetto al modello stesso, e non rispe
 \end{equation}
 Il vantaggio cruciale della KL reverse è che il valore atteso può essere riparametrizzato in termini della distribuzione base utilizzando il flow e la formula del cambio di variabile:
 \begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) = \Big\langle \log p_Z(\mathbf{z}) - \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big| - \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z})\big) \Big\rangle_{p_Z} + \mathrm{cost.},
+    \mathcal{L}(\boldsymbol{\theta}) = \Big\langle \log p_Z(\mathbf{z}) - \log \big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big| - \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z})\big) \Big\rangle_{p_Z} + \mathrm{cost.},
 \end{equation}
 il cui gradiente rispetto a $\boldsymbol{\theta}$ è stimabile tramite una media Monte Carlo su campioni $\{\mathbf{z}_n\}_{n=1}^N$ estratti dalla distribuzione base:
 \begin{equation}
-    \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) \approx - \frac{1}{N} \sum_{n=1}^{N} \nabla_{\boldsymbol{\theta}} \Big[  \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_n)\big| + \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z}_n)\big) \Big].
+    \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) \approx - \frac{1}{N} \sum_{n=1}^{N} \nabla_{\boldsymbol{\theta}} \Big[  \log \big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_n)\big| + \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z}_n)\big) \Big].
 \end{equation}
 Questo approccio richiede quindi di poter calcolare la trasformazione diretta $T_{\boldsymbol{\theta}}$ e il determinante del suo Jacobiano, ma non richiede mai di invertire $T_{\boldsymbol{\theta}}$ né di conoscere campioni dal target: è sufficiente poter valutare $\tilde{p}_X$ in un punto qualsiasi, esattamente la situazione in cui ci troviamo per la distribuzione di Boltzmann:
 \begin{equation}
-    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta V(\mathbf{x})} \equiv \frac{\tilde{p}_X(\mathbf{x})}{Z},
+    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta \mathcal{H}(\mathbf{x})} \equiv \frac{\tilde{p}_X(\mathbf{x})}{Z},
 \end{equation}
-come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ \cite{noe2019boltzmann}. I campioni così creati non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di star campionando la distribuzione target si illustra nella prossima sezione un metodo ibrido che unisce i NF e MCMC, in modo da ottere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
+come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ \cite{noe2019boltzmann}. I campioni così creati non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di star campionando la distribuzione target si illustra nella prossima sezione un metodo ibrido che unisce i NF e MCMC, in modo da ottenere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
 
 \section{Flow Markov Chain Monte Carlo}
 \label{sec:flow-mcmc}
