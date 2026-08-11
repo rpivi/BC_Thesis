@@ -163,73 +163,315 @@ Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come
     \label{fig:T1_Tk}
 \end{figure}
 
-Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima è l'\textbf{invertibilità}, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
+Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima è l'invertibilità, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
 
 Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione invertibile e differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni, un costo computazionale proibitivo se va ripetuto ad ogni valutazione della densità, come accade tipicamente a ogni passo dell'addestramento (Sezione \ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico.
 
-Infine, l'\textbf{espressività} è utile per poter limitare il numero di calcoli. Infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili, questo anche per facilitare l'addestramento e ridurre il numero di parametri $\boldsymbol{\theta}$ del flow.
+Infine, l'espressività è utile per poter limitare il numero di calcoli. Infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili, questo anche per facilitare l'addestramento e ridurre il numero di parametri $\boldsymbol{\theta}$ del flow.
 
-Le sottosezioni seguenti presentano alcune delle famiglie di trasformazioni più diffuse in letteratura che soddisfano questi tre requisiti.
-
-Le possibili scelte per $T_k$ sono molteplici, per completezza si riportano i nomi dei metodi di costruzione di un flow tramite composizione finita (Tabella \ref{tab:method_nf}):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{@{} l l l @{}}
-\toprule
-\textbf{Autoregressive flows} &
-\begin{tabular}[t]{@{}l@{}}
-Transformer type:\\
-\quad -- Affine\\
-\quad -- Combination-based\\
-\quad -- Integration-based\\
-\quad -- Spline-based
-\end{tabular}
-&
-\begin{tabular}[t]{@{}l@{}}
-Conditioner type:\\
-\quad -- Recurrent\\
-\quad -- Masked\\
-\quad -- Coupling layer
-\end{tabular}
-\\
-\midrule
-\textbf{Linear flows} &
-\multicolumn{2}{l}{
-\begin{tabular}[t]{@{}l@{}}
-Permutations\\[4pt]
-Decomposition-based:\\
-\quad -- PLU\\
-\quad -- QR\\[4pt]
-Orthogonal:\\
-\quad -- Exponential map\\
-\quad -- Cayley map\\
-\quad -- Householder
-\end{tabular}
-} \\
-\midrule
-\textbf{Residual flows} &
-\multicolumn{2}{l}{
-\begin{tabular}[t]{@{}l@{}}
-Contractive residual\\[4pt]
-Based on matrix determinant lemma:\\
-\quad -- Planar\\
-\quad -- Sylvester\\
-\quad -- Radial
-\end{tabular}
-} \\
-\bottomrule
-\end{tabular}
-\caption{Panoramica dei metodi per la costruzione di flow basati su composizioni finite.}
- \label{tab:method_nf}
-\end{table}
-
-In questa tesi si discuteranno nelle prossime sezioni gli Autoregressive flow e in particolare un tipo di Coupling layers chiamato Real NVP.
+Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e in un particolare tipo di tale categoria di flow chiamato \textbf{Real NVP}.
 
 \subsection{Autoregressive flows}
 
+Gli \textbf{autoregressive flows} costituiscono una famiglia di trasformazioni progettate per soddisfare simultaneamente i requisiti di invertibilità e di calcolo efficiente del determinante Jacobiano introdotti nella sezione precedente. L'idea fondamentale consiste nel costruire la trasformazione in modo che ciascuna componente dipenda solo dalle componenti precedenti della variabile di ingresso.
 
-\subsection{Coupling layers and Real NVP}
+... 
+
+\begin{equation}
+    z_i' = \tau(z_i;\mathbf{h}_i),
+    \qquad
+    \mathbf{h}_i = c_i(\mathbf{z}_{<i};\boldsymbol{\theta}),
+    \qquad i=1,\dots,D,
+    \label{eq:autoregressive}
+\end{equation}
+dove $\tau$ è detta \textbf{trasformatore} e $c_i$ è il \textbf{condizionatore} associato alla componente $i$-esima. Con
+$\mathbf{z}_{<i}=(z_1,\dots,z_{i-1})$ si indica l'insieme delle componenti precedenti a $z_i$. Il condizionatore determina quindi i parametri della trasformazione di $z_i$ utilizzando esclusivamente le componenti precedenti.
+
+La struttura autoregressiva impone una particolare struttura allo Jacobiano. Infatti, per $j>i$, la quantità $z_i'$ non dipende da $z_j$, e pertanto
+\begin{equation}
+    \frac{\partial z_i'}{\partial z_j}=0,
+    \qquad j>i.
+\end{equation}
+Lo Jacobiano assume quindi la forma triangolare inferiore
+\begin{equation}
+J_T =
+\begin{pmatrix}
+\frac{\partial z_1'}{\partial z_1} & 0 & \cdots & 0\\
+\frac{\partial z_2'}{\partial z_1} &
+\frac{\partial z_2'}{\partial z_2} & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+\frac{\partial z_D'}{\partial z_1} &
+\frac{\partial z_D'}{\partial z_2} &
+\cdots &
+\frac{\partial z_D'}{\partial z_D}
+\end{pmatrix}.
+\end{equation}
+
+Il determinante di una matrice triangolare è dato dal prodotto degli
+elementi diagonali. Nel caso della trasformazione \eqref{eq:autoregressive}
+si ottiene dunque
+\begin{equation}
+    \det J_T(\mathbf{z};\boldsymbol{\theta})
+    =
+    \prod_{i=1}^{D}
+    \frac{\partial \tau(z_i;\mathbf{h}_i)}{\partial z_i},
+    \qquad
+    \mathbf{h}_i=c_i(\mathbf{z}_{<i};\boldsymbol{\theta}).
+    \label{eq:autoregressive_det}
+\end{equation}
+Il calcolo del determinante, che per uno Jacobiano si riduce quindi alla valutazione
+dei soli elementi diagonali e scala linearmente con $D$.
+
+Resta da imporre l'invertibilità della trasformazione. Se il trasformatore
+$\tau(\,\cdot\,;\mathbf{h}_i)$ è invertibile rispetto al primo argomento,
+l'inversione può essere effettuata componente per componente:
+\begin{equation}
+    z_i =
+    \tau^{-1}(z_i';\mathbf{h}_i).
+\end{equation}
+Tuttavia, nella direzione inversa i parametri $\mathbf{h}_i$ devono essere
+calcolati utilizzando le componenti già ricostruite. Si procede pertanto in
+sequenza, partendo da $z_1$ e utilizzando il suo valore per determinare
+$\mathbf{h}_2$, quindi ricostruendo $z_2$, e così via fino a $z_D$.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/NF/autoregressive.png}
+    \caption{}
+    \label{fig:autoregressive}
+\end{figure}
+
+La struttura autoregressiva permette quindi di ottenere trasformazioni
+invertibili con un Jacobiano di cui il determinante è facilmente calcolabile.
+Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della
+trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle
+componenti precedenti, le diverse componenti non possono essere ricostruite
+simultaneamente. Questo può rendere il campionamento computazionalmente
+inefficiente quando la dimensione dello spazio delle configurazioni è
+elevata.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{@{} l l l @{}}
+        \toprule
+        \textbf{Autoregressive flows}
+        &
+        \begin{tabular}[t]{@{}l@{}}
+            \textbf{Transformatore:}\\
+            \quad -- Affine\\
+            \quad -- Combination-based\\
+            \quad -- Integration-based\\
+            \quad -- Spline-based
+        \end{tabular}
+        &
+        \begin{tabular}[t]{@{}l@{}}
+            \textbf{Condizionatore:}\\
+            \quad -- Recurrent\\
+            \quad -- Masked\\
+            \quad -- Coupling layer
+        \end{tabular}
+        \\
+        \bottomrule
+    \end{tabular}
+    \caption{Panoramica dei possibili modi di costruire un autoregressive flow,
+    distinti in base al tipo di trasformatore e di condizionatore.}
+    \label{tab:flow_construction_methods}
+\end{table}
+
+....
+\subsection{Real NVP}
+\label{sec:realnvp}
+
+Una delle architetture più utilizzate per costruire Normalizing Flows è la
+\textbf{Real NVP} (\emph{Real-valued Non-Volume Preserving}), introdotta da
+Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è
+costruire una trasformazione invertibile suddividendo le componenti della
+variabile di ingresso in due gruppi e trasformando un gruppo condizionatamente
+all'altro. Questa struttura, chiamata \textbf{coupling layer}, permette di
+ottenere contemporaneamente un'inversione esplicita e un calcolo efficiente
+del determinante Jacobiano.
+
+Consideriamo una variabile $\mathbf{z}\in\mathbb{R}^D$, che viene suddivisa
+in due sottoinsiemi di componenti,
+\begin{equation}
+    \mathbf{z} = (\mathbf{z}_a,\mathbf{z}_b).
+\end{equation}
+Un coupling layer lascia invariato il primo gruppo e trasforma il secondo
+utilizzando informazioni ottenute dal primo:
+\begin{equation}
+    \begin{aligned}
+        \mathbf{z}_a' &= \mathbf{z}_a,\\
+        \mathbf{z}_b' &=
+        \tau\left(
+            \mathbf{z}_b;
+            c(\mathbf{z}_a;\boldsymbol{\theta})
+        \right),
+    \end{aligned}
+    \label{eq:coupling_general}
+\end{equation}
+dove $\tau$ rappresenta il \textbf{trasformatore}, mentre
+$c$ rappresenta il \textbf{condizionatore}. Il primo determina come
+trasformare $\mathbf{z}_b$, mentre il secondo fornisce i parametri necessari
+a tale trasformazione a partire da $\mathbf{z}_a$.
+
+Nella Real NVP il trasformatore $\tau$ è scelto in modo da essere una
+\textbf{trasformazione affine}. Il condizionatore, invece, è rappresentato
+da una rete neurale che determina i parametri della trasformazione sulla
+base delle componenti $\mathbf{z}_a$. Questa separazione permette di
+utilizzare un condizionatore arbitrariamente espressivo senza richiedere
+che esso sia invertibile.
+
+\subsubsection{Trasformazione affine}
+
+La trasformazione utilizzata nella Real NVP è una trasformazione affine
+applicata componente per componente:
+\begin{equation}
+    \mathbf{z}_b'
+    =
+    \mathbf{z}_b \odot
+    \exp\big(\mathbf{s}(\mathbf{z}_a)\big)
+    +
+    \mathbf{t}(\mathbf{z}_a),
+    \label{eq:realnvp_affine}
+\end{equation}
+dove $\odot$ indica il prodotto elemento per elemento. Le funzioni
+$\mathbf{s}$ e $\mathbf{t}$ restituiscono rispettivamente un fattore di
+scala e una traslazione per ciascuna componente di $\mathbf{z}_b$.
+
+La presenza dell'esponenziale garantisce che il fattore di scala sia sempre
+positivo e, di conseguenza, che la trasformazione sia invertibile. Infatti,
+poiché $\mathbf{z}_a'=\mathbf{z}_a$, l'inversa può essere calcolata
+direttamente:
+\begin{equation}
+    \mathbf{z}_a = \mathbf{z}_a',
+\end{equation}
+\begin{equation}
+    \mathbf{z}_b =
+    \left[
+        \mathbf{z}_b'
+        -
+        \mathbf{t}(\mathbf{z}_a')
+    \right]
+    \odot
+    \exp\big(-\mathbf{s}(\mathbf{z}_a')\big).
+    \label{eq:realnvp_inverse}
+\end{equation}
+
+È importante osservare che non è necessario invertire le funzioni
+$\mathbf{s}$ e $\mathbf{t}$. Una volta ricostruito
+$\mathbf{z}_a=\mathbf{z}_a'$, esse possono essere semplicemente rivalutate
+sullo stesso input per ottenere i parametri necessari all'inversione.
+
+La struttura della trasformazione affine permette inoltre di calcolare
+facilmente il determinante Jacobiano. Lo Jacobiano del coupling layer ha
+infatti la struttura triangolare a blocchi
+\begin{equation}
+    J_T =
+    \begin{pmatrix}
+        I & 0\\[0.3em]
+        \dfrac{\partial \mathbf{z}_b'}
+        {\partial \mathbf{z}_a}
+        &
+        \dfrac{\partial \mathbf{z}_b'}
+        {\partial \mathbf{z}_b}
+    \end{pmatrix}.
+    \label{eq:realnvp_jacobian}
+\end{equation}
+Il blocco diagonale inferiore è dato da
+\begin{equation}
+    \frac{\partial \mathbf{z}_b'}
+    {\partial \mathbf{z}_b}
+    =
+    \operatorname{diag}
+    \left[
+        \exp\big(\mathbf{s}(\mathbf{z}_a)\big)
+    \right].
+\end{equation}
+Essendo il Jacobiano triangolare a blocchi, il suo determinante è dato dal
+prodotto dei determinanti dei blocchi diagonali:
+\begin{equation}
+    \det J_T
+    =
+    \exp\left(
+        \sum_i s_i(\mathbf{z}_a)
+    \right).
+    \label{eq:realnvp_det}
+\end{equation}
+Di conseguenza, il logaritmo del valore assoluto del determinante assume la
+forma particolarmente semplice
+\begin{equation}
+    \log\left|\det J_T\right|
+    =
+    \sum_i s_i(\mathbf{z}_a).
+    \label{eq:realnvp_logdet}
+\end{equation}
+Il calcolo del determinante non richiede quindi la valutazione della
+Jacobiana della rete neurale utilizzata nel condizionatore.
+
+\subsubsection{Il condizionatore}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/NF/coupling_layers.png}
+    \caption{}
+    \label{fig:coupling}
+\end{figure}
+
+Il condizionatore ha il compito di determinare i parametri della
+trasformazione affine a partire dalle componenti lasciate invariate. In
+particolare, può essere definito come una funzione
+\begin{equation}
+    c(\mathbf{z}_a;\boldsymbol{\theta})
+    =
+    \left(
+        \mathbf{s}(\mathbf{z}_a;\boldsymbol{\theta}),
+        \mathbf{t}(\mathbf{z}_a;\boldsymbol{\theta})
+    \right),
+    \label{eq:realnvp_conditioner}
+\end{equation}
+dove $\boldsymbol{\theta}$ rappresenta i parametri della rete neurale.
+
+Il condizionatore non deve soddisfare i requisiti di invertibilità imposti
+alla trasformazione complessiva. Può quindi essere realizzato mediante una
+rete neurale arbitrariamente espressiva, purché sia possibile valutarla in
+modo efficiente. La sua funzione è infatti esclusivamente quella di
+produrre i parametri $\mathbf{s}$ e $\mathbf{t}$ utilizzati dal trasformatore
+affine.
+
+Questa separazione tra trasformatore e condizionatore è uno degli aspetti
+fondamentali della costruzione Real NVP. Il trasformatore garantisce
+l'invertibilità e permette di calcolare analiticamente il determinante
+Jacobiano, mentre il condizionatore fornisce la capacità espressiva
+necessaria per adattare la trasformazione alla distribuzione target.
+
+Un singolo coupling layer presenta tuttavia una limitazione: le componenti
+$\mathbf{z}_a$ rimangono invariate. Per permettere a tutte le componenti di
+essere trasformate, la Real NVP utilizza una composizione di più coupling
+layers, alternando il ruolo dei due sottoinsiemi. Ad esempio, dopo un primo
+layer in cui $\mathbf{z}_b$ viene trasformato condizionatamente a
+$\mathbf{z}_a$, un secondo layer può trasformare $\mathbf{z}_a$ utilizzando
+$\mathbf{z}_b'$ come condizionamento:
+\begin{equation}
+    \begin{aligned}
+        \mathbf{z}_a'' &=
+        \mathbf{z}_a'
+        \odot
+        \exp\big(
+            \mathbf{s}_2(\mathbf{z}_b')
+        \big)
+        +
+        \mathbf{t}_2(\mathbf{z}_b'),\\
+        \mathbf{z}_b'' &= \mathbf{z}_b'.
+    \end{aligned}
+\end{equation}
+
+La composizione di questi layer consente quindi di modificare
+progressivamente tutte le componenti della variabile, mantenendo per ogni
+trasformazione un'inversione esplicita e un determinante Jacobiano
+facilmente calcolabile. Il Normalizing Flow risultante è infine ottenuto
+componendo un numero opportuno di coupling layers, eventualmente
+intercalati da trasformazioni che modificano l'ordine delle componenti.
 
 
 \section{Addestramento del flow}

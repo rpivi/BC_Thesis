@@ -5,9 +5,10 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
 Reallocating 'name_of_file' (item size: 1) to 13 items.
 Database file #1: Bibliografia.bib
+Warning--I didn't find a database entry for "dinh2017density"
 You've used 17 entries,
             1791 wiz_defined-function locations,
-            547 strings with 6132 characters,
+            548 strings with 6147 characters,
 and the built_in function-call counts, 2805 in all, are:
 = -- 231
 > -- 130
@@ -46,3 +47,4 @@ warning$ -- 0
 while$ -- 18
 width$ -- 19
 write$ -- 192
+(There was 1 warning)
