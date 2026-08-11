@@ -6,8 +6,10 @@ Nel capitolo precedente si è mostrato come i metodi Monte Carlo basati su caten
 In questo capitolo si introducono i \textbf{Normalizing Flows} (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
 
 Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di flow come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
-\section{Cambio di variabili e funzioni invertibili}
+
+\section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
+\subsection{Cambio di variabili e funzioni invertibili}
 
 Un Normalizing Flow è una trasformazione $T$ che permette di esprire una variabile aleatoria attraverso un altra variabile aleatoria:
 \begin{equation}
@@ -16,7 +18,7 @@ Un Normalizing Flow è una trasformazione $T$ che permette di esprire una variab
 dove si è espresso $\mathbf{x}$ come risultato della trasformazione $T$ su $\mathbf{z}$ campionata da $p_Z(\mathbf{z})$. 
 Chiameremo $T$ \textbf{flow}, mentre la variabile $\mathbf{z}$ - con distribuzione \textbf{base} (o prior) $p_Z(\mathbf{z})$ - è detta \textbf{variabile latente}.
 
-La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow. $T$ deve essere un diffeormorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
+La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow: deve essere un diffeormorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
 \begin{equation}
    \mathbf{x} \underset{T^{-1}}{\overset{T}{\rightleftarrows}} \mathbf{z}, \qquad \mathbf{x}, \mathbf{z} \in \mathbb{R}^D.
 \end{equation}
@@ -30,7 +32,7 @@ o equivalentemente espressa per $\mathbf{x}$:
 p_X(\mathbf{x})= p_Z(T^{-1}(\mathbf{x})) |\text{det} J_{T^{-1}}(\mathbf{x})|.
 \end{equation}
 
-Dove con $J_T(\mathbf{z})$ si indica la matrice jacobiana di $T$, ovvero la matrice $D \times D$  delle derivate parziali:
+Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matrice $D \times D$  delle derivate parziali:
 \begin{equation}
     J_T(\mathbf{z}) =
     \begin{pmatrix}
@@ -49,7 +51,7 @@ Supponiamo che $p_X(\mathbf{x}) > 0$ per ogni $\mathbf{x} \in \mathbb{R}^D$, e a
     p_X(\mathbf{x}) = \prod_{i=1}^{D} p_X(x_i \mid \mathbf{x}_{<i}).
 \end{equation}
 
-Poiché $p_X(\mathbf{x})$ è non nulla ovunque, si ha $p_X(x_i \mid \mathbf{x}_{<i}) > 0$ per ogni $i$ e $\mathbf{x}$. Definiamo quindi la trasformazione $F : \mathbf{x} \mapsto \mathbf{z} \in (0,1)^D$, il cui $i$-esimo elemento è dato dalla \emph{funzione di ripartizione} (cumulative distribution function) della $i$-esima condizionata:
+Poiché $p_X(\mathbf{x})$ è non nulla ovunque, si ha $p_X(x_i \mid \mathbf{x}_{<i}) > 0$ per ogni $i$ e $\mathbf{x}$. Definiamo quindi la trasformazione $F : \mathbf{x} \mapsto \mathbf{z} \in (0,1)^D$, il cui $i$-esimo elemento è dato dalla distribuzione cumulativa della $i$-esima condizionata:
 \begin{equation}
     z_i = F_i(x_i, \mathbf{x}_{<i}) = \int_{-\infty}^{x_i} p_X(x_i' \mid \mathbf{x}_{<i}) \, dx_i' = \Pr(x_i' \le x_i \mid \mathbf{x}_{<i}).
 \end{equation}
@@ -77,7 +79,7 @@ L'argomento sopra riportato mostra che un modello basato su flow può esprimere 
 
 Con lo stesso argomento esposto sopra, $G$ è un diffeomorfismo e $\mathbf{z}$ è distribuita uniformemente in $(0,1)^D$. Dunque, un flow con trasformazione $T = F^{-1} \circ G$ può trasformare $p_U(\mathbf{u})$ in $p_X(\mathbf{x})$.
 
-Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite un'integrale. Questo metodo però non è praticabile, poichè numericamente difficile in generale. Una soluzione più agevole è cercare di approssimare la trasformazione con una rete neurale.
+Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite integrazione. Questo metodo però non è praticabile, poichè numericamente difficile in generale. Una soluzione più agevole, come vedremo nella Sezione \ref{sec:costruction} è cercare di approssimare la trasformazione con una rete neurale.
 
 \subsection{Campionamento e inferenza}
 
@@ -102,56 +104,9 @@ Questa seconda operazione richiede quindi non solo che $T^{-1}$ sia calcolabile 
 
 Nel contesto di questa tesi, entrambe le direzioni risultano necessarie: il campionamento diretto approssimato è svolto tramite un NF di cui è sufficiente implementare la trasformazione $T$ , mentre la valutazione della densità è indispensabile per il calcolo dei tassi di accettazione nello schema Flow-MCMC (Sez.~\ref{sec:flow-mcmc}). 
 
-\subsection{Addestramento del flow}
-\label{sec:addestramento-flow}
-
-L'obiettivo dell'addestramento è determinare i parametri $\boldsymbol{\theta}$ della trasformazione $T_{\boldsymbol{\theta}}$ in modo che il modello $p_X(\mathbf{x};\boldsymbol{\theta})$, ottenuto tramite la formula di cambio di variabile
-\begin{equation}
-    p_X(\mathbf{x};\boldsymbol{\theta}) = p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x})\big)\,\big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x})\big|,
-\end{equation}
-approssimi il più fedelmente possibile una distribuzione target $p_X^*(\mathbf{x})$. Per farlo è necessario innanzitutto scegliere una misura di distanza tra le due distribuzioni. La scelta più comune, che adotteremo anche in questo lavoro, è la \textbf{divergenza di Kullback-Leibler} (KL) \cite{kullback1951information}, definita per due densità $p$ e $q$ come
-\begin{equation}
-    D_{\mathrm{KL}}(p \,\|\, q) = \Big\langle \log \frac{p}{q} \Big\rangle_{p} = \int p(\mathbf{x}) \log \frac{p(\mathbf{x})}{q(\mathbf{x})}\, d\mathbf{x}.
-\end{equation}
-Sebbene non sia una distanza in senso stretto, poiché non è simmetrica, la divergenza KL gode delle proprietà $D_{\mathrm{KL}}(p\,\|\,q) \geq 0$ e $D_{\mathrm{KL}}(p\,\|\,q) = 0 \iff p = q$, il che la rende una funzione di costo adeguata per l'addestramento. Proprio a causa della sua asimmetria, la scelta di quale delle due distribuzioni si pone come primo argomento non è indifferente, e conduce a due strategie di addestramento con proprietà molto diverse tra loro: la KL \emph{forward} e la KL \emph{reverse}.
-
-\paragraph{Divergenza KL forward.} Se disponiamo di un insieme di campioni $\{\mathbf{x}_n\}_{n=1}^N$ estratti dalla distribuzione target $p_X^*(\mathbf{x})$ — ad esempio un dataset generato con un metodo indipendente — ma non siamo necessariamente in grado di valutarne la densità, possiamo minimizzare la divergenza KL forward
-\begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) = D_{\mathrm{KL}}\big[p_X^*(\mathbf{x}) \,\|\, p_X(\mathbf{x};\boldsymbol{\theta})\big] = -\big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) \big\rangle_{p_X^*} + \mathrm{cost.}
-\end{equation}
-Sostituendo l'espressione di $p_X(\mathbf{x};\boldsymbol{\theta})$ e approssimando il valore atteso con una media Monte Carlo sui campioni disponibili, si ottiene
-\begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) \approx -\frac{1}{N} \sum_{n=1}^{N} \Big[ \log p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x}_n)\big) + \log \big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x}_n)\big| \Big] + \mathrm{cost.},
-\end{equation}
-che coincide, a meno di una costante additiva indipendente da $\boldsymbol{\theta}$, con la log-verosimiglianza negativa dei dati sotto il modello: minimizzare la KL forward equivale dunque a effettuare \emph{stima di massima verosimiglianza}. Questo approccio richiede di poter calcolare $T_{\boldsymbol{\theta}}^{-1}$ e il relativo determinante Jacobiano, ma non necessita mai di campionare dal modello durante l'addestramento.
-
-\paragraph{Divergenza KL reverse.} La situazione rilevante per questa tesi è diversa: la distribuzione target è quella di Boltzmann,
-\begin{equation}
-    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta V(\mathbf{x})} \equiv \frac{\tilde{p}_X(\mathbf{x})}{Z},
-\end{equation}
-di cui conosciamo la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, ma non la costante di normalizzazione $Z$, né disponiamo a priori di campioni estratti da essa: sono proprio questi campioni indipendenti ciò che il flow deve permetterci di generare. In questo scenario è naturale minimizzare la divergenza KL \emph{reverse},
-\begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) = D_{\mathrm{KL}}\big[p_X(\mathbf{x};\boldsymbol{\theta}) \,\|\, p_X^*(\mathbf{x})\big] = \big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) - \log p_X^*(\mathbf{x}) \big\rangle_{p_X(\cdot;\boldsymbol{\theta})},
-\end{equation}
-in cui il valore atteso è ora calcolato rispetto al modello stesso, e non rispetto al target. Poiché $Z$ non dipende da $\boldsymbol{\theta}$, il suo contributo a $\mathcal{L}(\boldsymbol{\theta})$ si riduce a una costante additiva, e possiamo riscrivere la funzione di costo usando esclusivamente $\tilde{p}_X$:
-\begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) = \big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) - \log \tilde{p}_X(\mathbf{x}) \big\rangle_{p_X(\cdot;\boldsymbol{\theta})} + \mathrm{cost.}
-\end{equation}
-Il vantaggio cruciale della KL reverse è che il valore atteso può essere riparametrizzato in termini della distribuzione base, tramite $\mathbf{x} = T_{\boldsymbol{\theta}}(\mathbf{z})$ con $\mathbf{z} \sim p_Z(\mathbf{z})$: campionare dal modello diventa così indipendente da $\boldsymbol{\theta}$, e possiamo scrivere
-\begin{equation}
-    \mathcal{L}(\boldsymbol{\theta}) = \Big\langle \log p_Z(\mathbf{z}) - \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big| - \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z})\big) \Big\rangle_{p_Z} + \mathrm{cost.},
-\end{equation}
-il cui gradiente rispetto a $\boldsymbol{\theta}$ è stimabile senza distorsione tramite una media Monte Carlo su campioni $\{\mathbf{z}_n\}_{n=1}^N$ estratti dalla distribuzione base:
-\begin{equation}
-    \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) \approx \frac{1}{N} \sum_{n=1}^{N} \nabla_{\boldsymbol{\theta}} \Big[ - \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_n)\big| - \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z}_n)\big) \Big].
-\end{equation}
-Questo approccio richiede quindi di poter calcolare la trasformazione diretta $T_{\boldsymbol{\theta}}$ e il determinante del suo Jacobiano, ma non richiede mai di invertire $T_{\boldsymbol{\theta}}$ né di conoscere campioni dal target: è sufficiente poter valutare $\tilde{p}_X$ in un punto qualsiasi, esattamente la situazione in cui ci troviamo per la distribuzione di Boltzmann.
-
-\`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ — campioni che verranno poi corretti a esatti tramite lo schema Flow-MCMC discusso nella Sezione~\ref{sec:flow-mcmc}.
-
-\section{Costruire un flow: composizione finita}
+\section{Costruire un flow}
 \label{sec:costruction}
-
+\subsection{Composizione finita}
 Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasfromazione invertibile e differenziabile. 
 
 \begin{equation}
@@ -173,7 +128,7 @@ In generale potremmo creare un flow $T$ come composizione di $K$ trasformazioni 
 \end{equation}
 
 Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
-Il logaritmo del determinante del jacobiano di $T$ sarà dunque calcolabile nel seguente modo:
+Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile nel seguente modo:
 \begin{equation}
     \log |\text{det}J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\text{det} J_{T_k}(\mathbf{z}_{k-1})|.
 \end{equation}
@@ -181,11 +136,62 @@ Il logaritmo del determinante del jacobiano di $T$ sarà dunque calcolabile nel 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/T1_Tk.png}
-    \caption{Rappresentazione di un flow composto da $K$ trasformazioni. }
+    \caption{Rappresentazione di un flow composto da $K$ trasformazioni.}
     \label{fig:T1_Tk}
 \end{figure}
 
 \subsection{Real NVP}
+
+
+\section{Addestramento del flow}
+\label{sec:addestramento-flow}
+
+L'obiettivo dell'addestramento è determinare i parametri $\boldsymbol{\theta}$ della trasformazione $T_{\boldsymbol{\theta}}$ in modo che il modello $p_X(\mathbf{x};\boldsymbol{\theta})$, ottenuto tramite la formula di cambio di variabile
+\begin{equation}
+    p_X(\mathbf{x};\boldsymbol{\theta}) = p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x})\big)\,\big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x})\big|,
+\end{equation}
+approssimi il più fedelmente possibile una distribuzione target $p_X^*(\mathbf{x})$.
+Per farlo è necessario innanzitutto scegliere una misura di distanza tra le due distribuzioni. La scelta più comune, che adotteremo anche in questo lavoro, è la \textbf{divergenza di Kullback-Leibler} (KL) \cite{kullback1951information}, definita per due densità $p$ e $q$ come
+\begin{equation}
+    D_{\mathrm{KL}}(p \,\|\, q) = \Big\langle \log \frac{p}{q} \Big\rangle_{p} = \int p(\mathbf{x}) \log \frac{p(\mathbf{x})}{q(\mathbf{x})}\, d\mathbf{x}.
+\end{equation}
+Sebbene non sia una distanza in senso stretto, poiché non è simmetrica, la divergenza KL gode delle proprietà $D_{\mathrm{KL}}(p\,\|\,q) \geq 0$ e $D_{\mathrm{KL}}(p\,\|\,q) = 0 \iff p = q$, il che la rende una funzione di costo adeguata per l'addestramento. Proprio a causa della sua asimmetria, la scelta di quale delle due distribuzioni si pone come primo argomento non è indifferente, e conduce a due strategie di addestramento con proprietà molto diverse tra loro: la KL \emph{forward} e la KL \emph{reverse}. Infatti si utilizza un metodo per poter fare inferenza statistica su dei dati, mentre l'altro per poter campionare un distribuzione nota.
+
+\paragraph{Divergenza KL forward.} Se disponiamo di un insieme di campioni $\{\mathbf{x}_n\}_{n=1}^N$ estratti dalla distribuzione target $p_X^*(\mathbf{x})$, ma non siamo necessariamente in grado di valutarne la densità, possiamo minimizzare la divergenza KL forward
+\begin{equation}
+    \mathcal{L}(\boldsymbol{\theta}) = D_{\mathrm{KL}}\big[p_X^*(\mathbf{x}) \,\|\, p_X(\mathbf{x};\boldsymbol{\theta})\big] = -\big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) \big\rangle_{p_X^*} + \mathrm{cost.}
+\end{equation}
+Sostituendo l'espressione di $p_X(\mathbf{x};\boldsymbol{\theta})$ e approssimando il valore atteso con una media Monte Carlo sui campioni disponibili, si ottiene
+\begin{equation}
+    \mathcal{L}(\boldsymbol{\theta}) \approx -\frac{1}{N} \sum_{n=1}^{N} \Big[ \log p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x}_n)\big) + \log \big|\text{det} J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x}_n)\big| \Big] + \mathrm{cost.},
+\end{equation}
+da cui si può notare che minimizzare la KL forward equivale a effettuare \emph{stima di massima verosimiglianza}. Questo approccio richiede di poter calcolare $T_{\boldsymbol{\theta}}^{-1}$ e il relativo determinante Jacobiano, ma non necessita mai di campionare dal modello durante l'addestramento. Si utilizza dunque la  KL forward per un NF addestrato per poter fare inferenza statistica su dei dati con distribuzione.
+
+\paragraph{Divergenza KL reverse.} Se possiamo valutare la distribuzione target
+\begin{equation}
+   p_X^*(\mathbf{x}) = \frac{\tilde{p}_X(\mathbf{x})}{Z} 
+\end{equation}
+anche a meno della costante $Z$ di normalizzazione, minimizzando la KL reverse siamo in grado di addestrare il flow per poterla campionare.  La loss $\mathcal{L}(\boldsymbol{\theta})$ in questo caso si scrive
+\begin{equation}
+    \mathcal{L}(\boldsymbol{\theta}) = D_{\mathrm{KL}}\big[p_X(\mathbf{x};\boldsymbol{\theta}) \,\|\, p_X^*(\mathbf{x})\big] = \big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) - \log p_X^*(\mathbf{x}) \big\rangle_{p_X(\cdot;\boldsymbol{\theta})},
+\end{equation}
+in cui il valore atteso è ora calcolato rispetto al modello stesso, e non rispetto al target. Poiché $Z$ non dipende da $\boldsymbol{\theta}$, il suo contributo a $\mathcal{L}(\boldsymbol{\theta})$ si riduce a una costante additiva, e possiamo riscrivere la funzione di costo usando esclusivamente $\tilde{p}_X$:
+\begin{equation}
+    \mathcal{L}(\boldsymbol{\theta}) = \big\langle \log p_X(\mathbf{x};\boldsymbol{\theta}) - \log \tilde{p}_X(\mathbf{x}) \big\rangle_{p_X(\cdot;\boldsymbol{\theta})} + \mathrm{cost.}
+\end{equation}
+Il vantaggio cruciale della KL reverse è che il valore atteso può essere riparametrizzato in termini della distribuzione base utilizzando il flow e la formula del cambio di variabile:
+\begin{equation}
+    \mathcal{L}(\boldsymbol{\theta}) = \Big\langle \log p_Z(\mathbf{z}) - \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big| - \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z})\big) \Big\rangle_{p_Z} + \mathrm{cost.},
+\end{equation}
+il cui gradiente rispetto a $\boldsymbol{\theta}$ è stimabile tramite una media Monte Carlo su campioni $\{\mathbf{z}_n\}_{n=1}^N$ estratti dalla distribuzione base:
+\begin{equation}
+    \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) \approx - \frac{1}{N} \sum_{n=1}^{N} \nabla_{\boldsymbol{\theta}} \Big[  \log \big|\text{det} J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_n)\big| + \log \tilde{p}_X\big(T_{\boldsymbol{\theta}}(\mathbf{z}_n)\big) \Big].
+\end{equation}
+Questo approccio richiede quindi di poter calcolare la trasformazione diretta $T_{\boldsymbol{\theta}}$ e il determinante del suo Jacobiano, ma non richiede mai di invertire $T_{\boldsymbol{\theta}}$ né di conoscere campioni dal target: è sufficiente poter valutare $\tilde{p}_X$ in un punto qualsiasi, esattamente la situazione in cui ci troviamo per la distribuzione di Boltzmann:
+\begin{equation}
+    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta V(\mathbf{x})} \equiv \frac{\tilde{p}_X(\mathbf{x})}{Z},
+\end{equation}
+come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta V(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ \cite{noe2019boltzmann}. I campioni così creati non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di star campionando la distribuzione target si illustra nella prossima sezione un metodo ibrido che unisce i NF e MCMC, in modo da ottere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
 
 \section{Flow Markov Chain Monte Carlo}
 \label{sec:flow-mcmc}

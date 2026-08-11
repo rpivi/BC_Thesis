@@ -90,4 +90,10 @@ Solomon Kullback and Richard~A. Leibler.
 \newblock On information and sufficiency.
 \newblock {\em The Annals of Mathematical Statistics}, 22(1), 1951.
 
+\bibitem{noe2019boltzmann}
+Frank Noé, Simon Olsson, Jonas Köhler, and Hao Wu.
+\newblock Boltzmann generators: Sampling equilibrium states of many-body
+  systems with deep learning.
+\newblock {\em Science}, 365(6457):eaaw1147, 2019.
+
 \end{thebibliography}
