@@ -34,22 +34,22 @@
 \contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{32}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Real NVP}{34}{subsection.3.2.3}%
 \contentsline {subsubsection}{\numberline {3.2.3.1}Trasformazione affine}{34}{subsubsection.3.2.3.1}%
-\contentsline {subsubsection}{\numberline {3.2.3.2}Il condizionatore}{35}{subsubsection.3.2.3.2}%
-\contentsline {section}{\numberline {3.3}Addestramento del flow}{36}{section.3.3}%
-\contentsline {paragraph}{Divergenza KL forward.}{37}{paragraph*.17}%
-\contentsline {paragraph}{Divergenza KL reverse.}{37}{paragraph*.18}%
-\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{38}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Studio del campionamento}{39}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{39}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{39}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{39}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Risultati}{40}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{42}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{42}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{42}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{45}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{47}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusione}{49}{chapter*.33}%
-\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{51}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{54}{appendix*.34}%
-\contentsline {chapter}{Ringraziamenti}{55}{appendix*.35}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}Il condizionatore}{34}{subsubsection.3.2.3.2}%
+\contentsline {section}{\numberline {3.3}Addestramento del flow}{34}{section.3.3}%
+\contentsline {paragraph}{Divergenza KL forward.}{35}{paragraph*.17}%
+\contentsline {paragraph}{Divergenza KL reverse.}{35}{paragraph*.18}%
+\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{36}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Studio del campionamento}{37}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{37}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{37}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{37}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Risultati}{38}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{40}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{40}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{40}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{43}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{45}{subsection.4.3.4}%
+\contentsline {chapter}{Conclusione}{47}{chapter*.33}%
+\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{49}{appendix.Alph1}%
+\contentsline {chapter}{Bibliografia}{52}{appendix*.34}%
+\contentsline {chapter}{Ringraziamenti}{53}{appendix*.35}%

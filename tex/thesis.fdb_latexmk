@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1786469023.89143 "thesis.aux" "thesis.bbl" "thesis" 1786469383.23435 0
+["bibtex thesis"] 1786473270.75853 "thesis.aux" "thesis.bbl" "thesis" 1786473373.40229 0
   "./Bibliografia.bib" 1786468994.22499 5093 9595c909ceac21fba68cf6ac31275391 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1786469382.09255 21226 b562e947401bf1b5d24c729e88162bd8 "pdflatex"
+  "thesis.aux" 1786473372.42794 20669 9a93cc04f36027e26adefb314a2e1596 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1786469375.09887 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786469383.2361 0
+["pdflatex"] 1786473365.77933 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786473373.40305 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786005416.94312 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -25,6 +25,8 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmbx10.tfm" 1256929440 12076 b54175e02101bea1addf6b2d0197ed12 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmbx12.tfm" 1256929440 12088 d750ac78274fa7c9f73ba09914c04f8a ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmbx6.tfm" 1256929440 12060 e1421116ee46f156304f311f9d8331aa ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmbx8.tfm" 1256929440 12076 360d279d01701e9e9f0f2427c1d230fe ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmcsc10.tfm" 1256929440 11276 116dd5bea6621ce4a1999f96d876084c ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr10.tfm" 1256929440 12056 7e13df7fe4cbce21b072ba7c4f4deb6e ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr12.tfm" 1256929440 12092 7b1546e2d096cfd5dcbd4049b0b1ec2e ""
@@ -268,7 +270,7 @@
   "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1786469375.33107 6059 77b5a801ca797e5ddee7f428b043daa8 ""
   "cap1.tex" 1786458833.28026 28414 23eff50239b6df32228544be41f3d5f9 ""
   "cap2.tex" 1786460691.9751 34448 8e2ae3f21546bd80540365b9ce859198 ""
-  "cap3.tex" 1786469009.00568 34030 8ee7f417303c2b9a4f59c0da9de4b193 ""
+  "cap3.tex" 1786473365.42467 27235 2def7b796352285875d4a0ea89a84d02 ""
   "cap4.tex" 1785359379.89573 4633 7803c2d8982894e8030fdbffcd3e9075 ""
   "conclusione.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
   "images/E_vs_N_plot_T_100.0.png" 1784804683.84719 184546 8c18f1a7269f02cae2bec5a58f20aac7 ""
@@ -309,10 +311,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1786007970.27406 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1786469382.09255 21226 b562e947401bf1b5d24c729e88162bd8 "pdflatex"
-  "thesis.bbl" 1786469024.25607 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
-  "thesis.out" 1786469382.12813 8831 8b2ca159fbf87b4bf0a3da00cb032d3b "pdflatex"
-  "thesis.toc" 1786469382.15273 4710 8fa2fd3d07ac916e4fdbcaba3ae9b754 "pdflatex"
+  "thesis.aux" 1786473372.42794 20669 9a93cc04f36027e26adefb314a2e1596 "pdflatex"
+  "thesis.bbl" 1786473271.05317 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
+  "thesis.out" 1786473372.45933 8831 8b2ca159fbf87b4bf0a3da00cb032d3b "pdflatex"
+  "thesis.toc" 1786473372.48622 4710 5c4da20efe9d9b85b58879fb21fcf949 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"

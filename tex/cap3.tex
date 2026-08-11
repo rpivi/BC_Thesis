@@ -175,7 +175,7 @@ Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e in un
 
 Gli \textbf{autoregressive flows} costituiscono una famiglia di trasformazioni progettate per soddisfare simultaneamente i requisiti di invertibilità e di calcolo efficiente del determinante Jacobiano introdotti nella sezione precedente. L'idea fondamentale consiste nel costruire la trasformazione in modo che ciascuna componente dipenda solo dalle componenti precedenti della variabile di ingresso.
 
-... 
+Considerando un flow che trasforma $\textbf{z}$ in $\textbf{z}'$
 
 \begin{equation}
     z_i' = \tau(z_i;\mathbf{h}_i),
@@ -219,20 +219,15 @@ si ottiene dunque
     \mathbf{h}_i=c_i(\mathbf{z}_{<i};\boldsymbol{\theta}).
     \label{eq:autoregressive_det}
 \end{equation}
-Il calcolo del determinante, che per uno Jacobiano si riduce quindi alla valutazione
-dei soli elementi diagonali e scala linearmente con $D$.
+Il calcolo del determinante per uno Jacobiano triangolare si riduce alla valutazione dei soli elementi diagonali e scala linearmente con $D$.
 
-Resta da imporre l'invertibilità della trasformazione. Se il trasformatore
-$\tau(\,\cdot\,;\mathbf{h}_i)$ è invertibile rispetto al primo argomento,
-l'inversione può essere effettuata componente per componente:
+Resta da imporre l'invertibilità della trasformazione. Se il trasformatore $\tau(\,\cdot\,;\mathbf{h}_i)$ è invertibile rispetto al primo argomento, l'inversione può essere effettuata componente per componente:
 \begin{equation}
     z_i =
     \tau^{-1}(z_i';\mathbf{h}_i).
 \end{equation}
-Tuttavia, nella direzione inversa i parametri $\mathbf{h}_i$ devono essere
-calcolati utilizzando le componenti già ricostruite. Si procede pertanto in
-sequenza, partendo da $z_1$ e utilizzando il suo valore per determinare
-$\mathbf{h}_2$, quindi ricostruendo $z_2$, e così via fino a $z_D$.
+
+...
 
 
 \begin{figure}[H]
@@ -242,14 +237,10 @@ $\mathbf{h}_2$, quindi ricostruendo $z_2$, e così via fino a $z_D$.
     \label{fig:autoregressive}
 \end{figure}
 
-La struttura autoregressiva permette quindi di ottenere trasformazioni
-invertibili con un Jacobiano di cui il determinante è facilmente calcolabile.
-Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della
-trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle
-componenti precedenti, le diverse componenti non possono essere ricostruite
-simultaneamente. Questo può rendere il campionamento computazionalmente
-inefficiente quando la dimensione dello spazio delle configurazioni è
-elevata.
+La struttura autoregressiva permette quindi di ottenere trasformazioni invertibili con un Jacobiano di cui il determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
+simultaneamente.
+
+...
 
 \begin{table}[htbp]
     \centering
@@ -283,197 +274,20 @@ elevata.
 \subsection{Real NVP}
 \label{sec:realnvp}
 
-Una delle architetture più utilizzate per costruire Normalizing Flows è la
-\textbf{Real NVP} (\emph{Real-valued Non-Volume Preserving}), introdotta da
-Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è
-costruire una trasformazione invertibile suddividendo le componenti della
-variabile di ingresso in due gruppi e trasformando un gruppo condizionatamente
-all'altro. Questa struttura, chiamata \textbf{coupling layer}, permette di
-ottenere contemporaneamente un'inversione esplicita e un calcolo efficiente
-del determinante Jacobiano.
+Una architettura molto utilizzata per costruire Normalizing Flows è la \textbf{Real NVP} (\emph{Real-valued Non-Volume Preserving}), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una trasformazione affine, i cui parametri sono calcolati da un condizionatore che suddivide le componenti della variabile di ingresso in due gruppi: il primo non viene trasformato, mentre il secondo viene trasformato condizionatamente al primo. Questa struttura di condizionatore è chiamata \textbf{coupling layer}.
 
-Consideriamo una variabile $\mathbf{z}\in\mathbb{R}^D$, che viene suddivisa
-in due sottoinsiemi di componenti,
-\begin{equation}
-    \mathbf{z} = (\mathbf{z}_a,\mathbf{z}_b).
-\end{equation}
-Un coupling layer lascia invariato il primo gruppo e trasforma il secondo
-utilizzando informazioni ottenute dal primo:
-\begin{equation}
-    \begin{aligned}
-        \mathbf{z}_a' &= \mathbf{z}_a,\\
-        \mathbf{z}_b' &=
-        \tau\left(
-            \mathbf{z}_b;
-            c(\mathbf{z}_a;\boldsymbol{\theta})
-        \right),
-    \end{aligned}
-    \label{eq:coupling_general}
-\end{equation}
-dove $\tau$ rappresenta il \textbf{trasformatore}, mentre
-$c$ rappresenta il \textbf{condizionatore}. Il primo determina come
-trasformare $\mathbf{z}_b$, mentre il secondo fornisce i parametri necessari
-a tale trasformazione a partire da $\mathbf{z}_a$.
-
-Nella Real NVP il trasformatore $\tau$ è scelto in modo da essere una
-\textbf{trasformazione affine}. Il condizionatore, invece, è rappresentato
-da una rete neurale che determina i parametri della trasformazione sulla
-base delle componenti $\mathbf{z}_a$. Questa separazione permette di
-utilizzare un condizionatore arbitrariamente espressivo senza richiedere
-che esso sia invertibile.
-
-\subsubsection{Trasformazione affine}
-
-La trasformazione utilizzata nella Real NVP è una trasformazione affine
-applicata componente per componente:
-\begin{equation}
-    \mathbf{z}_b'
-    =
-    \mathbf{z}_b \odot
-    \exp\big(\mathbf{s}(\mathbf{z}_a)\big)
-    +
-    \mathbf{t}(\mathbf{z}_a),
-    \label{eq:realnvp_affine}
-\end{equation}
-dove $\odot$ indica il prodotto elemento per elemento. Le funzioni
-$\mathbf{s}$ e $\mathbf{t}$ restituiscono rispettivamente un fattore di
-scala e una traslazione per ciascuna componente di $\mathbf{z}_b$.
-
-La presenza dell'esponenziale garantisce che il fattore di scala sia sempre
-positivo e, di conseguenza, che la trasformazione sia invertibile. Infatti,
-poiché $\mathbf{z}_a'=\mathbf{z}_a$, l'inversa può essere calcolata
-direttamente:
-\begin{equation}
-    \mathbf{z}_a = \mathbf{z}_a',
-\end{equation}
-\begin{equation}
-    \mathbf{z}_b =
-    \left[
-        \mathbf{z}_b'
-        -
-        \mathbf{t}(\mathbf{z}_a')
-    \right]
-    \odot
-    \exp\big(-\mathbf{s}(\mathbf{z}_a')\big).
-    \label{eq:realnvp_inverse}
-\end{equation}
-
-È importante osservare che non è necessario invertire le funzioni
-$\mathbf{s}$ e $\mathbf{t}$. Una volta ricostruito
-$\mathbf{z}_a=\mathbf{z}_a'$, esse possono essere semplicemente rivalutate
-sullo stesso input per ottenere i parametri necessari all'inversione.
-
-La struttura della trasformazione affine permette inoltre di calcolare
-facilmente il determinante Jacobiano. Lo Jacobiano del coupling layer ha
-infatti la struttura triangolare a blocchi
-\begin{equation}
-    J_T =
-    \begin{pmatrix}
-        I & 0\\[0.3em]
-        \dfrac{\partial \mathbf{z}_b'}
-        {\partial \mathbf{z}_a}
-        &
-        \dfrac{\partial \mathbf{z}_b'}
-        {\partial \mathbf{z}_b}
-    \end{pmatrix}.
-    \label{eq:realnvp_jacobian}
-\end{equation}
-Il blocco diagonale inferiore è dato da
-\begin{equation}
-    \frac{\partial \mathbf{z}_b'}
-    {\partial \mathbf{z}_b}
-    =
-    \operatorname{diag}
-    \left[
-        \exp\big(\mathbf{s}(\mathbf{z}_a)\big)
-    \right].
-\end{equation}
-Essendo il Jacobiano triangolare a blocchi, il suo determinante è dato dal
-prodotto dei determinanti dei blocchi diagonali:
-\begin{equation}
-    \det J_T
-    =
-    \exp\left(
-        \sum_i s_i(\mathbf{z}_a)
-    \right).
-    \label{eq:realnvp_det}
-\end{equation}
-Di conseguenza, il logaritmo del valore assoluto del determinante assume la
-forma particolarmente semplice
-\begin{equation}
-    \log\left|\det J_T\right|
-    =
-    \sum_i s_i(\mathbf{z}_a).
-    \label{eq:realnvp_logdet}
-\end{equation}
-Il calcolo del determinante non richiede quindi la valutazione della
-Jacobiana della rete neurale utilizzata nel condizionatore.
-
-\subsubsection{Il condizionatore}
-
+...
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/coupling_layers.png}
     \caption{}
     \label{fig:coupling}
 \end{figure}
-
-Il condizionatore ha il compito di determinare i parametri della
-trasformazione affine a partire dalle componenti lasciate invariate. In
-particolare, può essere definito come una funzione
-\begin{equation}
-    c(\mathbf{z}_a;\boldsymbol{\theta})
-    =
-    \left(
-        \mathbf{s}(\mathbf{z}_a;\boldsymbol{\theta}),
-        \mathbf{t}(\mathbf{z}_a;\boldsymbol{\theta})
-    \right),
-    \label{eq:realnvp_conditioner}
-\end{equation}
-dove $\boldsymbol{\theta}$ rappresenta i parametri della rete neurale.
-
-Il condizionatore non deve soddisfare i requisiti di invertibilità imposti
-alla trasformazione complessiva. Può quindi essere realizzato mediante una
-rete neurale arbitrariamente espressiva, purché sia possibile valutarla in
-modo efficiente. La sua funzione è infatti esclusivamente quella di
-produrre i parametri $\mathbf{s}$ e $\mathbf{t}$ utilizzati dal trasformatore
-affine.
-
-Questa separazione tra trasformatore e condizionatore è uno degli aspetti
-fondamentali della costruzione Real NVP. Il trasformatore garantisce
-l'invertibilità e permette di calcolare analiticamente il determinante
-Jacobiano, mentre il condizionatore fornisce la capacità espressiva
-necessaria per adattare la trasformazione alla distribuzione target.
-
-Un singolo coupling layer presenta tuttavia una limitazione: le componenti
-$\mathbf{z}_a$ rimangono invariate. Per permettere a tutte le componenti di
-essere trasformate, la Real NVP utilizza una composizione di più coupling
-layers, alternando il ruolo dei due sottoinsiemi. Ad esempio, dopo un primo
-layer in cui $\mathbf{z}_b$ viene trasformato condizionatamente a
-$\mathbf{z}_a$, un secondo layer può trasformare $\mathbf{z}_a$ utilizzando
-$\mathbf{z}_b'$ come condizionamento:
-\begin{equation}
-    \begin{aligned}
-        \mathbf{z}_a'' &=
-        \mathbf{z}_a'
-        \odot
-        \exp\big(
-            \mathbf{s}_2(\mathbf{z}_b')
-        \big)
-        +
-        \mathbf{t}_2(\mathbf{z}_b'),\\
-        \mathbf{z}_b'' &= \mathbf{z}_b'.
-    \end{aligned}
-\end{equation}
-
-La composizione di questi layer consente quindi di modificare
-progressivamente tutte le componenti della variabile, mantenendo per ogni
-trasformazione un'inversione esplicita e un determinante Jacobiano
-facilmente calcolabile. Il Normalizing Flow risultante è infine ottenuto
-componendo un numero opportuno di coupling layers, eventualmente
-intercalati da trasformazioni che modificano l'ordine delle componenti.
-
-
+...
+\subsubsection{Trasformazione affine}
+...
+\subsubsection{Il condizionatore}
+...
 \section{Addestramento del flow}
 \label{sec:addestramento-flow}
 
@@ -526,3 +340,4 @@ come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\math
 
 \section{Flow Markov Chain Monte Carlo}
 \label{sec:flow-mcmc}
+...
