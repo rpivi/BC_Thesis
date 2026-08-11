@@ -5,7 +5,7 @@ Nel capitolo precedente si è mostrato come i metodi Monte Carlo basati su caten
 
 In questo capitolo si introducono i \textbf{Normalizing Flows} (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
 
-Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di flow come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
+Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di flow come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
@@ -49,7 +49,7 @@ x = T(z) = a \, z + b,
 \end{equation}
 con parametri del flow $\boldsymbol{\theta} = \{a, b\}$ e $a \neq 0$.
 
-Sia $z \sim \mathcal{N}(0, 1)$ una variabile aleatoria estratta da una distribuzione base gaussiana standard con densità $p_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$. Poiché la derivata della trasformazione è semplicemente $T'(z) = a$, il valore assoluto del deterimante dello Jacobiano è costante $|\det J_T(z)| = |a|$. 
+Sia $z \sim \mathcal{N}(0, 1)$ una variabile aleatoria estratta da una distribuzione base gaussiana standard con densità $p_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$. Poiché la derivata della trasformazione è semplicemente $T'(z) = a$, il valore assoluto del determinante dello Jacobiano è costante $|\det J_T(z)| = |a|$. 
 
 Applicando la formula del cambio di variabile, la densità di probabilità della variabile trasformata $x$ è data da:
 \begin{equation}
@@ -67,7 +67,7 @@ In Figura~\ref{fig:affine} è illustrato un esempio pratico con $a = 2$ e $b = 7
 
 \subsection{Espressività del flow}
 
-Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. È possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi tipo distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
+Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. È possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
 
 Supponiamo che $p_X(\mathbf{x}) > 0$ per ogni $\mathbf{x} \in \mathbb{R}^D$, e assumiamo che tutte le probabilità condizionate $\Pr(x_i' \le x_i \mid \mathbf{x}_{<i})$ — dove $x_i'$ è la variabile aleatoria a cui questa probabilità fa riferimento — siano differenziabili rispetto a $(x_i, \mathbf{x}_{<i})$. Usando la regola della catena della probabilità, possiamo decomporre $p_X(\mathbf{x})$ in un prodotto di densità condizionate:
 \begin{equation}
@@ -102,7 +102,7 @@ L'argomento sopra riportato mostra che un modello basato su flow può esprimere 
 
 Con lo stesso argomento esposto sopra, $G$ è un diffeomorfismo e $\mathbf{z}$ è distribuita uniformemente in $(0,1)^D$. Dunque, un flow con trasformazione $T = F^{-1} \circ G$ può trasformare $p_U(\mathbf{u})$ in $p_X(\mathbf{x})$.
 
-Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite integrazione. Questo metodo però non è praticabile, poichè numericamente difficile in generale. Una soluzione più agevole, come vedremo nella Sezione \ref{sec:costruction} è cercare di approssimare la trasformazione con una rete neurale.
+Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite integrazione. Questo metodo però non è praticabile, poiché numericamente difficile in generale. Una soluzione più agevole, come vedremo nella Sezione \ref{sec:costruction} è cercare di approssimare la trasformazione con una rete neurale.
 
 \subsection{Campionamento e inferenza}
 
@@ -130,7 +130,7 @@ Nel contesto di questa tesi, entrambe le direzioni risultano necessarie: il camp
 \section{Costruire un flow}
 \label{sec:costruction}
 \subsection{Composizione finita}
-Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasfromazione invertibile e differenziabile. 
+Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasformazione invertibile e differenziabile. 
 
 \begin{equation}
     (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \det J_{T_2 \circ T_1}(\mathbf{z})=\det J_{T_2}(T_1(\mathbf{z})) \det J_{T_1}(\mathbf{z}) 
@@ -140,7 +140,7 @@ Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/Composizione.png}
-    \caption{Esempio di una trasformazione composizone di 4 trasformazioni. Si mostra l'effetto sui campioni: da una gaussiana standard a una distribuzione a forma di croce.}
+    \caption{Esempio di una trasformazione composizione di 4 trasformazioni. Si mostra l'effetto sui campioni: da una gaussiana standard a una distribuzione a forma di croce.}
     \label{fig:composizione}
 \end{figure}
 
@@ -163,7 +163,7 @@ Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come
     \label{fig:T1_Tk}
 \end{figure}
 
-Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima e l'\textbf{invertibilità}, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
+Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima è l'\textbf{invertibilità}, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
 
 Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione invertibile e differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni, un costo computazionale proibitivo se va ripetuto ad ogni valutazione della densità, come accade tipicamente a ogni passo dell'addestramento (Sezione \ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico.
 

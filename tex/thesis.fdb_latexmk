@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1786460451.66997 "thesis.aux" "thesis.bbl" "thesis" 1786460703.21316 0
+["bibtex thesis"] 1786461406.47878 "thesis.aux" "thesis.bbl" "thesis" 1786461440.9018 0
   "./Bibliografia.bib" 1786380896.46099 4832 e272e99ade463ebbfb281b6813c99c67 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1786460702.0083 19606 ca6e3047161a286cd2b9fb1d9279a0bc "pdflatex"
+  "thesis.aux" 1786461439.58391 19608 2187aa0c8cf8b07c320b529f83df2502 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1786460692.77777 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786460703.21483 0
+["pdflatex"] 1786461430.56559 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786461440.90387 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786005416.94312 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -268,7 +268,7 @@
   "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1786202173.04009 6058 7eaeff18fbbdd961a195224c764d6271 ""
   "cap1.tex" 1786458833.28026 28414 23eff50239b6df32228544be41f3d5f9 ""
   "cap2.tex" 1786460691.9751 34448 8e2ae3f21546bd80540365b9ce859198 ""
-  "cap3.tex" 1786460582.13024 23734 29fccc390b7bc06dec161622b86731b9 ""
+  "cap3.tex" 1786461407.53165 23734 77412433681fac11970c0806e47ad84e ""
   "cap4.tex" 1785359379.89573 4633 7803c2d8982894e8030fdbffcd3e9075 ""
   "conclusion.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
   "images/E_vs_N_plot_T_100.0.png" 1784804683.84719 184546 8c18f1a7269f02cae2bec5a58f20aac7 ""
@@ -307,10 +307,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1786007970.27406 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1786460702.0083 19606 ca6e3047161a286cd2b9fb1d9279a0bc "pdflatex"
-  "thesis.bbl" 1786460451.95086 3624 50d6559f33c8f47fce8028a0970b259b "bibtex thesis"
-  "thesis.out" 1786460702.03239 8940 963619e742515a0b1de2e03128a06a0b "pdflatex"
-  "thesis.toc" 1786460702.04789 4530 51505368d6d461199f25a232cb0bf12a "pdflatex"
+  "thesis.aux" 1786461439.58391 19608 2187aa0c8cf8b07c320b529f83df2502 "pdflatex"
+  "thesis.bbl" 1786461406.77407 3624 50d6559f33c8f47fce8028a0970b259b "bibtex thesis"
+  "thesis.out" 1786461439.62293 8940 963619e742515a0b1de2e03128a06a0b "pdflatex"
+  "thesis.toc" 1786461439.64738 4530 51505368d6d461199f25a232cb0bf12a "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
