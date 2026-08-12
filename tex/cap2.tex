@@ -315,7 +315,7 @@ Sostituendo la distribuzione di Boltzmann come distribuzione target otteniamo un
 \section{Campioni autocorrelati}
 \label{sec:campioni-autocorrelati}
 
-\paragraph*{Autocorrelazione}
+\paragraph*{Autocorrelazione.}
 
 Essendo MCMC un metodo di campionamento non diretto, i campioni generati sono correlati fra loro. Questo impone una stima dell'errore più complicata del caso semplice di campioni indipendenti. Considerando un osservabile $O(\mathbf{x})$ siamo interessati al valore medio e alla varianza di quest'ultimo:
 
@@ -376,7 +376,7 @@ Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza d
 
 Rimane tuttavia da affrontare un problema pratico: $\tau_{int \ O}$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalmente costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \textbf{blocking analysis} di Flyvbjerg e Petersen, che aggira il problema evitando una stima esplicita di $\tau_{int \ O}$, e il \textbf{metodo della finestra automatica di Sokal}, che stima $\tau_{int \ O}$ direttamente ma con un criterio di troncamento autoconsistente.
 
-\paragraph*{Blocking Analysis}
+\paragraph*{Blocking Analysis.}
 
 Per comprendere questo metodo di stima dell'errore è utile richiamare alcune proprietà elementari della varianza. Siano $O_1$ e $O_2$ due variabili aleatorie indipendenti e $a$ una costante, allora valgono le seguenti proprietà per la varianza:
 \begin{equation}
@@ -427,7 +427,7 @@ si ottiene la relazione tra il plateau di $R_O(m)$ e il tempo di autocorrelazion
 
 Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individuando il plateau di $R_O(m)$ descritto sopra. Questa procedura costituisce il metodo di blocking di Flyvbjerg e Petersen \cite{flyvbjerg1989error}, e ha il vantaggio di fornire una stima di $\tau_{\mathrm{int} \ O}$ senza richiedere il calcolo esplicito della funzione di correlazione $\chi_k$ a ogni ritardo $k$.
 
-\paragraph*{Metodo di Sokal}
+\paragraph*{Metodo di Sokal.}
 
 Una stima diretta di $\tau_{\mathrm{int} \ O}$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite il seguente stimatore
 

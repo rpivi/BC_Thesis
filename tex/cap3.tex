@@ -3,15 +3,15 @@
 
 Nel capitolo precedente si è mostrato come i metodi Monte Carlo basati su catene di Markov, pur essendo generali e asintoticamente esatti, soffrano di limitazioni quando la distribuzione target presenta più modi separati.
 
-In questo capitolo si introducono i \textbf{Normalizing Flows} (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
+In questo capitolo si introducono i \textbf{Normalizing Flows}, una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
 
-Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
+Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema \textbf{Flow-MCMC}, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
 \subsection{Cambio di variabili e funzioni invertibili}
 
-Un Normalizing Flow è una trasformazione $T$ che permette di esprimere una variabile aleatoria attraverso un'altra variabile aleatoria:
+Un Normalizing Flow (NF) è una trasformazione $T$ che permette di esprimere una variabile aleatoria attraverso un'altra variabile aleatoria:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
@@ -45,13 +45,13 @@ Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matr
 Si riporta di seguito un esempio concreto dell'utilizzo della formula del cambio di variabile tra due disttribuzioni di probabilità. 
 
 \begin{example}{Trasformazione affine unidimensionale}{affine}
-Consideriamo un cambio di variabile unidimensionale definito da una trasformazione affine $T: \mathbb{R} \to \mathbb{R}$:
+Consideriamo un cambio di variabile unidimensionale definito da una trasformazione affine $T$:
 \begin{equation}
 x = T(z) = a \, z + b,
 \end{equation}
 con parametri del flow $\boldsymbol{\theta} = \{a, b\}$ e $a \neq 0$.
 
-Sia $z \sim \mathcal{N}(0, 1)$ una variabile aleatoria estratta da una distribuzione base gaussiana standard con densità $p_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$. Poiché la derivata della trasformazione è semplicemente $T'(z) = a$, il valore assoluto del determinante dello Jacobiano è costante $|\det J_T(z)| = |a|$. 
+Sia $z \sim \mathcal{N}(0, 1)$ una variabile aleatoria estratta da una distribuzione base gaussiana standard con densità $p_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$.
 
 Applicando la formula del cambio di variabile, la densità di probabilità della variabile trasformata $x$ è data da:
 \begin{equation}
@@ -59,10 +59,10 @@ p_X(x) = p_Z(T^{-1}(x)) \cdot \left| \frac{\mathrm{d}T^{-1}(x)}{\mathrm{d}x} \ri
 \end{equation}
 che corrisponde ancora a una distribuzione gaussiana $\mathcal{N}(b, a^2)$.
 
-In Figura~\ref{fig:affine} è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
+In figura è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
 
 \begin{center}
-    \includegraphics[width=0.50\textwidth]{images/NF/change_of_var.png}
+    \includegraphics[width=0.45\textwidth]{images/NF/change_of_var.png}
     \label{fig:affine}
 \end{center}
 \end{example}
@@ -179,7 +179,7 @@ Infine, l'espressività è utile per poter limitare il numero di calcoli. Infatt
     \label{fig:espress_comp}
 \end{figure}
 
-Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e in un particolare tipo di NF di tale categoria chiamato \textbf{Real NVP}.
+Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e un particolare tipo di NF di tale categoria chiamato \textbf{Real NVP}.
 
 \subsection{Autoregressive flows}
 
@@ -277,10 +277,18 @@ La costruzione di un autoregressive flow dipende dalla scelta del trasformatore 
     \label{tab:flow_construction_methods}
 \end{table}
 
-\begin{example}{}{}
+\begin{example}{Autoregressive flow in 3D senza NN}{Au_3d}
+Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, definito dalla seguente trasformazione:
+\begin{align*}
+    x_1 &= z_1 \\
+    x_2 &= \sin(x_1^2 + 0.5 x_1) + e^{0.01 x_1} z_2 \\
+    x_3 &= (0.1 x_1 + 0.1 x_2) + e^{0.01 (x_1 - x_2)} z_3  \ .
+\end{align*}
+
+Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma progressivamente in una distribuzione di probabilità complessa, come mostrato in figura:
+
 \begin{center}
-    \includegraphics[width=0.50\textwidth]{images/NF/auto_example.png}
-    \includegraphics[width=0.50\textwidth]{images/NF/auto2_example.png}
+    \includegraphics[width=0.60\textwidth]{images/NF/auto_example.png}
     \label{fig:auto_ex}
 \end{center}
 \end{example}
@@ -291,7 +299,7 @@ Nella prossima sezione si discuterà una particolare implementazione di questa c
 
 Una architettura molto utilizzata per costruire Normalizing Flows è la \textbf{Real NVP} (Real-valued Non-Volume Preserving), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una \textbf{trasformazione affine}, i cui parametri sono calcolati da un condizionatore. Il condizionatore ha due caratteristiche principali: è una rete neurale ed ha una struttura di condizionamento chiamata \textbf{coupling layer}.
 
-\paragraph*{Trasformazione affine}
+\paragraph*{Trasformazione affine.}
 
 Il \emph{trasformatore} $\tau$ impiegato nella Real NVP è una trasformazione di tipo affine: per ogni componente $z_i$ della variabile latente si pone
 \begin{equation}
@@ -305,9 +313,9 @@ dove $s_i$ (\emph{scale}) e $t_i$ (\emph{translation}) sono i parametri della tr
 \end{equation}
 Poiché la trasformazione agisce componente per componente, lo Jacobiano della trasformazione è diagonale, e il suo determinante si riduce al prodotto dei singoli fattori $\exp(s_i)$, ossia $\prod_i \exp(s_i) = \exp\left(\sum_i s_i\right)$: la valutazione del log-determinante richiede quindi solo una somma.
 
-\paragraph*{Coupling Layer}
+\paragraph*{Coupling Layer.}
 
-I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale (tipicamente un MLP) che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \textbf{coupling layer}.
+I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \textbf{coupling layer}.
 
 Sia $\mathbf{z} \in \mathbb{R}^D$ e sia $d < D$ un indice di taglio (tipicamente $d = \lfloor D/2 \rfloor$). Un coupling layer divide $\mathbf{z}$ in due blocchi, $\mathbf{z}_{\leq d} = (z_1, \dots, z_d)$ e $\mathbf{z}_{>d} = (z_{d+1}, \dots, z_D)$, e definisce la trasformazione $\mathbf{z} \to \mathbf{z}'$ come segue:
 \begin{align}
@@ -360,14 +368,14 @@ applicate secondo la trasformazione
 \[
 x_1 = z_1, \qquad x_2 = z_2\, e^{s(z_1)} + t(z_1).
 \]
-Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione ripetutamente. La prima immagine mostra l'effetto sulla distribuzione della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poichè si sta trasformando unicamente quella variabile e non si sono svolte permutazioni.
+Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione ripetutamente. L'immagine mostra l'effetto sulla distribuzione della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poichè si sta trasformando unicamente quella variabile e non si sono svolte permutazioni.
 
 \begin{center}
-    \includegraphics[width=0.80\textwidth]{images/NF/coupling_af_example.png}
+    \includegraphics[width=1.0\textwidth]{images/NF/coupling_af_example.png}
 \end{center}
 \end{example}
 
-La presenza delle NN nei Real NVP non è un caso, ma è un elemento fondamentale: esse permettono al flow $T$ una maggiore espressività e una dipendenza da un numero maggiore di parametri $\boldsymbol{\theta}$, conferendo al flow la capacità di apprendere trasformazioni complesse. I parametri delle reti neurali devono essere determinati attraverso una procedura di addestramento. L'obiettivo è scegliere tali parametri in modo che la trasformazione appresa sia in grado di rappresentare in modo efficace la distribuzione di interesse. Nel prossimo capitolo verrà quindi illustrato come viene formulato il problema di addestramento di un Normalizing Flow.
+La presenza delle NN nei Real NVP non è un caso, ma è un elemento fondamentale: esse permettono al flow $T$ una maggiore espressività e una dipendenza da un numero maggiore di parametri $\boldsymbol{\theta}$, conferendo al flow la capacità di apprendere trasformazioni complesse. I parametri delle reti neurali devono essere determinati attraverso una procedura di addestramento. L'obiettivo è scegliere tali parametri in modo che la trasformazione appresa sia in grado di rappresentare in modo efficace la distribuzione di interesse. Nel prossimo capitolo verrà quindi illustrato come viene formulato il problema di addestramento di un NF.
 
 \section{Addestramento del flow}
 \label{sec:addestramento-flow}

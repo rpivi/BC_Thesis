@@ -12,6 +12,7 @@
 \contentsline {subsection}{\numberline {1.2.2}L'ensemble canonico}{9}{subsection.1.2.2}%
 \contentsline {subsection}{\numberline {1.2.3}La distribuzione di Boltzmann}{10}{subsection.1.2.3}%
 \contentsline {section}{\numberline {1.3}Campionamento: diretto e markoviano}{11}{section.1.3}%
+\contentsline {paragraph}{Diretto vs Markov}{12}{paragraph*.6}%
 \contentsline {chapter}{\numberline {2}Metodi Monte Carlo}{15}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Cenni storici}{15}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Metodo dell'inversa}{17}{section.2.2}%
@@ -24,15 +25,15 @@
 \contentsline {subsection}{\numberline {3.1.1}Cambio di variabili e funzioni invertibili}{27}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Espressività del flow}{29}{subsection.3.1.2}%
 \contentsline {subsection}{\numberline {3.1.3}Campionamento e inferenza}{30}{subsection.3.1.3}%
-\contentsline {paragraph}{Campionamento.}{31}{paragraph*.10}%
-\contentsline {paragraph}{Inferenza.}{31}{paragraph*.11}%
+\contentsline {paragraph}{Campionamento.}{30}{paragraph*.11}%
+\contentsline {paragraph}{Inferenza.}{30}{paragraph*.12}%
 \contentsline {section}{\numberline {3.2}Costruire un flow}{31}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Composizione finita}{31}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{33}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Real NVP}{35}{subsection.3.2.3}%
 \contentsline {section}{\numberline {3.3}Addestramento del flow}{38}{section.3.3}%
-\contentsline {paragraph}{Divergenza KL forward.}{39}{paragraph*.18}%
-\contentsline {paragraph}{Divergenza KL reverse.}{39}{paragraph*.19}%
+\contentsline {paragraph}{Divergenza KL forward.}{39}{paragraph*.19}%
+\contentsline {paragraph}{Divergenza KL reverse.}{39}{paragraph*.20}%
 \contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{40}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{41}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{41}{section.4.1}%
@@ -44,7 +45,7 @@
 \contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{44}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{47}{subsection.4.3.3}%
 \contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{49}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusione}{51}{chapter*.34}%
+\contentsline {chapter}{Conclusione}{51}{chapter*.35}%
 \contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{53}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{56}{appendix*.35}%
-\contentsline {chapter}{Ringraziamenti}{57}{appendix*.36}%
+\contentsline {chapter}{Bibliografia}{56}{appendix*.36}%
+\contentsline {chapter}{Ringraziamenti}{57}{appendix*.37}%
