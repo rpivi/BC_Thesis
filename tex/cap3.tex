@@ -5,7 +5,7 @@ Nel capitolo precedente si è mostrato come i metodi Monte Carlo basati su caten
 
 In questo capitolo si introducono i \textbf{Normalizing Flows}, una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
 
-Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema \textbf{Flow-MCMC}, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
+Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:construction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema \textbf{Flow-MCMC}, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
@@ -42,7 +42,7 @@ Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matr
     \end{pmatrix}.
 \end{equation}
 
-Si riporta di seguito un esempio concreto dell'utilizzo della formula del cambio di variabile tra due disttribuzioni di probabilità. 
+Si riporta di seguito un esempio concreto dell'utilizzo della formula del cambio di variabile tra due distribuzioni di probabilità. 
 
 \begin{example}{Trasformazione affine unidimensionale}{affine}
 Consideriamo un cambio di variabile unidimensionale definito da una trasformazione affine $T$:
@@ -63,10 +63,8 @@ In figura è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il
 
 \begin{center}
     \includegraphics[width=0.45\textwidth]{images/NF/change_of_var.png}
-    \label{fig:affine}
 \end{center}
 \end{example}
-
 
 \subsection{Espressività del flow}
 
@@ -105,7 +103,7 @@ L'argomento sopra riportato mostra che un modello basato su flow può esprimere 
 
 Con lo stesso argomento esposto sopra, $G$ è un diffeomorfismo e $\mathbf{z}$ è distribuita uniformemente in $(0,1)^D$. Dunque, un flow con trasformazione $T = F^{-1} \circ G$ può trasformare $p_U(\mathbf{u})$ in $p_X(\mathbf{x})$.
 
-Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite integrazione. Questo metodo però non è praticabile, poiché numericamente difficile in generale. Una soluzione più agevole, come vedremo nella Sezione \ref{sec:costruction} è cercare di approssimare la trasformazione con una rete neurale.
+Il risultato ottenuto ci garantisce l'esistenza di una trasformazione e ci fornisce un metodo per ottenerla tramite integrazione. Questo metodo però non è praticabile, poiché numericamente difficile in generale. Una soluzione più agevole, come vedremo nella Sezione \ref{sec:construction} è cercare di approssimare la trasformazione con una rete neurale.
 
 \subsection{Campionamento e inferenza}
 
@@ -131,7 +129,7 @@ Questa seconda operazione richiede quindi non solo che $T^{-1}$ sia calcolabile 
 Nel contesto di questa tesi, entrambe le direzioni risultano necessarie: il campionamento diretto approssimato è svolto tramite un NF di cui è sufficiente implementare la trasformazione $T$ , mentre la valutazione della densità è indispensabile per il calcolo dei tassi di accettazione nello schema Flow-MCMC (Sez.~\ref{sec:flow-mcmc}). 
 
 \section{Costruire un flow}
-\label{sec:costruction}
+\label{sec:construction}
 \subsection{Composizione finita}
 Una proprietà delle trasformazioni invertibili e differenziabili è che sono \emph{componibili}. Considerando due trasformazioni $T_1$ e $T_2$ con tali caratteristiche, la loro composizione $T_2 \circ T_1$ è una trasformazione invertibile e differenziabile. 
 
@@ -147,7 +145,7 @@ Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ 
     \label{fig:composizione}
 \end{figure}
 
-In generale potremmo creare un flow $T$ come composizione di $K$ trasformazioni invertibili e differenziabili
+In generale si può creare un flow $T$ come composizione di $K$ trasformazioni invertibili e differenziabili
 
 \begin{equation}
     T = T_K \circ \dots \circ T_1.
@@ -242,10 +240,27 @@ Un vantaggio molto importante degli autoregressive flow è che le proprietà fon
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{images/NF/autoregressive.png}
+    \includegraphics[width=0.88\textwidth]{images/NF/autoregressive.png}
     \caption{Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau$. A sinistra la trasformazione e a destra la sua inversa. }
     \label{fig:autoregressive}
 \end{figure}
+
+Si mostra un'esempio di autoregressive flow che non utilizza NN nella sua definizione e composto da otto trasformazioni.
+
+\begin{example}{Autoregressive flow in 3D senza NN}{Au_3d}
+Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, definito dalla seguente trasformazione:
+\begin{align*}
+    x_1 &= z_1 \\
+    x_2 &= \sin(x_1^2 + 0.5 x_1) + e^{0.01 x_1} z_2 \\
+    x_3 &= (0.1 x_1 + 0.1 x_2) + e^{0.01 (x_1 - x_2)} z_3  \ .
+\end{align*}
+
+Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma progressivamente in una distribuzione di probabilità complessa, come mostrato in figura:
+
+\begin{center}
+    \includegraphics[width=0.60\textwidth]{images/NF/auto_example.png}
+\end{center}
+\end{example}
 
 La costruzione di un autoregressive flow dipende dalla scelta del trasformatore e del condizionatore. Si riportano in Tabella \ref{tab:flow_construction_methods} le possibili scelte di questi elementi.
 
@@ -276,22 +291,6 @@ La costruzione di un autoregressive flow dipende dalla scelta del trasformatore 
     distinti in base al tipo di trasformatore e di condizionatore.}
     \label{tab:flow_construction_methods}
 \end{table}
-
-\begin{example}{Autoregressive flow in 3D senza NN}{Au_3d}
-Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, definito dalla seguente trasformazione:
-\begin{align*}
-    x_1 &= z_1 \\
-    x_2 &= \sin(x_1^2 + 0.5 x_1) + e^{0.01 x_1} z_2 \\
-    x_3 &= (0.1 x_1 + 0.1 x_2) + e^{0.01 (x_1 - x_2)} z_3  \ .
-\end{align*}
-
-Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma progressivamente in una distribuzione di probabilità complessa, come mostrato in figura:
-
-\begin{center}
-    \includegraphics[width=0.60\textwidth]{images/NF/auto_example.png}
-    \label{fig:auto_ex}
-\end{center}
-\end{example}
 
 Nella prossima sezione si discuterà una particolare implementazione di questa categoria di NF, ovvero una Real NVP.
 \subsection{Real NVP}
@@ -368,7 +367,7 @@ applicate secondo la trasformazione
 \[
 x_1 = z_1, \qquad x_2 = z_2\, e^{s(z_1)} + t(z_1).
 \]
-Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione ripetutamente. L'immagine mostra l'effetto sulla distribuzione della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poichè si sta trasformando unicamente quella variabile e non si sono svolte permutazioni.
+Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione ripetutamente. L'immagine mostra l'effetto sulla distribuzione della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poichè non si sono svolte permutazioni e dunque la prima variabile è rimasta invariata durante tutte le trasformazioni.
 
 \begin{center}
     \includegraphics[width=1.0\textwidth]{images/NF/coupling_af_example.png}
@@ -399,6 +398,10 @@ Sostituendo l'espressione di $p_X(\mathbf{x};\boldsymbol{\theta})$ e approssiman
 \begin{equation}
     \mathcal{L}(\boldsymbol{\theta}) \approx -\frac{1}{N} \sum_{n=1}^{N} \Big[ \log p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x}_n)\big) + \log \big|\det J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x}_n)\big| \Big] + \mathrm{cost.},
 \end{equation}
+La minimizzazione di $\mathcal{L}(\boldsymbol{\theta})$ si svolge attraverso la discesa del gradiente, calcolando ad ogni iterazione la seguente quantità: 
+\begin{equation}
+    \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) .
+\end{equation}
 da cui si può notare che minimizzare la KL forward equivale a effettuare \emph{stima di massima verosimiglianza}. Questo approccio richiede di poter calcolare $T_{\boldsymbol{\theta}}^{-1}$ e il relativo determinante Jacobiano, ma non necessita mai di campionare dal modello durante l'addestramento. Si utilizza dunque la  KL forward per un NF addestrato per poter fare inferenza statistica su dei dati con distribuzione.
 
 \paragraph{Divergenza KL reverse.} Se possiamo valutare la distribuzione target
@@ -425,7 +428,16 @@ Questo approccio richiede quindi di poter calcolare la trasformazione diretta $T
 \begin{equation}
     p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta \mathcal{H}(\mathbf{x})} = \frac{\tilde{p}_X(\mathbf{x})}{Z},
 \end{equation}
-come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ \cite{noe2019boltzmann}. I campioni così creati non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di star campionando la distribuzione target si illustra nella prossima sezione un metodo ibrido che unisce i NF e MCMC, in modo da ottenere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
+come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$. I campioni così ottenuti possono essere migliorati tramite una tecnica chiamata Re-weighting. Questo metodo di campionamento della distribuzione di Boltzmann prende anche il nome di \textbf{Boltzmann Generator} ideato da Noe et al.\cite{noe2019boltzmann} (Figura \ref{fig:boltzmanngen}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{images/NF/bg.jpeg}
+    \caption{Boltzmann Generator: utilizza NF e Re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}
+    \label{fig:boltzmanngen}
+\end{figure}
+
+I campioni creati con un NF non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di campionare la distribuzione target si illustra nella prossima sezione un altro metodo - ibrido fra NF e MCMC - che permette di ottenere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
 
 \section{Flow Markov Chain Monte Carlo}
 \label{sec:flow-mcmc}
