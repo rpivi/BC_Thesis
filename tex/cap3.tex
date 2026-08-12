@@ -289,21 +289,65 @@ Nella prossima sezione si discuterà una particolare implementazione di questa c
 \subsection{Real NVP}
 \label{sec:realnvp}
 
-Una architettura molto utilizzata per costruire Normalizing Flows è la \textbf{Real NVP} (\emph{Real-valued Non-Volume Preserving}), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una trasformazione affine, i cui parametri sono calcolati da un condizionatore che suddivide le componenti della variabile di ingresso in due gruppi: il primo non viene trasformato, mentre il secondo viene trasformato condizionatamente al primo. Questa struttura di condizionatore è chiamata \textbf{coupling layer}.
+Una architettura molto utilizzata per costruire Normalizing Flows è la \textbf{Real NVP} (\emph{Real-valued Non-Volume Preserving}), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una \textbf{trasformazione affine}, i cui parametri sono calcolati da un condizionatore che suddivide le componenti della variabile di ingresso in due gruppi: il primo non viene trasformato, mentre il secondo viene trasformato condizionatamente al primo. Questa struttura di condizionatore è chiamata \textbf{coupling layer}.
 
-...
+\paragraph*{Trasformazione affine}
+
+Il \emph{trasformatore} $\tau$ impiegato nella Real NVP è una trasformazione elementwise di tipo affine: per ogni componente $z_i$ della variabile latente si pone
+\begin{equation}
+    \tau(z_i; s_i, t_i) = z_i \cdot \exp(s_i) + t_i,
+    \label{eq:affine_transform}
+\end{equation}
+dove $s_i$ (\emph{scale}) e $t_i$ (\emph{translation}) sono i parametri della trasformazione. La presenza del fattore esponenziale $\exp(s_i)$ garantisce che la trasformazione sia sempre invertibile qualunque sia il valore reale assunto da $s_i$, e l'inversa si scrive semplicemente come
+\begin{equation}
+    \tau^{-1}(z_i'; s_i, t_i) = \frac{z_i' - t_i}{\exp(s_i)}.
+    \label{eq:affine_transform_inv}
+\end{equation}
+Poiché la trasformazione agisce componente per componente, lo Jacobiano della trasformazione elementwise è diagonale, e il suo determinante si riduce al prodotto dei singoli fattori $\exp(s_i)$, ossia $\prod_i \exp(s_i) = \exp\left(\sum_i s_i\right)$: la valutazione del log-determinante richiede quindi solo una somma, con un costo computazionale trascurabile anche in alte dimensioni.
+
+\paragraph*{Coupling Layer}
+
+I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale (tipicamente un MLP) che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \textbf{coupling layer}.
+
+Sia $\mathbf{z} \in \mathbb{R}^D$ e sia $d < D$ un indice di taglio (tipicamente $d = \lfloor D/2 \rfloor$). Un coupling layer divide $\mathbf{z}$ in due blocchi, $\mathbf{z}_{\leq d} = (z_1, \dots, z_d)$ e $\mathbf{z}_{>d} = (z_{d+1}, \dots, z_D)$, e definisce la trasformazione $\mathbf{z} \to \mathbf{z}'$ come segue:
+\begin{align}
+    \mathbf{z}'_{\leq d} &= \mathbf{z}_{\leq d}, \\
+    \mathbf{z}'_{>d} &= \mathbf{z}_{>d} \odot \exp\!\big(\mathbf{s}(\mathbf{z}_{\leq d})\big) + \mathbf{t}(\mathbf{z}_{\leq d}),
+    \label{eq:coupling_forward}
+\end{align}
+dove $\mathbf{s}(\cdot)$ e $\mathbf{t}(\cdot)$ sono reti neurali arbitrarie (i condizionatori), $\odot$ indica il prodotto componente per componente, ed $\exp(\cdot)$ è applicato elementwise.
+
+Il primo blocco $\mathbf{z}_{\leq d}$ viene quindi lasciato \emph{invariato} (funge da input del condizionatore), mentre il secondo blocco $\mathbf{z}_{>d}$ viene trasformato affinemente in base ai valori del primo. Questa asimmetria è ciò che rende la trasformazione facilmente invertibile: nota $\mathbf{z}'_{\leq d} = \mathbf{z}_{\leq d}$, è possibile ricalcolare $\mathbf{s}(\mathbf{z}_{\leq d})$ e $\mathbf{t}(\mathbf{z}_{\leq d})$ e quindi invertire la \eqref{eq:coupling_forward} in forma chiusa:
+\begin{align}
+    \mathbf{z}_{\leq d} &= \mathbf{z}'_{\leq d}, \\
+    \mathbf{z}_{>d} &= \big(\mathbf{z}'_{>d} - \mathbf{t}(\mathbf{z}_{\leq d})\big) \odot \exp\!\big(-\mathbf{s}(\mathbf{z}_{\leq d})\big).
+    \label{eq:coupling_inverse}
+\end{align}
+Si noti che, a differenza dei flow autoregressivi generali, l'inversione di un coupling layer non richiede alcuna procedura sequenziale: tutte le componenti di $\mathbf{z}_{>d}$ vengono ricostruite \emph{simultaneamente}, poiché dipendono unicamente dal blocco $\mathbf{z}_{\leq d}$ già disponibile. Per lo stesso motivo, anche la valutazione in avanti (forward) è completamente parallelizzabile: il coupling layer è quindi \emph{computazionalmente simmetrico}, essendo ugualmente efficiente da valutare in entrambe le direzioni (a differenza, ad esempio, dei MAF, dove una delle due direzioni richiede $D$ passaggi sequenziali).
+
+Lo Jacobiano della trasformazione ha una struttura triangolare inferiore a blocchi,
+\begin{equation}
+    J_{\phi} =
+    \begin{pmatrix}
+        \mathbf{I}_d & \mathbf{0} \\
+        \mathbf{A} & \mathrm{diag}\big(\exp(\mathbf{s}(\mathbf{z}_{\leq d}))\big)
+    \end{pmatrix},
+    \label{eq:coupling_jacobian}
+\end{equation}
+dove $\mathbf{I}_d$ è la matrice identità $d \times d$, $\mathbf{0}$ è la matrice nulla $d \times (D-d)$, e $\mathbf{A}$ è una matrice $(D-d) \times d$ generica (il cui contenuto dipende dalle derivate di $\mathbf{s}$ e $\mathbf{t}$, ma è irrilevante ai fini del calcolo del determinante). Il determinante si riduce infatti al prodotto degli elementi diagonali del blocco inferiore destro,
+\begin{equation}
+    \det J_{\phi} = \prod_{i=d+1}^{D} \exp\big(s_i(\mathbf{z}_{\leq d})\big) = \exp\left(\sum_{i=d+1}^{D} s_i(\mathbf{z}_{\leq d})\right),
+\end{equation}
+il che conferma che il costo di valutazione del log-determinante è lineare in $D$, indipendentemente dalla complessità delle reti $\mathbf{s}$ e $\mathbf{t}$.
+
+Un singolo coupling layer, tuttavia, lascia $\mathbf{z}_{\leq d}$ completamente invariato: per ottenere un flow espressivo è quindi necessario \emph{concatenare più coupling layer}, alternando ad ogni passo quale sottoinsieme di componenti viene tenuto fisso (tipicamente scambiando i due blocchi, oppure applicando una permutazione delle componenti tra un layer e il successivo), in modo che ogni componente venga trasformata più volte nel corso del flow.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/coupling_layers.png}
-    \caption{}
+    \caption{Illustrazione di un coupling layer, nella direzione forward (a sinistra) e inversa (a destra). Le componenti $\mathbf{z}_{\leq d}$ vengono lasciate invariate e utilizzate come input del condizionatore $F$, che produce i parametri $\mathbf{h}_{d+1}, \dots, \mathbf{h}_D$ della trasformazione affine $\tau$ applicata alle componenti restanti $\mathbf{z}_{>d}$.}
     \label{fig:coupling}
 \end{figure}
-...
-\paragraph*{Trasformazione affine}
-...
-\paragraph*{Coupling Layer}
-...
-
 
 \begin{example}{}{}
 \begin{center}
