@@ -5,7 +5,7 @@ Nel capitolo precedente si è mostrato come i metodi Monte Carlo basati su caten
 
 In questo capitolo si introducono i \textbf{Normalizing Flows} (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice da campionare (come una gaussiana standard) in una distribuzione target arbitrariamente complessa. A differenza di un campionatore MCMC, che solitamente esplora lo spazio delle configurazioni in maniera locale, un NF correttamente addestrato permette di generare campioni indipendenti da una distribuzione che approssima la distribuzione target con un singolo passaggio in avanti attraverso la rete.
 
-Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di flow come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
+Il capitolo è organizzato come segue. Nella Sezione~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza, oltre al problema del loro addestramento. Nella Sezione \ref{sec:costruction} si mostra come costruire flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \textbf{Real NVP}, impiegata successivamente in questo lavoro. Infine, nella Sezione~\ref{sec:flow-mcmc} presentiamo lo schema Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target.
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
@@ -18,7 +18,7 @@ Un Normalizing Flow è una trasformazione $T$ che permette di esprimere una vari
 dove si è espresso $\mathbf{x}$ come risultato della trasformazione $T$ su $\mathbf{z}$ campionata da $p_Z(\mathbf{z})$. 
 Chiameremo $T$ \textbf{flow}, mentre la variabile $\mathbf{z}$ - con distribuzione \textbf{base} (o prior) $p_Z(\mathbf{z})$ - è detta \textbf{variabile latente}.
 
-La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow: deve essere un diffeormorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
+La trasformazione $T$ deve avere alcune proprietà particolari per essere un Normalizing Flow: deve essere un diffeomorfismo, ovvero una funzione invertibile, differenziabile con inversa $T^{-1}$ differenziabile \cite{papamakarios2021normalizing}. Questo costringe ad avere $\mathbf{x}$ e $\mathbf{z}$ entrambi $D$ dimensionali. Schematicamente si può scrivere:
 \begin{equation}
    \mathbf{x} \underset{T^{-1}}{\overset{T}{\rightleftarrows}} \mathbf{z}, \qquad \mathbf{x}, \mathbf{z} \in \mathbb{R}^D.
 \end{equation}
@@ -42,6 +42,8 @@ Dove con $J_T(\mathbf{z})$ si indica la matrice Jacobiana di $T$, ovvero la matr
     \end{pmatrix}.
 \end{equation}
 
+Si riporta di seguito un esempio concreto dell'utilizzo della formula del cambio di variabile tra due disttribuzioni di probabilità. 
+
 \begin{example}{Trasformazione affine unidimensionale}{affine}
 Consideriamo un cambio di variabile unidimensionale definito da una trasformazione affine $T: \mathbb{R} \to \mathbb{R}$:
 \begin{equation}
@@ -60,10 +62,11 @@ che corrisponde ancora a una distribuzione gaussiana $\mathcal{N}(b, a^2)$.
 In Figura~\ref{fig:affine} è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
 
 \begin{center}
-    \includegraphics[width=0.60\textwidth]{images/NF/change_of_var.png}
+    \includegraphics[width=0.50\textwidth]{images/NF/change_of_var.png}
     \label{fig:affine}
 \end{center}
 \end{example}
+
 
 \subsection{Espressività del flow}
 
@@ -150,7 +153,7 @@ In generale potremmo creare un flow $T$ come composizione di $K$ trasformazioni 
     T = T_K \circ \dots \circ T_1.
 \end{equation}
 
-Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
+Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} \ k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
 Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come somma di determinanti nel seguente modo:
 \begin{equation}
     \log |\det J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\det J_{T_k}(\mathbf{z}_{k-1})|.
@@ -167,15 +170,22 @@ Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il
 
 Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione invertibile e differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni, un costo computazionale proibitivo se va ripetuto ad ogni valutazione della densità, come accade tipicamente a ogni passo dell'addestramento (Sezione \ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico.
 
-Infine, l'espressività è utile per poter limitare il numero di calcoli. Infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili, questo anche per facilitare l'addestramento e ridurre il numero di parametri $\boldsymbol{\theta}$ del flow.
+Infine, l'espressività è utile per poter limitare il numero di calcoli. Infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili. Si mostra un esempio nella Figura \ref{fig:espress_comp}.
 
-Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e in un particolare tipo di tale categoria di flow chiamato \textbf{Real NVP}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/NF/espressivita.png}
+    \caption{Esempio di espressività di un flow composto. Si mostra la distribuzione base  gaussiana e il risultato ogni due trasformazioni. Si può notare che con una buona espressività di $T_k$ con poche trasformazioni si ottengono distribuzioni qualitativamente molto diverse dalla distribuzione base.}
+    \label{fig:espress_comp}
+\end{figure}
+
+Si discuteranno nelle prossime sezioni gli \textbf{autoregressive flows} e in un particolare tipo di NF di tale categoria chiamato \textbf{Real NVP}.
 
 \subsection{Autoregressive flows}
 
 Gli \textbf{autoregressive flows} costituiscono una famiglia di trasformazioni progettate per soddisfare simultaneamente i requisiti di invertibilità e di calcolo efficiente del determinante Jacobiano introdotti nella sezione precedente. L'idea fondamentale consiste nel costruire la trasformazione in modo che ciascuna componente dipenda solo dalle componenti precedenti della variabile di ingresso.
 
-Considerando un flow che trasforma $\textbf{z}$ in $\textbf{z}'$
+Considerando una flow che trasforma $\textbf{z}$ in $\textbf{z}'$
 
 \begin{equation}
     z_i' = \tau(z_i;\mathbf{h}_i),
@@ -207,9 +217,7 @@ J_T =
 \end{pmatrix}.
 \end{equation}
 
-Il determinante di una matrice triangolare è dato dal prodotto degli
-elementi diagonali. Nel caso della trasformazione \eqref{eq:autoregressive}
-si ottiene dunque
+Il determinante di una matrice triangolare è dato dal prodotto degli elementi diagonali. Nel caso della trasformazione \eqref{eq:autoregressive} si ottiene dunque
 \begin{equation}
     \det J_T(\mathbf{z};\boldsymbol{\theta})
     =
@@ -221,26 +229,25 @@ si ottiene dunque
 \end{equation}
 Il calcolo del determinante per uno Jacobiano triangolare si riduce alla valutazione dei soli elementi diagonali e scala linearmente con $D$.
 
-Resta da imporre l'invertibilità della trasformazione. Se il trasformatore $\tau(\,\cdot\,;\mathbf{h}_i)$ è invertibile rispetto al primo argomento, l'inversione può essere effettuata componente per componente:
+Resta da imporre l'invertibilità della trasformazione, necessaria per essere un NF. Se il trasformatore $\tau(\,\cdot\,;\mathbf{h}_i)$ è invertibile rispetto al primo argomento, l'inversione può essere effettuata componente per componente:
 \begin{equation}
     z_i =
     \tau^{-1}(z_i';\mathbf{h}_i).
 \end{equation}
 
-...
+La struttura autoregressiva permette quindi di ottenere trasformazioni con un Jacobiano di cui il determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
+simultaneamente. Si mostra in Figura \ref{fig:autoregressive} lo schema di calcolo per un autoregressive flow.
 
+Un vantaggio molto importante degli autoregressive flow è che le proprietà fondamentali per essere un flow sono a carico di $\tau$, mentre il condizionatore $c_i$ è un elemento di estrema libertà implementativa. Infatti su $c_i$ non vi è alcuna richiesta di invertibilità, questo ci permette di utilizzare una rete neurale (neural network o NN) come condizionatore.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/autoregressive.png}
-    \caption{}
+    \caption{Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau$. a sinistra la trasformazione e a destra la sua inversa. }
     \label{fig:autoregressive}
 \end{figure}
 
-La struttura autoregressiva permette quindi di ottenere trasformazioni invertibili con un Jacobiano di cui il determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
-simultaneamente.
-
-...
+La costruzione di un autoregressive flow dipende dalla scelta del trasformatore e del condizionatore. Si riportano in Tabella \ref{tab:flow_construction_methods} le possibili scelte di questi elementi.
 
 \begin{table}[htbp]
     \centering
@@ -270,7 +277,15 @@ simultaneamente.
     \label{tab:flow_construction_methods}
 \end{table}
 
-....
+\begin{example}{}{}
+\begin{center}
+    \includegraphics[width=0.50\textwidth]{images/NF/auto_example.png}
+    \includegraphics[width=0.50\textwidth]{images/NF/auto2_example.png}
+    \label{fig:auto_ex}
+\end{center}
+\end{example}
+
+Nella prossima sezione si discuterà una particolare implementazione di questa categoria di NF, ovvero una Real NVP.
 \subsection{Real NVP}
 \label{sec:realnvp}
 
@@ -284,10 +299,19 @@ Una architettura molto utilizzata per costruire Normalizing Flows è la \textbf{
     \label{fig:coupling}
 \end{figure}
 ...
-\subsubsection{Trasformazione affine}
+\paragraph*{Trasformazione affine}
 ...
-\subsubsection{Il condizionatore}
+\paragraph*{Coupling Layer}
 ...
+
+
+\begin{example}{}{}
+\begin{center}
+    \includegraphics[width=0.50\textwidth]{images/NF/coupling_af_example.png}
+    \includegraphics[width=0.50\textwidth]{images/NF/coupling_af2_example.png}
+\end{center}
+\end{example}
+
 \section{Addestramento del flow}
 \label{sec:addestramento-flow}
 
@@ -334,7 +358,7 @@ il cui gradiente rispetto a $\boldsymbol{\theta}$ è stimabile tramite una media
 \end{equation}
 Questo approccio richiede quindi di poter calcolare la trasformazione diretta $T_{\boldsymbol{\theta}}$ e il determinante del suo Jacobiano, ma non richiede mai di invertire $T_{\boldsymbol{\theta}}$ né di conoscere campioni dal target: è sufficiente poter valutare $\tilde{p}_X$ in un punto qualsiasi, esattamente la situazione in cui ci troviamo per la distribuzione di Boltzmann:
 \begin{equation}
-    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta \mathcal{H}(\mathbf{x})} \equiv \frac{\tilde{p}_X(\mathbf{x})}{Z},
+    p_X^*(\mathbf{x}) = \frac{1}{Z}\, e^{-\beta \mathcal{H}(\mathbf{x})} = \frac{\tilde{p}_X(\mathbf{x})}{Z},
 \end{equation}
 come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, ma non la costante di normalizzazione $Z$. \`E questa dunque la strategia di addestramento adottata in questo lavoro: il flow è addestrato per minimizzare la divergenza KL reverse rispetto alla densità di Boltzmann non normalizzata $\tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, permettendo così, una volta addestrato, di generare campioni approssimativamente distribuiti secondo $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti attraverso $T_{\boldsymbol{\theta}}$ \cite{noe2019boltzmann}. I campioni così creati non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di star campionando la distribuzione target si illustra nella prossima sezione un metodo ibrido che unisce i NF e MCMC, in modo da ottenere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
 

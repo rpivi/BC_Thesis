@@ -12,7 +12,7 @@ Nelle prossime pagine si introducono le nozioni di variabile aleatoria e distrib
 \section{Teoria della probabilità}
 \label{sec:probabilita}
 \subsection{Spazi di probabilità e variabili aleatorie}
-In teoria della probabilità ha un ruolo fondamentale la definizione di \textbf{spazio di probabilità} ($ \Omega, \mathtt{A}, P$), in cui $\Omega$ è l'insieme di tutti i possibili esiti $\chi$, $\mathtt{A}$ è una sigma-algebra su $\Omega$ e $P$ è una misura di probabilità su $\mathtt{A}$. Un sottoinsieme $A \subset \Omega$ è chiamato evento e a ognuno di essi è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
+In teoria della probabilità ha un ruolo fondamentale la definizione di \textbf{spazio di probabilità} ($ \Omega, \mathcal{F}, P$), in cui $\Omega$ è l'insieme di tutti i possibili esiti $\chi$, $\mathcal{F}$ è una sigma-algebra su $\Omega$ e $P$ è una misura di probabilità su $\mathcal{F}$. Un sottoinsieme $A \subset \Omega$ è chiamato evento e a ognuno di essi è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
 
 In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi numerabili disgiunti $\{A_i\}$ valga:
 
@@ -25,8 +25,7 @@ Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega =
 Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
 \end{example}
 
-Una \textbf{variabile aleatoria} (reale) $X$ associa agli elementi di uno spazio degli esiti $\Omega$ valori appartenenti a uno spazio misurabile $(\mathbb{R})$. 
-Una variabile aleatoria $X$ associa a ciascun esito $\chi$ un valore $x$ appartenente allo spazio dei valori possibili della variabile. Nel caso di una variabile aleatoria reale si ha quindi:
+Una \textbf{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R})$. Nel caso di una variabile aleatoria reale si ha quindi:
 \begin{equation}
 X:\Omega \rightarrow \mathbb{R}.
 \end{equation}
