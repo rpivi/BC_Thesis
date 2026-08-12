@@ -31,7 +31,7 @@
 \contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{33}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Real NVP}{35}{subsection.3.2.3}%
 \contentsline {section}{\numberline {3.3}Addestramento del flow}{38}{section.3.3}%
-\contentsline {paragraph}{Divergenza KL forward.}{38}{paragraph*.18}%
+\contentsline {paragraph}{Divergenza KL forward.}{39}{paragraph*.18}%
 \contentsline {paragraph}{Divergenza KL reverse.}{39}{paragraph*.19}%
 \contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{40}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{41}{chapter.4}%
