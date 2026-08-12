@@ -255,10 +255,10 @@ Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, 
     x_3 &= (0.1 x_1 + 0.1 x_2) + e^{0.01 (x_1 - x_2)} z_3  \ .
 \end{align*}
 
-Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma progressivamente in una distribuzione di probabilità complessa, come mostrato in figura:
+Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma in una distribuzione di probabilità complessa, come mostrato in figura:
 
 \begin{center}
-    \includegraphics[width=0.60\textwidth]{images/NF/auto_example.png}
+    \includegraphics[width=0.85\textwidth]{images/NF/auto2_example.png}
 \end{center}
 \end{example}
 
@@ -432,13 +432,76 @@ come detto in precedenza è nota la densità non normalizzata $\tilde{p}_X(\math
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{images/NF/bg.jpeg}
+    \includegraphics[width=1.0\textwidth]{images/NF/bg.png}
     \caption{Boltzmann Generator: utilizza NF e Re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}
     \label{fig:boltzmanngen}
 \end{figure}
 
 I campioni creati con un NF non sono però del tutto fedeli alla distribuzione target e la bontà di tali campioni dipende dall'espressività del flow e dall'addestramento. Per ottenere la certezza di campionare la distribuzione target si illustra nella prossima sezione un altro metodo - ibrido fra NF e MCMC - che permette di ottenere campioni esatti, al costo di saper calcolare anche $T_{\boldsymbol{\theta}}^{-1}$.
 
+....
 \section{Flow Markov Chain Monte Carlo}
 \label{sec:flow-mcmc}
+
+Nella sezione precedente si è introdotto il Boltzmann Generator, uno schema di campionamento che sfrutta un NF addestrato per generare candidati approssimativamente distribuiti secondo la densità di Boltzmann target $p_X^*(\mathbf{x})$ con un singolo passaggio in avanti. Il vantaggio di questo approccio è la capacità di produrre campioni tra loro indipendenti e potenzialmente distribuiti su tutti i modi della distribuzione, a differenza di un campionatore MCMC locale (Sezione~\ref{sec:mcmc}), che esplora lo spazio delle configurazioni con passi locali e rischia l'intrappolamento in un singolo.
+
+Lo svantaggio del Boltzmann Generator è che la qualità dei campioni dipende interamente dalla bontà dell'addestramento: non vi è alcuna garanzia che, per un $T_{\boldsymbol{\theta}}$ addestrato con risorse finite, la distribuzione $p_X(\mathbf{x};\boldsymbol{\theta})$ coincida esattamente con $p_X^*(\mathbf{x})$. In questa sezione si presenta il \textbf{Flow-MCMC}, uno schema che combina i vantaggi dei due approcci: la capacità del flow di proporre configurazioni distribuite globalmente tra i vari modi, e la garanzia di convergenza asintoticamente esatta propria delle catene di Markov, ottenuta incorporando il flow all'interno di un passo di Metropolis-Hastings.
+
+\paragraph*{Independence sampler}
+
+L'idea è utilizzare la distribuzione  $p_X(\mathbf{x}'; \boldsymbol{\theta})$, ottenuta dall'addestrato di $T_{\boldsymbol{\theta}}$, come distribuzione di proposta $q(\mathbf{x})$ all'interno di una catena di Metropolis-Hastings, al posto della proposta gaussiana locale. A differenza di quest'ultima, la proposta ottenuta dal flow non dipende dallo stato corrente della catena:
+\begin{equation}
+    q(\mathbf{x}' \mid \mathbf{x}_i) = q(\mathbf{x}') = p_X(\mathbf{x}'; \boldsymbol{\theta}), \qquad \mathbf{x}' = T_{\boldsymbol{\theta}}(\mathbf{z}'), \quad \mathbf{z}' \sim p_Z(\mathbf{z}).
+\end{equation}
+
+Una metodo Metropolis-Hastings si dice \emph{independence sampler} se la distribuzione di proposta $q(\mathbf{x}'|\mathbf{x})$ non dipende dallo stato corrente $\mathbf{x}$, ossia $q(\mathbf{x}'|\mathbf{x}) = q(\mathbf{x}')$ per ogni $\mathbf{x}$. Ogni candidato $\mathbf{x}'$ è dunque un campione indipendente estratto da $q$, accettato o rifiutato secondo il consueto criterio di Metropolis-Hastings.
+
+Ricordando il criterio generale di Metropolis-Hastings per una catena con distribuzione target $\pi(\mathbf{x}) \propto \tilde\pi(\mathbf{x})$,
+\begin{equation}
+    \alpha(\mathbf{x}_i \to \mathbf{x}') = \min\left(1, \frac{\tilde\pi(\mathbf{x}')\, q(\mathbf{x}_i|\mathbf{x}')}{\tilde\pi(\mathbf{x}_i)\, q(\mathbf{x}'|\mathbf{x}_i)}\right),
+\end{equation}
+nel caso dell'independence sampler si ha $q(\mathbf{x}_i|\mathbf{x}')=q(\mathbf{x}_i)$ e $q(\mathbf{x}'|\mathbf{x}_i)=q(\mathbf{x}')$, per cui l'espressione si semplifica in
+\begin{equation}
+    \alpha(\mathbf{x}_i \to \mathbf{x}') = \min\left(1, \frac{w(\mathbf{x}')}{w(\mathbf{x}_i)}\right),
+    \label{eq:flow-mcmc-accept}
+\end{equation}
+dove si è definito il \emph{peso di importanza}
+\begin{equation}
+    w(\mathbf{x}) \equiv \frac{\tilde\pi(\mathbf{x})}{q(\mathbf{x})} = \frac{e^{-\beta \mathcal{H}(\mathbf{x})}}{p_X(\mathbf{x};\boldsymbol{\theta})}.
+    \label{eq:importance-weight}
+\end{equation}
+Il peso $w(\mathbf{x})$ è la stessa quantità impiegata nel Re-weighting del Boltzmann Generator (Sez.~\ref{sec:addestramento-flow}), qui riutilizzata per costruire una catena di Markov che converge \emph{esattamente} a $p_X^*(\mathbf{x})$, indipendentemente dalla qualità dell'addestramento.
+
+Poiché $q(\mathbf{x})=p_X(\mathbf{x};\boldsymbol{\theta})$ è nota tramite il cambio di variabile, il calcolo di $w$ richiederebbe in generale la modalità di \emph{inferenza} discussa in Sez.~\ref{sec:flows}, ossia $T_{\boldsymbol{\theta}}^{-1}$ e il relativo Jacobiano. Nella pratica questo passaggio è evitabile: essendo ogni candidato $\mathbf{x}'=T_{\boldsymbol{\theta}}(\mathbf{z}')$ generato a partire da uno $\mathbf{z}'$ noto per costruzione, si ha
+\begin{equation}
+    \log q(\mathbf{x}') = \log p_Z(\mathbf{z}') - \log\big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}')\big|,
+\end{equation}
+calcolabile con un solo passaggio in avanti. Poiché in un independence sampler ogni stato della catena — incluso quello iniziale — è sempre un campione generato dal flow, è sufficiente memorizzare $\log q$ al momento della generazione e riutilizzarlo ai confronti successivi, evitando così ogni inversione di $T_{\boldsymbol{\theta}}$.
+
+\paragraph*{Correttezza e ruolo della qualità del flow}
+
+Il bilancio dettagliato rispetto a $\pi(\mathbf{x})$ è garantito dalla probabilità di accettazione \eqref{eq:flow-mcmc-accept} indipendentemente dalla scelta di $q$, purché sia soddisfatta la condizione di \emph{supporto}: $q(\mathbf{x})>0$ ovunque $\pi(\mathbf{x})>0$. Questa condizione è qui automaticamente soddisfatta, poiché $p_Z(\mathbf{z})$ è gaussiana con supporto su tutto $\mathbb{R}^D$ e $T_{\boldsymbol{\theta}}$, essendo un diffeomorfismo, mappa tale supporto sull'intero $\mathbb{R}^D$ di $\mathbf{x}$.
+
+Questo è il punto centrale del metodo: la convergenza asintotica a $p_X^*(\mathbf{x})$ non dipende dalla qualità dell'addestramento del flow, ma solo dalla sua \emph{efficienza}. Un flow ben addestrato produce pesi $w(\mathbf{x})$ pressoché costanti e un tasso di accettazione elevato, con la catena che si muove liberamente tra i modi a ogni iterazione. Un flow mal addestrato — ad esempio se sottostima la probabilità di un modo — produce pesi $w(\mathbf{x})$ fortemente variabili e un tasso di accettazione più basso, riducendo l'efficienza statistica ma \emph{senza introdurre alcun bias asintotico}.
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwIn{Flow addestrato $T_{\boldsymbol{\theta}}$, distribuzione base $p_Z$, energia $\mathcal{H}(\mathbf{x})$, $\beta$, numero di passi $N$}
+\KwOut{Catena $\{\mathbf{x}_0, \dots, \mathbf{x}_N\}$}
+Campiona $\mathbf{z}_0 \sim p_Z(\mathbf{z})$; $\ \mathbf{x}_0 \leftarrow T_{\boldsymbol{\theta}}(\mathbf{z}_0)$\;
+$\log w_0 \leftarrow -\beta \mathcal{H}(\mathbf{x}_0) - \log p_Z(\mathbf{z}_0) + \log|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_0)|$\;
+\For{$i = 0$ \KwTo $N-1$}{
+    Campiona $\mathbf{z}' \sim p_Z(\mathbf{z})$; $\ \mathbf{x}' \leftarrow T_{\boldsymbol{\theta}}(\mathbf{z}')$\;
+    $\log w' \leftarrow -\beta \mathcal{H}(\mathbf{x}') - \log p_Z(\mathbf{z}') + \log|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}')|$\;
+    Campiona $u \sim \mathcal{U}(0,1)$\;
+    \eIf{$u < \min(1, \exp(\log w' - \log w_i))$}{
+        $\mathbf{x}_{i+1} \leftarrow \mathbf{x}'$, $\log w_{i+1} \leftarrow \log w'$ \tcp*{accettata}
+    }{
+        $\mathbf{x}_{i+1} \leftarrow \mathbf{x}_i$, $\log w_{i+1} \leftarrow \log w_i$ \tcp*{rifiutata}
+    }
+}
+\caption{Flow-MCMC (independence sampler)}
+\label{alg:flow-mcmc}
+\end{algorithm}
+
 ...

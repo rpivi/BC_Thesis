@@ -149,51 +149,53 @@
 \newlabel{fig:boltzmanngen}{{3.6}{40}{Boltzmann Generator: utilizza NF e Re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target}{figure.caption.21}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Flow Markov Chain Monte Carlo}{41}{section.3.4}\protected@file@percent }
 \newlabel{sec:flow-mcmc}{{3.4}{41}{Flow Markov Chain Monte Carlo}{section.3.4}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{43}{chapter.4}\protected@file@percent }
+\newlabel{eq:flow-mcmc-accept}{{3.44}{41}{}{equation.3.44}{}}
+\newlabel{eq:importance-weight}{{3.45}{42}{}{equation.3.45}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces Flow-MCMC (independence sampler)}}{42}{algocf.3}\protected@file@percent }
+\newlabel{alg:flow-mcmc}{{3}{42}{}{algocf.3}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{45}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{43}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{43}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{43}{subsection.4.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{43}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:therm_T_D}{{4.1}{43}{\relax }{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{44}{subsection.4.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{44}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:acc_T_D}{{4.2}{44}{\relax }{figure.caption.23}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{44}{figure.caption.24}\protected@file@percent }
-\newlabel{fig:E_T_D}{{4.3}{44}{\relax }{figure.caption.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{45}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:Cv_T_D}{{4.4}{45}{\relax }{figure.caption.25}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{45}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:tau_T_D}{{4.5}{45}{\relax }{figure.caption.26}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{46}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{46}{subsection.4.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{46}{subsection.4.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{46}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:acc_T_all}{{4.6}{46}{\relax }{figure.caption.27}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{47}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:E_T_all}{{4.7}{47}{\relax }{figure.caption.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{47}{figure.caption.29}\protected@file@percent }
-\newlabel{fig:tau_T_all}{{4.8}{47}{\relax }{figure.caption.29}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{48}{figure.caption.30}\protected@file@percent }
-\newlabel{fig:msig_T_all}{{4.9}{48}{\relax }{figure.caption.30}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{48}{figure.caption.31}\protected@file@percent }
-\newlabel{fig:essn_T_all}{{4.10}{48}{\relax }{figure.caption.31}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{49}{subsection.4.3.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{49}{figure.caption.32}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{50}{figure.caption.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{51}{subsection.4.3.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{51}{figure.caption.34}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces \relax }}{52}{figure.caption.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Conclusione}{53}{chapter*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{45}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{45}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{45}{subsection.4.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{45}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:therm_T_D}{{4.1}{45}{\relax }{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{46}{subsection.4.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{46}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:acc_T_D}{{4.2}{46}{\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{46}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:E_T_D}{{4.3}{46}{\relax }{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{47}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:Cv_T_D}{{4.4}{47}{\relax }{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{47}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:tau_T_D}{{4.5}{47}{\relax }{figure.caption.26}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{48}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{48}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{48}{subsection.4.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{48}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:acc_T_all}{{4.6}{48}{\relax }{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{49}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:E_T_all}{{4.7}{49}{\relax }{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{49}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:tau_T_all}{{4.8}{49}{\relax }{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{50}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:msig_T_all}{{4.9}{50}{\relax }{figure.caption.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{51}{subsection.4.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{51}{figure.caption.31}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{52}{figure.caption.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{53}{subsection.4.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{53}{figure.caption.33}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{54}{figure.caption.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Conclusione}{55}{chapter*.35}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{Bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{55}{appendix.Alph1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{57}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{sec:a_boltzm_der}{{A}{55}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
+\newlabel{sec:a_boltzm_der}{{A}{57}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
 \bibcite{budd2025monte}{1}
 \bibcite{marinari2023calcolo}{2}
 \bibcite{kennett2020essential}{3}
@@ -212,6 +214,6 @@
 \bibcite{dinh2017density}{16}
 \bibcite{kullback1951information}{17}
 \bibcite{noe2019boltzmann}{18}
-\@writefile{toc}{\contentsline {chapter}{Bibliografia}{58}{appendix*.37}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{59}{appendix*.38}\protected@file@percent }
-\gdef \@abspage@last{68}
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{60}{appendix*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{61}{appendix*.37}\protected@file@percent }
+\gdef \@abspage@last{70}
