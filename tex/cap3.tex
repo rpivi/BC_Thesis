@@ -501,8 +501,8 @@ Si riporta l'algoritmo di Flow-MCMC, basato sulla struttura di Metropolis-Hastin
 Campiona $\mathbf{z}_0 \sim p_Z(\mathbf{z})$; $\ \mathbf{x}_0 \leftarrow T_{\boldsymbol{\theta}}(\mathbf{z}_0)$\;
 $\log \Gamma(\mathbf{x}_0) \leftarrow \log p_Z(\mathbf{z}_0) - \log|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}_0)|$\;
 \For{$i = 0$ \KwTo $N-1$}{
-    Genera un candidato $\mathbf{z}' \sim p_Z(\mathbf{z})$; $\ \mathbf{y} \leftarrow T_{\boldsymbol{\theta}}(\mathbf{z}')$\;
-    $\Gamma(\mathbf{y}) \leftarrow p_Z(\mathbf{z}') \big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}')\big|^{-1}$\;
+    Genera un candidato $\mathbf{z} \sim p_Z(\mathbf{z})$; $\ \mathbf{y} \leftarrow T_{\boldsymbol{\theta}}(\mathbf{z})$\;
+    $\Gamma(\mathbf{y}) \leftarrow p_Z(\mathbf{z}) \big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big|^{-1}$\;
     Genera $u \sim \mathcal{U}(0,1)$\;
     Calcola il tasso di accettazione $\mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min\left(1, \dfrac{\Gamma(\mathbf{x}_i)\, f(\mathbf{y})}{\Gamma(\mathbf{y})\, f(\mathbf{x}_i)}\right)$\;
     \eIf{$u < \mathcal{A}(\mathbf{x}_i, \mathbf{y})$}{
