@@ -486,9 +486,9 @@ nel caso dell'independence sampler si ha $\Gamma(\mathbf{y} \to \mathbf{x}_i) = 
     \label{eq:flow-mcmc-accept}
 \end{equation}
 
-Poiché $\Gamma(\mathbf{x}) = p_X(\mathbf{x};\boldsymbol{\theta})$ è valutabile tramite il cambio di variabile, infatti il $\log \Gamma (\mathbf{y})$ è esprimibile come
+Poiché $\Gamma(\mathbf{x}) = p_X(\mathbf{x};\boldsymbol{\theta})$ è valutabile tramite il cambio di variabile
 \begin{equation}
-    \log \Gamma(\mathbf{y}) = \log p_Z(\mathbf{z}') - \log\big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z}')\big|,
+    \Gamma(\mathbf{y}) = p_Z(\mathbf{z}) \big|\det J_{T_{\boldsymbol{\theta}}}(\mathbf{z})\big|^{-1},
 \end{equation}
 calcolabile con un solo passaggio in avante, poiché è sufficiente memorizzare $\log \Gamma$ al momento della generazione e riutilizzarlo ai confronti successivi, evitando così l'inversione di $T_{\boldsymbol{\theta}}$.
 
