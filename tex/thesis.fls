@@ -503,10 +503,6 @@ INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\ot1lmss.fd
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmss12.tfm
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmss8.tfm
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmss8.tfm
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT .\images\MCMC\mcmc_algo.png
 INPUT .\images\MCMC\mcmc_algo.png
 INPUT .\images\MCMC\mcmc_algo.png
@@ -588,6 +584,10 @@ INPUT .\images\NF\bg.png
 INPUT .\images\NF\bg.png
 INPUT .\images\NF\bg.png
 INPUT .\images\NF\bg.png
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT .\cap4.tex
 INPUT .\cap4.tex
 INPUT cap4.tex

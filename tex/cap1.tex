@@ -12,9 +12,7 @@ Nelle prossime pagine si introducono le nozioni di variabile aleatoria e distrib
 \section{Teoria della probabilità}
 \label{sec:probabilita}
 \subsection{Spazi di probabilità e variabili aleatorie}
-In teoria della probabilità ha un ruolo fondamentale la definizione di \textbf{spazio di probabilità} ($ \Omega, \mathcal{F}, P$), in cui $\Omega$ è l'insieme di tutti i possibili esiti $\chi$, $\mathcal{F}$ è una sigma-algebra su $\Omega$ e $P$ è una misura di probabilità su $\mathcal{F}$. Un sottoinsieme $A \subset \Omega$ è chiamato evento e a ognuno di essi è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. 
-
-In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi numerabili disgiunti $\{A_i\}$ valga:
+In teoria della probabilità ha un ruolo fondamentale la definizione di \emph{spazio di probabilità} ($ \Omega, \mathcal{F}, P$), in cui $\Omega$ è l'insieme di tutti i possibili esiti $\chi$, $\mathcal{F}$ è una sigma-algebra su $\Omega$ e $P$ è una misura di probabilità su $\mathcal{F}$. Un insieme $A \in \mathcal{F}$ è chiamato evento e a ognuno di essi è possibile associare un numero reale $P(A) \in [0, 1]$ - ovvero la probabilità di tale evento. In particolare è necessario che siano soddisfatte $P(\Omega) = 1$, $ P(\emptyset) = 0$ e per ogni insieme di eventi numerabili disgiunti $\{A_i\}$ valga:
 
 \begin{equation}
     P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i).
@@ -25,14 +23,14 @@ Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega =
 Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
 \end{example}
 
-Una \textbf{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R})$. Nel caso di una variabile aleatoria reale si ha quindi:
+Una \emph{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R})$. Nel caso di una variabile aleatoria reale si ha quindi:
 \begin{equation}
 X:\Omega \rightarrow \mathbb{R}.
-\end{equation}
+\end{equation} All'interno di questo lavoro di tesi lavoreremo esclusivamente con variabili reali. Per cui, si interpreti come reale ogni variabile aleatoria nominate nel manoscritto anche se non specificato.
 
 \subsection{Distribuzioni di probabilità continue}
 
-Data una variabile aleatoria $X$ essa ha associata una funzione \textbf{distribuzione cumulativa} $F_X(x)$, definita da: 
+Data una variabile aleatoria $X$ essa ha associata una funzione \emph{distribuzione cumulativa} $F_X(x)$, definita da: 
 \begin{equation}
     F_X(x) = P(X \leq x).
 \end{equation}
@@ -44,7 +42,7 @@ $F_X(x)$ è una funzione di $x$ monotona, nondecrescente e definita su tutto l'a
 \begin{equation}
     \lim_{x \to - \infty }F_X(x) = 0, \quad  \lim_{x \to + \infty }F_X(x) = 1.
 \end{equation} 
-Per una variabile aleatoria continua, la funzione di distribuzione cumulativa può essere espressa come integrale di una densità di probabilità
+Per una variabile aleatoria continua, la funzione di distribuzione cumulativa può essere espressa come integrale di una \emph{densità di probabilità}
 \begin{equation}
     F_X(x) = \int_{- \infty}^{x} p_X(y) dy,  \quad p_X(x) = \frac{d\ F_X(x)}{dx}
 \end{equation}
@@ -86,23 +84,6 @@ P(\mathbf{x}\in\mathcal{A})
 \int_{\mathcal{A}}p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
-\subsection{Distribuzioni unimodali e multimodali}
-
-Una distribuzione di probabilità può presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \textbf{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \textbf{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
-
-Una distribuzione \textbf{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa. Il caso particolare in cui vi siano due massimi locali è detto distribuzione \textbf{bimodale}. La differenza qualitativa tra le due tipologie di distribuzioni è illustrata in Figura \ref{fig:uni_multi}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/uni_multi.png}
-    \caption{Confronto tra una distribuzione unimodale (gaussiana) e una distribuzione multimodale (bimodale).}
-    \label{fig:uni_multi}
-\end{figure}
-
-La distinzione tra distribuzioni unimodali e multimodali è particolarmente importante nel problema del campionamento. Nel caso di una distribuzione unimodale, un metodo di campionamento che esplori efficacemente la regione attorno al massimo della distribuzione può ottenere un campione rappresentativo dell'intera distribuzione. Nel caso multimodale, invece, il campionamento può risultare più complesso, poiché è necessario esplorare tutte le regioni rilevanti dello spazio delle configurazioni e riprodurre correttamente la probabilità associata a ciascun modo e non esclusivamente a quello di maggiore densità.
-
-Se le diverse regioni ad alta probabilità sono separate da zone di bassa probabilità, un metodo di campionamento locale può infatti rimanere confinato per lungo tempo all'interno di uno dei modi, esplorando con difficoltà gli altri. Il fenomeno è chiamato \textbf{intrappolamento in un modo} ed è una delle principali difficoltà associate al campionamento di distribuzioni multimodali, nonché una delle principali cause di inefficienza dei metodi di campionamento locali. In questi casi, è necessario adottare strategie più sofisticate per garantire un campionamento efficace e rappresentativo dell'intera distribuzione.
-
 \subsection{Valori di aspettazione e campionamento}
 
 Sia $p(\mathbf{x})$ la densità di probabilità della variabile aleatoria e $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione di $O(\mathbf{x})$ è calcolabile tramite il seguente integrale:
@@ -143,11 +124,32 @@ Per la legge dei grandi numeri la stima converge, per $N\rightarrow\infty$, al v
 
 \begin{equation}
 \sigma_{\langle O \rangle} \sim \frac{\sigma_O}{\sqrt{N}},
-\end{equation}
+\end{equation} dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. 
 
-dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. 
+Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ di modo da poter stimare i valori di aspettazione. I metodi con cui è possibile generare questi campioni saranno oggetto dei capitoli successivi.
 
-Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ di modo da poter stimare i valori di aspettazione. I metodi con cui è possibile generare questi campioni saranno oggetto dei capitoli successivi
+\subsection{Distribuzioni unimodali e multimodali}
+
+Una distribuzione di probabilità può presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \emph{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \emph{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
+
+Una distribuzione \emph{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa. Il caso particolare in cui vi siano due massimi locali è detto distribuzione \emph{bimodale}. La differenza qualitativa tra le due tipologie di distribuzioni è illustrata in Figura \ref{fig:uni_multi}.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/uni_multi.png}
+    \caption{Confronto tra una distribuzione unimodale (gaussiana) e una distribuzione multimodale (bimodale).}
+    \label{fig:uni_multi}
+\end{figure}
+
+La distinzione tra distribuzioni unimodali e multimodali è particolarmente importante nel problema del campionamento. Nel caso di una distribuzione unimodale, un metodo di campionamento che esplori efficacemente la regione attorno al massimo della distribuzione può ottenere un campione rappresentativo dell'intera distribuzione. Nel caso multimodale, invece, il campionamento può risultare più complesso, poiché è necessario esplorare tutte le regioni rilevanti dello spazio delle configurazioni e riprodurre correttamente la probabilità associata a ciascun modo e non esclusivamente a quello di maggiore densità.
+
+Se le diverse regioni ad alta probabilità sono ben separate, il valore medio $\langle x \rangle$ della distribuzione tende a collocarsi in una zona intermedia, in generale caratterizzata da una densità di probabilità più bassa rispetto a quella dei modi. Di conseguenza, per un generico osservabile $O(x)$, anche i campioni tipici, concentrati nell'intorno dei singoli modi, risultano significativamente distanti dalla media $\langle O \rangle$: il termine
+
+\begin{equation}
+    \sum_i \left( O(x_i) - \langle O \rangle \right)^2
+\end{equation} assume valori tipicamente più elevati rispetto al caso di una distribuzione unimodale di eguale larghezza. Le distribuzioni multimodali possiedono pertanto una deviazione standard intrinsecamente più alta, e più in generale proprietà statistiche più complesse da caratterizzare rispetto a una distribuzione con un unico massimo ben localizzato attorno al proprio valore medio.
+
+Va inoltre sottolineato che la presenza di due o più modi non influenza soltanto queste proprietà statistiche, ma ha un impatto significativo anche sul processo di campionamento, come vedremo nei capitoli successivi.
 
 \section{Meccanica statistica}
 \label{sec:meccanica-statistica}
@@ -156,9 +158,9 @@ Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamen
 Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico, adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo descrivere il sistema microscopicamente in modo completo, dovremmo tenere conto delle variabili dinamiche di tutte le particelle che lo compongono. Per un sistema macroscopico, il numero di gradi di libertà è enorme e una descrizione microscopica completa risulta quindi impraticabile. Un tipico esempio è la descrizione di un gas: in una mole di gas vi sono $\sim 10^{23}$ particelle e per seguire l'evoluzione temporale di ogni atomo o molecola sarebbe necessario risolvere l'equazione di Schrödinger per ciascuna di esse. Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle.
 La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche dei singoli elementi che lo costituiscono. In particolare, si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
 
-In meccanica statistica, un \textbf{microstato} rappresenta una configurazione specifica del sistema, descritta da tutte le variabili microscopiche necessarie per caratterizzarlo completamente. Ad esempio, per un gas ideale, un microstato può essere definito dalle posizioni e dai momenti di tutte le particelle che lo compongono. Un \textbf{macrostato}, invece, è una descrizione più generale del sistema, caratterizzata da grandezze macroscopiche come energia, numero di particelle e volume. Un macrostato può corrispondere a molti microstati diversi: ad esempio, due configurazioni microscopiche diverse di un gas possono avere la stessa temperatura e pressione. 
+In meccanica statistica, un \emph{microstato} rappresenta una configurazione specifica del sistema, descritta da tutte le variabili microscopiche necessarie per caratterizzarlo completamente. Ad esempio, per un gas ideale, un microstato può essere definito dalle posizioni e dai momenti di tutte le particelle che lo compongono. Un \emph{macrostato}, invece, è una descrizione più generale del sistema, caratterizzata da grandezze macroscopiche come energia, numero di particelle e volume. Un macrostato può corrispondere a molti microstati diversi: ad esempio, due configurazioni microscopiche diverse di un gas possono avere la stessa temperatura e pressione, come raffigurato in Figura \ref{fig:micro_macro}.
 
-\begin{figure}[H]
+\begin{figure}[!b]
     \centering
     \includegraphics[width=0.83\textwidth]{images/stat_mec/macro_micro.png}
     \caption{Rappresentazione schematica della relazione tra microstati e macrostato. Un macrostato può corrispondere a molteplici microstati, ognuno dei quali rappresenta una configurazione specifica del sistema.}
@@ -178,27 +180,23 @@ Per comprendere il comportamento di un sistema fisico, è fondamentale scegliere
 
 Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$, dove $\mathbf{x}$ rappresenta collettivamente i gradi di libertà del sistema, quali posizioni, impulsi o, più in generale, tutte le variabili necessarie a identificarne uno stato microscopico, ovvero una configurazione del sistema.
 
-Supponiamo che il sistema sia posto a contatto con un \textbf{serbatoio termico} (o bagno termico), cioè un sistema macroscopico molto più grande del sistema in esame. I due sistemi possono scambiare energia, mentre il numero di particelle rimane costante. Una rappresentazione grafica della situazione fisica è la Figura \ref{fig:canonical}. Grazie alle dimensioni macroscopiche del serbatoio, gli scambi di energia producono variazioni trascurabili del suo stato, cosicché esso può essere considerato in equilibrio ad una temperatura costante $T$. 
+Supponiamo che il sistema sia posto a contatto con un \emph{serbatoio termico} (o bagno termico), cioè un sistema macroscopico molto più grande del sistema in esame. I due sistemi possono scambiare energia, mentre il numero di particelle rimane costante. Una rappresentazione grafica della situazione fisica è la Figura \ref{fig:canonical}. Grazie alle dimensioni macroscopiche del serbatoio, gli scambi di energia producono variazioni trascurabili del suo stato, cosicché esso può essere considerato in equilibrio ad una temperatura costante $T$. 
 
-\begin{figure}[H]
+\begin{figure}[tb]
     \centering
     \includegraphics[width=0.9\textwidth]{images/stat_mec/canonical.png}
     \caption{Rappresentazione schematica dell'ensemble canonico: sistema (System), serbatoio termico (Bath) e flusso di calore fra i due sistemi (Heat Flow).}
     \label{fig:canonical}
 \end{figure}
 
-In queste condizioni l'energia del sistema può quindi fluttuare a causa degli scambi con il serbatoio, mentre il suo valore medio è fissato dalla temperatura del bagno termico. L'insieme di copie ideali del sistema, tutte caratterizzate dallo stesso numero di particelle e dalla medesima temperatura, prende il nome di \textbf{ensemble canonico}.
+In queste condizioni l'energia del sistema può quindi fluttuare a causa degli scambi con il serbatoio, mentre il suo valore medio è fissato dalla temperatura del bagno termico. L'insieme di copie ideali del sistema, tutte caratterizzate dallo stesso numero di particelle e dalla medesima temperatura, prende il nome di \emph{ensemble canonico}.
 
-L'obiettivo della meccanica statistica è determinare la probabilità che il sistema si trovi in un determinato stato microscopico $\mathbf{x}$ di energia $\mathcal{H}(\mathbf{x})$. Tale probabilità è descritta dalla \textbf{distribuzione di Boltzmann} ricavabile tramite il principio di massima entropia, come mostrato nell'Appendice A.
-
-\subsection{La distribuzione di Boltzmann}
-La distribuzione di Boltzmann descrive la probabilità di osservare il sistema in una configurazione microscopica quando esso si trova all'equilibrio termico con un serbatoio a temperatura $T$ fissata.
+L'obiettivo della meccanica statistica è determinare la probabilità che il sistema si trovi in un determinato stato microscopico $\mathbf{x}$ di energia $\mathcal{H}(\mathbf{x})$. Tale probabilità è descritta dalla \emph{distribuzione di Boltzmann} ricavabile tramite il principio di massima entropia, come mostrato nell'Appendice A. La distribuzione di Boltzmann descrive la probabilità di osservare il sistema in una configurazione microscopica quando esso si trova all'equilibrio termico con un serbatoio a temperatura $T$ fissata.
 
 Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione della distribuzione e di valore medio dell'energia costante, si ottiene
 \begin{equation}
     p(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}, \quad Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x}
-\end{equation}
-dove $\beta = \frac{1}{k_B T}$ e $Z(\beta)$ è la funzione di partizione.
+\end{equation} dove $\beta = \frac{1}{k_B T}$ e $Z(\beta)$ è la funzione di partizione.
 
 Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina il peso relativo delle configurazioni nella distribuzione. Si può facilmente comprendere come all'aumentare della temperatura sono probabilisticamente permessi una gamma più ampia di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e da essa possono essere ricavate le principali grandezze termodinamiche del sistema.
 
@@ -244,34 +242,25 @@ k_B(\ln Z+\beta\langle E\rangle).
 Nella maggior parte dei sistemi di interesse fisico la funzione di partizione non può essere calcolata in forma chiusa. Essa richiede infatti l'integrazione della quantità:
 \begin{equation}
     e^{-\beta \mathcal{H}(\mathbf{x})}
-\end{equation}
-su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle.
-
-Di conseguenza, anche il valore della densità di probabilità normalizzata non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le densità di probabilità di due configurazioni
+\end{equation} su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle. Di conseguenza, anche il valore della densità di probabilità normalizzata non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le densità di probabilità di due configurazioni
 
 \begin{equation}
     \frac{p(\mathbf{x}_2, T)}{p(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
-\end{equation}
-
-nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica. Questa osservazione è importante per i capitoli successivi, poiché per poter campionare la distribuzione di Boltzmann è necessario disporre di metodi in grado di generare configurazioni distribuite secondo la distribuzione target anche quando questa è nota soltanto a meno della costante di normalizzazione.
+\end{equation} nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica. Questa osservazione è importante per i capitoli successivi, poiché per poter campionare la distribuzione di Boltzmann è necessario disporre di metodi in grado di generare configurazioni distribuite secondo la distribuzione target anche quando questa è nota soltanto a meno della costante di normalizzazione.
 
 \section{Campionamento: diretto e markoviano}
 \label{sec:tassonomia_campionamento}
 
-Il problema centrale di questa tesi - generare configurazioni distribuite secondo la distribuzione di Boltzmann - non ammette un'unica strategia algoritmica. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
-\newline
-\paragraph{Diretto vs Markov}
-La prima distinzione riguarda \emph{come} viene prodotta una configurazione. Si parla di \textbf{campionamento diretto} quando è possibile generare direttamente campioni indipendenti distribuiti secondo $p(\mathbf{x})$. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo \ref{ch:mc} si mostra un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa (Sezione \ref{sec:metodo-inversa}),che è un metodo esatto di campionamento diretto.
-\newline
-Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda \emph{solo} dalla precedente. Una successione con questa proprietà è una \textbf{catena di Markov}, ed è alla base dei metodi \textbf{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \textbf{termalizzazione}. Inoltre ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \textbf{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
+Il problema centrale di questa tesi - generare configurazioni distribuite secondo la distribuzione di Boltzmann - può essere affrontato secondo strategie molto diverse tra loro, ciascuna con vantaggi e limiti. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
+\paragraph*{Diretto vs markoviano.}
+La prima distinzione riguarda come viene prodotta una configurazione. Si parla di \emph{campionamento diretto} quando è possibile generare direttamente campioni indipendenti distribuiti secondo $p(\mathbf{x})$. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo \ref{ch:mc} si mostra un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa (Sezione \ref{sec:metodo-inversa}),che è un metodo esatto di campionamento diretto.
+Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda solo dalla precedente. Una successione con questa proprietà è una \emph{catena di Markov}, ed è alla base dei metodi \emph{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \emph{termalizzazione}. Inoltre ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \emph{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
 \newline
 Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ anche a meno della costante di normalizzazione, condizione tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
+\paragraph*{Passo locale vs passo globale.}
+Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \emph{passo locale} - esempio in Figura \ref{fig:local_vs_global} in alto - quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis-Hastings (Sezione \ref{subsec:metropolis}). Un passo locale è una scelta semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.
 \newline
-
-\paragraph*{Passo locale e globale}
-Una seconda distinzione, interna al campionamento markoviano, riguarda la natura della configurazione candidata proposta a ogni passo della catena. Si parla di \textbf{passo locale} quando la configurazione proposta è ottenuta perturbando quella corrente con uno spostamento di ampiezza limitata: è questo il caso dell'algoritmo di Metropolis-Hastings (Sezione \ref{subsec:metropolis}). Un passo locale è una scelta semplice ed economica, ma la sua efficacia dipende criticamente dalla struttura di $p(\mathbf{x})$: se la distribuzione è multimodale e i modi sono separati da regioni di bassa probabilità, una successione di piccoli spostamenti può impiegare un tempo computazionale enorme per attraversare la regione a bassa densità che separa due modi, rimanendo di fatto \emph{intrappolata in un modo}.
-\newline
-Si parla invece di \textbf{passo globale} quando la configurazione candidata può discostarsi significativamente da quella corrente, fino al caso limite in cui è generata indipendentemente da essa, attingendo a un'intera distribuzione di proposta definita su tutto lo spazio delle configurazioni. Una catena costruita in questo modo non soffre per costruzione dell'intrappolamento nei modi, poiché ogni proposta esplora potenzialmente l'intero spazio indipendentemente da dove si trovi la catena. La sua efficienza dipende però interamente dalla qualità della distribuzione di proposta: se questa è troppo diversa dalla distribuzione target, la probabilità che una proposta venga accettata può essere troppo bassa, vanificando il vantaggio teorico del passo globale. La Figura \ref{fig:local_vs_global} illustra qualitativamente la differenza fra passo locale e passo globale su una distribuzione bimodale: nel primo caso il camminatore esplora un modo alla volta, nel secondo può spostarsi direttamente da un modo all'altro.
+Si parla invece di \emph{passo globale} - esempio in Figura \ref{fig:local_vs_global} in basso - quando la configurazione candidata può discostarsi significativamente da quella corrente, fino al caso limite in cui è generata indipendentemente da essa, attingendo a un'intera distribuzione di proposta definita su tutto lo spazio delle configurazioni. Una catena costruita in questo modo non soffre per costruzione dell'intrappolamento nei modi, poiché ogni proposta esplora potenzialmente l'intero spazio indipendentemente da dove si trovi la catena. La sua efficienza dipende però interamente dalla qualità della distribuzione di proposta: se questa è troppo diversa dalla distribuzione target, la probabilità che una proposta venga accettata può essere troppo bassa, vanificando il vantaggio teorico del passo globale.
 
 \begin{figure}[H]
     \centering
@@ -280,7 +269,7 @@ Si parla invece di \textbf{passo globale} quando la configurazione candidata pu�
     \label{fig:local_vs_global}
 \end{figure}
 
-Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un \textbf{Normalizing Flow (NF)} (Capitolo \ref{ch:nf}) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti un candidato naturale come \textbf{distribuzione di proposta} per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - \textbf{Flow-MCMC}, discusso nella Sezione \ref{sec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
+Le due strategie discusse in questa sezione possono non essere alternative e diventare complementari. Un \emph{Normalizing Flow (NF)} (Capitolo \ref{ch:nf}) addestrato ad approssimare $p(\mathbf{x})$ costituisce infatti un candidato naturale come \emph{distribuzione di proposta} per un MCMC: pur non fornendo un campionamento diretto esatto, il flow può fungere da motore per mosse globali all'interno di una catena di Markov. Il metodo ibrido così ottenuto - \emph{Flow-MCMC}, discusso nella Sezione \ref{subsec:flow-mcmc} - combina la correttezza asintotica garantita dalla struttura markoviana con la capacità di esplorazione globale offerta dal flow.
 
 Nei seguenti capitoli si utilizza la seguente notazione 
 \begin{equation}
@@ -288,7 +277,7 @@ Nei seguenti capitoli si utilizza la seguente notazione
 \end{equation}
 per indicare il campionamento di una configurazione $\mathbf{x}$ estratta dalla distribuzione di probabilità $p(\mathbf{x})$.
 
-I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel campionamento markoviano a mosse locali (MCMC, Sezione \ref{sec:mcmc}), nel campionamento diretto approssimato (Normalizing Flow, Sezione \ref{sec:flows}), e nel campionamento markoviano a mosse globali (Flow-MCMC, Sezione \ref{sec:flow-mcmc}).
+I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel campionamento markoviano a mosse locali (MCMC, Sezione \ref{sec:mcmc}), nel campionamento diretto approssimato (Normalizing Flow, Sezione \ref{sec:flows}), e nel campionamento markoviano a mosse globali (Flow-MCMC, Sezione \ref{subsec:flow-mcmc}).
 
 \begin{figure}[H]
     \centering
