@@ -110,91 +110,89 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Costruire un flow}{35}{section.3.2}\protected@file@percent }
 \newlabel{sec:construction}{{3.2}{35}{Costruire un flow}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Composizione finita}{35}{subsection.3.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Esempio di una trasformazione composizione di 4 trasformazioni. Si mostra l'effetto sui campioni: da una gaussiana standard a una distribuzione a forma di croce.}}{35}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:composizione}{{3.1}{35}{Esempio di una trasformazione composizione di 4 trasformazioni. Si mostra l'effetto sui campioni: da una gaussiana standard a una distribuzione a forma di croce}{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Esempi di composizione di trasformazioni di flow a partire da una distribuzione base gaussiana. In entrambi i casi si parte da campioni della gaussiana standard e si applica progressivamente una sequenza di trasformazioni $T_k$, ottenendo distribuzioni qualitativamente molto diverse dalla base.}}{35}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:composizione}{{3.1}{35}{Esempi di composizione di trasformazioni di flow a partire da una distribuzione base gaussiana. In entrambi i casi si parte da campioni della gaussiana standard e si applica progressivamente una sequenza di trasformazioni $T_k$, ottenendo distribuzioni qualitativamente molto diverse dalla base}{figure.caption.12}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Rappresentazione di un flow composto da $K$ trasformazioni.}}{36}{figure.caption.13}\protected@file@percent }
 \newlabel{fig:T1_Tk}{{3.2}{36}{Rappresentazione di un flow composto da $K$ trasformazioni}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Esempio di espressività di un flow composto. La prima immagine mostra i campioni della distribuzione base gaussiana, mentre le successive mostrano la distribuzione ottenuta applicando progressivamente la trasformazione $T_k$: dopo 2, 4 e 8 trasformazioni consecutive. Si può osservare come, grazie all'elevata espressività delle singole trasformazioni $T_k$, già con un numero limitato di trasformazioni sia possibile ottenere distribuzioni qualitativamente molto diverse dalla distribuzione base. }}{36}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:espress_comp}{{3.3}{36}{Esempio di espressività di un flow composto. La prima immagine mostra i campioni della distribuzione base gaussiana, mentre le successive mostrano la distribuzione ottenuta applicando progressivamente la trasformazione $T_k$: dopo 2, 4 e 8 trasformazioni consecutive. Si può osservare come, grazie all'elevata espressività delle singole trasformazioni $T_k$, già con un numero limitato di trasformazioni sia possibile ottenere distribuzioni qualitativamente molto diverse dalla distribuzione base}{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{37}{subsection.3.2.2}\protected@file@percent }
-\newlabel{eq:autoregressive}{{3.18}{37}{Autoregressive flows}{equation.3.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{36}{subsection.3.2.2}\protected@file@percent }
+\newlabel{eq:autoregressive}{{3.18}{36}{Autoregressive flows}{equation.3.18}{}}
 \newlabel{eq:autoregressive_det}{{3.21}{37}{Autoregressive flows}{equation.3.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau $. A sinistra la trasformazione e a destra la sua inversa. }}{38}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:autoregressive}{{3.4}{38}{Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau $. A sinistra la trasformazione e a destra la sua inversa}{figure.caption.15}{}}
-\newlabel{ex:Au_3d}{{3.2.1}{38}{Autoregressive flow in 3D senza NN}{tcb@cnt@example.3.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau $. A sinistra la trasformazione e a destra la sua inversa. }}{37}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:autoregressive}{{3.3}{37}{Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau $. A sinistra la trasformazione e a destra la sua inversa}{figure.caption.14}{}}
 \citation{dinh2017density}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Panoramica dei possibili modi di costruire un autoregressive flow, distinti in base al tipo di trasformatore e di condizionatore.}}{39}{table.caption.16}\protected@file@percent }
-\newlabel{tab:flow_construction_methods}{{3.1}{39}{Panoramica dei possibili modi di costruire un autoregressive flow, distinti in base al tipo di trasformatore e di condizionatore}{table.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Real NVP}{39}{subsection.3.2.3}\protected@file@percent }
-\newlabel{sec:realnvp}{{3.2.3}{39}{Real NVP}{subsection.3.2.3}{}}
+\newlabel{ex:Au_3d}{{3.2.1}{38}{Autoregressive flow in 3D senza NN}{tcb@cnt@example.3.2.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Panoramica dei possibili modi di costruire un autoregressive flow, distinti in base al tipo di trasformatore e di condizionatore.}}{38}{table.caption.15}\protected@file@percent }
+\newlabel{tab:flow_construction_methods}{{3.1}{38}{Panoramica dei possibili modi di costruire un autoregressive flow, distinti in base al tipo di trasformatore e di condizionatore}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Real NVP}{38}{subsection.3.2.3}\protected@file@percent }
+\newlabel{sec:realnvp}{{3.2.3}{38}{Real NVP}{subsection.3.2.3}{}}
 \newlabel{eq:affine_transform}{{3.23}{39}{}{equation.3.23}{}}
 \newlabel{eq:affine_transform_inv}{{3.24}{39}{}{equation.3.24}{}}
-\newlabel{eq:coupling_forward}{{3.26}{40}{}{equation.3.26}{}}
-\newlabel{eq:coupling_inverse}{{3.28}{40}{}{equation.3.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Rappresentazione grafica di un $T_k$ per una Real NVP. Possiamo vedere la suddivisione del vettore $\mathbf  {z}$ e il calcolo di $s$ e $t$ rispettivamente i fattori di scaling e translation. A sinistra la trasformazione e a destra la sua inversa. }}{40}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:coupling}{{3.5}{40}{Rappresentazione grafica di un $T_k$ per una Real NVP. Possiamo vedere la suddivisione del vettore $\mathbf {z}$ e il calcolo di $s$ e $t$ rispettivamente i fattori di scaling e translation. A sinistra la trasformazione e a destra la sua inversa}{figure.caption.17}{}}
+\newlabel{eq:coupling_forward}{{3.26}{39}{}{equation.3.26}{}}
+\newlabel{eq:coupling_inverse}{{3.28}{39}{}{equation.3.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Rappresentazione grafica di un $T_k$ per una Real NVP. Possiamo vedere la suddivisione del vettore $\mathbf  {z}$ e il calcolo di $s$ e $t$ rispettivamente i fattori di scaling e translation. A sinistra la trasformazione e a destra la sua inversa. }}{40}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:coupling}{{3.4}{40}{Rappresentazione grafica di un $T_k$ per una Real NVP. Possiamo vedere la suddivisione del vettore $\mathbf {z}$ e il calcolo di $s$ e $t$ rispettivamente i fattori di scaling e translation. A sinistra la trasformazione e a destra la sua inversa}{figure.caption.16}{}}
 \newlabel{eq:coupling_jacobian}{{3.29}{40}{}{equation.3.29}{}}
-\newlabel{ex:CLF}{{3.2.2}{41}{Coupling Layer Affine senza NN}{tcb@cnt@example.3.2.2}{}}
 \citation{kullback1951information}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Addestramento del flow}{42}{section.3.3}\protected@file@percent }
-\newlabel{sec:addestramento-flow}{{3.3}{42}{Addestramento del flow}{section.3.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Divergenza KL forward.}{42}{paragraph*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Divergenza KL reverse.}{43}{paragraph*.19}\protected@file@percent }
+\newlabel{ex:CLF}{{3.2.2}{41}{Coupling Layer Affine senza NN}{tcb@cnt@example.3.2.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Addestramento del flow}{41}{section.3.3}\protected@file@percent }
+\newlabel{sec:addestramento-flow}{{3.3}{41}{Addestramento del flow}{section.3.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Divergenza KL forward.}{42}{paragraph*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Divergenza KL reverse.}{42}{paragraph*.18}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Campionamento con NF}{43}{section.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Campionamento diretto e re-weithing}{43}{subsection.3.4.1}\protected@file@percent }
+\newlabel{eq:importance-weight}{{3.42}{43}{}{equation.3.42}{}}
+\newlabel{eq:reweighting-estimator}{{3.43}{43}{}{equation.3.43}{}}
 \citation{noe2019boltzmann}
-\newlabel{eq:importance-weight}{{3.42}{44}{}{equation.3.42}{}}
-\newlabel{eq:reweighting-estimator}{{3.43}{44}{}{equation.3.43}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}}{45}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:boltzmanngen}{{3.6}{45}{Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target}{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{46}{subsection.3.4.2}\protected@file@percent }
-\newlabel{subsec:flow-mcmc}{{3.4.2}{46}{Flow Markov Chain Monte Carlo}{subsection.3.4.2}{}}
-\newlabel{eq:flow-mcmc-accept}{{3.46}{46}{}{equation.3.46}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Flow-MCMC}}{47}{algocf.2}\protected@file@percent }
-\newlabel{alg:flow-mcmc}{{2}{47}{}{algocf.2}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{49}{chapter.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}}{44}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:boltzmanngen}{{3.5}{44}{Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{45}{subsection.3.4.2}\protected@file@percent }
+\newlabel{subsec:flow-mcmc}{{3.4.2}{45}{Flow Markov Chain Monte Carlo}{subsection.3.4.2}{}}
+\newlabel{eq:flow-mcmc-accept}{{3.46}{45}{}{equation.3.46}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Flow-MCMC}}{46}{algocf.2}\protected@file@percent }
+\newlabel{alg:flow-mcmc}{{2}{46}{}{algocf.2}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{47}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{49}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{49}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{49}{subsection.4.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{49}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:therm_T_D}{{4.1}{49}{\relax }{figure.caption.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{50}{subsection.4.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{50}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:acc_T_D}{{4.2}{50}{\relax }{figure.caption.22}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{50}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:E_T_D}{{4.3}{50}{\relax }{figure.caption.23}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{51}{figure.caption.24}\protected@file@percent }
-\newlabel{fig:Cv_T_D}{{4.4}{51}{\relax }{figure.caption.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{51}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:tau_T_D}{{4.5}{51}{\relax }{figure.caption.25}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{52}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{52}{subsection.4.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{52}{subsection.4.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{52}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:acc_T_all}{{4.6}{52}{\relax }{figure.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{53}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:E_T_all}{{4.7}{53}{\relax }{figure.caption.27}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{53}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:tau_T_all}{{4.8}{53}{\relax }{figure.caption.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{54}{figure.caption.29}\protected@file@percent }
-\newlabel{fig:msig_T_all}{{4.9}{54}{\relax }{figure.caption.29}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{55}{subsection.4.3.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{55}{figure.caption.30}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{56}{figure.caption.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{57}{subsection.4.3.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{57}{figure.caption.32}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{58}{figure.caption.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Conclusione}{59}{chapter*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{47}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{47}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{47}{subsection.4.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \relax }}{47}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:therm_T_D}{{4.1}{47}{\relax }{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Risultati}{48}{subsection.4.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \relax }}{48}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:acc_T_D}{{4.2}{48}{\relax }{figure.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{48}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:E_T_D}{{4.3}{48}{\relax }{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \relax }}{49}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:Cv_T_D}{{4.4}{49}{\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \relax }}{49}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:tau_T_D}{{4.5}{49}{\relax }{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{50}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{50}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{50}{subsection.4.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces \relax }}{50}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:acc_T_all}{{4.6}{50}{\relax }{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces \relax }}{51}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:E_T_all}{{4.7}{51}{\relax }{figure.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces \relax }}{51}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:tau_T_all}{{4.8}{51}{\relax }{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces \relax }}{52}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:msig_T_all}{{4.9}{52}{\relax }{figure.caption.28}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{53}{subsection.4.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces \relax }}{53}{figure.caption.29}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces \relax }}{54}{figure.caption.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{55}{subsection.4.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces \relax }}{55}{figure.caption.31}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces \relax }}{56}{figure.caption.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Conclusione}{57}{chapter*.33}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{Bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{61}{appendix.Alph1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{59}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{sec:a_boltzm_der}{{A}{61}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
+\newlabel{sec:a_boltzm_der}{{A}{59}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
 \bibcite{budd2025monte}{1}
 \bibcite{marinari2023calcolo}{2}
 \bibcite{kennett2020essential}{3}
@@ -213,6 +211,6 @@
 \bibcite{dinh2017density}{16}
 \bibcite{kullback1951information}{17}
 \bibcite{noe2019boltzmann}{18}
-\@writefile{toc}{\contentsline {chapter}{Bibliografia}{64}{appendix*.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{65}{appendix*.36}\protected@file@percent }
-\gdef \@abspage@last{74}
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{62}{appendix*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{63}{appendix*.35}\protected@file@percent }
+\gdef \@abspage@last{72}
