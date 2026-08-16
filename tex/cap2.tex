@@ -165,6 +165,23 @@ Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica di
 \end{equation}
 Sommando entrambi i membri su $i$ e sfruttando la stocasticità delle colonne di $P_{ij}$ (Equazione \ref{eq:normaliz}), si verifica facilmente che il bilancio dettagliato garantisce la stazionarietà ed è dunque una condizione \emph{sufficiente} ma non \emph{necessaria}.
 
+Il formalismo matematico delle catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
+\begin{equation}
+p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf{x}},
+\end{equation} e la matrice di transizione $P_{ij}$ viene sostituita da un kernel di transizione continuo:
+\begin{equation}
+    \pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^+
+\end{equation} che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
+\begin{equation}
+p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
+\end{equation} Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la condizione di bilancio dettagliato:
+\begin{equation}
+\pi(\mathbf{x}, \mathbf{y}) p(\mathbf{y}) = \pi(\mathbf{y}, \mathbf{x}) p(\mathbf{x})
+\end{equation} Sotto condizioni di ergodicità, facendo evolvere gli elementi della catena attraverso tale kernel, si ottiene una sequenza di campioni $\{\mathbf{x}_i\}_{i=1}^N$. Dopo un certo tempo $t$ sufficientemente grande, detto \emph{tempo di termalizzazione} (o burn-in time), i campioni generati risulteranno distribuiti secondo la distribuzione target $p(\mathbf{x})$:
+\begin{equation}
+\mathbf{x}_i \sim p(\mathbf{x})= \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} \quad \text{per } i > t
+\end{equation} Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$,  conoscendone anche soltanto la forma non normalizzata $f(\mathbf{x})$.
+
 \begin{example}{Meteo a tre stati}{markov-meteo}
 Consideriamo tre stati possibili: $x_1=$Sole, $x_2=$Nuvoloso e $x_3=$Pioggia; che rappresentano le tre condizioni meteorologiche possibili in un giorno. Sia $X_i$ la variabile aleatoria discreta che descrive la condizione meteorologica osservata al giorno $i$.
 
@@ -187,7 +204,7 @@ La matrice d'esempio rispetta l'Equazione \ref{eq:normaliz}, ovvero che ogni col
 Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
 
 \begin{center}
-\includegraphics[width=0.55\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
+\includegraphics[width=0.85\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
 \label{fig:markov_meteo}
 \end{center}
 
@@ -196,23 +213,6 @@ Se oggi è nuvoloso, la distribuzione iniziale è $p^{(0)} = (0,\,1,\,0)^{\maths
 p^{(1)}_i = \sum_j P_{ij}\, p^{(0)}_j = \begin{pmatrix} 0.3 \\ 0.4 \\ 0.3 \end{pmatrix}.
 \]
 \end{example}
-
-Il formalismo matematico delle catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
-\begin{equation}
-p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf{x}},
-\end{equation} e la matrice di transizione $P_{ij}$ viene sostituita da un kernel di transizione continuo:
-\begin{equation}
-    \pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^+
-\end{equation} che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
-\begin{equation}
-p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
-\end{equation} Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la condizione di bilancio dettagliato:
-\begin{equation}
-\pi(\mathbf{x}, \mathbf{y}) p(\mathbf{y}) = \pi(\mathbf{y}, \mathbf{x}) p(\mathbf{x})
-\end{equation} Sotto condizioni di ergodicità, facendo evolvere gli elementi della catena attraverso tale kernel, si ottiene una sequenza di campioni $\{\mathbf{x}_i\}_{i=1}^N$. Dopo un certo tempo $t$ sufficientemente grande, detto \emph{tempo di termalizzazione} (o burn-in time), i campioni generati risulteranno distribuiti secondo la distribuzione target $p(\mathbf{x})$:
-\begin{equation}
-\mathbf{x}_i \sim p(\mathbf{x})= \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} \quad \text{per } i > t
-\end{equation} Nella sezione successiva verrà presentato l'algoritmo di Metropolis-Hastings, che permette di costruire un kernel $\pi$ che soddisfa la condizione di bilancio dettagliato permettendo di campionare una distribuzione target $p(\mathbf{x})$,  conoscendone anche soltanto la forma non normalizzata $f(\mathbf{x})$.
 
 \subsection{L'Algoritmo di Metropolis-Hastings}
 \label{subsec:metropolis}
@@ -363,3 +363,7 @@ La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M
     M \ge c\, \tau^{\mathrm{int}}_O(M),
 \end{equation}
 con $c$ una costante tipicamente compresa tra $4$ e $10$. Questo criterio richiede di calcolare $\tau_{\mathrm{int}\ O}(M)$ per valori crescenti di $M$ finché la condizione non è soddisfatta, ottenendo così sia una stima di $\tau^{\mathrm{int}}_O$ sia il criterio di arresto in un'unica procedura, senza dover fissare arbitrariamente $M$.
+
+\blankpage
+
+\blankpage
