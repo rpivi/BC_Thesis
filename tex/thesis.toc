@@ -45,7 +45,7 @@
 \contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{52}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{55}{subsection.4.3.3}%
 \contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{57}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusione}{59}{chapter*.34}%
+\contentsline {chapter}{Conclusione}{59}{chapter*.33}%
 \contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{61}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{64}{appendix*.35}%
-\contentsline {chapter}{Ringraziamenti}{65}{appendix*.36}%
+\contentsline {chapter}{Bibliografia}{64}{appendix*.34}%
+\contentsline {chapter}{Ringraziamenti}{65}{appendix*.35}%
