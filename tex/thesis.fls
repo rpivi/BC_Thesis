@@ -2,11 +2,11 @@ PWD C:\Users\rickp\Desktop\GitHub\BC_Thesis\tex
 INPUT C:\Users\rickp\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT c:\Users\rickp\Desktop\GitHub\BC_Thesis\tex\thesis.tex
 OUTPUT thesis.log
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\size12.clo
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\size12.clo
-INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\size12.clo
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\book.cls
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\book.cls
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\bk12.clo
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\bk12.clo
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\bk12.clo
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\inputenc.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\inputenc.sty
@@ -214,6 +214,8 @@ INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.s
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\tools\array.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\tools\array.sty
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\tools\tabularx.sty
+INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\tools\tabularx.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\algorithm2e\algorithm2e.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\algorithm2e\algorithm2e.sty
 INPUT C:\Users\rickp\AppData\Local\Programs\MiKTeX\tex\latex\base\ifthen.sty

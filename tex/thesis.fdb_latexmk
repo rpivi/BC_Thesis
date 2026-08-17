@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1786886813.91008 "thesis.aux" "thesis.bbl" "thesis" 1786886845.04674 0
+["bibtex thesis"] 1786984703.1624 "thesis.aux" "thesis.bbl" "thesis" 1786985314.54222 0
   "./Bibliografia.bib" 1786468994.22499 5093 9595c909ceac21fba68cf6ac31275391 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1786886843.5694 22703 307179b6f8ff35281b8dc5a7ae8b267c "pdflatex"
+  "thesis.aux" 1786985312.882 22975 edd0d1c384ac2f8ea8bc2002def0d80c "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1786886832.9654 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786886845.05058 0
+["pdflatex"] 1786985299.48191 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786985314.54359 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786005416.94312 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -165,11 +165,11 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amstext.sty" 1762695272 2444 9983e1d0683f102e3b190c64a49313aa ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/arabi/bblopts.cfg" 1705750854 902 74ca68fb2e6c2b8d370ff0e672de0f31 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/babel-italian/italian.ldf" 1768645311 11544 73e1a196f9cb1197c32a45aa6e9ead35 ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/bk12.clo" 1761900684 8285 eb2e07a9e456f2e445aaaabcc61b0d24 ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/book.cls" 1761900684 23268 0045640547c14751e547e94fe4a0e0a8 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/fontenc.sty" 1761900684 5275 6f9d359641b36842524cdb97716ab75f ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/ifthen.sty" 1761900684 5525 1593ca62a2554dd7423fc8a4e5a82125 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/inputenc.sty" 1761900684 5048 0270515b828149155424600fd2d58ac5 ""
-  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/report.cls" 1761900684 23203 f495085ac76be4e20c5e1e88646a241e ""
-  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/base/size12.clo" 1761900684 8449 8dc66c6c313c8eb2d774af83bca435dd ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/booktabs/booktabs.sty" 1579093635 6253 71987c78d3b294f5a70855024b9b06cc ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/caption/caption.sty" 1696169587 56128 c2ccf1a29d78c33bc553880402e4fb9a ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/caption/caption3.sty" 1696169587 72619 ee90b6612147680fd73c3b1406a74245 ""
@@ -256,6 +256,7 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/tikzfill/tikzlibraryfill.image.code.tex" 1776944018 11087 a8e863ed8feeea219c8e48e5ac59d76d ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/titlesec/titlesec.sty" 1736608268 48766 87a17a4ef312a39cd43896e34a679a56 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/tools/array.sty" 1761901070 15651 9d7c62df82cb29a555c00550babfe364 ""
+  "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/tools/tabularx.sty" 1761901070 7243 a2c17f18e2c9b702b84fad03d5f9c78b ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/tools/verbatim.sty" 1761901070 7532 26d26e9d8f2ca784270d5da8ec7d102b ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/tools/xspace.sty" 1761901070 4545 d7bb86d489a8ad5263e4c34304c03aee ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/translations/translations.sty" 1644048522 44247 2188b95d0ee74e31eca4d316263c58a7 ""
@@ -264,10 +265,10 @@
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "abstract.tex" 1784275408.46122 138 f4847178a92669b6d943f16fc393a970 ""
   "appendix.tex" 1786028146.62761 1975 882b9f4ffd1a2bdbcbba75ed06ae71d7 ""
-  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1786535034.74165 6128 8723335f61400e1549c3a98ba13f0b2c ""
-  "cap1.tex" 1786885638.82089 28961 377bd94ebfab72c3a6dc2a154a704dcc ""
-  "cap2.tex" 1786882907.05088 33251 4632af544c35e583cdcbfd17e6849d54 ""
-  "cap3.tex" 1786886832.0829 44963 1bb0ecd2b65b659f282151ad9224aecf ""
+  "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" 1786984846.28088 6138 3925948067d7fa3ab1e5dedb7df38a42 ""
+  "cap1.tex" 1786985008.52281 28982 e123b988029ed6c4d44dc75171d9cef5 ""
+  "cap2.tex" 1786983178.68105 33241 393491c9cef12ffaaf78bcbf6f0c84ed ""
+  "cap3.tex" 1786985293.05547 45753 0b87251e0d8a7d3cedfc317840197aff ""
   "cap4.tex" 1786555598.24713 4458 c98e87df02f6211cf92c3f35548c46c0 ""
   "conclusione.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
   "images/E_vs_N_plot_T_100.0.png" 1784804683.84719 184546 8c18f1a7269f02cae2bec5a58f20aac7 ""
@@ -311,10 +312,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1786007970.27406 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1786886843.5694 22703 307179b6f8ff35281b8dc5a7ae8b267c "pdflatex"
-  "thesis.bbl" 1786886814.31659 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
-  "thesis.out" 1786886843.60333 8594 3e897ec092cb6563eff96f67e4f7cd49 "pdflatex"
-  "thesis.toc" 1786886843.64081 4346 5ba350c724161e864ea66fdcdb5a88d7 "pdflatex"
+  "thesis.aux" 1786985312.882 22975 edd0d1c384ac2f8ea8bc2002def0d80c "pdflatex"
+  "thesis.bbl" 1786984703.6819 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
+  "thesis.out" 1786985312.92069 8594 0144fe4e4e8c1978f90a152ba5b2da15 "pdflatex"
+  "thesis.toc" 1786985312.95027 4346 6ff1b0314a9548aaf51fd09ce6202e1c "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"

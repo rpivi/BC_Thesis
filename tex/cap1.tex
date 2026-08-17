@@ -23,10 +23,10 @@ Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega =
 Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
 \end{example}
 
-Una \emph{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R})$. Nel caso di una variabile aleatoria reale si ha quindi:
+Una \emph{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R}, \mathcal{F}(\mathbb{R}))$. Nel caso di una variabile aleatoria reale si ha quindi:
 \begin{equation}
 X:\Omega \rightarrow \mathbb{R}.
-\end{equation} All'interno di questo lavoro di tesi lavoreremo esclusivamente con variabili reali. Per cui, si interpreti come reale ogni variabile aleatoria nominate nel manoscritto anche se non specificato.
+\end{equation} All'interno di questo lavoro di tesi lavoreremo esclusivamente con variabili reali. Per cui, si interpreti come reale ogni variabile aleatoria nominata nel manoscritto anche se non specificato.
 
 \subsection{Distribuzioni di probabilità continue}
 
@@ -154,7 +154,7 @@ Va inoltre sottolineato che la presenza di due o più modi non influenza soltant
 \label{sec:meccanica-statistica}
 
 \subsection{Microstato, macrostato e ensemble statistico}
-Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico, adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo descrivere il sistema microscopicamente in modo completo, dovremmo tenere conto delle variabili dinamiche di tutte le particelle che lo compongono. Per un sistema macroscopico, il numero di gradi di libertà è enorme e una descrizione microscopica completa risulta quindi impraticabile. Un tipico esempio è la descrizione di un gas: in una mole di gas vi sono $\sim 10^{23}$ particelle e per seguire l'evoluzione temporale di ogni atomo o molecola sarebbe necessario risolvere l'equazione di Schrödinger per ciascuna di esse. Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle.
+Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico, adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo descrivere il sistema microscopicamente in modo completo, dovremmo tenere conto delle variabili dinamiche di tutte le particelle che lo compongono. Per un sistema macroscopico, il numero di gradi di libertà è enorme e una descrizione microscopica completa risulta quindi impraticabile. Un tipico esempio è la descrizione di un gas ideale: in una mole vi sono $\sim 10^{23}$ particelle e per seguire l'evoluzione temporale di ogni atomo o molecola sarebbe necessario risolvere l'equazione di Schrödinger per ciascuna di esse. Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle.
 La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche dei singoli elementi che lo costituiscono. In particolare, si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
 
 In meccanica statistica, un \emph{microstato} rappresenta una configurazione specifica del sistema, descritta da tutte le variabili microscopiche necessarie per caratterizzarlo completamente. Ad esempio, per un gas ideale, un microstato può essere definito dalle posizioni e dai momenti di tutte le particelle che lo compongono. Un \emph{macrostato}, invece, è una descrizione più generale del sistema, caratterizzata da grandezze macroscopiche come energia, numero di particelle e volume. Un macrostato può corrispondere a molti microstati diversi: ad esempio, due configurazioni microscopiche diverse di un gas possono avere la stessa temperatura e pressione, come raffigurato in Figura \ref{fig:micro_macro}.
@@ -169,7 +169,7 @@ In meccanica statistica, un \emph{microstato} rappresenta una configurazione spe
 Josiah Willard Gibbs (1839-1903) introdusse il concetto di \emph{ensemble statistico}, che rappresenta un insieme di copie del sistema di interesse, ciascuna delle quali può trovarsi in uno dei possibili microstati compatibili con un dato macrostato. Se l'ensemble è sufficientemente grande, allora la probabilità di trovare il sistema in un particolare microstato è la frazione di copie dell'ensemble che si trovano in quel microstato. 
 Vi sono diversi tipi di ensemble statistici, ognuno dei quali è adatto a descrivere sistemi con diversi vincoli. I principali ensemble sono:
 \begin{itemize}
-\item \textbf{Ensemble microcanonico}: Descrive un sistema isolato con energia, volume e numero di particelle costanti. Tutti i microstati compatibili con questi vincoli hanno la stessa probabilità.
+\item \textbf{Ensemble microcanonico}: Descrive un sistema isolato con energia e numero di particelle costanti. Tutti i microstati compatibili con questi vincoli hanno la stessa probabilità.
 \item \textbf{Ensemble canonico}: Descrive un sistema a contatto termico con un serbatoio a temperatura fissa, in cui l'energia può fluttuare ma il numero di particelle è costante. La probabilità di un microstato è data dalla distribuzione di Boltzmann.
 \item \textbf{Ensemble grand-canonico}: Descrive un sistema a contatto con un serbatoio che può scambiare sia energia che particelle. La probabilità di un microstato è data dalla distribuzione Grand Canonica.
 \end{itemize}
@@ -197,24 +197,18 @@ Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione dell
     p(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}, \quad Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x}
 \end{equation} dove $\beta = \frac{1}{k_B T}$ e $Z(\beta)$ è la funzione di partizione.
 
-Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina il peso relativo delle configurazioni nella distribuzione. Si può facilmente comprendere come all'aumentare della temperatura sono probabilisticamente permessi una gamma più ampia di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e da essa possono essere ricavate le principali grandezze termodinamiche del sistema.
-
+Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina il peso relativo delle configurazioni nella distribuzione. Si può facilmente comprendere come all'aumentare della temperatura sono probabilisticamente permessi un'insieme più ampio di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e da essa possono essere ricavate le principali grandezze termodinamiche del sistema.
 L'energia libera di Helmholtz è
-
 \begin{equation}
 F=-k_BT\ln Z.
 \end{equation}
-
 L'energia media è
-
 \begin{equation}
 \langle E\rangle
 =
 -\frac{\partial\ln Z}{\partial\beta}.
 \end{equation}
-
 La capacità termica a volume costante è
-
 \begin{equation}
 C_V
 =
@@ -225,9 +219,7 @@ k_B\beta^2
 \langle E^2\rangle-\langle E\rangle^2
 \right),
 \end{equation}
-
 mentre l'entropia è
-
 \begin{equation}
 S
 =
@@ -242,7 +234,6 @@ Nella maggior parte dei sistemi di interesse fisico la funzione di partizione no
 \begin{equation}
     e^{-\beta \mathcal{H}(\mathbf{x})}
 \end{equation} su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle. Di conseguenza, anche il valore della densità di probabilità normalizzata non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le densità di probabilità di due configurazioni
-
 \begin{equation}
     \frac{p(\mathbf{x}_2, T)}{p(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
 \end{equation} nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica. Questa osservazione è importante per i capitoli successivi, poiché per poter campionare la distribuzione di Boltzmann è necessario disporre di metodi in grado di generare configurazioni distribuite secondo la distribuzione target anche quando questa è nota soltanto a meno della costante di normalizzazione.
@@ -253,7 +244,10 @@ Nella maggior parte dei sistemi di interesse fisico la funzione di partizione no
 Il problema centrale di questa tesi - generare configurazioni distribuite secondo la distribuzione di Boltzmann - può essere affrontato secondo strategie molto diverse tra loro, ciascuna con vantaggi e limiti. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
 \paragraph*{Diretto vs markoviano.}
 La prima distinzione riguarda come viene prodotta una configurazione. Si parla di \emph{campionamento diretto} quando è possibile generare direttamente campioni indipendenti distribuiti secondo $p(\mathbf{x})$. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo \ref{ch:mc} si mostra un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa (Sezione \ref{sec:metodo-inversa}),che è un metodo esatto di campionamento diretto.
-Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda solo dalla precedente. Una successione con questa proprietà è una \emph{catena di Markov}, ed è alla base dei metodi \emph{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \emph{termalizzazione}. Inoltre ogni configurazione dipende da quella precedente, le configurazioni generate non sono statisticamente indipendenti ma \emph{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
+
+Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda solo dalla precedente. Una successione avente questa proprietà è una \emph{catena di Markov}, ed essa è alla base dei metodi \emph{Markov Chain Monte Carlo (MCMC)}, presentati nella Sezione \ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \emph{termalizzazione}. 
+
+Inoltre ogni configurazione dipende da quella precedente, dunque le configurazioni generate non sono statisticamente indipendenti ma \emph{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
 \newline
 Il vantaggio decisivo dell'approccio markoviano, che ne spiega la centralità in fisica statistica, è che la catena può essere costruita conoscendo $p(\mathbf{x})$ anche a meno della costante di normalizzazione, condizione tipicamente verificata per la distribuzione di Boltzmann, la cui funzione di partizione $Z(\beta)$ non è in generale calcolabile.
 \paragraph*{Passo locale vs passo globale.}
