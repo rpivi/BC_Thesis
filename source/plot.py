@@ -71,8 +71,8 @@ def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg, n_exclude_cold=5):
                  fmt=MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='FLow-MCMC', capsize=5)
     plt.yscale('symlog', linthresh=10)
     plt.xlabel('Temperature T [K]')
-    plt.ylabel(r'Effective Time $\tau$')
-    plt.title('Effective Time vs Temperature')
+    plt.ylabel(r'$\tau$')
+    plt.title(r'$\tau$ vs Temperature')
     plt.legend()
     plt.grid(True, which='both')
     plt.tight_layout()
@@ -201,7 +201,7 @@ def plot_x(x_mcmc, x_bg, x_mcmc_bg, T, V, dim, kb=8.617333262145e-5):
         ax.grid(True)
         ax.legend(loc='upper right', fontsize=9)
 
-    axes[-1].set_xlabel('Position x[0]')
+    axes[-1].set_xlabel('x_1')
     fig.suptitle(f'Position Distribution at T={T}')
     plt.tight_layout()
     plt.savefig(OUT_DIR / f"x_distribution_T_{T}.png", dpi=150, bbox_inches="tight")
@@ -236,7 +236,7 @@ def plot_x_traj(x_mcmc, x_bg, x_mcmc_bg, T, n_zoom=3000):
         # --- colonna sinistra: zoom primi n_zoom step ---
         n_z = min(n_zoom, len(x))
         ax_zoom.plot(np.arange(n_z), x[:n_z], color=color, lw=0.7)
-        ax_zoom.set_ylabel('Position x[0]')
+        ax_zoom.set_ylabel('x_1')
         ax_zoom.set_title(f'{label} — primi {n_z} step')
         ax_zoom.grid(True)
 
@@ -414,7 +414,7 @@ def plot_mean_sign_vsN(results_vsN_mcmc, results_vsN_bg, results_vsN_mcmc_bg, T)
  
     plt.xscale("log")
     plt.xlabel('Number of Samples (N)')
-    plt.ylabel(r'Sign of Mean Position $\langle \text{sgn}(x_0) \rangle$')
+    plt.ylabel(r'Sign of Mean Position $\langle \text{sgn}(x_1) \rangle$')
     plt.title(f'Sign of Mean Position vs Number of Samples at T={T}')
     plt.legend()
     plt.grid(True)

@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1786984703.1624 "thesis.aux" "thesis.bbl" "thesis" 1786985314.54222 0
+["bibtex thesis"] 1787048312.28317 "thesis.aux" "thesis.bbl" "thesis" 1787049062.15586 0
   "./Bibliografia.bib" 1786468994.22499 5093 9595c909ceac21fba68cf6ac31275391 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1786985312.882 22975 edd0d1c384ac2f8ea8bc2002def0d80c "pdflatex"
+  "thesis.aux" 1787049060.13136 23488 d8baa670ebb80a7f69ec7f2550da9324 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1786985299.48191 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1786985314.54359 0
+["pdflatex"] 1787049045.01391 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1787049062.15718 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786005416.94312 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -269,7 +269,7 @@
   "cap1.tex" 1786985008.52281 28982 e123b988029ed6c4d44dc75171d9cef5 ""
   "cap2.tex" 1786983178.68105 33241 393491c9cef12ffaaf78bcbf6f0c84ed ""
   "cap3.tex" 1786985293.05547 45753 0b87251e0d8a7d3cedfc317840197aff ""
-  "cap4.tex" 1786555598.24713 4458 c98e87df02f6211cf92c3f35548c46c0 ""
+  "cap4.tex" 1787048901.9827 10997 e66d49aba28827302a70c24d61ca1715 ""
   "conclusione.tex" 1784274284.79836 67 93c128d282f82ce38b39303fb71f1f0e ""
   "images/E_vs_N_plot_T_100.0.png" 1784804683.84719 184546 8c18f1a7269f02cae2bec5a58f20aac7 ""
   "images/E_vs_N_plot_T_1100.0.png" 1784804676.63305 139316 100f47bcc7e7604b628f4791be9c4e94 ""
@@ -304,7 +304,7 @@
   "images/stat_mec/canonical.png" 1786008856.62008 19527 3707445e0c195ff1bb525141f9716668 ""
   "images/stat_mec/macro_micro.png" 1786004260.54756 95241 21b0d4923f4350298a6efd40694e5454 ""
   "images/tau_vs_T_plot.png" 1784804610.45737 51190 93e4d52362147b1a83a0cc0edc439db1 ""
-  "images/uni_multi.png" 1785317054.52368 62749 8bc3238010feee7075fed4ad6d0e0087 ""
+  "images/uni_multi.png" 1787049043.65695 62438 62b91a7468471c4391990367e86a8440 ""
   "images/x_distribution_T_100.0.png" 1784804627.47445 110621 7a0f25b97dbdb9c85ed1bf6de5e2e03d ""
   "images/x_distribution_T_1100.0.png" 1784804613.60671 125361 da68136280b75f9d82dbfb1f7538b12d ""
   "images/x_distribution_T_600.0.png" 1784804622.09486 141575 93e41a6f506ef743fdee70319a997816 ""
@@ -312,10 +312,10 @@
   "images/x_trajectory_T_1100.0.png" 1784804619.12717 1354316 27bfcdd0fee858b0d01fe478bb13d20b ""
   "images/x_trajectory_T_600.0.png" 1784804624.67149 1519169 9846bdbcc3c86075c04cfdf511f9b701 ""
   "ringraziamenti.tex" 1786007970.27406 73 6a5bb97b5a706153dce6fd3b3e17cdfc ""
-  "thesis.aux" 1786985312.882 22975 edd0d1c384ac2f8ea8bc2002def0d80c "pdflatex"
-  "thesis.bbl" 1786984703.6819 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
-  "thesis.out" 1786985312.92069 8594 0144fe4e4e8c1978f90a152ba5b2da15 "pdflatex"
-  "thesis.toc" 1786985312.95027 4346 6ff1b0314a9548aaf51fd09ce6202e1c "pdflatex"
+  "thesis.aux" 1787049060.13136 23488 d8baa670ebb80a7f69ec7f2550da9324 "pdflatex"
+  "thesis.bbl" 1787048312.68695 3836 252514dfda528a78fc39c70ccc39ed6e "bibtex thesis"
+  "thesis.out" 1787049060.22556 8594 0144fe4e4e8c1978f90a152ba5b2da15 "pdflatex"
+  "thesis.toc" 1787049060.24813 4346 01e50881ca565e809b46c95371f12cf8 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
