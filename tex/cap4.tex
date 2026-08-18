@@ -10,100 +10,92 @@ Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studi
 \section{Il potenziale doppio pozzo}
 \label{sec:potenziale_dw}
 
-Molti sistemi fisici e chimici di interesse presentano un panorama energetico caratterizzato da più minimi locali separati da barriere di potenziale: transizioni conformazionali di macromolecole, reazioni chimiche con stati di transizione (Figura \ref{fig:reazione}), o transizioni di fase in sistemi a molti corpi. Ciascun minimo corrisponde a uno stato \emph{metastabile}: una configurazione stabile, in cui il sistema può permanere per tempi lunghi rispetto alla scala delle fluttuazioni termiche. Il massimo di potenziale che separa due minimi rappresenta invece la barriera energetica che il sistema deve superare per transire da uno stato metastabile all'altro.
+Molti sistemi fisici e chimici di interesse presentano un panorama energetico caratterizzato da più minimi locali separati da barriere di potenziale, come nel caso di transizioni conformazionali di macromolecole, reazioni chimiche con stati di transizione (Figura~\ref{fig:reazione}) o transizioni di fase in sistemi a molti corpi. Ciascun minimo corrisponde a uno stato \emph{metastabile} in cui il sistema può permanere per tempi lunghi rispetto alla scala delle fluttuazioni termiche. Il massimo di potenziale che separa due minimi rappresenta invece la barriera energetica che il sistema deve superare per transire da una configurazione all'altra.
 
 \begin{figure}[htbp]
     \centering
-        \centering
-        \includegraphics[width=\textwidth]{images/Doppio_pozzo/DW_reaction.png}
-        \caption{}
-        \label{fig:reazione}
+    \includegraphics[width=0.7\textwidth]{images/Doppio_pozzo/DW_reaction.png}
+    \caption{Rappresentazione schematica di un profilo energetico con due stati metastabili separati da una barriera di potenziale per una reazione con uno stato di transizione.}
+    \label{fig:reazione}
 \end{figure}
 
-Dal punto di vista del campionamento, questa struttura multimodale è precisamente ciò che rende difficile la stima di osservabili termodinamiche: un algoritmo che esplora lo spazio delle configurazioni con soli spostamenti locali può restare intrappolato in un singolo minimo per tempi computazionalmente proibitivi, sottostimando le fluttuazioni e producendo stime distorte delle medie di insieme. Il potenziale doppio pozzo costituisce l'esempio più semplice che cattura questa fenomenologia: possiede due minimi simmetrici, un'unica barriera di altezza controllabile, ed è dunque il banco di prova naturale per confrontare l'efficienza di un campionatore MCMC standard con quella di metodi basati su Normalizing Flow, capaci in linea di principio di generare proposte globali che scavalcano la barriera senza doverla attraversare con passi locali.
+Dal punto di vista del campionamento, la presenza di più modi rende estremamente complessa la stima di osservabili termodinamiche. Un algoritmo basato esclusivamente su spostamenti locali può rimanere intrappolato in un singolo minimo per tempi computazionalmente proibitivi, sottostimando le fluttuazioni e fornendo stime distorte delle medie d'insieme. Il potenziale a doppio pozzo (\emph{double-well potential}) rappresenta il sistema minimale per studiare questa fenomenologia.
 
-Il potenziale doppio pozzo (double-well potential) è definito come segue
+\paragraph*{Definizione del sistema.} 
+L'interazione lungo la coordinata "lenta" del sistema $x_1$ è modellizzata dal potenziale:
 \begin{equation}
-    V_{\text{dw}}(x) = \frac{a}{b^4}\left(x^2 - b\right)^2.
+    V_{\text{dw}}(x_1) = \frac{a}{b^4}\left(x_1^2 - b\right)^2, \qquad a, b > 0.
 \end{equation}
-In questo lavoro viene scelto agente lungo un coordinata $x_1$, mentre le rimanenti $D-1$ direzioni sono trattate come oscillatori armonici. Il potenziale totale, per $\mathbf{x} = (x_1, \mathbf{x}_\perp) \in
-\mathbb{R}^D$, è quindi
+Tale potenziale presenta due minimi simmetrici in $x_1 = \pm\sqrt{b}$, separati da una barriera posizionata in $x_1 = 0$ la cui altezza è data da:
+\begin{equation}
+    \Delta V = V_{\text{dw}}(0) = \frac{a}{b^2}.
+    \label{eq:barrier_height}
+\end{equation}
+Per studiare l'effetto della dimensionalità senza introdurre ulteriori barriere o multimodalità, si affiancano alla coordinata $x_1$ altre $D-1$ direzioni "veloci" $\mathbf{x}_\perp = (x_2, \dots, x_D) \in \mathbb{R}^{D-1}$, trattate come oscillatori armonici disaccoppiati. Il potenziale totale del sistema $D$-dimensionale assume quindi la forma:
 \begin{equation}
     V(\mathbf{x}) = \underbrace{\frac{a}{b^4}\left(x_1^2 - b\right)^2}_{V_{\text{dw}}(x_1)}
-    \;+\; \underbrace{\frac{1}{2}\sum_{i=2}^{D} x_i^2}_{V_{\text{arm}}(\mathbf{x}_\perp)},
-    \qquad a, b > 0.
+    \;+\; \underbrace{\frac{1}{2}\sum_{i=2}^{D} x_i^2}_{V_{\text{arm}}(\mathbf{x}_\perp)}.
     \label{eq:double_well_potential}
 \end{equation}
-La coordinata $x_1$ è detta "lenta",poichè vede la struttura a doppia buca, mentre $\mathbf{x}_\perp = (x_2,\dots,x_D)$ raccoglie le direzioni "veloci", puramente armoniche e prive di barriere.
-La distribuzione di Boltzmann associata è
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Doppio_pozzo/doppio.png}
+        \label{fig:dw}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Doppio_pozzo/armonici.png}
+        \label{fig:arm}
+    \end{subfigure}
+    \caption{Profilo del potenziale e della distribuzione di Boltzmann per la coordinata "lenta" a destra e a sinistra per una cordinata "veloce".}
+    \label{fig:potenziale_e_boltzmann}
+\end{figure}
+
+La distribuzione di Boltzmann a temperatura $T$ è definita
 \begin{equation}
-    p(\mathbf{x}) = \frac{1}{Z} e^{-\beta V(\mathbf{x})}, \qquad \beta = \frac{1}{k_B T},
+p(\mathbf{x}) = \frac{1}{Z} e^{-\beta V(\mathbf{x})} \qquad \beta = \frac{1}{k_BT}.
 \end{equation}
-e, per la separabilità di $V$, fattorizza come
+Grazie alla separabilità del potenziale espresso nella Eq.~\eqref{eq:double_well_potential}, la distribuzione fattorizza esattamente nel prodotto delle marginali:
 \begin{equation}
     p(\mathbf{x}) = p(x_1)\, p(\mathbf{x}_\perp), \qquad
     p(x_1) \propto e^{-\beta V_{\text{dw}}(x_1)}, \qquad
     p(\mathbf{x}_\perp) \propto e^{-\beta V_{\text{arm}}(\mathbf{x}_\perp)}.
 \end{equation}
 
-Il termine $V_{\text{dw}}(x_1)$ ha due minimi in $x_1 = \pm\sqrt{b}$, separati da una barriera in $x_1 = 0$ di altezza
-%
+\paragraph*{Simmetria e diagnostica di ergodicità.}
+Il potenziale è una funzione pari rispetto a ciascuna coordinata, $V(-x_i) = V(x_i) \forall x_i$, proprietà che viene passata anche alla distribuzione di Boltzmann $p(-x_i) = p(x_i)$. Una conseguenza immediata riguarda il valore di aspettazione del segno della coordinata lenta, $\langle \operatorname{sgn}(x_1) \rangle$. Sfruttando la disparità della funzione segno e la parità della distribuzione:
 \begin{equation}
-    \Delta V = V_{\text{dw}}(0) = \frac{a}{b^2}.
-    \label{eq:barrier_height}
+    \langle \operatorname{sgn}(x_1) \rangle = \int_{\mathbb{R}^D} p(x_1, \mathbf{x}_\perp) \, \operatorname{sgn}(x_1) \, d\mathbf{x}.
 \end{equation}
-%
-Il potenziale è pari su ogni variabile, $V(-x_i) = V(x_i)$, e la distribuzione di Boltzmann associata eredita la stessa simmetria, $p(-x_i) = p(x_i)$. Una conseguenza diretta è il segno medio $\langle \operatorname{sgn}(x_1) \rangle$ è nullo, infatti:
+Applicando il cambio di variabile $x_1 \to -x_1$, si ottiene:
 \begin{equation}
-    \langle \operatorname{sgn}(x_1) \rangle
-    = \int_{\mathbb{R}^D} p(\mathbf{x}) \, \operatorname{sgn}(x_1) \, d\mathbf{x}.
+    \langle \operatorname{sgn}(x_1) \rangle = \int_{\mathbb{R}^D} p(-x_1, \mathbf{x}_\perp) \, \operatorname{sgn}(-x_1) \, d\mathbf{x} = -\int_{\mathbb{R}^D} p(x_1, \mathbf{x}_\perp) \, \operatorname{sgn}(x_1) \, d\mathbf{x} = -\langle \operatorname{sgn}(x_1) \rangle,
 \end{equation}
-Operando il cambio di variabile $x_1 \to -x_1$ (a $\mathbf{x}_\perp$ fissato,
-con $d\mathbf{x}$ invariante) si ottiene
-\begin{equation}
-    \langle \operatorname{sgn}(x_1) \rangle
-    = \int_{\mathbb{R}^D} p(-x_1, \mathbf{x}_\perp) \, \operatorname{sgn}(-x_1) \, d\mathbf{x}
-    = -\int_{\mathbb{R}^D} p(x_1, \mathbf{x}_\perp) \, \operatorname{sgn}(x_1) \, d\mathbf{x}
-\end{equation}
-dove nel secondo passaggio si è usata la parità di $p$ e la disparità di $\operatorname{sgn}$, $\operatorname{sgn}(-x_1) = -\operatorname{sgn}(x_1)$. Nell'ultimo passaggio possiamo risostituire la definizione di segno medio e da $\langle \operatorname{sgn}(x_1) \rangle = -\langle \operatorname{sgn}(x_1) \rangle$ segue immediatamente
+da cui segue rigorosamente che:
 \begin{equation}
     \langle \operatorname{sgn}(x_1) \rangle = 0.
 \end{equation}
+L'osservabile $\langle \operatorname{sgn}(x_1) \rangle$ funge da fondamentale indicatore di ergodicità per le simulazioni: se un campionatore rimane confinato in una sola delle due buche per l'intera durata della simulazione, il valore stimato della media sarà $\approx +1$ oppure $\approx -1$. La deviazione da zero misura direttamente l'incapacità dell'algoritmo di attraversare la barriera e campionare equamente entrambi i minimi.
 
-Nella simulazione si è fissato $a = 0.1$~eV e $b = 1.0$ (in unità della coordinata $x_1$), da cui, per l'Eq.~\eqref{eq:barrier_height}, una barriera $\Delta V = 0.1$~eV, con minimi in $x_1 = \pm 1$.
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/Doppio_pozzo/doppio.png}
-        \caption{}
-        \label{fig:dw}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/Doppio_pozzo/armonici.png}
-        \caption{}
-        \label{fig:arm}
-    \end{subfigure}
-    \caption{}
-    \label{fig:potenziale_e_boltzmann}
-\end{figure}
-Il parametro rilevante per il grado di difficoltà del campionamento è il rapporto adimensionale $\Delta V / (k_B T)$ tra l'altezza della barriera e l'energia termica disponibile. Le temperature esplorate sono all'interno dell'intervallo $T \in [100, 1100]$~K e dunque il rapporto avrà un valore minimo e un valore massimo:
-%
+\paragraph*{Parametri e barriera di potenziale.}
+Nelle simulazioni presentate in questo lavoro sono stati fissati i parametri $a = 0.1$~eV e $b = 1.0$ (in unità arbitrarie della coordinata $x_1$), corrispondenti a una barriera di potenziale $\Delta V = 0.1$~eV con minimi posizionati in $x_1 = \pm 1$.
+
+Il fattore determinante per la difficoltà del campionamento è il rapporto adimensionale $\Delta V / (k_B T)$ tra l'altezza della barriera e l'energia termica del sistema. Gli esperimenti sono stati condotti nell'intervallo di temperature $T \in [100, 1100]$~K, a cui corrispondono i seguenti regimi estremi:
 \begin{equation}
-    \frac{\Delta V}{k_B T}\bigg|_{T = 1100~\text{K}} \approx 1.05,
+    \left.\frac{\Delta V}{k_B T}\right|_{T = 1100~\text{K}} \approx 1.05,
     \qquad
-    \frac{\Delta V}{k_B T}\bigg|_{T = 100~\text{K}} \approx 11.6.
+    \left.\frac{\Delta V}{k_B T}\right|_{T = 100~\text{K}} \approx 11.6.
 \end{equation}
-%
-Alle temperature più alte la barriera è dell'ordine dell'energia termica: la catena di Markov con proposte locali la attraversa facilmente. Alle temperature più basse la barriera diventa fortemente soppressa in probabilità ($e^{-\Delta V/k_BT} = e^{-11.6} \approx 9\times10^{-6}$), è in questo regime che ci si aspetta il fallimento del campionamento locale, e il vantaggio dei metodi basati su Normalizing Flow.
-
-Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$ e, per equipartizione, contribuisce esattamente $\tfrac{1}{2}(D-1)k_BT$ all'energia media e di $\tfrac{1}{2}(D-1)k_B \approx (D-1) \times 4.3 \times 10^{-5}$ alla capacità termica. La funzione del termine è quella di aggiungere gradi di libertà al sistema senza aggiungere barriere energetiche e quindi senza aggiungere altre variabili multimodali. Questa separabilità rende inoltre facilmente disponibile un riferimento per l'energia media, ottenuto per quadratura numerica 1D sulla sola coordinata $x_1$ e sommando il contributo armonico in forma chiusa; questo valore $\langle E \rangle(T)$ verrà usato come riferimento nei confronti al variare di $N$ in Sezione~\ref{sec:confronto_metodi}. 
+A temperature elevate ($1100$~K), l'energia termica è confrontabile con la barriera ($\Delta V \approx k_B T$), rendendo i passaggi tra i due minimi frequenti anche per catene di Markov basate su mosse locali. Al contrario, a basse temperature ($100$~K), la probabilità di sormontare la barriera tramite fluttuazioni termiche è fortemente soppressa da un fattore di Boltzmann $e^{-\Delta V/k_BT} \approx e^{-11.6} \approx 9\times10^{-6}$. In questo regime, il MCMC standard entra in crisi, mettendo in evidenza i vantaggi dei Normalizing Flow e del Flow-MCMC nell'eseguire proposte di aggiornamento globali.
 
 \section{Limiti di Markov Chain Monte Carlo}
 \label{sec:limiti_mcmc}
 \paragraph*{Dettagli implementativi}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
@@ -112,6 +104,8 @@ Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$
 \end{figure}
 
 \paragraph*{Risultati}
+
+Per il principio di equipartizione dell'energia, le dimensioni armoniche contribuiscono in modo esatto all'energia media per $\frac{1}{2}(D-1)k_BT$ e alla capacità termica per $\frac{1}{2}(D-1)k_B$.
 
 \begin{figure}[H]
     \centering
@@ -178,6 +172,8 @@ Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$
 
 \paragraph*{Confronto al variare di N}
 
+Come detto in precedenza, le dimensioni armoniche contribuiscono in modo esatto all'energia media per $\frac{1}{2}(D-1)k_BT$. Ciò consente di calcolare i valori di riferimento per le grandezze termodinamiche integrando numericamente soltanto la coordinata $x_1$ unidimensionale.
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
@@ -186,7 +182,7 @@ Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$
     \end{subfigure}
 
      \vspace{1em}
-     
+
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_600.0.png}
         \caption{Seconda}
@@ -230,21 +226,21 @@ Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{images/x_distribution_T_100.0.png}
         \caption{Prima}
     \end{subfigure}
 
    \vspace{1em}
 
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{images/x_distribution_T_600.0.png}
         \caption{Seconda}
     \end{subfigure}
     
     \vspace{1em}
     
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.40\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/x_distribution_T_1100.0.png}
         \caption{Terza}
