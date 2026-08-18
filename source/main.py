@@ -20,7 +20,7 @@ def main():
     T_analysis = [Ts[0], Ts[len(Ts)//2], Ts[-1]] # temperature for R(m) and N analysis 
     D = 3 # dimension of the system fixed to 3 for the double well potential: 1 slow variable + 2 fast variables
     kb = 8.617333262145e-5
-    key = jax.random.PRNGKey(42)
+    key = jax.random.PRNGKey(0)
     n_samples = 10**6 # these are the number of samples for the Boltzmann generator and the steps of MCMC
     n_train_steps = 1000 # number of training steps for the Boltzmann generator at each temperature
     n_samples_training = 500 # number of samples for the training of the Boltzmann generator at each temperature
