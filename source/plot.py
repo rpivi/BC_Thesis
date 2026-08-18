@@ -44,7 +44,7 @@ def E_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     plt.savefig(OUT_DIR / "E_vs_T_plot.png", dpi=150, bbox_inches="tight")
     plt.close()
  
-def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg, n_exclude_cold=5):
+def tau_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg, n_exclude_cold=6):
     """
     Plotta τ + error vs T per MCMC, Normalizing Flow e FLow-MCMC.
 

@@ -1,7 +1,7 @@
 \chapter{Studio del campionamento}
 \label{ch:studio}
 
-Nei capitoli precedenti sono stati introdotti gli strumenti teorici necessari a campionare una distribuzione di Boltzmann: il campionamento markoviano locale via Metropolis-Hastings (Sez.~\ref{sec:mcmc}), i normalizing flow (Capitolo~\ref{ch:nf}) e da quest'ultimo è stato derivato anche uno schema ibrido, il Flow-MCMC. Questi tre metodi condividono l'obiettivo ma differiscono radicalmente nella strategia: MCMC locale esplora lo spazio delle configurazioni muovendosi solo nell'intorno immediato dello stato corrente; il normalizing flow genera campioni indipendenti, pagando il prezzo di un addestramento preliminare e di un possibile disallineamento tra la distribuzione appresa e quella target; il Flow-MCMC combina le due prospettive mantenendo convergenza asintotica e campionamento globale. La domanda naturale è se questa differenza di strategia si traduca in una differenza pratica misurabile nella qualità del campionamento.
+Nei capitoli precedenti sono stati introdotti gli strumenti teorici necessari a campionare una distribuzione di Boltzmann: il campionamento markoviano locale via Metropolis-Hastings (Sez.~\ref{sec:mcmc}), i Normalizing Flow (Capitolo~\ref{ch:nf}) e da quest'ultimo è stato derivato anche uno schema ibrido, il Flow-MCMC. Questi tre metodi condividono l'obiettivo ma differiscono radicalmente nella strategia: MCMC locale esplora lo spazio delle configurazioni muovendosi solo nell'intorno immediato dello stato corrente; il Normalizing Flow genera campioni indipendenti, pagando il prezzo di un addestramento preliminare e di un possibile disallineamento tra la distribuzione appresa e quella target; il Flow-MCMC combina le due prospettive mantenendo convergenza asintotica e campionamento globale. La domanda naturale è se questa differenza di strategia si traduca in una differenza pratica misurabile nella qualità del campionamento.
 
 Per rispondere si è scelto, come sistema di test, un potenziale a doppio pozzo lungo una coordinata, descritto in Sezione~\ref{sec:potenziale_dw}. Questo sistema ha la minima richiesta di multimodalità, essendo bimodale, e dunque è il caso più semplice in cui ci si aspetta che le strategie locali di campionamento, come Metropolis-Hastings standard, entrino in difficoltà; alla coordinata bimodale si possono affiancare ulteriori dimensioni puramente armoniche, che non aggiungono multimodalità ma permettono di studiare l'effetto della dimensionalità complessiva del sistema sulla qualità del campionamento.
 
@@ -10,11 +10,23 @@ Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studi
 \section{Il potenziale doppio pozzo}
 \label{sec:potenziale_dw}
 
-Il potenziale doppio pozzo è definito da
+Molti sistemi fisici e chimici di interesse presentano un panorama energetico caratterizzato da più minimi locali separati da barriere di potenziale: transizioni conformazionali di macromolecole, reazioni chimiche con stati di transizione (Figura \ref{fig:reazione}), o transizioni di fase in sistemi a molti corpi. Ciascun minimo corrisponde a uno stato \emph{metastabile}: una configurazione stabile, in cui il sistema può permanere per tempi lunghi rispetto alla scala delle fluttuazioni termiche. Il massimo di potenziale che separa due minimi rappresenta invece la barriera energetica che il sistema deve superare per transire da uno stato metastabile all'altro.
+
+\begin{figure}[htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{images/Doppio_pozzo/DW_reaction.png}
+        \caption{}
+        \label{fig:reazione}
+\end{figure}
+
+Dal punto di vista del campionamento, questa struttura multimodale è precisamente ciò che rende difficile la stima di osservabili termodinamiche: un algoritmo che esplora lo spazio delle configurazioni con soli spostamenti locali può restare intrappolato in un singolo minimo per tempi computazionalmente proibitivi, sottostimando le fluttuazioni e producendo stime distorte delle medie di insieme. Il potenziale doppio pozzo costituisce l'esempio più semplice che cattura questa fenomenologia: possiede due minimi simmetrici, un'unica barriera di altezza controllabile, ed è dunque il banco di prova naturale per confrontare l'efficienza di un campionatore MCMC standard con quella di metodi basati su Normalizing Flow, capaci in linea di principio di generare proposte globali che scavalcano la barriera senza doverla attraversare con passi locali.
+
+Il potenziale doppio pozzo (double-well potential) è definito come segue
 \begin{equation}
-    V_{\text{dw}}(x) = \frac{a}{b^4}\left(x^2 - b\right)^2,
+    V_{\text{dw}}(x) = \frac{a}{b^4}\left(x^2 - b\right)^2.
 \end{equation}
-e viene scelto agente lungo una sola coordinata, mentre le rimanenti $D-1$ direzioni sono trattate come oscillatori armonici disaccoppiati. Il potenziale totale, per $\mathbf{x} = (x_1, \mathbf{x}_\perp) \in
+In questo lavoro viene scelto agente lungo un coordinata $x_1$, mentre le rimanenti $D-1$ direzioni sono trattate come oscillatori armonici. Il potenziale totale, per $\mathbf{x} = (x_1, \mathbf{x}_\perp) \in
 \mathbb{R}^D$, è quindi
 \begin{equation}
     V(\mathbf{x}) = \underbrace{\frac{a}{b^4}\left(x_1^2 - b\right)^2}_{V_{\text{dw}}(x_1)}
@@ -23,6 +35,17 @@ e viene scelto agente lungo una sola coordinata, mentre le rimanenti $D-1$ direz
     \label{eq:double_well_potential}
 \end{equation}
 La coordinata $x_1$ è detta "lenta",poichè vede la struttura a doppia buca, mentre $\mathbf{x}_\perp = (x_2,\dots,x_D)$ raccoglie le direzioni "veloci", puramente armoniche e prive di barriere.
+La distribuzione di Boltzmann associata è
+\begin{equation}
+    p(\mathbf{x}) = \frac{1}{Z} e^{-\beta V(\mathbf{x})}, \qquad \beta = \frac{1}{k_B T},
+\end{equation}
+e, per la separabilità di $V$, fattorizza come
+\begin{equation}
+    p(\mathbf{x}) = p(x_1)\, p(\mathbf{x}_\perp), \qquad
+    p(x_1) \propto e^{-\beta V_{\text{dw}}(x_1)}, \qquad
+    p(\mathbf{x}_\perp) \propto e^{-\beta V_{\text{arm}}(\mathbf{x}_\perp)}.
+\end{equation}
+
 Il termine $V_{\text{dw}}(x_1)$ ha due minimi in $x_1 = \pm\sqrt{b}$, separati da una barriera in $x_1 = 0$ di altezza
 %
 \begin{equation}
@@ -48,7 +71,24 @@ dove nel secondo passaggio si è usata la parità di $p$ e la disparità di $\op
 \end{equation}
 
 Nella simulazione si è fissato $a = 0.1$~eV e $b = 1.0$ (in unità della coordinata $x_1$), da cui, per l'Eq.~\eqref{eq:barrier_height}, una barriera $\Delta V = 0.1$~eV, con minimi in $x_1 = \pm 1$.
-
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Doppio_pozzo/doppio.png}
+        \caption{}
+        \label{fig:dw}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Doppio_pozzo/armonici.png}
+        \caption{}
+        \label{fig:arm}
+    \end{subfigure}
+    \caption{}
+    \label{fig:potenziale_e_boltzmann}
+\end{figure}
 Il parametro rilevante per il grado di difficoltà del campionamento è il rapporto adimensionale $\Delta V / (k_B T)$ tra l'altezza della barriera e l'energia termica disponibile. Le temperature esplorate sono all'interno dell'intervallo $T \in [100, 1100]$~K e dunque il rapporto avrà un valore minimo e un valore massimo:
 %
 \begin{equation}
@@ -57,14 +97,13 @@ Il parametro rilevante per il grado di difficoltà del campionamento è il rappo
     \frac{\Delta V}{k_B T}\bigg|_{T = 100~\text{K}} \approx 11.6.
 \end{equation}
 %
-Alle temperature più alte la barriera è dell'ordine dell'energia termica: la catena di Markov con proposte locali la attraversa facilmente. Alle temperature più basse la barriera diventa fortemente soppressa in probabilità ($e^{-\Delta V/k_BT} \sim e^{-11.6} \approx 9\times10^{-6}$), è in questo regime che ci si aspetta il fallimento del campionamento locale, e il vantaggio dei metodi basati su normalizing flow.
+Alle temperature più alte la barriera è dell'ordine dell'energia termica: la catena di Markov con proposte locali la attraversa facilmente. Alle temperature più basse la barriera diventa fortemente soppressa in probabilità ($e^{-\Delta V/k_BT} = e^{-11.6} \approx 9\times10^{-6}$), è in questo regime che ci si aspetta il fallimento del campionamento locale, e il vantaggio dei metodi basati su Normalizing Flow.
 
-Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$ e, per equipartizione, contribuisce esattamente $\tfrac{1}{2}(D-1)k_BT$ all'energia media: la sua funzione è puramente quella di aggiungere gradi di libertà al sistema senza aggiungere barriere energetiche e quindi senza aggiungere altre variabili multimodali. Questa separabilità rende inoltre disponibile un riferimento per l'energia media, ottenuto per quadratura numerica 1D sulla sola coordinata $x_1$ e sommando il
-contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esatto}}(T)$ verrà usato come riferimento nei confronti al variare di $N$ in Sezione~\ref{sec:confronto_metodi}. 
+Il termine armonico $V_{\text{arm}}(\mathbf{x}_\perp)$ è disaccoppiato da $x_1$ e, per equipartizione, contribuisce esattamente $\tfrac{1}{2}(D-1)k_BT$ all'energia media e di $\tfrac{1}{2}(D-1)k_B \approx (D-1) \times 4.3 \times 10^{-5}$ alla capacità termica. La funzione del termine è quella di aggiungere gradi di libertà al sistema senza aggiungere barriere energetiche e quindi senza aggiungere altre variabili multimodali. Questa separabilità rende inoltre facilmente disponibile un riferimento per l'energia media, ottenuto per quadratura numerica 1D sulla sola coordinata $x_1$ e sommando il contributo armonico in forma chiusa; questo valore $\langle E \rangle(T)$ verrà usato come riferimento nei confronti al variare di $N$ in Sezione~\ref{sec:confronto_metodi}. 
 
 \section{Limiti di Markov Chain Monte Carlo}
 \label{sec:limiti_mcmc}
-\subsection{Dettagli implementativi}
+\paragraph*{Dettagli implementativi}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
@@ -72,7 +111,7 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
     \label{fig:therm_T_D}
 \end{figure}
 
-\subsection{Risultati}
+\paragraph*{Risultati}
 
 \begin{figure}[H]
     \centering
@@ -105,9 +144,9 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
 \section{Confronto dei metodi di campionamento}
 \label{sec:confronto_metodi}
 
-\subsection{Dettagli implementativi}
+\paragraph*{Dettagli implementativi}
 
-\subsection{Confronto al variare di T}
+\paragraph*{Confronto al variare di T}
 
 \begin{figure}[H]
     \centering
@@ -137,7 +176,7 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
     \label{fig:msig_T_all}
 \end{figure}
 
-\subsection{Confronto al variare di N}
+\paragraph*{Confronto al variare di N}
 
 \begin{figure}[H]
     \centering
@@ -145,7 +184,9 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_100.0.png}
         \caption{Prima}
     \end{subfigure}
-    \hfill
+
+     \vspace{1em}
+     
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_600.0.png}
         \caption{Seconda}
@@ -167,7 +208,9 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
         \includegraphics[width=\textwidth]{images/mean_sign_vs_N_plot_T_100.0.png}
         \caption{Prima}
     \end{subfigure}
-    \hfill
+
+     \vspace{1em}
+
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/mean_sign_vs_N_plot_T_600.0.png}
         \caption{Seconda}
@@ -183,7 +226,7 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
     \caption{}
 \end{figure}
 
-\subsection{Distribuzioni e traiettorie del camminatore}
+\paragraph*{Distribuzioni e traiettorie del camminatore}
 
 \begin{figure}[H]
     \centering
@@ -191,7 +234,9 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
         \includegraphics[width=\textwidth]{images/x_distribution_T_100.0.png}
         \caption{Prima}
     \end{subfigure}
-    \hfill
+
+   \vspace{1em}
+
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/x_distribution_T_600.0.png}
         \caption{Seconda}
@@ -213,7 +258,9 @@ contributo armonico in forma chiusa; questo valore $\langle E \rangle_{\text{esa
         \includegraphics[width=\textwidth]{images/x_trajectory_T_100.0.png}
         \caption{Prima}
     \end{subfigure}
-    \hfill
+
+    \vspace{1em}
+
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/x_trajectory_T_600.0.png}
         \caption{Seconda}

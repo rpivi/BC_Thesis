@@ -37,15 +37,9 @@
 \contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{45}{subsection.3.4.2}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{49}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{49}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{51}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Dettagli implementativi}{51}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Risultati}{52}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{54}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Dettagli implementativi}{54}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Confronto al variare di T}{54}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Confronto al variare di N}{57}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Distribuzioni e traiettorie del camminatore}{59}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusione}{61}{chapter*.34}%
-\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{63}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{66}{appendix*.35}%
-\contentsline {chapter}{Ringraziamenti}{67}{appendix*.36}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{53}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{56}{section.4.3}%
+\contentsline {chapter}{Conclusione}{63}{chapter*.36}%
+\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{65}{appendix.Alph1}%
+\contentsline {chapter}{Bibliografia}{68}{appendix*.37}%
+\contentsline {chapter}{Ringraziamenti}{69}{appendix*.38}%
