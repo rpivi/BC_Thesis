@@ -3,9 +3,9 @@
 
 Nei capitoli precedenti sono stati introdotti gli strumenti teorici necessari a campionare una distribuzione di Boltzmann: il campionamento markoviano locale via Metropolis-Hastings (Sez.~\ref{sec:mcmc}), i Normalizing Flow (Capitolo~\ref{ch:nf}) e da quest'ultimo è stato derivato anche uno schema ibrido, il Flow-MCMC. Questi tre metodi condividono l'obiettivo ma differiscono radicalmente nella strategia: MCMC locale esplora lo spazio delle configurazioni muovendosi solo nell'intorno immediato dello stato corrente; il Normalizing Flow genera campioni indipendenti, pagando il prezzo di un addestramento preliminare e di un possibile disallineamento tra la distribuzione appresa e quella target; il Flow-MCMC combina le due prospettive mantenendo convergenza asintotica e campionamento globale. La domanda naturale è se questa differenza di strategia si traduca in una differenza pratica misurabile nella qualità del campionamento.
 
-Per rispondere si è scelto, come sistema di test,il potenziale a doppio pozzo, descritto in Sezione~\ref{sec:potenziale_dw}. Questo sistema ha la minima richiesta di multimodalità, essendo bimodale, e dunque è il caso più semplice in cui ci si aspetta che le strategie locali di campionamento, come Metropolis-Hastings standard, entrino in difficoltà; alla coordinata bimodale si sono affiancate ulteriori dimensioni puramente armoniche, che non aggiungono multimodalità ma permettono di studiare l'effetto della dimensionalità del sistema sulla qualità del campionamento.
+Per rispondere si è scelto, come sistema di test,il potenziale a doppio pozzo, descritto in Sezione~\ref{sec:potenziale_dw}. Questo sistema ha la minima richiesta di multimodalità, essendo bimodale, e dunque è il caso più semplice in cui ci si aspetta che le strategie locali di campionamento, come Metropolis-Hastings standard, entrino in difficoltà. Alla coordinata bimodale si sono affiancate ulteriori dimensioni puramente armoniche, che non aggiungono multimodalità, ma permettono di studiare l'effetto della dimensionalità del sistema sulla qualità del campionamento.
 
-Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studiano i limiti di MCMC locale al variare del numero di dimensioni del sistema e della temperatura e si quantifica l'inefficienza attraverso il tasso di accettazione e il tempo di autocorrelazione integrato. La Sezione~\ref{sec:confronto_metodi} confronta invece i tre metodi --- MCMC locale, NF con re-weighting e Flow-MCMC --- a dimensione fissata $D=3$ (una variabile in potenziale doppio pozzo e due armoniche), sia al variare della temperatura sia al variare del numero di campioni utilizzati, mostrando il netto vantaggio dei metodi generativi della Sezione \ref{ch:nf}.
+Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studiano i limiti di MCMC locale al variare del numero di dimensioni del sistema e della temperatura e si quantifica l'inefficienza attraverso il tasso di accettazione e il tempo di autocorrelazione integrato. La Sezione~\ref{sec:confronto_metodi} confronta invece i tre metodi --- MCMC locale, NF con re-weighting e Flow-MCMC --- a dimensione fissata $D=3$ (una variabile in potenziale doppio pozzo e due armoniche), sia al variare della temperatura sia al variare del numero di campioni utilizzati. Infine nella Sezione \ref{sec:rif} vi è un riassunto dei risultati ottenuti sul calcolatore e una discussione sul netto vantaggio dimostrato dei metodi generativi della Sezione \ref{ch:nf}.
 
 \section{Il potenziale doppio pozzo}
 \label{sec:potenziale_dw}
@@ -59,8 +59,8 @@ p(\mathbf{x}) = \frac{1}{Z} e^{-\beta V(\mathbf{x})} \qquad \beta = \frac{1}{k_B
 \end{equation}
 Nella Figura \ref{fig:potenziale_e_boltzmann} si può notare, rispettivamente per il potenziale a doppio pozzo e quello armonico, come i minimi del potenziale siano i massimi della distribuzione di Boltzmann associata.
 
-\paragraph*{Parità.}
-Il potenziale è una funzione pari $V(-x_i) = V(x_i) \ \forall x_i$, proprietà che viene ereditata anche alla distribuzione di Boltzmann $p(-x_i) = p(x_i)$. Una conseguenza immediata riguarda il valore di aspettazione del segno della coordinata lenta, $\langle \operatorname{sgn}(x_1) \rangle$. Sfruttando la disparità della funzione segno e la parità della distribuzione:
+\paragraph*{Riflessione e parità.}
+Il potenziale è una funzione simmetrica per riflessione di ogni variabile $V(-x_i) = V(x_i) \ \forall x_i$ (e dunque anche pari), proprietà che vengono ereditate anche dalla distribuzione di Boltzmann $p(-x_i) = p(x_i)$. Una conseguenza immediata riguarda il valore di aspettazione del segno della coordinata lenta, $\langle \operatorname{sgn}(x_1) \rangle$. Sfruttando la disparità della funzione segno e la parità della distribuzione:
 \begin{equation}
     \langle \operatorname{sgn}(x_1) \rangle = \int_{\mathbb{R}^D} p(\mathbf{x}) \, \operatorname{sgn}(x_1) \, d\mathbf{x}.
 \end{equation}
@@ -83,16 +83,17 @@ Il fattore determinante per la difficoltà del campionamento è il rapporto adim
     \qquad
     \left.\frac{\Delta V}{k_B T}\right|_{T = 100~\text{K}} \approx 11.6.
 \end{equation}
-A temperature elevate ($1100$~K), l'energia termica è confrontabile con la barriera ($\Delta V \approx k_B T$), rendendo i passaggi tra i due minimi frequenti anche per catene di Markov basate su mosse locali. Al contrario, a basse temperature ($100$~K), la probabilità di sormontare la barriera tramite fluttuazioni termiche è fortemente soppressa da un fattore di Boltzmann $e^{-\Delta V/k_BT} \approx e^{-11.6} \approx 9\times10^{-6}$. In questo regime, il MCMC standard entra in crisi, mettendo in evidenza i vantaggi dei Normalizing Flow e del Flow-MCMC.
+A temperature elevate ($1100$~K), l'energia termica è confrontabile con la barriera ($\Delta V \approx k_B T$), rendendo i passaggi tra i due minimi frequenti anche per catene di Markov basate su mosse locali. Al contrario, a basse temperature ($100$~K), la probabilità di sormontare la barriera tramite fluttuazioni termiche è fortemente soppressa da un fattore di Boltzmann $e^{-\Delta V/k_BT} \approx e^{-11.6} \approx 9\times10^{-6}$. In questo regime, il MCMC locale entra in crisi, mettendo in evidenza i vantaggi dei Normalizing Flow e del Flow-MCMC.
 
 \section{Limiti di Markov Chain Monte Carlo}
 \label{sec:limiti_mcmc}
+
 \paragraph*{Dettagli implementativi.}
 Le simulazioni sono condotte con l'algoritmo di Metropolis-Hastings a proposta gaussiana simmetrica (Eq.~\ref{eq:proposta_gaussiana}), con ampiezza $\sigma$ fissa. Per ciascuna dimensione $D \in \{1,2,3,4\}$ si esegue una scansione di temperatura $T \in [150, 1140]$~K a passi di 10~K, procedendo in ordine di temperatura \emph{crescente}: si parte dal caso più difficile ($T=150$~K), a cui viene dedicata una termalizzazione più estesa, per poi proseguire verso temperature via via più alte riutilizzando come configurazione iniziale l'ultimo stato della catena alla temperatura precedente (\emph{warm start}). Questo schema è più efficiente di una termalizzazione indipendente a ogni $T$, poichè consente di diminuire i calcoli e i campioni utilizzati nella fase di termalizzazione.
 
 Per ogni coppia $(D,T)$ vengono generati $10^6$ campioni di produzione. Viene stimato il tempo di autocorrelazione integrato della variabile lenta  tramite il metodo della finestra automatica di Sokal (Sez.~\ref{sec:campioni_autocorrelati}). Si utilizzano i campioni per stimare gli osservabili e l'incertezza su di essi (energia media, capacità termica) è stimata tramite blocking analysis di Flyvbjerg-Petersen, individuando il plateau di $R_O(m)$ con una tolleranza del $10\%$ su una finestra di 4 valori consecutivi in scala logaritmica. I parametri sono riassunti in Tabella~\ref{tab:mcmc_details}.
 
-\begin{table}[H]
+\begin{table}[tbp]
 \centering
 \begin{tabular}{ll}
 \toprule
@@ -116,34 +117,30 @@ Finestra blocking per rilevazione plateau                     & 4 \\
 
 Prima di procedere al confronto sistematico, è utile verificare empiricamente la fase di termalizzazione della catena nel caso più
 difficile della scansione, $D=4$ e $T=150$~K. La Figura~\ref{fig:therm_T_D} confronta l'evoluzione dell'energia per due inizializzazioni distinte: una inizializzazione $x_1=\dots=x_D=1$ e una estratta da una distribuzione normale standard. Si osserva che, indipendentemente dal punto di partenza, l'energia converge alla stessa regione entro le prime centinaia di passi. È bene notare che questa figura utilizza $10^3$ passi a solo scopo illustrativo, un ordine di grandezza in meno rispetto ai $10^4$ passi di termalizzazione effettivamente impiegati per $T=150$~K nella simulazione di produzione dei campioni (Tabella~\ref{tab:mcmc_details}): la convergenza dell'energia media qui mostrata non implica l'assenza di intrappolamento in un singolo modo.
-
-\begin{figure}[H]
+\begin{figure}[tbp]
     \centering
-    \includegraphics[width=0.70\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
+    \includegraphics[width=0.85\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
     \caption{Evoluzione dell'energia durante la termalizzazione per $D=4$,
 $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf{x}=(1,\dots,1)$ e una estratta da distribuzione normale standard.}
     \label{fig:therm_T_D}
 \end{figure}
 
 \paragraph*{Risultati.}
-
 La Figura~\ref{fig:acc_T_D} mostra il tasso di accettazione in funzione della temperatura per $D=1,\dots,4$. Si osservano due andamenti distinti. L'accettazione cresce monotonamente con $T$: al crescere della temperatura
-il fattore $1/(k_BT)$ si riduce, rendendo più probabile l'accettazione di mosse che aumentano l'energia del sistema. L'accettazione decresce invece all'aumentare di $D$ mostrando come un aumento dell'energia del sistema dovuro dalla sua dimensionalità causa un peggioramento dell'efficienza del metodo di campionamento.
-
-\begin{figure}[H]
+il fattore $1/(k_BT)$ si riduce, rendendo più probabile l'accettazione di mosse che aumentano l'energia del sistema. L'accettazione decresce invece all'aumentare di $D$ mostrando come un aumento dell'energia del sistema dovuro dalla sua dimensionalità causa un peggioramento dell'efficienza del metodo di campionamento. Questo grafico mostra che l'ineffcienza delle proposte locali aumenta con l'aumentare della dimensione e al diminuire della temperatura.
+\begin{figure}[tbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/MCMC/acceptance_vs_T.png}
+    \includegraphics[width=0.85\textwidth]{images/MCMC/acceptance_vs_T.png}
     \caption{Tasso di accettazione in funzione della
 temperatura, per $D=1,2,3,4$, con prposta gaussiana e ampiezza di passo fissa $\sigma=0.1$
 (Tabella~\ref{tab:mcmc_details}).}
     \label{fig:acc_T_D}
 \end{figure}
 
-Il risultato più rilevante di questa sezione è riportato in Figura~\ref{fig:tau_T_D}, che mostra $\tau^{int}$ della coordinata $x_1$, stimato con il metodo della finestra di Sokal, per $D=1$ e $D=4$. 
-...
-\begin{figure}[H]
+Il risultato più rilevante di questa sezione è riportato in Figura~\ref{fig:tau_T_D}, che mostra $\tau^{int}$ della coordinata $x_1$, stimato con il metodo della finestra di Sokal, per $D=1$ e $D=4$. A differenza del tasso di accettazione, che è una misura locale della qualità delle singole mosse proposte, $\tau^{int}$ quantifica direttamente il numero di passi Monte Carlo necessari a ottenere un campione statisticamente indipendente e, tramite la relazione $\sigma^2_{\bar O} = 2\tau^{int}\sigma^2_O/N$, entra esplicitamente nell'errore associato a qualunque osservabile stimato dalla catena. È dunque questa la quantità che permette di tradurre in termini quantitativi l'intrappolamento nei modi discusso nella Sezione~\ref{sec:potenziale_dw}: un $\tau^{int}$ elevato non segnala soltanto una minore efficienza, ma implica che il numero di campioni effettivamente indipendenti prodotti dalla simulazione, $N_{\text{eff}} = N/(2\tau^{int})$, può essere drasticamente inferiore al numero nominale di campioni generati. Come si osserva in Figura~\ref{fig:tau_T_D}, $\tau^{int}$ cresce di oltre un ordine di grandezza al diminuire della temperatura, raggiungendo valori dell'ordine di $10^4$--$10^5$ passi nel regime $T\lesssim 200$~K: a fronte dei $10^6$ campioni di produzione generati (Tabella~\ref{tab:mcmc_details}), ciò significa che il numero di campioni statisticamente indipendenti disponibili per la stima degli osservabili si riduce a poche decine. Questo risultato motiva direttamente il confronto con i metodi generativi svolto nella Sezione~\ref{sec:confronto_metodi}, dove si mostra come i metodi alternativi non soffrono di questa stessa crescita di $\tau^{int}$ al diminuire della temperatura.
+\begin{figure}[tbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/MCMC/Tau_vs_T.png}
+    \includegraphics[width=0.85\textwidth]{images/MCMC/Tau_vs_T.png}
     \caption{empo di autocorrelazione integrato $\tau^{int}$ della coordinata
 lenta $x_1$ in funzione della temperatura, stimato con il metodo della
 finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$.}
@@ -154,19 +151,17 @@ Le Figure~\ref{fig:E_T_D} e~\ref{fig:Cv_T_D} riportano rispettivamente l'energia
 $\frac{1}{2}(D-1)k_B \approx (D-1) \times 4.3 \times 10^{-5}$ per $C_V$.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/MCMC/E_mean_vs_T.png}
+    \includegraphics[width=0.85\textwidth]{images/MCMC/E_mean_vs_T.png}
     \caption{Energia media in funzione della temperatura per $D=1,2,3,4$.}
     \label{fig:E_T_D}
 \end{figure}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/MCMC/Cv_vs_T.png}
+    \includegraphics[width=0.85\textwidth]{images/MCMC/Cv_vs_T.png}
     \caption{Capacità termica in funzione della temperatura per $D=1,2,3,4$.}
     \label{fig:Cv_T_D}
 \end{figure}
-
-Questi risultati mostrano che, per $T$ basse, MCMC standard diventa computazionalmente inefficiente: la Sezione~\ref{sec:confronto_metodi} confronta questo comportamento con quello del Normalizing Flow e del metodo ibrido Flow-MCMC.
+Nella prossima sezione si mostra il confronto fra i tre metodi di campionamento e si dimostra che i metodi Normalizing Flow e Flow-MCMC non soffrono degli stessi limiti di MCMC locale.
 \section{Confronto dei metodi di campionamento}
 \label{sec:confronto_metodi}
 
@@ -228,141 +223,132 @@ La Figura~\ref{fig:acc_T_all} mostra il tasso di accettazione di MCMC e
 Flow-MCMC in funzione della temperatura. Mentre MCMC riproduce l'andamento crescente già osservato in Sez.~\ref{sec:limiti_mcmc}, il tasso di accettazione del Flow-MCMC resta pressoché costante e prossimo a 1 su tutto l'intervallo, in accordo con la previsione teorica della Sezione \ref{subsec:flow-mcmc}: quando la distribuzione appresa $p_X(x;\theta)$ approssima bene la distribuzione target, ogni proposta generata dal flow viene quasi sempre accettata, indipendentemente da $T$.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/acceptance_vs_T_plot.png}
+    \includegraphics[width=0.85\textwidth]{images/acceptance_vs_T_plot.png}
     \caption{Tasso di accettazione di MCMC e Flow-MCMC in funzione della
     temperatura, a $D=3$.}
     \label{fig:acc_T_all}
 \end{figure}
-
 La Figura~\ref{fig:tau_T_all} mostra il tempo di autocorrelazione integrato $\tau^{int}$ di $x_1$ per MCMC e Flow-MCMC, stimato con il metodo della finestra di Sokal, insieme alla quantità $\tau_{\text{eff}}$ per NF. È importante sottolineare che queste due
 grandezze non sono direttamente confrontabili in senso stretto: $\tau^{int}$ misura la correlazione temporale lungo una catena di
 Markov, mentre $\tau_{\text{eff}}$, definito a partire dall'effective sample size dei pesi di importanza (Sez.~\ref{sec:confronto_metodi}), non presuppone alcuna catena e quantifica invece la degenerazione dei pesi generata dal disallineamento tra $p_X(x;\theta)$ e la distribuzione target. Con questa avvertenza, si osserva che MCMC mostra la stessa divergenza a bassa temperatura discussa in Sez.~\ref{sec:limiti_mcmc}, mentre sia $\tau_{\text{eff}}$ del NF sia $\tau^{int}$ del Flow-MCMC restano vicini all'unità per l'intero intervallo di temperature, incluso il regime a bassa $T$ dove MCMC risulta inefficace.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/tau_vs_T_plot.png}
+    \includegraphics[width=0.85\textwidth]{images/tau_vs_T_plot.png}
     \caption{$\tau^{int}$ di $x_1$ per MCMC, Flow-MCMC e $\tau_{\text{eff}}=N/(2\,\mathrm{ESS})$ per NF in funzione della temperatura.}
     \label{fig:tau_T_all}
 \end{figure}
-
 La Figura~\ref{fig:E_T_all} riporta l'energia media stimata dai tre metodi: su tutto l'intervallo di temperature i tre stimatori risultano in buon accordo. Questo è atteso anche nel regime in cui MCMC mostra intrappolamento nei modi, poiché, come discusso in precedenza, l'energia è una funzione pari di e non è dunque un osservabile sufficiente a discriminare la qualità del campionamento.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/E_vs_T_plot.png}
+    \includegraphics[width=0.85\textwidth]{images/E_vs_T_plot.png}
     \caption{Energia media stimata da MCMC, Normalizing Flow e
     Flow-MCMC in funzione della temperatura, a $D=3$.}
     \label{fig:E_T_all}
 \end{figure}
-
 La Figura~\ref{fig:msig_T_all} mostra il segno medio $\langle\operatorname{sgn}(x_1)\rangle$, il cui valore teorico atteso è
 zero per ogni $T$ (Eq.~4.8). MCMC devia fortemente da zero a bassa temperatura, segno di un campionamento confinato in una sola delle due buche; Flow-MCMC resta prossimo a zero su tutto l'intervallo, così come il NF.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/mean_sign_vs_T_plot.png}
+    \includegraphics[width=0.85\textwidth]{images/mean_sign_vs_T_plot.png}
     \caption{Segno medio $\langle\operatorname{sgn}(x_1)\rangle$ per MCMC, NF e Flow-MCMC in funzione della temperatura. Il
     valore teorico atteso è zero per ogni $T$.}
     \label{fig:msig_T_all}
 \end{figure}
-
 \paragraph*{Confronto al variare di N.}
-
-Come detto in precedenza, le dimensioni armoniche contribuiscono in modo esatto all'energia media per $\frac{1}{2}(D-1)k_BT$. Ciò consente di calcolare i valori di riferimento per le grandezze termodinamiche integrando numericamente soltanto la coordinata $x_1$ unidimensionale.
-
+Come detto in precedenza, le dimensioni armoniche contribuiscono in modo esatto all'energia media per $\frac{1}{2}(D-1)k_BT$, questo consente di calcolare i valori di riferimento per le grandezze termodinamiche integrando numericamente rispetto alla coordinata lenta. La Figura~\ref{fig:E_vs_N} mostra la stima dell'energia media in funzione del numero di campioni $N$ utilizzati, con relative bande di incertezza, confrontata con il valore di riferimento (linea tratteggiata). A tutte e tre le temperature NF e Flow-MCMC convergono rapidamente al valore di riferimento, con bande di incertezza strette già per $N$ piccolo. MCMC mostra invece bande di incertezza sistematicamente più ampie a parità di $N$, e una convergenza più lenta e oscillante attorno al valore corretto; riflettendo la difficoltà del campionatore locale di esplorare correttamente lo spazio delle configurazioni, sebbene, come discusso in precedenza, l'energia resti un osservabile che non discrimina univocamente l'intrappolamento in un singolo pozzo.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.60\textwidth}
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_100.0.png}
-        \caption{Prima}
+        \caption{$T=100$~K}
     \end{subfigure}
-
      \vspace{1em}
-
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.60\textwidth}
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_600.0.png}
-        \caption{Seconda}
+        \caption{$T=600$~K}
     \end{subfigure}
-    
     \vspace{1em}
-    
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.60\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/E_vs_N_plot_T_1100.0.png}
-        \caption{Terza}
+        \caption{$T=1100$~K}
     \end{subfigure}
-    \caption{}
+    \caption{Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature. La linea tratteggiata indica il valore di riferimento ottenuto per quadratura numerica.}
+    \label{fig:E_vs_N}
 \end{figure}
-
+Un quadro ben più netto emerge osservando $\langle\operatorname{sgn}(x_1)\rangle$ in funzione di $N$ (Figura~\ref{fig:msig_vs_N}), il cui valore teorico atteso è zero indipendentemente da $T$. A $T=600$~K e $T=1100$~K MCMC converge anch'esso a zero, ma con una dinamica qualitativamente diversa da NF e Flow-MCMC: parte da valori fortemente distorti ($-1$ o $+1$, a seconda del pozzo in cui la catena si trova inizialmente intrappolata) e converge solo dopo un numero di campioni molto maggiore degli altri metodi. A $T=100$~K, invece, MCMC resta stabilmente a $1.0$ per l'intero intervallo di $N$ considerato, senza alcun segno di convergenza: non si tratta di un errore statistico riducibile aumentando $N$, ma di un errore sistematico dovuto all'intrappolamento completo in un singolo pozzo entro i tempi computazionali considerati. NF e Flow-MCMC, al contrario, restano prossimi a zero fin dai valori più piccoli di $N$ e a tutte le temperature, confermando l'assenza di intrappolamento nei modi indipendentemente dal regime termico.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.6\textwidth}
         \includegraphics[width=\textwidth]{images/mean_sign_vs_N_plot_T_100.0.png}
-        \caption{Prima}
+        \caption{$T=100$~K}
     \end{subfigure}
-
      \vspace{1em}
-
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.6\textwidth}
         \includegraphics[width=\textwidth]{images/mean_sign_vs_N_plot_T_600.0.png}
-        \caption{Seconda}
+        \caption{$T=600$~K}
     \end{subfigure}
-    
     \vspace{1em}
-    
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.6\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/mean_sign_vs_N_plot_T_1100.0.png}
-        \caption{Terza}
+        \caption{$T=1100$~K}
     \end{subfigure}
-    \caption{}
+    \caption{Segno medio $\langle\operatorname{sgn}(x_1)\rangle$ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature. Il valore teorico atteso è zero per ogni $T$.}
+    \label{fig:msig_vs_N}
 \end{figure}
 
 \paragraph*{Distribuzioni e traiettorie del camminatore.}
-
-\begin{figure}[H]
+Per completare il quadro qualitativo, la Figura~\ref{fig:x_distribution} confronta l'istogramma, normalizzato a densità di probabilità, dei campioni della coordinata $x_1$ ottenuti dai tre metodi con la distribuzione di Boltzmann marginale esatta (linea tratteggiata), alle stesse tre temperature. A $T=600$~K e $T=1100$~K tutti e tre i metodi riproducono correttamente la bimodalità della distribuzione target. A $T=100$~K l'istogramma di MCMC è concentrato quasi esclusivamente in uno dei due pozzi, mancando completamente il secondo picco previsto dalla distribuzione esatta; NF e Flow-MCMC, al contrario, riproducono correttamente entrambi i minimi anche in questo regime.
+\begin{figure}[htbp]
     \centering
-    \begin{subfigure}[b]{0.40\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/x_distribution_T_100.0.png}
-        \caption{Prima}
+        \caption{$T=100$~K}
     \end{subfigure}
-
-   \vspace{1em}
-
-    \begin{subfigure}[b]{0.40\textwidth}
+   \hfil
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/x_distribution_T_600.0.png}
-        \caption{Seconda}
+        \caption{$T=600$~K}
     \end{subfigure}
-    
     \vspace{1em}
-    
-    \begin{subfigure}[b]{0.40\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/x_distribution_T_1100.0.png}
-        \caption{Terza}
+        \caption{$T=1100$~K}
     \end{subfigure}
-    \caption{}
+    \caption{Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$.}
+    \label{fig:x_distribution}
 \end{figure}
-
+La stessa fenomenologia emerge in modo ancora più diretto osservando le traiettorie della coordinata $x_1$ (Figura~\ref{fig:x_trajectory}). La colonna sinistra mostra i primi 3000 passi della simulazione per i tre metodi: a $T=100$~K la traiettoria di MCMC rimane confinata in un'unica buca per l'intera finestra mostrata, senza mai attraversare la barriera, mentre NF e Flow-MCMC alternano liberamente le due buche fin dai primi campioni, non essendo vincolati a mosse locali. La colonna destra riporta invece la densità di occupazione sull'intera traiettoria di produzione: a bassa temperatura la mappa di MCMC resta concentrata su un'unica banda per tutta la simulazione, confermando che l'intrappolamento osservato nella finestra iniziale non è un transitorio ma persiste sull'intero run; per NF e Flow-MCMC la densità è invece distribuita su entrambe le bande fin dall'inizio. Al crescere della temperatura la traiettoria di MCMC mostra transizioni sempre più frequenti tra le due buche, coerentemente con la riduzione della barriera efficace $\Delta V/k_BT$, mentre NF e Flow-MCMC mantengono in ogni regime una copertura uniforme di entrambi i pozzi.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.65\textwidth}
         \includegraphics[width=\textwidth]{images/x_trajectory_T_100.0.png}
-        \caption{Prima}
+        \caption{$T=100$~K}
     \end{subfigure}
-
     \vspace{1em}
-
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.65\textwidth}
         \includegraphics[width=\textwidth]{images/x_trajectory_T_600.0.png}
-        \caption{Seconda}
+        \caption{$T=600$~K}
     \end{subfigure}
-    
     \vspace{1em}
-    
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.65\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/x_trajectory_T_1100.0.png}
-        \caption{Terza}
+        \caption{$T=1100$~K}
     \end{subfigure}
-    \caption{}
+    \caption{Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log(\text{conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione.}
+    \label{fig:x_trajectory}
 \end{figure}
+
+\section{Riflessioni finali}
+\label{sec:rif}
+
+I risultati presentati in questo capitolo permettono di rispondere alla domanda posta in apertura: la differenza di strategia tra si traduce in una differenza misurabile nella qualità del campionamento di una distribuzione multimodale.
+Nella Sezione~\ref{sec:limiti_mcmc} si è mostrato come MCMC locale, pur essendo asintoticamente corretto, sviluppi un'inefficienza crescente al diminuire della temperatura: il tempo di autocorrelazione integrato $\tau^{int}$ cresce di oltre un ordine di grandezza nell'intervallo di temperature considerato, traducendosi in una drastica riduzione del numero di campioni effettivamente indipendenti prodotti a parità di campioni generati (escludendo i campioni usati per la termalizzazione).
+
+Il confronto sistematico a $D=3$ svolto nella Sezione~\ref{sec:confronto_metodi} ha permesso di isolare l'effetto dell'intrappolamento nei modi su osservabili diversi. Da un lato, osservabili pari come l'energia media risultano robusti anche in presenza di intrappolamento, grazie alla simmetria di riflessione del potenziale, e non sono quindi sufficienti a diagnosticare un campionamento incompleto. Dall'altro, l'osservabile dispari $\langle\operatorname{sgn}(x_1)\rangle$ si è rivelato un indicatore diretto ed efficace: mentre a temperature moderate ed elevate MCMC converge comunque al valore teorico atteso, seppure con una dinamica più lenta e con partenze fortemente distorte, nel regime a bassa temperatura la stima rimane sistematicamente lontana da zero anche al crescere del numero di campioni, segno di un intrappolamento completo in un singolo pozzo. Normalizing Flow e Flow-MCMC non mostrano invece questa dipendenza dalla temperatura: il tasso di accettazione del Flow-MCMC resta prossimo a 1 su tutto l'intervallo studiato, le quantità $\tau_{\text{eff}}$ del Normalizing Flow e $\tau^{int}$ per Flow-MCMC rimangono vicine all'unità anche nel regime dove MCMC diverge, e $\langle\operatorname{sgn}(x_1)\rangle$ converge rapidamente a zero indipendentemente da $T$ per entrambi i metodi. L'analisi delle traiettorie e delle distribuzioni marginali conferma qualitativamente lo stesso quadro: a bassa temperatura MCMC popola una sola buca per l'intera simulazione, mentre entrambi i metodi basati sul flow riproducono correttamente la bimodalità della distribuzione target.
+
+Questi risultati mostrano dunque che l'utilizzo di un Normalizing Flow, sia come stimatore diretto con re-weighting sia come proposta all'interno di uno schema Flow-MCMC, permette di superare la limitazione fondamentale del campionamento locale nel regime a bassa temperatura, senza richiedere modifiche allo schema di proposta o un tuning ad hoc dell'ampiezza di passo. Il prezzo pagato è il costo aggiuntivo dell'addestramento della rete, qui contenuto grazie allo schema di warm start dei pesi tra temperature successive (Sez.~\ref{sec:confronto_metodi}), e la necessità di correggere le proposte del flow, tramite re-weighting o tramite la correzione di Metropolis-Hastings del Flow-MCMC, per garantire la correttezza asintotica del campionamento anche in presenza di un disallineamento residuo tra la distribuzione appresa e quella target.
 

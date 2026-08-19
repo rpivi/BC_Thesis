@@ -39,7 +39,8 @@
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{49}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{52}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{57}{section.4.3}%
-\contentsline {chapter}{Conclusione}{67}{chapter*.38}%
-\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{69}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{72}{appendix*.39}%
-\contentsline {chapter}{Ringraziamenti}{73}{appendix*.40}%
+\contentsline {section}{\numberline {4.4}Riflessioni finali}{69}{section.4.4}%
+\contentsline {chapter}{Conclusione}{71}{chapter*.38}%
+\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{73}{appendix.Alph1}%
+\contentsline {chapter}{Bibliografia}{76}{appendix*.39}%
+\contentsline {chapter}{Ringraziamenti}{77}{appendix*.40}%

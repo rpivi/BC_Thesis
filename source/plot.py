@@ -5,6 +5,16 @@ from pathlib import Path
 import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 
+plt.rcParams.update({
+    'font.size': 14,          # Dimensione generale del font
+    'axes.labelsize': 12,     # Dimensione etichette x e y
+    'axes.titlesize': 14,     # Dimensione titolo del grafico
+    'xtick.labelsize': 10,    # Dimensione tick sulle x
+    'ytick.labelsize': 10,    # Dimensione tick sulle y
+    'legend.fontsize': 10,    # Dimensione legenda
+    'figure.titlesize': 14
+})
+
 # plot.py è in BC_Thesis/source/, quindi .parent.parent = BC_Thesis/
 HERE = Path(__file__).resolve().parent
 OUT_DIR = HERE.parent / "tex" / "images"
