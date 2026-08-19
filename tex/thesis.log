@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  18 AUG 2026 19:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.22)  19 AUG 2026 12:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1224,195 +1224,218 @@ Overfull \hbox (4.56938pt too wide) in paragraph at lines 464--485
 
 ]
 Capitolo 4.
-[49]
-<images/Doppio_pozzo/DW_reaction.png, id=793, 1541.76pt x 1027.84pt>
+<images/Doppio_pozzo/DW_reaction.png, id=789, 1541.76pt x 1027.84pt>
 File: images/Doppio_pozzo/DW_reaction.png Graphic file (type png)
 <use images/Doppio_pozzo/DW_reaction.png>
 Package pdftex.def Info: images/Doppio_pozzo/DW_reaction.png  used on input line 17.
 (pdftex.def)             Requested size: 286.80241pt x 191.19821pt.
-<images/Doppio_pozzo/doppio.png, id=794, 399.7087pt x 374.69215pt>
+[49]
+<images/Doppio_pozzo/doppio.png, id=795, 399.7087pt x 374.69215pt>
 File: images/Doppio_pozzo/doppio.png Graphic file (type png)
 <use images/Doppio_pozzo/doppio.png>
 Package pdftex.def Info: images/Doppio_pozzo/doppio.png  used on input line 45.
 (pdftex.def)             Requested size: 200.76482pt x 188.1975pt.
-<images/Doppio_pozzo/armonici.png, id=795, 399.7087pt x 374.69215pt>
+<images/Doppio_pozzo/armonici.png, id=796, 399.7087pt x 374.69215pt>
 File: images/Doppio_pozzo/armonici.png Graphic file (type png)
 <use images/Doppio_pozzo/armonici.png>
-Package pdftex.def Info: images/Doppio_pozzo/armonici.png  used on input line 51.
+Package pdftex.def Info: images/Doppio_pozzo/armonici.png  used on input line 50.
 (pdftex.def)             Requested size: 200.76482pt x 188.1975pt.
- [50 <./images/Doppio_pozzo/DW_reaction.png (PNG copy)>]
-Overfull \hbox (21.26591pt too wide) detected at line 77
-[][][]\OMS/lmsy/m/n/12 h[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 x[]\OT1/lmr/m/n/12 )\OMS/lmsy/m/n/12 i \OT1/lmr/m/n/12 = [][] \OML/lmm/m/it/12 p\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 ^^@\OML/lmm/m/it/12 x[]; \OT1/lmr/bx/n/12 x[]\OT1/lmr/m/n/12 )  [](\OMS/lmsy/m/n/12 ^^@\OML/lmm/m/it/12 x[]\OT1/lmr/m/n/12 ) \OML/lmm/m/it/12 d\OT1/lmr/bx/n/12 x \OT1/lmr/m/n/12 = \OMS/lmsy/m/n/12 ^^@ [][] \OML/lmm/m/it/12 p\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 x[]; \OT1/lmr/bx/n/12 x[]\OT1/lmr/m/n/12 )  [](\OML/lmm/m/it/12 x[]\OT1/lmr/m/n/12 ) \OML/lmm/m/it/12 d\OT1/lmr/bx/n/12 x \OT1/lmr/m/n/12 = \OMS/lmsy/m/n/12 ^^@h[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 x[]\OT1/lmr/m/n/12 )\OMS/lmsy/m/n/12 i\OML/lmm/m/it/12 ;
- []
+ [50 <./images/Doppio_pozzo/DW_reaction.png (PNG copy)>] [51 <./images/Doppio_pozzo/doppio.png> <./images/Doppio_pozzo/armonici.png>]
+Underfull \vbox (badness 4752) has occurred while \output is active []
 
-[51 <./images/Doppio_pozzo/doppio.png> <./images/Doppio_pozzo/armonici.png>]
-<images/MCMC/thermalization_energies_D4_T150.00.png, id=818, 489.5088pt x 393.6306pt>
+ [52]
+<images/MCMC/thermalization_energies_D4_T150.00.png, id=830, 489.5088pt x 393.6306pt>
 File: images/MCMC/thermalization_energies_D4_T150.00.png Graphic file (type png)
 <use images/MCMC/thermalization_energies_D4_T150.00.png>
-Package pdftex.def Info: images/MCMC/thermalization_energies_D4_T150.00.png  used on input line 101.
-(pdftex.def)             Requested size: 368.74507pt x 296.51959pt.
- [52 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
-<images/MCMC/acceptance_vs_T.png, id=827, 499.1448pt x 393.6306pt>
+Package pdftex.def Info: images/MCMC/thermalization_energies_D4_T150.00.png  used on input line 122.
+(pdftex.def)             Requested size: 286.80241pt x 230.63034pt.
+ [53 <./images/MCMC/thermalization_energies_D4_T150.00.png>]
+<images/MCMC/acceptance_vs_T.png, id=838, 499.1448pt x 393.6306pt>
 File: images/MCMC/acceptance_vs_T.png Graphic file (type png)
 <use images/MCMC/acceptance_vs_T.png>
-Package pdftex.def Info: images/MCMC/acceptance_vs_T.png  used on input line 112.
+Package pdftex.def Info: images/MCMC/acceptance_vs_T.png  used on input line 135.
 (pdftex.def)             Requested size: 368.74507pt x 290.80157pt.
-<images/MCMC/E_mean_vs_T.png, id=828, 511.6716pt x 393.6306pt>
-File: images/MCMC/E_mean_vs_T.png Graphic file (type png)
-<use images/MCMC/E_mean_vs_T.png>
-Package pdftex.def Info: images/MCMC/E_mean_vs_T.png  used on input line 119.
-(pdftex.def)             Requested size: 368.74507pt x 283.6841pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [53 <./images/MCMC/acceptance_vs_T.png>]
-<images/MCMC/Cv_vs_T.png, id=835, 530.9436pt x 393.6306pt>
-File: images/MCMC/Cv_vs_T.png Graphic file (type png)
-<use images/MCMC/Cv_vs_T.png>
-Package pdftex.def Info: images/MCMC/Cv_vs_T.png  used on input line 126.
-(pdftex.def)             Requested size: 368.74507pt x 273.37727pt.
-<images/MCMC/Tau_vs_T.png, id=836, 501.072pt x 393.6306pt>
+<images/MCMC/Tau_vs_T.png, id=842, 501.072pt x 393.6306pt>
 File: images/MCMC/Tau_vs_T.png Graphic file (type png)
 <use images/MCMC/Tau_vs_T.png>
-Package pdftex.def Info: images/MCMC/Tau_vs_T.png  used on input line 133.
+Package pdftex.def Info: images/MCMC/Tau_vs_T.png  used on input line 146.
 (pdftex.def)             Requested size: 368.74507pt x 289.67839pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [54 <./images/MCMC/E_mean_vs_T.png> <./images/MCMC/Cv_vs_T.png>]
-<images/acceptance_vs_T_plot.png, id=845, 570.4512pt x 424.4658pt>
-File: images/acceptance_vs_T_plot.png Graphic file (type png)
-<use images/acceptance_vs_T_plot.png>
-Package pdftex.def Info: images/acceptance_vs_T_plot.png  used on input line 147.
-(pdftex.def)             Requested size: 368.74507pt x 274.38391pt.
+ [54 <./images/MCMC/acceptance_vs_T.png>]
+<images/MCMC/E_mean_vs_T.png, id=852, 511.6716pt x 393.6306pt>
+File: images/MCMC/E_mean_vs_T.png Graphic file (type png)
+<use images/MCMC/E_mean_vs_T.png>
+Package pdftex.def Info: images/MCMC/E_mean_vs_T.png  used on input line 157.
+(pdftex.def)             Requested size: 368.74507pt x 283.6841pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [55 <./images/MCMC/Tau_vs_T.png>]
-<images/E_vs_T_plot.png, id=852, 570.4512pt x 424.4658pt>
-File: images/E_vs_T_plot.png Graphic file (type png)
-<use images/E_vs_T_plot.png>
-Package pdftex.def Info: images/E_vs_T_plot.png  used on input line 154.
+<images/MCMC/Cv_vs_T.png, id=860, 530.9436pt x 393.6306pt>
+File: images/MCMC/Cv_vs_T.png Graphic file (type png)
+<use images/MCMC/Cv_vs_T.png>
+Package pdftex.def Info: images/MCMC/Cv_vs_T.png  used on input line 164.
+(pdftex.def)             Requested size: 368.74507pt x 273.37727pt.
+ [56 <./images/MCMC/E_mean_vs_T.png> <./images/MCMC/Cv_vs_T.png>]
+
+LaTeX Warning: Reference `sec:flow_mcmc' on page 57 undefined on input line 181.
+
+
+Overfull \hbox (12.83067pt too wide) in paragraph at lines 189--222
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [57]
+<images/acceptance_vs_T_plot.png, id=879, 570.4512pt x 424.4658pt>
+File: images/acceptance_vs_T_plot.png Graphic file (type png)
+<use images/acceptance_vs_T_plot.png>
+Package pdftex.def Info: images/acceptance_vs_T_plot.png  used on input line 231.
 (pdftex.def)             Requested size: 368.74507pt x 274.38391pt.
-<images/tau_vs_T_plot.png, id=853, 569.9694pt x 423.984pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [58]
+<images/tau_vs_T_plot.png, id=889, 569.9694pt x 423.984pt>
 File: images/tau_vs_T_plot.png Graphic file (type png)
 <use images/tau_vs_T_plot.png>
-Package pdftex.def Info: images/tau_vs_T_plot.png  used on input line 161.
+Package pdftex.def Info: images/tau_vs_T_plot.png  used on input line 242.
 (pdftex.def)             Requested size: 368.74507pt x 274.31183pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [56 <./images/acceptance_vs_T_plot.png> <./images/E_vs_T_plot.png>]
-<images/mean_sign_vs_T_plot.png, id=862, 570.4512pt x 424.4658pt>
-File: images/mean_sign_vs_T_plot.png Graphic file (type png)
-<use images/mean_sign_vs_T_plot.png>
-Package pdftex.def Info: images/mean_sign_vs_T_plot.png  used on input line 168.
+ [59 <./images/acceptance_vs_T_plot.png>]
+<images/E_vs_T_plot.png, id=897, 570.4512pt x 424.4658pt>
+File: images/E_vs_T_plot.png Graphic file (type png)
+<use images/E_vs_T_plot.png>
+Package pdftex.def Info: images/E_vs_T_plot.png  used on input line 251.
 (pdftex.def)             Requested size: 368.74507pt x 274.38391pt.
 
-Underfull \vbox (badness 1292) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [57 <./images/tau_vs_T_plot.png> <./images/mean_sign_vs_T_plot.png>]
-<images/E_vs_N_plot_T_100.0.png, id=871, 569.4876pt x 423.5022pt>
+ [60 <./images/tau_vs_T_plot.png>]
+<images/mean_sign_vs_T_plot.png, id=905, 570.4512pt x 424.4658pt>
+File: images/mean_sign_vs_T_plot.png Graphic file (type png)
+<use images/mean_sign_vs_T_plot.png>
+Package pdftex.def Info: images/mean_sign_vs_T_plot.png  used on input line 261.
+(pdftex.def)             Requested size: 368.74507pt x 274.38391pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [61 <./images/E_vs_T_plot.png>]
+<images/E_vs_N_plot_T_100.0.png, id=912, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_100.0.png>
-Package pdftex.def Info: images/E_vs_N_plot_T_100.0.png  used on input line 180.
+Package pdftex.def Info: images/E_vs_N_plot_T_100.0.png  used on input line 274.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
-<images/E_vs_N_plot_T_600.0.png, id=872, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_600.0.png, id=913, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_600.0.png>
-Package pdftex.def Info: images/E_vs_N_plot_T_600.0.png  used on input line 187.
+Package pdftex.def Info: images/E_vs_N_plot_T_600.0.png  used on input line 281.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
-<images/E_vs_N_plot_T_1100.0.png, id=873, 569.4876pt x 423.5022pt>
+<images/E_vs_N_plot_T_1100.0.png, id=914, 569.4876pt x 423.5022pt>
 File: images/E_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/E_vs_N_plot_T_1100.0.png>
-Package pdftex.def Info: images/E_vs_N_plot_T_1100.0.png  used on input line 195.
+Package pdftex.def Info: images/E_vs_N_plot_T_1100.0.png  used on input line 289.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
-<images/mean_sign_vs_N_plot_T_100.0.png, id=874, 569.4876pt x 423.5022pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [62 <./images/mean_sign_vs_T_plot.png>]
+<images/mean_sign_vs_N_plot_T_100.0.png, id=920, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_100.0.png>
-Package pdftex.def Info: images/mean_sign_vs_N_plot_T_100.0.png  used on input line 204.
+Package pdftex.def Info: images/mean_sign_vs_N_plot_T_100.0.png  used on input line 298.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
-<images/mean_sign_vs_N_plot_T_600.0.png, id=875, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_600.0.png, id=921, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_600.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_600.0.png>
-Package pdftex.def Info: images/mean_sign_vs_N_plot_T_600.0.png  used on input line 211.
+Package pdftex.def Info: images/mean_sign_vs_N_plot_T_600.0.png  used on input line 305.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
-<images/mean_sign_vs_N_plot_T_1100.0.png, id=876, 569.4876pt x 423.5022pt>
+<images/mean_sign_vs_N_plot_T_1100.0.png, id=922, 569.4876pt x 423.5022pt>
 File: images/mean_sign_vs_N_plot_T_1100.0.png Graphic file (type png)
 <use images/mean_sign_vs_N_plot_T_1100.0.png>
-Package pdftex.def Info: images/mean_sign_vs_N_plot_T_1100.0.png  used on input line 219.
+Package pdftex.def Info: images/mean_sign_vs_N_plot_T_1100.0.png  used on input line 313.
 (pdftex.def)             Requested size: 184.37253pt x 137.10667pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [58 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
-<images/x_distribution_T_100.0.png, id=886, 570.4512pt x 711.1368pt>
+ [63 <./images/E_vs_N_plot_T_100.0.png> <./images/E_vs_N_plot_T_600.0.png> <./images/E_vs_N_plot_T_1100.0.png>]
+<images/x_distribution_T_100.0.png, id=931, 570.4512pt x 711.1368pt>
 File: images/x_distribution_T_100.0.png Graphic file (type png)
 <use images/x_distribution_T_100.0.png>
-Package pdftex.def Info: images/x_distribution_T_100.0.png  used on input line 230.
+Package pdftex.def Info: images/x_distribution_T_100.0.png  used on input line 324.
 (pdftex.def)             Requested size: 163.8853pt x 204.30374pt.
-<images/x_distribution_T_600.0.png, id=887, 570.4512pt x 711.1368pt>
+<images/x_distribution_T_600.0.png, id=932, 570.4512pt x 711.1368pt>
 File: images/x_distribution_T_600.0.png Graphic file (type png)
 <use images/x_distribution_T_600.0.png>
-Package pdftex.def Info: images/x_distribution_T_600.0.png  used on input line 237.
+Package pdftex.def Info: images/x_distribution_T_600.0.png  used on input line 331.
 (pdftex.def)             Requested size: 163.8853pt x 204.30374pt.
-<images/x_distribution_T_1100.0.png, id=888, 570.4512pt x 711.1368pt>
+<images/x_distribution_T_1100.0.png, id=933, 570.4512pt x 711.1368pt>
 File: images/x_distribution_T_1100.0.png Graphic file (type png)
 <use images/x_distribution_T_1100.0.png>
-Package pdftex.def Info: images/x_distribution_T_1100.0.png  used on input line 245.
+Package pdftex.def Info: images/x_distribution_T_1100.0.png  used on input line 339.
 (pdftex.def)             Requested size: 163.8853pt x 204.30374pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>]
+ [64 <./images/mean_sign_vs_N_plot_T_100.0.png> <./images/mean_sign_vs_N_plot_T_600.0.png> <./images/mean_sign_vs_N_plot_T_1100.0.png>]
 Overfull \vbox (35.9996pt too high) has occurred while \output is active []
 
- [60 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
-<images/x_trajectory_T_100.0.png, id=905, 1251.7164pt x 852.3042pt>
+ [65 <./images/x_distribution_T_100.0.png> <./images/x_distribution_T_600.0.png> <./images/x_distribution_T_1100.0.png>]
+<images/x_trajectory_T_100.0.png, id=951, 1251.7164pt x 852.3042pt>
 File: images/x_trajectory_T_100.0.png Graphic file (type png)
 <use images/x_trajectory_T_100.0.png>
-Package pdftex.def Info: images/x_trajectory_T_100.0.png  used on input line 254.
+Package pdftex.def Info: images/x_trajectory_T_100.0.png  used on input line 348.
 (pdftex.def)             Requested size: 184.37253pt x 125.53821pt.
-<images/x_trajectory_T_600.0.png, id=906, 1251.7164pt x 852.3042pt>
+<images/x_trajectory_T_600.0.png, id=952, 1251.7164pt x 852.3042pt>
 File: images/x_trajectory_T_600.0.png Graphic file (type png)
 <use images/x_trajectory_T_600.0.png>
-Package pdftex.def Info: images/x_trajectory_T_600.0.png  used on input line 261.
+Package pdftex.def Info: images/x_trajectory_T_600.0.png  used on input line 355.
 (pdftex.def)             Requested size: 184.37253pt x 125.53821pt.
-<images/x_trajectory_T_1100.0.png, id=907, 1250.7528pt x 852.3042pt>
+<images/x_trajectory_T_1100.0.png, id=953, 1250.7528pt x 852.3042pt>
 File: images/x_trajectory_T_1100.0.png Graphic file (type png)
 <use images/x_trajectory_T_1100.0.png>
-Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 269.
+Package pdftex.def Info: images/x_trajectory_T_1100.0.png  used on input line 363.
 (pdftex.def)             Requested size: 184.37253pt x 125.62924pt.
-) (conclusione.tex [61 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>] [62
+) (conclusione.tex [66 <./images/x_trajectory_T_100.0.png> <./images/x_trajectory_T_600.0.png> <./images/x_trajectory_T_1100.0.png>]) (appendix.tex [67
 
-]) (appendix.tex [63] [64
+] [68
 
 ]
 Appendice A.
-) (thesis.bbl [65] [66
+) (thesis.bbl [69] [70
 
-] [67]) (ringraziamenti.tex [68]) [69
+] [71]) (ringraziamenti.tex [72]) [73
 
 ] (thesis.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D14AACA1BF1B9077A5FB6FDF9F4C36CB;7440.
+(rerunfilecheck)             Checksum: 68AD848CEAF2814B85EA5A62F0D88656;7440.
  ) 
 Here is how much of TeX's memory you used:
- 39619 strings out of 467871
- 834480 string characters out of 5418376
- 1274474 words of memory out of 5000000
- 67567 multiletter control sequences out of 15000+600000
+ 39625 strings out of 467871
+ 834574 string characters out of 5418376
+ 1275592 words of memory out of 5000000
+ 67568 multiletter control sequences out of 15000+600000
  720605 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 86i,17n,96p,1074b,1295s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,17n,96p,1371b,1295s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib7.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (78 pages, 11823404 bytes).
+Output written on thesis.pdf (82 pages, 11845303 bytes).
 PDF statistics:
- 1134 PDF objects out of 1200 (max. 8388607)
- 322 named destinations out of 1000 (max. 500000)
+ 1178 PDF objects out of 1200 (max. 8388607)
+ 327 named destinations out of 1000 (max. 500000)
  16044 words of extra memory for PDF output out of 17280 (max. 10000000)
 
