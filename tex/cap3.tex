@@ -1,14 +1,14 @@
 \chapter{Normalizing Flows}
 \label{ch:nf}
-In questo capitolo si introducono i Normalizing Flows, una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice in una distribuzione target complessa. La versatilità di questi modelli permette di utilizzarli sia per fare inferenza di dati sia per il campionamento diretto da una distribuzione.
+In questo capitolo si introducono i Normalizing Flows (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice in una distribuzione target complessa. La versatilità di questi modelli permette di utilizzarli sia per fare inferenza di dati sia per il campionamento diretto da una distribuzione.
 
-Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una Real NVP,ed il problema del loro addestramento(Sez. \ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
+Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real Non Volume Preserving} (Real NVP),ed il problema del loro addestramento(Sez. \ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
 \subsection{Cambio di variabili e funzioni invertibili}
 
-Un Normalizing Flow (NF) è una trasformazione $T$ che permette di esprimere una variabile aleatoria attraverso un'altra variabile aleatoria:
+Un Normalizing Flow (NF) è una trasformazione invertibile $T$ che permette di mappare una variabile aleatoria con distribuzione $p_Z$ in una nuova variable con distribuzione diversa semplicemente applicando T:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
@@ -122,31 +122,22 @@ Una proprietà delle trasformazioni invertibili e differenziabili è che sono \e
 \begin{equation}
     (T_2 \circ T_1)^{-1}= T^{-1}_1 \circ T^{-1}_2, \qquad \det J_{T_2 \circ T_1}(\mathbf{z})=\det J_{T_2}(T_1(\mathbf{z})) \det J_{T_1}(\mathbf{z}) 
 \end{equation}
-Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ T_1$ essendo invertibile e differenziabile può essere composta con una terza trasformazione $T_3$ e così via. Si può dunque creare un flow $T$ più complesso proprio tramite la consecutiva composizione di più trasformazioni. Due esempi sono mostrati in Figura \ref{fig:composizione}.
-\begin{figure}[tb]
+Questa proprietà non si ferma a sole due trasformazioni, ovviamente $T_2 \circ T_1$ essendo invertibile e differenziabile può essere composta con una terza trasformazione $T_3$ e così via. Si può dunque creare un flow $T$ più complesso proprio tramite la consecutiva composizione di più trasformazioni. Due esempi sono mostrati in Figura \ref{fig:T1_Tk}a.
+\begin{figure}[t]
     \centering
-    \includegraphics[width=1.0\textwidth]{images/NF/espressivita.png}
-    \\[0.5em]
-    \includegraphics[width=1.0\textwidth]{images/NF/Composizione.png}
-    \caption{Esempi dell'effetto della composizione di trasformazioni per creare flow espressivi. In entrambe le immagini si campiona una distribuzione di base gaussiana e si applica progressivamente una sequenza di trasformazioni $T_k$, ottenendo distribuzioni qualitativamente molto diverse dalla base.}
-    \label{fig:composizione}
+    \includegraphics[width=1.0\textwidth]{images/NF/T1_Tk.png}
+    \caption{$a:$ Esempio di composizione di trasformazioni per creare flow espressivo. Si campiona una distribuzione di base gaussiana e si applica progressivamente una sequenza di trasformazioni $T_k$, ottenendo distribuzioni qualitativamente molto diverse dalla base. $b:$ Rappresentazione di un flow composto da $K$ trasformazioni.}
+    \label{fig:T1_Tk}
 \end{figure}
 In generale si può creare un flow $T$ come composizione di $K$ trasformazioni invertibili e differenziabili
 \begin{equation}
     T = T_K \circ \dots \circ T_1.
 \end{equation}
-Come in Figura \ref{fig:T1_Tk} si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} \ k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
+Come in Figura \ref{fig:T1_Tk}b si indicano con $\mathbf{z}_k = T_k(\mathbf{z}_{k-1}) \ \ \text{per} \ k=1,2,\dots,K$, $\mathbf{z}_0=\mathbf{z}$ e $\mathbf{z}_K=\mathbf{x}=T(\mathbf{z}_0)$. 
 Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come somma di determinanti nel seguente modo:
 \begin{equation}
     \log |\det J_T(\mathbf{z}_0)| = \sum_{k=1}^{K} \log |\det J_{T_k}(\mathbf{z}_{k-1})|.
 \end{equation}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/NF/T1_Tk.png}
-    \caption{Rappresentazione di un flow composto da $K$ trasformazioni.}
-    \label{fig:T1_Tk}
-\end{figure}
 
 Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima è l'invertibilità, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
 
@@ -207,26 +198,12 @@ Resta da imporre l'invertibilità della trasformazione, necessaria per essere un
 La struttura autoregressiva permette quindi di ottenere trasformazioni con un Jacobiano di cui il determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
 simultaneamente. Si mostra in Figura \ref{fig:autoregressive} lo schema di calcolo per un autoregressive flow.
 Un vantaggio molto importante degli autoregressive flow è che le proprietà fondamentali per essere un flow sono a carico di $\tau$, mentre il condizionatore $c_i$ è un elemento di estrema libertà implementativa. Infatti su $c_i$ non vi è alcuna richiesta di invertibilità, questo ci permette di utilizzare una rete neurale (neural network o NN) come condizionatore.
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \includegraphics[width=1.0\textwidth]{images/NF/autoregressive.png}
     \caption{Rappresentazione grafica di un $T_k$ autoregressive flow composto dal condizionatore $c_i$ e dal trasformatore $\tau$. A sinistra la trasformazione e a destra la sua inversa. }
     \label{fig:autoregressive}
 \end{figure}
-Si mostra un esempio di autoregressive flow composto da otto trasformazioni che non utilizza NN nella sua definizione.
-\begin{example}{Autoregressive flow in 3D senza NN}{Au_3d}
-Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, definito dalla seguente trasformazione:
-\begin{align*}
-    x_1 &= z_1 \\
-    x_2 &= \sin(\theta_1 x_1^2 + \theta_2 x_1) + e^{\theta_3 x_1} z_2 \\
-    x_3 &= (\theta_4 x_1 + \theta_5 x_2) + e^{\theta_6 (x_1 - x_2)} z_3  \ .
-\end{align*}
-Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma in una distribuzione di probabilità complessa. Si mostrano in Figura \ref{auto_ex} gli istogrammi delle variabili $z_i$ in alto e $x_i$ in basso, dove sono stati usati i parametri $\boldsymbol{\theta}= \{1, 0.5, 0.01, 0.1, 0.1, 0.01\}$:
-\begin{center}
-    \includegraphics[width=1.0\textwidth]{images/NF/auto2_example.png}
-    \label{auto_ex}
-\end{center}
-\end{example}
 
 La costruzione di un autoregressive flow dipende dalla scelta del trasformatore e del condizionatore. Si riportano in Tabella \ref{tab:flow_construction_methods} le possibili scelte di questi elementi. Nella prossima sezione si discuterà una particolare implementazione di questa categoria di NF, ovvero una \emph{Real NVP}.
 
@@ -258,6 +235,20 @@ La costruzione di un autoregressive flow dipende dalla scelta del trasformatore 
     \label{tab:flow_construction_methods}
 \end{table}
 
+Si mostra un esempio di autoregressive flow composto da otto trasformazioni che non utilizza NN nella sua definizione.
+\begin{example}{Autoregressive flow in 3D senza NN}{Au_3d}
+Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, definito dalla seguente trasformazione:
+\begin{align*}
+    x_1 &= z_1 \\
+    x_2 &= \sin(\theta_1 x_1^2 + \theta_2 x_1) + e^{\theta_3 x_1} z_2 \\
+    x_3 &= (\theta_4 x_1 + \theta_5 x_2) + e^{\theta_6 (x_1 - x_2)} z_3  \ .
+\end{align*}
+Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma in una distribuzione di probabilità complessa. Si mostrano in Figura \ref{auto_ex} gli istogrammi delle variabili $z_i$ in alto e $x_i$ in basso, dove sono stati usati i parametri $\boldsymbol{\theta}= \{1, 0.5, 0.01, 0.1, 0.1, 0.01\}$:
+\begin{center}
+    \includegraphics[width=1.0\textwidth]{images/NF/auto2_example.png}
+    \label{auto_ex}
+\end{center}
+\end{example}
 \subsection{Real NVP}
 \label{sec:realnvp}
 Una architettura molto utilizzata per costruire Normalizing Flows è la \emph{Real NVP} (Real-valued Non-Volume Preserving), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una \emph{trasformazione affine}, i cui parametri sono calcolati da un condizionatore. Il condizionatore ha due caratteristiche principali: è una rete neurale ed ha una struttura di condizionamento chiamata \emph{coupling layer}.
@@ -278,7 +269,7 @@ Poiché la trasformazione agisce componente per componente, lo Jacobiano della t
 
 \paragraph*{Coupling Layer.}
 
-I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \emph{coupling layer}.
+I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale (NN) che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \emph{coupling layer}.
 
 Sia $\mathbf{z} \in \mathbb{R}^D$ e sia $d < D$ un indice di taglio (tipicamente $d = \lfloor D/2 \rfloor$). Un coupling layer divide $\mathbf{z}$ in due blocchi, $\mathbf{z}_{\leq d} = (z_1, \dots, z_d)$ e $\mathbf{z}_{>d} = (z_{d+1}, \dots, z_D)$, e definisce la trasformazione $\mathbf{z} \to \mathbf{z}'$ come segue:
 \begin{align}
@@ -293,13 +284,14 @@ Il primo blocco $\mathbf{z}_{\leq d}$ viene quindi lasciato \emph{invariato} e f
     \mathbf{z}_{>d} &= \big(\mathbf{z}'_{>d} - \mathbf{t}(\mathbf{z}_{\leq d})\big) \odot \exp\!\big(-\mathbf{s}(\mathbf{z}_{\leq d})\big).
     \label{eq:coupling_inverse}
 \end{align}
-Si noti che, a differenza dei flow autoregressivi generali, l'inversione di un coupling layer non richiede alcuna procedura sequenziale: tutte le componenti di $\mathbf{z}_{>d}$ vengono ricostruite \emph{simultaneamente}, poiché dipendono unicamente dal blocco $\mathbf{z}_{\leq d}$ già disponibile. Per lo stesso motivo, anche la valutazione in avanti (forward) è completamente parallelizzabile: il coupling layer è quindi \emph{computazionalmente simmetrico}, essendo ugualmente efficiente da valutare in entrambe le direzioni (Figura \ref{fig:coupling}).
-\begin{figure}[tb]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{images/NF/coupling_layers.png}
+    \includegraphics[width=0.9\textwidth]{images/NF/coupling_layers.png}
     \caption{Rappresentazione grafica di un $T_k$ per una Real NVP. Possiamo vedere la suddivisione del vettore $\mathbf{z}$ e il calcolo di $s$ e $t$ rispettivamente i fattori di scaling e translation. A sinistra la trasformazione e a destra la sua inversa. }
     \label{fig:coupling}
 \end{figure}
+
+Si noti che, a differenza dei flow autoregressivi generali, l'inversione di un coupling layer non richiede alcuna procedura sequenziale: tutte le componenti di $\mathbf{z}_{>d}$ vengono ricostruite \emph{simultaneamente}, poiché dipendono unicamente dal blocco $\mathbf{z}_{\leq d}$ già disponibile. Per lo stesso motivo, anche la valutazione in avanti (forward) è completamente parallelizzabile: il coupling layer è quindi \emph{computazionalmente simmetrico}, essendo ugualmente efficiente da valutare in entrambe le direzioni (Figura \ref{fig:coupling}).
 Lo Jacobiano della trasformazione Real NVP ha la seguente struttura triangolare inferiore:
 \begin{equation}
     J_{\phi} =
@@ -316,7 +308,10 @@ dove $\mathbf{I}_d$ è la matrice identità $d \times d$, $\mathbf{0}$ è la mat
 il che conferma che il costo di valutazione del log-determinante è lineare in $D$, indipendentemente dalla complessità delle reti $\mathbf{s}$ e $\mathbf{t}$.
 
 Un singolo coupling layer, tuttavia, lascia $\mathbf{z}_{\leq d}$ completamente invariato: per ottenere un flow espressivo è quindi necessario \emph{concatenare più coupling layer}, alternando a ogni passo quale sottoinsieme di componenti viene tenuto fisso. Tipicamente questo è ottenuto \emph{permutando} gli elementi a ogni passo in modo che ogni componente venga trasformata più volte nel corso del flow, ovviamente è necessario assicurarsi che alla fine di ogni trasformazione ogni componente sia nella sua posizione originale.
-Si riporta un semplice esempio bidimensionale di un flow che ha le caratteristiche principali di una Real NVP, tranne l'implementazione di $s$ e $t$ (che in una Real NVP sono delle NN), mentre in questo semplice esempio sono delle funzioni non lineari.
+
+La presenza delle NN nelle Real NVP non è un caso, ma è un elemento fondamentale: esse permettono al flow $T$ una maggiore espressività e una dipendenza da un numero maggiore di parametri $\boldsymbol{\theta}$, conferendo al flow la capacità di apprendere trasformazioni complesse. I parametri delle reti neurali devono essere determinati attraverso una procedura di addestramento. L'obiettivo è scegliere tali parametri in modo che la trasformazione appresa sia in grado di rappresentare in modo efficace la distribuzione di interesse. Nella prossima sezione si illustra come viene formulato il problema dell'addestramento di un NF.
+
+Prima, però, si riporta un semplice esempio bidimensionale di un flow che ha le caratteristiche principali di una Real NVP, tranne l'implementazione di $s$ e $t$ (che in una Real NVP sono delle NN), mentre nel seguente semplice esempio sono delle funzioni non lineari.
 
 \begin{example}{Coupling Layer Affine senza NN}{CLF}
 Consideriamo un flow bidimensionale definito dalle funzioni 
@@ -334,7 +329,6 @@ Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana 
     \label{fig:coupling_ex}
 \end{center}
 \end{example}
-La presenza delle NN nelle Real NVP non è un caso, ma è un elemento fondamentale: esse permettono al flow $T$ una maggiore espressività e una dipendenza da un numero maggiore di parametri $\boldsymbol{\theta}$, conferendo al flow la capacità di apprendere trasformazioni complesse. I parametri delle reti neurali devono essere determinati attraverso una procedura di addestramento. L'obiettivo è scegliere tali parametri in modo che la trasformazione appresa sia in grado di rappresentare in modo efficace la distribuzione di interesse. Nella prossima sezione si illustra come viene formulato il problema dell'addestramento di un NF.
 
 \section{Addestramento del flow}
 \label{sec:addestramento-flow}
@@ -406,19 +400,19 @@ Il valore atteso di un osservabile $O(\mathbf{x})$ rispetto alla distribuzione t
     \langle O \rangle_{p_X^*} \approx \frac{\displaystyle\sum_{n=1}^{N} w(\mathbf{x}_n)\, O(\mathbf{x}_n)}{\displaystyle\sum_{n=1}^{N} w(\mathbf{x}_n)},
     \label{eq:reweighting-estimator}
 \end{equation}
-che è uno stimatore asintoticamente di $\langle O \rangle_{p_X^*}$ per $N \to \infty$, indipendentemente da quanto bene $p_X(\mathbf{x};\boldsymbol{\theta})$ approssimi $p_X^*(\mathbf{x})$. Inoltre i pesi possono essere ridefiniti a meno della costante $Z$, poiché essa si semplifica nella stima di $\langle O \rangle_{p_X^*}$.
+che è uno stimatore senza bias di $\langle O \rangle_{p_X^*}$ per $N \to \infty$, indipendentemente da quanto bene $p_X(\mathbf{x};\boldsymbol{\theta})$ approssimi $p_X^*(\mathbf{x})$. Inoltre i pesi possono essere ridefiniti a meno della costante $Z$, poiché essa si semplifica nella stima di $\langle O \rangle_{p_X^*}$.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.68\textwidth]{images/NF/bg.png}
+    \includegraphics[width=0.77\textwidth]{images/NF/bg.png}
     \caption{Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}
     \label{fig:boltzmanngen}
 \end{figure}
-Se il flow approssima bene la distribuzione target, i pesi risultano circa uguali all'unità e ogni campione contribuisce in modo eguale alla stima; se invece il flow sottostima la probabilità di alcune regioni dello spazio delle configurazioni (ad esempio un modo poco rappresentato durante l'addestramento), pochi campioni con peso molto elevato possono comunque dominare la somma.
-Il metodo esposto che utilizza NF e re-weighting è un metodo del tutto generale, ma ha avuto un importante impatto per il campionamento della distribuzione di Boltzmann, infatti in letteratura prende anche il nome di \emph{Boltzmann Generator} (Noe et al.\cite{noe2019boltzmann} - Figura \ref{fig:boltzmanngen}).
+Se il flow approssima bene la distribuzione target, i pesi $w(\mathbf{x}_n)$ risultano circa uguali all'unità e ogni campione contribuisce in modo eguale alla stima; se invece il flow sottostima la probabilità di alcune regioni dello spazio delle configurazioni (ad esempio un modo poco rappresentato durante l'addestramento), pochi campioni con peso molto elevato possono comunque dominare la somma.
+Il metodo esposto che utilizza NF e re-weighting è un metodo del tutto generale, ma ha avuto un importante impatto per il campionamento della distribuzione di Boltzmann, e in letteratura prende anche il nome di \emph{Boltzmann Generator} (Noe et al.\cite{noe2019boltzmann} - Figura \ref{fig:boltzmanngen}).
 
 \subsection{Flow Markov Chain Monte Carlo}
 \label{subsec:flow-mcmc}
-Il campionamento tramite MCMC ha un vantaggio principale: la garanzia teorica di convergenza alla distribuzione target, assicurata dal soddisfacimento del bilancio dettagliato. Lo svantaggio è che tale garanzia vale solo asintoticamente: proposte locali esplorano lo spazio delle configurazioni con passi piccoli, il che rende la catena vulnerabile all'intrappolamento in un singolo modo, producendo campioni fortemente correlati e tempi di termalizzazione lunghi.
+Il campionamento tramite Markov Chain Monte Carlo (MCMC) ha un vantaggio principale: la garanzia teorica di convergenza alla distribuzione target, assicurata dal soddisfacimento del bilancio dettagliato. Lo svantaggio è che tale garanzia vale solo asintoticamente: proposte locali esplorano lo spazio delle configurazioni con passi piccoli, il che rende la catena vulnerabile all'intrappolamento in un singolo modo, producendo campioni fortemente correlati e tempi di termalizzazione lunghi.
 
 L'utilizzo del flow per il campionamento ha altri vantaggi: la capacità di produrre campioni tra loro indipendenti e potenzialmente distribuiti su tutti i modi della distribuzione. Lo svantaggio dell'uso di NF per il campionamento è che la qualità dei campioni generati dipende interamente dalla bontà dell'addestramento: la distribuzione di probabilità $p_X(\mathbf{x};\boldsymbol{\theta})$ ottenuta attraverso un NF approssima la distribuzione target $p_X^*(\mathbf{x})$ e non vi è garanzia che esse coincidano. 
 
@@ -492,6 +486,7 @@ La convergenza asintotica a $p_X^*(\mathbf{x})$ non dipende dalla qualità dell'
 Si può dimostrare la seguente affermazione
 \begin{equation}
     p_X(\mathbf{x};\boldsymbol{\theta}) \approx p_X^*(\mathbf{x}) \implies \mathcal{A} \approx 1.
+    \label{eq:ac_flow_mcmc}
 \end{equation}
 Partendo dal tasso di accettazione
 \begin{equation}
@@ -501,3 +496,18 @@ e utilizzando l'ipotesi di buon addestramento e ricordando $p_X^*(\mathbf{x}) = 
 \begin{equation}
    \mathcal{A}(\mathbf{x}_i, \mathbf{y}) \approx \min\left(1, \frac{p_X^*(\mathbf{x}_i)\, f(\mathbf{y})}{p_X^*(\mathbf{y})\, f(\mathbf{x}_i)}\right) = \min\left(1, 1 \right) = 1
 \end{equation}
+
+Inoltre si può dimostrare che se $p_X(\mathbf{x};\boldsymbol{\theta}) \approx p_X^*(\mathbf{x})$ allora il tempo di autocorrelazione integrato e la varianza della media raggiungono il minor valore possibile.
+Avendo dimostrato \ref{eq:ac_flow_mcmc} sappiamo che la catena è composta di campioni estratti in modo indipendente dal flow, questo comporta che la funzione di correlazione \ref{eq:cor} si annulli:
+\begin{equation}
+    \chi_{|i-j|} = \langle O(\mathbf{x}_i) O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle = \langle O(\mathbf{x}_i)\rangle \langle O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle = 0 .
+\end{equation}
+Ricordando la definizione di tempo di autocorrelazione integrato e il suo legame con la varianza della media:
+\begin{equation}
+    \tau^{\mathrm{int}}_O = \frac{1}{2} + \sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}, \qquad \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau^{\mathrm{int}}_O \right),
+\end{equation}
+si ottiene che per $p_X(\mathbf{x};\boldsymbol{\theta}) \approx p_X^*(\mathbf{x})$ il valore di $\tau^{\mathrm{int}}_O$ e $\sigma^2_{\bar{O}}$ sono i valori minimi:
+\begin{equation}
+    \tau^{\mathrm{int}}_O = \frac{1}{2}, \qquad \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N}.
+\end{equation}
+\'E importante notare come la formula per $\sigma^2_{\bar{O}}$ sia esattamente quella per campioni indipendenti.

@@ -28,10 +28,10 @@
 \contentsline {section}{\numberline {3.2}Costruire un flow}{34}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Composizione finita}{34}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Autoregressive flows}{36}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Real NVP}{39}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.3}Real NVP}{38}{subsection.3.2.3}%
 \contentsline {section}{\numberline {3.3}Addestramento del flow}{41}{section.3.3}%
-\contentsline {paragraph}{Divergenza KL forward.}{42}{paragraph*.17}%
-\contentsline {paragraph}{Divergenza KL reverse.}{42}{paragraph*.18}%
+\contentsline {paragraph}{Divergenza KL forward.}{42}{paragraph*.16}%
+\contentsline {paragraph}{Divergenza KL reverse.}{42}{paragraph*.17}%
 \contentsline {section}{\numberline {3.4}Campionamento con NF}{43}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Campionamento diretto e re-weithing}{43}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{45}{subsection.3.4.2}%
@@ -39,8 +39,8 @@
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{49}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{52}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{57}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Riflessioni finali}{69}{section.4.4}%
-\contentsline {chapter}{Conclusione}{71}{chapter*.38}%
-\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{73}{appendix.Alph1}%
-\contentsline {chapter}{Bibliografia}{76}{appendix*.39}%
-\contentsline {chapter}{Ringraziamenti}{77}{appendix*.40}%
+\contentsline {section}{\numberline {4.4}Riflessioni sui risultati}{68}{section.4.4}%
+\contentsline {chapter}{Conclusione}{69}{chapter*.37}%
+\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{71}{appendix.Alph1}%
+\contentsline {chapter}{Bibliografia}{74}{appendix*.38}%
+\contentsline {chapter}{Ringraziamenti}{75}{appendix*.39}%

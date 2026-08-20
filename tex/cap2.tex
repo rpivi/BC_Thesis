@@ -3,7 +3,7 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo si descrivono i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introduce il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discutere un metodo Monte Carlo di campionamento diretto (Sezione \ref{sec:metodo-inversa}) e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discute di un aspetto cruciale per Markov Chain Monte Carlo, ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni_autocorrelati}).
+In questo capitolo si descrivono i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introduce il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discutere un metodo Monte Carlo di campionamento diretto (Sezione \ref{sec:metodo-inversa}) e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discute di un aspetto cruciale per Markov Chain Monte Carlo (MCMC), ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni_autocorrelati}).
 
 \section{Cenni storici}
 \label{sec:storia}
@@ -262,12 +262,10 @@ Sostituendo la distribuzione di Boltzmann come distribuzione target otteniamo un
 \paragraph*{Autocorrelazione.}
 
 Essendo MCMC un metodo di campionamento non diretto, i campioni generati sono correlati fra loro. Questo impone una stima dell'errore più complicata del caso semplice di campioni indipendenti. Considerando un osservabile $O(\mathbf{x})$ siamo interessati al valore medio e alla varianza di quest'ultimo:
-
 \begin{equation}
     \langle O \rangle = \int_{\mathbb{R}^D} p(\mathbf{x}) O(\mathbf{x}) \ d \mathbf{x}, \quad \sigma^2_O = \langle O^2\rangle - \langle O \rangle ^2 .
 \end{equation}
 Possiamo stimare entrambe le quantità - come detto in precedenza - con il campionamento della distribuzione target $p(\mathbf{x})$. Utilizzando come stima la media aritmetica $\bar{O}$ per $N$ campioni estratti:
-
 \begin{equation}
     \bar{O} = \frac{1}{N}\sum_{i=1}^{N} O(\mathbf{x}_i), \quad  \sigma^2_{\bar{O}} = \langle {\bar{O}}^2\rangle - \langle \bar{O} \rangle ^2
 \end{equation} Per la legge dei grandi numeri, $\bar{O}$ converge a $\langle O \rangle$ per $N \to +\infty$. Il calcolo della varianza può essere riscritto, sviluppando il quadrato della media come doppia somma sugli indici $i,j$ e usando la linearità del valore atteso,
@@ -283,6 +281,7 @@ Possiamo stimare entrambe le quantità - come detto in precedenza - con il campi
 
 \begin{equation}
     \chi_{|i-j|} = \langle O(\mathbf{x}_i) O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle,
+    \label{eq:cor}
 \end{equation} che per un processo stazionario dipende solo dalla distanza temporale $|i-j|$ (e per cui vale $\chi_0 = \sigma^2_O$), la doppia somma può essere riscritta raggruppando i termini a parità di $k=|i-j|$. Poiché $\forall \ k \geq 1$ esistono $2(N-k)$ coppie $(i,j)$ con $|i-j|=k$, si ottiene:
 
 \begin{equation}
@@ -295,7 +294,6 @@ Possiamo stimare entrambe le quantità - come detto in precedenza - con il campi
 \begin{equation}
     \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau^{\mathrm{int}}_O \right).
 \end{equation} Questo risultato è generale e vale anche per campioni correlati, come nel caso di un campionamento markoviano. Se invece il campionamento fosse diretto, i campioni sarebbero statisticamente indipendenti e la funzione di correlazione si annullerebbe per $k \neq 0$:
-
 \begin{equation}
     \chi_{|i-j|} = 0 \ \ \forall\, i\neq j \implies \sigma^2_{\bar{O}} = \frac{\sigma^2_{O}}{N}.
 \end{equation} Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau^{\mathrm{int}}_O)$ per un metodo markoviano.
@@ -364,6 +362,12 @@ La scelta di $M$ rappresenta un compromesso tra bias e varianza: un valore di $M
     M \ge c\, \tau^{\mathrm{int}}_O(M),
 \end{equation}
 con $c$ una costante tipicamente compresa tra $4$ e $10$. Questo criterio richiede di calcolare $\tau_{\mathrm{int}\ O}(M)$ per valori crescenti di $M$ finché la condizione non è soddisfatta, ottenendo così sia una stima di $\tau^{\mathrm{int}}_O$ sia il criterio di arresto in un'unica procedura, senza dover fissare arbitrariamente $M$.
+
+Una volta determinato $M$ tramite il criterio della finestra automatica, è necessario associare un'incertezza statistica alla stima $\tau^{\mathrm{int}}_O(M)$. Sokal fornisce una formula approssimata per varianza dello stimatore:
+\begin{equation}
+    \text{var}(\tau^{\mathrm{int}}_O) \approx {\tau^{\mathrm{int}}_O(M)}^2 {\frac{2(2M+1)}{N}},
+\end{equation}
+dove $N$ è la lunghezza della catena.
 
 \blankpage
 
