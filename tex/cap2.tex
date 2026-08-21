@@ -293,6 +293,7 @@ Possiamo stimare entrambe le quantità - come detto in precedenza - con il campi
     \tau^{\mathrm{int}}_O = \frac{1}{2} + \sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0},
 \end{equation} la varianza dello stimatore assume la forma compatta
 \begin{equation}
+    \label{eq:var_tau}
     \sigma^2_{\bar{O}} = \frac{\sigma^2_O}{N} \left( 2\tau^{\mathrm{int}}_O \right).
 \end{equation} Questo risultato è generale e vale anche per campioni correlati, come nel caso di un campionamento markoviano. Se invece il campionamento fosse diretto, i campioni sarebbero statisticamente indipendenti e la funzione di correlazione si annullerebbe per $k \neq 0$:
 \begin{equation}
@@ -336,7 +337,6 @@ dove $m^*$ è la lunghezza di blocco oltre la quale i blocchi possono essere con
 
 Confrontando questa stima con la relazione generale tra varianza della media campionaria e tempo di autocorrelazione integrato, valida per $N\to\infty$,
 \begin{equation}
-    \label{eq:var_tau_int}
     \mathrm{Var}(\bar O) = \frac{2\,\tau^{\mathrm{int}}_O}{N}\, \mathrm{Var}(O),
 \end{equation}
 si ottiene la relazione tra il plateau di $R_O(m)$ e il tempo di autocorrelazione integrato:

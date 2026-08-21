@@ -88,9 +88,7 @@ P(\mathbf{x}\in\mathcal{A})
 Sia $p(\mathbf{x})$ la densità di probabilità della variabile aleatoria e $O(\mathbf{x})$ una funzione della variabile aleatoria, il valore di aspettazione di $O(\mathbf{x})$ è calcolabile tramite il seguente integrale:
 
 \begin{equation}
-\langle O(\mathbf{x})\rangle
-=
-\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x}) \ d\mathbf{x}.
+\langle O(\mathbf{x})\rangle_p=\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
 La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilmente risolvibile analiticamente o numericamente.
@@ -114,7 +112,7 @@ L'idea alla base dei metodi di campionamento consiste - anziché valutare la fun
 
 \begin{equation}
 \langle O(\mathbf{x})\rangle
-\approx
+\approx \bar{O} =
 \frac{1}{N}\sum_{i=1}^{N}O(\mathbf{x}_i).
 \label{eq:mc_estimator}
 \end{equation}
