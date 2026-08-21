@@ -83,6 +83,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}L'Algoritmo di Metropolis-Hastings}{24}{subsection.2.3.2}\protected@file@percent }
 \newlabel{subsec:metropolis}{{2.3.2}{24}{L'Algoritmo di Metropolis-Hastings}{subsection.2.3.2}{}}
 \newlabel{eq:proposta_gaussiana}{{2.24}{24}{L'Algoritmo di Metropolis-Hastings}{equation.2.24}{}}
+\newlabel{eq:ac_gauss}{{2.25}{24}{L'Algoritmo di Metropolis-Hastings}{equation.2.25}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces A destra l'algoritmo di Metropolis-Hastings per la generazione dello stato $\mathbf  {x}_{i+1}$. A sinistra l'iterazione dell'algoritmo partendo prima dell'estrazione da una distribuzione uniforme per il primo stato della catena, successivamente si utilizza l'algoritmo di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata.}}{25}{figure.caption.9}\protected@file@percent }
 \newlabel{fig:metropolis-hastings}{{2.2}{25}{A destra l'algoritmo di Metropolis-Hastings per la generazione dello stato $\mathbf {x}_{i+1}$. A sinistra l'iterazione dell'algoritmo partendo prima dell'estrazione da una distribuzione uniforme per il primo stato della catena, successivamente si utilizza l'algoritmo di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata}{figure.caption.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Campioni autocorrelati}{25}{section.2.4}\protected@file@percent }
@@ -167,15 +168,16 @@
 \newlabel{sec:potenziale_dw}{{4.1}{49}{Il potenziale doppio pozzo}{section.4.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Rappresentazione schematica di un profilo energetico con due stati metastabili separati da una barriera di potenziale per una reazione con uno stato di transizione.}}{50}{figure.caption.20}\protected@file@percent }
 \newlabel{fig:reazione}{{4.1}{50}{Rappresentazione schematica di un profilo energetico con due stati metastabili separati da una barriera di potenziale per una reazione con uno stato di transizione}{figure.caption.20}{}}
-\newlabel{eq:barrier_height}{{4.3}{50}{}{equation.4.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Profilo del potenziale e della distribuzione di Boltzmann: a sinistra per la coordinata lenta $x_1$, a destra per una coordinata veloce.}}{51}{figure.caption.21}\protected@file@percent }
 \newlabel{fig:potenziale_e_boltzmann}{{4.2}{51}{Profilo del potenziale e della distribuzione di Boltzmann: a sinistra per la coordinata lenta $x_1$, a destra per una coordinata veloce}{figure.caption.21}{}}
+\newlabel{eq:barrier_height}{{4.3}{51}{}{equation.4.3}{}}
 \newlabel{eq:double_well_potential}{{4.4}{51}{}{equation.4.4}{}}
-\newlabel{eq:sgn_zero}{{4.8}{51}{}{equation.4.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{52}{section.4.2}\protected@file@percent }
-\newlabel{sec:limiti_mcmc}{{4.2}{52}{Limiti di Markov Chain Monte Carlo}{section.4.2}{}}
+\newlabel{eq:sgn_zero}{{4.8}{52}{}{equation.4.8}{}}
+\newlabel{eq:ac_barrier}{{4.10}{52}{}{equation.4.10}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Parametri implementativi delle simulazioni MCMC.}}{53}{table.caption.22}\protected@file@percent }
 \newlabel{tab:mcmc_details}{{4.1}{53}{Parametri implementativi delle simulazioni MCMC}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{53}{section.4.2}\protected@file@percent }
+\newlabel{sec:limiti_mcmc}{{4.2}{53}{Limiti di Markov Chain Monte Carlo}{section.4.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf  {x}=(1,\dots  ,1)$ e una estratta da distribuzione normale standard.}}{54}{figure.caption.23}\protected@file@percent }
 \newlabel{fig:therm_T_D}{{4.3}{54}{Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf {x}=(1,\dots ,1)$ e una estratta da distribuzione normale standard}{figure.caption.23}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Tasso di accettazione in funzione della temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $\sigma =0.1$ (Tabella~\ref {tab:mcmc_details}).}}{55}{figure.caption.24}\protected@file@percent }

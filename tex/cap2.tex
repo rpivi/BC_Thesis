@@ -3,7 +3,7 @@
 
 I metodi Monte Carlo rappresentano una classe di tecniche numeriche che permettono di stimare quantità altrimenti inaccessibili per via analitica, sostituendo il calcolo esatto con una stima statistica basata sul campionamento casuale. In fisica statistica questo approccio è particolarmente prezioso: il calcolo di valori di aspettazione rispetto alla distribuzione di Boltzmann richiede in generale la valutazione di integrali in uno spazio delle configurazioni ad altissima dimensionalità, per cui le tecniche di quadratura deterministica diventano rapidamente inapplicabili. L'idea alla base del metodo — sostituire il calcolo esatto con una stima ottenuta da un numero sufficiente di "prove" — nacque in un contesto scientifico unico a livello storico, per poi diventare uno degli strumenti computazionali più importanti del Novecento.
 
-In questo capitolo si descrivono i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introduce il contesto storico in cui è nato il metodo (Sezione \ref{sec:storia}), per poi discutere un metodo Monte Carlo di campionamento diretto (Sezione \ref{sec:metodo-inversa}) e uno markoviano (Sezione \ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discute di un aspetto cruciale per Markov Chain Monte Carlo (MCMC), ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione \ref{sec:campioni_autocorrelati}).
+In questo capitolo si descrivono i concetti e gli algoritmi più importanti dei metodi Monte Carlo. Si introduce il contesto storico in cui è nato il metodo (Sezione~\ref{sec:storia}), per poi discutere un metodo Monte Carlo di campionamento diretto (Sezione~\ref{sec:metodo-inversa}) e uno markoviano (Sezione~\ref{sec:mcmc}), presentando prima le catene di Markov. Infine si discute di un aspetto cruciale per Markov Chain Monte Carlo (MCMC), ovvero la presenza di correlazione tra i campioni generati, che rende necessaria un'attenta analisi statistica per una corretta stima degli errori (Sezione~\ref{sec:campioni_autocorrelati}).
 
 \section{Cenni storici}
 \label{sec:storia}
@@ -16,11 +16,11 @@ la probabilità che l'ago intersechi una delle linee. Buffon non solo condusse l
 
 Alcuni anni dopo, Laplace osservò che questa stessa relazione poteva essere invertita per stimare $\pi$ a partire dalla frequenza empirica delle intersezioni: un primo esempio, seppur rudimentale e a convergenza lenta, di determinazione stocastica di una costante analitica a partire da un esperimento casuale \cite{laplace1886}.
 
-Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori elettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura \ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a John von Neumann (Figura \ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic Numerical Integrator And Computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
+Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori elettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura~\ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
+Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a John von Neumann (Figura~\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic Numerical Integrator And Computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
 Il nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (Figura \ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC. Noto anche con il nome \textit{Il carrello Monte Carlo}, il FERMIAC era un computer analogico che permetteva di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, diffusione e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
+Vi è inoltre un precursore del metodo: Enrico Fermi (Figura~\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC. Noto anche con il nome \textit{Il carrello Monte Carlo}, il FERMIAC era un computer analogico che permetteva di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, diffusione e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
 
 \begin{figure}[H]
     \centering
@@ -70,7 +70,7 @@ P\left(U \leq F_X(y)\right) = F_X(y),
 F_Y(y) = F_X(y).
 \end{equation} Pertanto $Y$ e $X$ hanno la stessa distribuzione.
 
-L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente Algoritmo \ref{alg:inverse_transform}:
+L'applicazione pratica del metodo dell'inversa per la generazione di $N$ campioni indipendenti è sintetizzata nel seguente Algoritmo~\ref{alg:inverse_transform}:
 
 \vspace{5mm}
 \begin{algorithm}[H]
@@ -158,12 +158,12 @@ P(\mathbf{x}_i|\mathbf{x}_1) & \cdots & P(\mathbf{x}_i|\mathbf{x}_j) & \cdots \\
     p_i = \sum_{j} P_{ij} p_j.
 \end{equation}
 Ovvero una distribuzione di probabilità che non viene più modificata iterando il procedimento (per questo detta stazionaria), inoltre essa è l'autovettore della matrice di transizione $P_{ij}$ con autovalore unitario.
-L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che si vuole campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo, garantendo la validità dell'Equazione \ref{eq:staz}.
+L'obiettivo di Markov Chain Monte Carlo è quello di costruire una catena di Markov che abbia come distribuzione stazionaria la distribuzione target $p_i$ che si vuole campionare. Per fare ciò è necessario costruire una matrice di transizione $P_{ij}$ costruita in un certo modo, garantendo la validità dell'Equazione~\ref{eq:staz}.
 Metropolis et al. (1953) proposero che fosse possibile ottenere una specifica distribuzione $p_i$ se la $P_{ij}$ soddisfa una certa condizione detta di \emph{bilancio dettagliato} (detailed balance condition): 
 \begin{equation}
     P_{ij} p_j = P_{ji} p_i.
 \end{equation}
-Sommando entrambi i membri su $i$ e sfruttando la stocasticità delle colonne di $P_{ij}$ (Equazione \ref{eq:normaliz}), si verifica facilmente che il bilancio dettagliato garantisce la stazionarietà ed è dunque una condizione \emph{sufficiente} ma non \emph{necessaria}.
+Sommando entrambi i membri su $i$ e sfruttando la stocasticità delle colonne di $P_{ij}$ (Equazione~\ref{eq:normaliz}), si verifica facilmente che il bilancio dettagliato garantisce la stazionarietà ed è dunque una condizione \emph{sufficiente} ma non \emph{necessaria}.
 
 Il formalismo matematico delle catene di Markov descritto per variabili discrete è estremamente flessibile e può essere generalizzato al caso continuo sostituendo la sommatoria con l'integrazione. Nel caso continuo, la distribuzione di probabilità stazionaria $p_i$ diventa una densità di probabilità 
 \begin{equation}
@@ -185,7 +185,7 @@ p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{
 \begin{example}{Meteo a tre stati}{markov-meteo}
 Consideriamo tre stati possibili: $x_1=$Sole, $x_2=$Nuvoloso e $x_3=$Pioggia; che rappresentano le tre condizioni meteorologiche possibili in un giorno. Sia $X_i$ la variabile aleatoria discreta che descrive la condizione meteorologica osservata al giorno $i$.
 
-Si assume che la sequenza $X_1, X_2, \dots, X_N$ costituisca una catena di Markov secondo la definizione data in Equazione \ref{eq:markov}: il tempo che farà domani dipende soltanto dal tempo di oggi. Questa è chiaramente un'approssimazione della realtà fisica.
+Si assume che la sequenza $X_1, X_2, \dots, X_N$ costituisca una catena di Markov secondo la definizione data in Equazione~\ref{eq:markov}: il tempo che farà domani dipende soltanto dal tempo di oggi. Questa è chiaramente un'approssimazione della realtà fisica.
 
 La matrice di transizione, che fornisce la probabilità di osservare lo stato $x_i$ il giorno successivo dato lo stato $x_j$ nel giorno corrente, è data da:
 \[
@@ -200,7 +200,7 @@ P(x_3 \mid x_1) & P(x_3 \mid x_2) & P(x_3 \mid x_3)
 0.1 & 0.3 & 0.5
 \end{pmatrix}
 \].
-La matrice d'esempio rispetta l'Equazione \ref{eq:normaliz}, ovvero che ogni colonna somma ad 1.
+La matrice d'esempio rispetta l'Equazione~\ref{eq:normaliz}, ovvero che ogni colonna somma ad 1.
 Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
 
 \begin{center}
@@ -208,7 +208,7 @@ Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
 \label{fig:markov_meteo}
 \end{center}
 
-Se oggi è nuvoloso, la distribuzione iniziale è $p^{(0)} = (0,\,1,\,0)^{\mathsf{T}}$, e la distribuzione di probabilità sul tempo di domani si ottiene applicando l'Equazione \ref{eq:evol}:
+Se oggi è nuvoloso, la distribuzione iniziale è $p^{(0)} = (0,\,1,\,0)^{\mathsf{T}}$, e la distribuzione di probabilità sul tempo di domani si ottiene applicando l'Equazione~\ref{eq:evol}:
 \[
 p^{(1)}_i = \sum_j P_{ij}\, p^{(0)}_j = \begin{pmatrix} 0.3 \\ 0.4 \\ 0.3 \end{pmatrix}.
 \]
@@ -231,7 +231,7 @@ Si dimostra che il kernel così costruito soddisfa la condizione di bilancio det
 \pi(\mathbf{x}, \mathbf{y}) \frac{f(\mathbf{y})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})} = \pi(\mathbf{y}, \mathbf{x}) \frac{f(\mathbf{x})}{\int \mathrm{d}\mathbf{x} \, f(\mathbf{x})}.
 \end{equation}
 
-A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la procedura descritta in Figura \ref{fig:metropolis-hastings} a destra. L'iterazione di questa operazione, dopo la necessaria termalizzazione, permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura \ref{fig:metropolis-hastings} a sinistra.
+A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1}$ a partire dallo stato corrente $\mathbf{x}_i$ segue la procedura descritta in Figura~\ref{fig:metropolis-hastings} a destra. L'iterazione di questa operazione, dopo la necessaria termalizzazione, permette di creare la catena di campioni distribuiti secondo la distribuzione target, questo procedimento è rappresentato graficamente in Figura~\ref{fig:metropolis-hastings} a sinistra.
 
 \begin{figure}[tb]
     \centering
@@ -247,6 +247,7 @@ Un caso comune prevede l'uso di uno spostamento gaussiano simmetrico, in cui:
 \end{equation}
 Poiché la proposta è simmetrica ($\Gamma(\mathbf{x} \to \mathbf{y}) = \Gamma(\mathbf{y} \to \mathbf{x})$), il tasso di accettazione si semplifica nel rapporto diretto tra le densità di target:
 \begin{equation}
+    \label{eq:ac_gauss}
 \mathcal{A}(\mathbf{x}_i, \mathbf{y}) = \min \left\{ 1, \, \frac{f(\mathbf{y})}{f(\mathbf{x}_i)} \right\}
 \end{equation}
 
@@ -298,7 +299,7 @@ Possiamo stimare entrambe le quantità - come detto in precedenza - con il campi
     \chi_{|i-j|} = 0 \ \ \forall\, i\neq j \implies \sigma^2_{\bar{O}} = \frac{\sigma^2_{O}}{N}.
 \end{equation} Il tempo di autocorrelazione integrato permette di quantificare l'inefficienza del metodo di campionamento: per avere la stessa informazione statistica di un insieme di $N$ campioni campionati direttamente è necessario campionarne $N(2\tau^{\mathrm{int}}_O)$ per un metodo markoviano.
 
-Rimane tuttavia da affrontare un problema pratico: $\tau^{\mathrm{int}}_O$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione \ref{eq:tau_int}) è computazionalmente costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \emph{blocking analysis} di Flyvbjerg e Petersen, che aggira il problema evitando una stima esplicita di $\tau^{\mathrm{int}}_O$, e il \emph{metodo della finestra automatica di Sokal}, che stima $\tau^{\mathrm{int}}_O$ direttamente ma con un criterio di troncamento autoconsistente.
+Rimane tuttavia da affrontare un problema pratico: $\tau^{\mathrm{int}}_O$ non è noto a priori e va stimato a partire dalla stessa serie di campioni di cui si vuole quantificare l'errore. Una stima diretta tramite la formula (Equazione~\ref{eq:tau_int}) è computazionalmente costosa e non sempre efficace, inoltre troncare la somma in modo arbitrario può causare stime sbagliate. Nel seguito si presentano due strategie complementari per affrontare questo problema: la \emph{blocking analysis} di Flyvbjerg e Petersen, che aggira il problema evitando una stima esplicita di $\tau^{\mathrm{int}}_O$, e il \emph{metodo della finestra automatica di Sokal}, che stima $\tau^{\mathrm{int}}_O$ direttamente ma con un criterio di troncamento autoconsistente.
 
 \paragraph*{Blocking Analysis.}
 
@@ -313,7 +314,7 @@ La media campionaria $\bar O$ è essa stessa una variabile aleatoria, la cui var
     \sigma^2_{\bar O} = \mathrm{Var}\!\left( \frac{1}{N} \sum_{i=1}^{N} O(\mathbf{x}_i)\right) = \mathrm{Var}\!\left( \frac{1}{N_{\mathrm{blocks}}} \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{O}_j \right), \ \ \bar{O}_j = \frac{1}{m} \sum_{i=(j-1)m+1}^{jm} O(\mathbf{x}_i),
 \end{equation}
 dove $\bar O_j$ è la media del $j$-esimo blocco.
-Applicando le proprietà della varianza (Equazione \ref{eq:prop_var}):
+Applicando le proprietà della varianza (Equazione~\ref{eq:prop_var}):
 \begin{equation}
     \sigma^2_{\bar O} = \frac{1}{N_{\mathrm{blocks}}^2}\, \mathrm{Var}\!\left( \sum_{j=1}^{N_{\mathrm{blocks}}} \bar{O}_j \right).
 \end{equation} Se la lunghezza di blocco $m$ è sufficientemente grande, le medie di blocchi distinti possono essere considerate approssimativamente indipendenti; in questo limite la varianza della somma coincide con la somma delle varianze:
@@ -347,13 +348,13 @@ Il valore $m^*$ non è mai noto a priori: viene determinato a posteriori individ
 
 \paragraph*{Metodo di Sokal.}
 
-Una stima diretta di $\tau^{\mathrm{int}}_O$ tramite l'Equazione \ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite il seguente stimatore
+Una stima diretta di $\tau^{\mathrm{int}}_O$ tramite l'Equazione~\ref{eq:tau_int} richiede il calcolo di $\chi_k$ per ogni ritardo $k$. Possiamo calcolare $\chi_k$ tramite il seguente stimatore
 \begin{equation}
     \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right),
 \end{equation} 
 che ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
 
-Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau^{\mathrm{int}}_O$ (Equazione \ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
+Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau^{\mathrm{int}}_O$ (Equazione~\ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
 \begin{equation}
     \tau^{\mathrm{int}}_O(M) = \frac{1}{2} + \sum_{k=1}^{M}\left(1-\frac{k}{N}\right)\frac{\chi_k}{\chi_0}.
 \end{equation}
