@@ -113,23 +113,24 @@ def acceptance_vs_T_plot(results_mcmc, results_mcmc_bg):
  
 def mean_sign_vs_T_plot(results_mcmc, results_bg, results_mcmc_bg):
     """
-    Plotta mean sign vs T per MCMC, Normalizing Flow e FLow-MCMC.
+    Plotta mean sign vs T per MCMC, Normalizing Flow e Flow-MCMC.
     """
-    plt.figure(figsize=(8, 6))
-    plt.plot(results_mcmc["T"], results_mcmc["mean_sign"], MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC')
-    plt.plot(results_bg["T"], results_bg["mean_sign"], MARKERS["BG"] + '-', color=COLORS["BG"], label='Normalizing Flow')
-    plt.plot(results_mcmc_bg["T"], results_mcmc_bg["mean_sign"], MARKERS["MCMC-BG"] + '-', color=COLORS["MCMC-BG"], label='FLow-MCMC')
- 
-    plt.xlabel('Temperature T [K]')
-    plt.ylabel('Mean Sign')
-    plt.title('Mean Sign vs Temperature')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig(OUT_DIR / "mean_sign_vs_T_plot.png", dpi=150, bbox_inches="tight")
-    plt.close()
- 
- 
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.plot( results_mcmc["T"], results_mcmc["mean_sign"], MARKERS["MCMC"] + '-', color=COLORS["MCMC"], label='MCMC')
+    ax.plot(results_bg["T"],results_bg["mean_sign"],MARKERS["BG"] + '-',color=COLORS["BG"],label='Normalizing Flow')
+    ax.plot(results_mcmc_bg["T"],results_mcmc_bg["mean_sign"],MARKERS["MCMC-BG"] + '-',color=COLORS["MCMC-BG"],label='Flow-MCMC')
+
+    ax.set_yscale("symlog", linthresh=0.01)
+    ax.set_xlabel('Temperature T [K]')
+    ax.set_ylabel('Mean Sign (symlog scale)')
+    ax.set_title('Mean Sign vs Temperature')
+
+    ax.legend()
+    ax.grid(True)
+    fig.tight_layout()
+    fig.savefig(OUT_DIR / "mean_sign_vs_T_plot.png", dpi=250,bbox_inches="tight")
+    plt.close(fig)
+
 def plot_loss_vs_T(results_bg):
     """
     Plotta la loss del Normalizing Flow (start vs last) per ogni temperatura.

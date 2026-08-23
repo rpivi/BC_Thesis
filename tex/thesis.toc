@@ -37,7 +37,7 @@
 \contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{47}{subsection.3.4.2}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{51}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{51}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{54}{section.4.2}%
+\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{55}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{59}{section.4.3}%
 \contentsline {chapter}{Conclusione}{71}{chapter*.39}%
 \contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{73}{appendix.Alph1}%
