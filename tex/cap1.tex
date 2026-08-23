@@ -1,5 +1,35 @@
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
+La determinazione delle proprietà macroscopiche di un sistema fisico a partire dalla sua descrizione microscopica costituisce l'obiettivo della meccanica statistica. Nel caso di un sistema all'equilibrio termico con un serbatoio a temperatura costante $T$, le probabilità dei microstati sono descritte dalla distribuzione di Boltzmann. 
+Il calcolo dei valori di aspettazione di generici osservabili fisici richiede la valutazione di integrali definiti sullo spazio delle configurazioni.
+Per sistemi con un numero elevato di gradi di libertà, tali integrali non sono generalmente calcolabili per via analitica. Al contempo, l'impiego di metodi di integrazione numerica risulta impraticabile a causa della crescita esponenziale del costo computazionale all'aumentare della dimensionalità del sistema. In questo contesto, i metodi Monte Carlo costituiscono lo più efficace: sostituiscono l'integrazione esatta con una stima statistica basata sulla media aritmetica di un numero finito $N$ di configurazioni campionate.
+
+La generazione di un campionamento rappresentativo della distribuzione di Boltzmann presenta forti ostacoli pratici. Il problema del campionamento diventa particolarmente critico quando il sistema presenta un paesaggio energetico complesso: la distribuzione di Boltzmann associata risulta multimodale e dunque caratterizzata da molteplici regioni di alta probabilità (modi) ben separate da regioni di bassa densità.
+
+Un metodo per campionare è Markov Chain Monte Carlo, comunemente implementato con l'algoritmo di Metropolis-Hastings con proposte di aggiornamento dello stato della catena di tipo locale. Sebbene Markov Chain Monte Carlo garantisca teoricamente la convergenza asintotica alla distribuzione target, la natura locale delle mosse limita fortemente l'efficienza della catena di Markov in contesti multimodali. Per attraversare una regione a bassa probabilità tramite piccoli spostamenti locali, la catena richiede tempi computazionali estremamente lunghi. Di conseguenza, la catena può rimanere intrappolata in un singolo modo per la quasi totalità della simulazione, portando a una scorretta valutazione dei valori medi degli osservabili.
+
+Lo sviluppo dell'apprendimento automatico e dei modelli generativi ha aperto nuove prospettive per superare le limitazioni di Markov Chain Monte Carlo. In particolare, i Normalizing Flows costituiscono una classe di modelli generativi basati su trasformazioni invertibili e differenziabili che mappano una distribuzione base semplice in un'approssimazione della distribuzione target. Un Normalizing Flow addestrato ad approssimare la distribuzione di Boltzmann consente di generare campioni in modo diretto, offrendo un campionamento in grado di esplorare globalmente lo spazio delle configurazioni.
+
+Tuttavia, l'impiego diretto dei Normalizing Flows non garantisce una stima esatta per via della possibile differenza fra distribuzione appresa e distribuzione target. Per tale motivo, i Normalizing Flows non vanno intesi come un sostituto di Markov Chain Monte Carlo, bensì come uno strumento per potenziarlo. Flow-MCMC è un approccio ibrido: la procedura di Metropolis-Hastings preserva la convergenza asintotica alla distribuzione target, mentre la distribuzione appresa dal Normalizing Flow viene utilizzata per generare proposte di aggiornamento, consentendo alla catena di compiere transizioni dirette tra modi separati dello spazio delle configurazioni.
+
+In questo lavoro di tesi viene condotta un'analisi comparativa tra i tre approcci di campionamento: il metodo Markov Chain Monte Carlo locale, il campionamento diretto tramite Normalizing Flow e l'approccio ibrido Flow-MCMC. 
+L'analisi viene svolta empiricamente su un sistema di test a potenziale a doppio pozzo, scelto specificamente per la bimodalità che induce sulla distribuzione di Boltzmann associata. Il confronto quantifica l'efficienza e la velocità di convergenza dei tre metodi al variare della temperatura $T$ del sistema e del numero di campioni $N$ generati. I risultati mostrano chiaramente che:
+\begin{itemize}
+    \item A basse temperature, il Markov Chain Monte Carlo locale soffre di un marcato fenomeno di intrappolamento, rimanendo confinato in un solo pozzo di potenziale.
+    \item I metodi basati sui Normalizing Flows riescono a esplorare in modo bilanciato entrambi i modi della distribuzione anche a basse temperature e dimostrano una convergenza più rapida, richiedendo meno campioni per stime accurate.
+\end{itemize}
+I risultati confermano quindi il vantaggio pratico, per il campionamento di distribuzioni multimodali, derivante dall'introduzione di mosse globali tramite Normalizing Flows rispetto alle classiche dinamiche markoviane locali.
+
+La tesi è strutturata nei seguenti capitoli:
+\begin{itemize}
+    \item \textbf{Capitolo~\ref{ch:stat_mecstat} - Probabilità e meccanica statistica}: introduce le nozioni fondamentali della teoria della probabilità, dell'ensemble canonico e della distribuzione di Boltzmann, unitamente a una classificazione concettuale delle strategie di campionamento: diretto e markoviano, mosse locali e mosse globali.
+    
+    \item \textbf{Capitolo~\ref{ch:mc} - Metodi Monte Carlo}: presenta una rassegna dei metodi stocastici per il campionamento, a partire dai cenni storici e dal metodo dell'inversa, per poi approfondire la teoria delle catene di Markov, l'algoritmo di Metropolis-Hastings e l'analisi dell'autocorrelazione tra campioni.
+    
+    \item \textbf{Capitolo~\ref{ch:nf} - Normalizing Flows}: descrive il formalismo teorico dei Normalizing Flows, l'espressività e la costruzione tramite composizione di trasformazioni, fino alla descrizione dell'architettura Real NVP. Essendo metodi generativi è presentato l'addestramento mediante divergenza di Kullback-Leibler. Infine si presentano gli utilizzi dei Normalizing Flow per metodi di campionamento.
+    
+    \item \textbf{Capitolo~\ref{ch:studio} - Studio del campionamento}: espone il sistema di test del potenziale a doppio pozzo, il setup dell'addestramento e la valutazione quantitativa del campionamento ottenuto tramite i tre metodi presi in esame: Markov Chain Monte Carlo, Normalizing Flows, Flow-MCMC.
+\end{itemize}
 
 \blankpage
 
@@ -97,7 +127,7 @@ Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basar
 \begin{example}{Metodo del trapezio}{trapezoid}
 Nel caso unidimensionale il metodo di quadratura approssima l'integrale di una funzione $f(x)$ su un intervallo $[a,b]$ mediante la formula:
 \begin{equation}
-\int_a^b f(x) \ dx \approx  \sum_{i}^{N} \int_{x_{i}-\epsilon}^{x_{i}+\epsilon} f(x) \ dx
+\int_a^b f(x) \ dx \approx  \sum_{i=1}^{N} \int_{x_{i}-\epsilon}^{x_{i}+\epsilon} f(x) \ dx
 \end{equation}
 dove $x_i$ sono i punti della griglia e $\epsilon$ è la metà della distanza tra due punti consecutivi.
 Il metodo del trapezio approssima ciascun integrale locale con l'area di un trapezio, sostituendo l'integrale con:
@@ -108,7 +138,7 @@ Il metodo del trapezio approssima ciascun integrale locale con l'area di un trap
 
 Se lo spazio delle configurazioni ha dimensione $D$ e si utilizzano $N$ punti per ciascuna direzione, il numero totale di valutazioni della funzione integranda cresce come $N^D$. Per sistemi con un numero elevato di gradi di libertà, come tipicamente accade in meccanica statistica, questa crescita esponenziale rende i metodi di quadratura del tutto inapplicabili. In questi casi, il problema del calcolo di valori di aspettazione può essere affrontato in maniera più efficiente mediante metodi di campionamento, che permettono di stimare l'integrale senza la necessità di discretizzare lo spazio delle configurazioni.
 
-L'idea alla base dei metodi di campionamento consiste - anziché valutare la funzione integranda su una griglia deterministica - nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare i valori di aspettazione mediante la media aritmetica:
+L'idea alla base dei metodi Monte Carlo consiste - anziché valutare la funzione integranda su una griglia deterministica - nel generare un insieme di configurazioni $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N\}$ distribuite secondo la densità di probabilità $p(\mathbf{x})$, e nello stimare i valori di aspettazione mediante la media aritmetica:
 
 \begin{equation}
 \langle O(\mathbf{x})\rangle
@@ -123,7 +153,7 @@ Per la legge dei grandi numeri la stima converge, per $N\rightarrow\infty$, al v
 \sigma_{\langle O \rangle} \sim \frac{\sigma_O}{\sqrt{N}},
 \end{equation} dove $\sigma_O$ è la deviazione standard di $O(\mathbf{x})$ rispetto a $p(\mathbf{x})$. 
 
-Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi di campionamento lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ di modo da poter stimare i valori di aspettazione. I metodi con cui è possibile generare questi campioni saranno oggetto dei capitoli successivi.
+Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamente dalla dimensione $D$ dello spazio delle configurazioni: è questa caratteristica a rendere i metodi Monte Carlo lo strumento privilegiato per lo studio di sistemi ad alta dimensionalità. Il problema è dunque generare un insieme di configurazioni distribuite secondo $p(\mathbf{x})$ in modo da poter stimare i valori di aspettazione. I metodi con cui è possibile generare questi campioni saranno oggetto dei capitoli successivi.
 
 \subsection{Distribuzioni unimodali e multimodali}
 
