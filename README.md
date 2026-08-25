@@ -5,7 +5,7 @@ Questo repository contiene il codice Python e l'analisi sviluppati per la tesi d
 - **Autore:** Riccardo Pivi
 - **Relatore:** Prof. Cesare Franchini
 - **Correlatore:** Dott. Luca Leoni
-
+📄 **Manoscritto:** [Clicca qui per consultare la tesi in formato PDF](tex/thesis.pdf)
 ---
 
 ## 📖 Descrizione del Progetto
