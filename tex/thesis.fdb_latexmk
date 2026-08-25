@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1787672426.59668 "thesis.aux" "thesis.bbl" "thesis" 1787673763.18519 0
+["bibtex thesis"] 1787672426.59668 "thesis.aux" "thesis.bbl" "thesis" 1787673821.07875 0
   "./Bibliografia.bib" 1787668546.56258 7386 2c7af0e375ce6bb09e8a236019664120 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1787673761.925 30078 4273ba90d31dc0471045804db6aad2f1 "pdflatex"
+  "thesis.aux" 1787673819.46621 30078 4273ba90d31dc0471045804db6aad2f1 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1787673753.16435 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1787673763.18622 0
+["pdflatex"] 1787673810.56564 "c:/Users/rickp/Desktop/GitHub/BC_Thesis/tex/thesis.tex" "thesis.pdf" "thesis" 1787673821.08105 0
   "C:/Users/rickp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1787219141.32866 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rickp/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774187969.78712 13333487 5170ba2ea8526befdeeb047bbdb0d2c5 ""
   "C:/Users/rickp/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -330,11 +330,11 @@
   "images/x_trajectory_T_100.0.png" 1787505205.11797 1097499 fd90a383746eea1ab0842d6433498e67 ""
   "images/x_trajectory_T_1100.0.png" 1787505196.85379 1342083 fdcc36651e940a3840dd7e259220789e ""
   "images/x_trajectory_T_600.0.png" 1787505201.36765 1397035 f596ce5dd3eebbc72c6887a13ed8b692 ""
-  "ringraziamenti.tex" 1787673759.72406 1506 87f2150f64bfefd8a97ceac8e94ebbfe ""
-  "thesis.aux" 1787673761.925 30078 4273ba90d31dc0471045804db6aad2f1 "pdflatex"
+  "ringraziamenti.tex" 1787673809.94833 1514 b4d6437c86a13f09fc1fdc5d209594fe ""
+  "thesis.aux" 1787673819.46621 30078 4273ba90d31dc0471045804db6aad2f1 "pdflatex"
   "thesis.bbl" 1787672427.01858 5300 92dc6d84fe842cf617854735e8f19166 "bibtex thesis"
-  "thesis.out" 1787673761.95861 7440 80428351895047b7080a86c8ee3dbe82 "pdflatex"
-  "thesis.toc" 1787673761.9934 3775 d3a40bd59a14d9c7922c0a1d0d0f386c "pdflatex"
+  "thesis.out" 1787673819.51625 7440 80428351895047b7080a86c8ee3dbe82 "pdflatex"
+  "thesis.toc" 1787673819.51625 3775 d3a40bd59a14d9c7922c0a1d0d0f386c "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
