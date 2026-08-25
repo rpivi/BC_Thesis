@@ -20,11 +20,11 @@ In questo progetto si esplora l'utilizzo dei **Normalizing Flows (NF)** (in part
 3. **Flow-MCMC (Approccio Ibrido):** Algoritmo Metropolis-Hastings con mosse globali proposte dal Normalizing Flow, che unisce la capacità di esplorazione globale dei modelli generativi con la correttezza ed ergodicità asintotica di MCMC.
 
 ### Sistema di Test
-Tutti i metodi vengono confrontati empiricamente su un sistema a **potenziale doppio pozzo (Double-Well Potential)**, scelto specificamente per la bimodalità indotta sulla distribuzione di Boltzmann associata, valutandone l'efficienza e la velocità diconvergenza al variare della temperatura $T$ e del numero di campioni $N$.
+Tutti i metodi vengono confrontati empiricamente su un sistema a **potenziale doppio pozzo (Double-Well Potential)**, scelto specificamente per la bimodalità indotta sulla distribuzione di Boltzmann associata, valutandone l'efficienza e la velocità diconvergenza al variare della temperatura e del numero di campioni.
 
 ---
 
 ## 📊 Risultati Principali
 
 - **Basse Temperature:** MCMC locale rimane sistematicamente intrappolato in una sola buca del potenziale doppio pozzo, fallendo nel campionare correttamente la distribuzione di Boltzmann.
-- **Normalizing Flow & Flow-MCMC:** Mantengono un'esplorazione bilanciata di entrambi i modi anche a basse temperature, garantendo tempi di autocorrelazione integrati ($	au^{int}$) significativamente inferiori e una convergenza più rapida ai valori di aspettazione teorici.
+- **Normalizing Flow & Flow-MCMC:** Mantengono un'esplorazione bilanciata di entrambi i modi anche a basse temperature, garantendo tempi di autocorrelazione integrati significativamente inferiori e una convergenza più rapida ai valori di aspettazione teorici.
