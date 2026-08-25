@@ -2,13 +2,13 @@
 \label{ch:nf}
 In questo capitolo si introducono i Normalizing Flows (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice in una distribuzione target complessa. La versatilità di questi modelli permette di utilizzarli sia per fare inferenza di dati sia per il campionamento diretto da una distribuzione.
 
-Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real Non Volume Preserving} (Real NVP),ed il problema del loro addestramento(Sez.~\ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
+Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real Non Volume Preserving} (Real NVP), ed il problema del loro addestramento(Sez.~\ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
 \subsection{Cambio di variabili e funzioni invertibili}
 
-Un Normalizing Flow (NF) è una trasformazione invertibile $T$ che permette di mappare una variabile aleatoria con distribuzione $p_Z$ in una nuova variable con distribuzione diversa semplicemente applicando T:
+Un Normalizing Flow è una trasformazione invertibile $T$ che permette di mappare una variabile aleatoria con distribuzione $p_Z$ in una nuova variable con distribuzione diversa semplicemente applicando T:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
@@ -52,7 +52,7 @@ p_X(x) = p_Z(T^{-1}(x)) \cdot \left| \frac{\mathrm{d}T^{-1}(x)}{\mathrm{d}x} \ri
 \]
 che corrisponde ancora a una distribuzione gaussiana $\mathcal{N}(b, a^2)$.
 
-In Figura~\ref{fig:ex_change} è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
+In figura è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il confronto tra la densità teorica di $x$ e l'istogramma dei campioni trasformati.
 
 \begin{center}
     \includegraphics[width=0.55\textwidth]{images/NF/change_of_var.png}
@@ -243,7 +243,7 @@ Consideriamo un autoregressive flow in 3 dimensioni $\mathbf{z}\to \mathbf{x}$, 
     x_2 &= \sin(\theta_1 x_1^2 + \theta_2 x_1) + e^{\theta_3 x_1} z_2 \\
     x_3 &= (\theta_4 x_1 + \theta_5 x_2) + e^{\theta_6 (x_1 - x_2)} z_3  \ .
 \end{align*}
-Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma in una distribuzione di probabilità complessa. Si mostrano in Figura~\ref{auto_ex} gli istogrammi delle variabili $z_i$ in alto e $x_i$ in basso, dove sono stati usati i parametri $\boldsymbol{\theta}= \{1, 0.5, 0.01, 0.1, 0.1, 0.01\}$:
+Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la distribuzione gaussiana base $z \sim \mathcal{N}(0, I_3)$ si trasforma in una distribuzione di probabilità complessa. Si mostrano in figura gli istogrammi delle variabili $z_i$ in alto e $x_i$ in basso, dove sono stati usati i parametri $\boldsymbol{\theta}= \{1, 0.5, 0.01, 0.1, 0.1, 0.01\}$:
 \begin{center}
     \includegraphics[width=1.0\textwidth]{images/NF/auto2_example.png}
     \label{auto_ex}
@@ -269,7 +269,7 @@ Poiché la trasformazione agisce componente per componente, lo Jacobiano della t
 
 \paragraph*{Coupling Layer.}
 
-I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale (NN) che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \emph{coupling layer}.
+I parametri $s_i, t_i$ non sono a loro volta parametri liberi, ma sono prodotti da un \emph{condizionatore}: una rete neurale che riceve in ingresso solo una parte delle componenti di $\mathbf{z}$ e restituisce in uscita i parametri della trasformazione affine per le componenti rimanenti. Questa costruzione prende il nome di \emph{coupling layer}.
 
 Sia $\mathbf{z} \in \mathbb{R}^D$ e sia $d < D$ un indice di taglio (tipicamente $d = \lfloor D/2 \rfloor$). Un coupling layer divide $\mathbf{z}$ in due blocchi, $\mathbf{z}_{\leq d} = (z_1, \dots, z_d)$ e $\mathbf{z}_{>d} = (z_{d+1}, \dots, z_D)$, e definisce la trasformazione $\mathbf{z} \to \mathbf{z}'$ come segue:
 \begin{align}
@@ -322,7 +322,7 @@ applicate secondo la trasformazione affine
 \[
 x_1 = z_1, \qquad x_2 = z_2\, e^{s(z_1)} + t(z_1).
 \]
-Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione con parametri $\boldsymbol{\theta}=\{0.5,0.6,1\}$. La Figura~\ref{fig:coupling_ex} mostra l'effetto sulla distribuzione base della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poiché non si sono svolte permutazioni e dunque la prima variabile è rimasta invariata durante tutte le trasformazioni.
+Partendo da un campione $\mathbf{z} \in \mathbb{R}^2$ estratto da una gaussiana standard bidimensionale, applichiamo la trasformazione con parametri $\boldsymbol{\theta}=\{0.5,0.6,1\}$. La figura mostra l'effetto sulla distribuzione base della ripetuta applicazione della trasformazione: la deformazione avviene solo sulla seconda variabile, poiché non si sono svolte permutazioni e dunque la prima variabile è rimasta invariata durante tutte le trasformazioni.
 
 \begin{center}
     \includegraphics[width=1.0\textwidth]{images/NF/coupling_af_example.png}
@@ -404,7 +404,7 @@ che è uno stimatore senza bias di $\langle O \rangle_{p_X^*}$ per $N \to \infty
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.77\textwidth]{images/NF/bg.png}
-    \caption{Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target.}
+    \caption{Boltzmann Generator: utilizza NF e re-weighting per campionare la distribuzione di Boltzmann. Nella figura si mostrano i passi di questo metodo e due configurazioni di una proteina rappresentati due modi distinti della distribuzione target. Figura tratta da \cite{noe2019boltzmann}.}
     \label{fig:boltzmanngen}
 \end{figure}
 Se il flow approssima bene la distribuzione target, i pesi $w(\mathbf{x}_n)$ risultano circa uguali all'unità e ogni campione contribuisce in modo eguale alla stima; se invece il flow sottostima la probabilità di alcune regioni dello spazio delle configurazioni (ad esempio un modo poco rappresentato durante l'addestramento), pochi campioni con peso molto elevato possono comunque dominare la somma.

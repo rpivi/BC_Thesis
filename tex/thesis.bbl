@@ -33,6 +33,16 @@ Nicholas Metropolis.
 \newblock The beginning of the monte carlo method.
 \newblock {\em Los Alamos Science}, Special Issue, 1987.
 
+\bibitem{rosenbluth2003}
+Marshall~N. Rosenbluth.
+\newblock Genesis of the monte carlo algorithm for statistical mechanics.
+\newblock {\em AIP Conference Proceedings}, 690, 2003.
+
+\bibitem{georgescu2023}
+Iulia Georgescu.
+\newblock Fair statistics.
+\newblock {\em Nature Reviews Physics}, 5, 2023.
+
 \bibitem{kalos2008montecarlo}
 Malvin~H. Kalos and Paula~A. Whitlock.
 \newblock {\em Monte Carlo Methods}.
@@ -49,6 +59,11 @@ Luca Leoni.
 \newblock Master's thesis, University of Bologna, Department of Physics and
   Astronomy, Bologna, Italy, 2023.
 \newblock Supervisor: Prof. Cesare Franchini. Academic Year 2022/2023.
+
+\bibitem{Leoni2024}
+Luca Leoni and Cesare Franchini.
+\newblock Global sampling of {F}eynman's diagrams through normalizing flow.
+\newblock {\em Physical Review Research}, 6(3), 2024.
 
 \bibitem{metropolis1953equation}
 Nicholas Metropolis, Arianna~W. Rosenbluth, Marshall~N. Rosenbluth, Augusta~H.

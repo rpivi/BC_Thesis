@@ -7,37 +7,36 @@ In questo capitolo si descrivono i concetti e gli algoritmi più importanti dei 
 
 \section{Cenni storici}
 \label{sec:storia}
-
-L'idea che un processo casuale possa essere utilizzato per stimare una quantità analitica non è nuova al Novecento. Il primo esempio documentato risale al 1777, quando Georges-Louis Leclerc, conte di Buffon, propose il celebre esperimento dell'ago \cite{buffon1777}: un ago di lunghezza $L$ viene lanciato a caso su un piano rigato da linee parallele distanti $d > L$, e si chiede
-la probabilità che l'ago intersechi una delle linee. Buffon non solo condusse l'esperimento fisicamente, lanciando l'ago numerose volte, ma ne derivò anche la soluzione analitica
+L'idea che un processo casuale possa essere utilizzato per stimare una quantità analitica non è nuova al Novecento. Il primo esempio documentato risale al 1777, quando Georges-Louis Leclerc, conte di Buffon, propose il celebre esperimento dell'ago \cite{buffon1777}: un ago di lunghezza $L$ viene lanciato a caso su un piano rigato da linee parallele distanti $d > L$, e si chiede la probabilità che l'ago intersechi una delle linee. Il conte condusse l'esperimento fisicamente e ne derivò anche la soluzione analitica
 \begin{equation}
     P = \frac{2L}{\pi d}.
 \end{equation}
+Alcuni anni dopo, Laplace osservò che questa relazione poteva essere invertita per stimare $\pi$ a partire dalla frequenza empirica delle intersezioni: un primo esempio, seppur rudimentale, di determinazione stocastica di una costante analitica a partire da un esperimento casuale \cite{laplace1886}.
 
-Alcuni anni dopo, Laplace osservò che questa stessa relazione poteva essere invertita per stimare $\pi$ a partire dalla frequenza empirica delle intersezioni: un primo esempio, seppur rudimentale e a convergenza lenta, di determinazione stocastica di una costante analitica a partire da un esperimento casuale \cite{laplace1886}.
+Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori elettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura~\ref{fig:ulam}) durante una partita di solitario: la frustrazione nel calcolare analiticamente la probabilità di vincere lo portò a realizzare che una buona stima sarebbe stata possibile evitando del tutto i calcoli, semplicemente giocando molte partite e segnandosi vittorie e sconfitte. L'idea si estese presto alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali per ottenere stime accurate delle quantità cercate. Ulam lavorava allora con John von Neumann (Figura~\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic Numerical Integrator And Computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastico per simulare computazionalmente il trasporto dei neutroni attraverso un materiale fissile. I due svilupparono una procedura stocastica per simulare il trasporto dei neutroni attraverso un materiale fissile. Il nome "Monte Carlo", ispirato al celebre casinò monegasco, fu proposto nel 1947 da Nicholas Constantine Metropolis \cite{metropolis1987beginning} per canzonare Ulam, che aveva uno zio con il vizio del gioco d'azzardo.
 
-Fu tuttavia solo nel XX secolo, con l'avvento dei primi calcolatori elettronici, che questa intuizione si trasformò in un metodo computazionale sistematico. Il metodo Monte Carlo, nella forma in cui lo intendiamo oggi, nacque da un'idea di Stanisław Ulam (Figura~\ref{fig:ulam}) - fisico e matematico polacco naturalizzato statunitense - durante una partita di solitario. La frustrazione del matematico nel cercare di calcolare analiticamente la probabilità di vincere una partita lo portò a realizzare che una buona stima di quest'ultima sarebbe stata possibile evitando completamente i calcoli. 
-Ulam capì che, se avesse giocato un numero sufficiente di partite, avrebbe potuto stimarla segnandosi quante di queste prove avrebbe vinto o perso. L'idea dal semplice gioco si spostò poi alla risoluzione di problemi di matematica e fisica: con i primi computer elettronici sarebbe stato possibile simulare un sistema generando campioni virtuali dello stesso così da ottenere stime accurate delle quantità ricercate. All'epoca Ulam lavorava assieme a John von Neumann (Figura~\ref{fig:von-neumann}) presso il Los Alamos National Laboratory, che durante la seconda guerra mondiale era un centro di ricerca segreto per lo sviluppo della prima bomba nucleare. Qui era stato costruito l'ENIAC (Electronic Numerical Integrator And Computer) uno dei primi computer elettronici digitali general purpose della storia. I due scienziati lavorarono ad una procedura stocastica basata sull'idea del matematico polacco per simulare il trasporto dei neutroni attraverso un materiale fissile. 
-Il nome "Monte Carlo" fu proposto nel 1947 da un altro celebre fisico del gruppo, Nicholas Constantine Metropolis \cite{metropolis1987beginning}. La scelta del nome, ispirata al celebre casinò situato nel Principato di Monaco, nacque per canzonare Ulam, il quale aveva uno zio con il vizio del gioco d'azzardo.
+Un precursore del metodo fu Enrico Fermi (Figura~\ref{fig:fermi}): Metropolis scoprì, parlando con Emilio Segrè, che Fermi aveva ideato indipendentemente un metodo basato sul campionamento statistico quindici anni prima. Partecipando al progetto Manhattan, Fermi costruì infatti con Percy King il FERMIAC, un computer analogico noto come \textit{il carrello Monte Carlo}, capace di simulare genealogie di neutroni --- collisioni, diffusione, fissioni --- tramite numeri pseudo-casuali.
 
-Vi è inoltre un precursore del metodo: Enrico Fermi (Figura~\ref{fig:fermi}). Metropolis parlando con Emilio Segrè scoprì che Fermi aveva già ideato, in modo del tutto indipendente, un metodo basato sul campionamento statistico quindici anni prima di loro. Lo stesso Fermi infatti partecipando al progetto Manhattan (1942-1946) aiutò nello studio del trasporto dei neutroni costruendo insieme a Percy King il FERMIAC. Noto anche con il nome \textit{Il carrello Monte Carlo}, il FERMIAC era un computer analogico che permetteva di sviluppare genealogie di neutroni in due dimensioni, o modelli di comportamento di neutroni individuali, comprendenti ciascuno collisioni, diffusione e fissioni. In ogni fase venivano usati numeri pseudo-casuali per ricavare le decisioni che influenzano il comportamento di ciascun neutrone.
-
+\'E importante ricordare anche un merito meno noto dell'algoritmo di Metropolis, pubblicato nel 1953 a firma dei coniugi Rosenbluth, dei coniugi Teller e di Metropolis. Il resoconto che Marshall Rosenbluth ne diede per il cinquantesimo anniversario \cite{rosenbluth2003} attribuisce a Metropolis un ruolo marginale, mentre l'implementazione algoritmica fu opera quasi interamente di Arianna Rosenbluth. Solo di recente il suo contributo ha ricevuto un riconoscimento più ampio \cite{georgescu2023}.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.29\textwidth}
-        \includegraphics[width=\textwidth]{images/MCMC/ulam.jpg}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[height=4.8cm, width=\textwidth, keepaspectratio]{images/MCMC/ulam.jpg}
         \caption{Stanisław Ulam e il FERMIAC.}
         \label{fig:ulam}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.36\textwidth}
-        \includegraphics[width=\textwidth]{images/MCMC/Von-Neumann-1000.jpg}
+    \begin{subfigure}[t]{0.332\textwidth}
+        \centering
+        \includegraphics[height=4.8cm, width=\textwidth, keepaspectratio]{images/MCMC/Von-Neumann-1000.jpg}
         \caption{Von Neumann.}
         \label{fig:von-neumann}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.29\textwidth}
-        \includegraphics[width=\textwidth]{images/MCMC/fermi.jpg}
+    \begin{subfigure}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[height=4.8cm, width=\textwidth, keepaspectratio]{images/MCMC/fermi.jpg}
         \caption{Enrico Fermi.}
         \label{fig:fermi}
     \end{subfigure}
@@ -47,7 +46,7 @@ Vi è inoltre un precursore del metodo: Enrico Fermi (Figura~\ref{fig:fermi}). M
 
 \section{Metodo dell'inversa}
 \label{sec:metodo-inversa}
-Il metodo dell'inversa (o \textit{inverse transform sampling}) è una tecnica di campionamento \textit{diretto}: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$ \cite{kalos2008montecarlo}.
+Il metodo dell'inversa è una tecnica di campionamento \textit{diretto}: essa consente di generare campioni distribuiti secondo una generica densità di probabilità unidimensionale $p_X(x)$ a partire da una variabile aleatoria distribuita uniformemente nell'intervallo $[0, 1]$ \cite{kalos2008montecarlo}.
 
 Sia $X$ una variabile aleatoria continua con funzione di distribuzione cumulativa $F_X(x) = P(X \leq x)$ strettamente monotona e continua, tale da ammettere una funzione inversa $F_X^{-1}: (0,1) \to \mathbb{R}$. Sia inoltre $U \sim \mathcal{U}(0,1)$ una variabile aleatoria uniforme sull'intervallo $(0,1)$.
 Si consideri la variabile aleatoria definita dalla trasformazione inversa:
@@ -56,7 +55,7 @@ Y = F_X^{-1}(U).
 \end{equation} Per definizione di funzione di distribuzione cumulativa:
 \begin{equation}
 F_Y(y) = P(Y \leq y) = P\left(F_X^{-1}(U) \leq y\right).
-\end{equation} Poiché $F_X(x)$ è per ipotesi strettamente monotona crescente,$F_X(x)$ preserva il verso delle disuguaglianze: applicando $F_X$ ad entrambi i membri della disuguaglianza $F_X^{-1}(U) \leq y$ si ottiene una disuguaglianza equivalente,
+\end{equation} Poiché $F_X(x)$ è per ipotesi strettamente monotona crescente, $F_X(x)$ preserva il verso delle disuguaglianze: applicando $F_X$ ad entrambi i membri della disuguaglianza $F_X^{-1}(U) \leq y$ si ottiene una disuguaglianza equivalente,
 \begin{equation}
 F_X^{-1}(U) \leq y \quad \Longleftrightarrow \quad F_X\!\left(F_X^{-1}(U)\right) \leq F_X(y).
 \end{equation} Per definizione di funzione inversa, $F_X\!\left(F_X^{-1}(U)\right) = U$; sostituendo questa identità nella probabilità si ha dunque:
@@ -171,7 +170,7 @@ p(\mathbf{x}) = \frac{f(\mathbf{x})}{\int_{\mathbb{R}^D}f(\mathbf{x})\ d \mathbf
 \end{equation} e la matrice di transizione $P_{ij}$ viene sostituita da un kernel di transizione continuo:
 \begin{equation}
     \pi \colon \mathbb{R}^D \times \mathbb{R}^D \to \mathbb{R}^+
-\end{equation} che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
+\end{equation} che definisce la probabilità di transizione tra stati dello spazio continuo  \cite{leoni2023enhancing} \cite{Leoni2024}. L'evoluzione ricorsiva della distribuzione al passo $(i+1)$ assume quindi la forma:
 \begin{equation}
 p^{(i+1)}(\mathbf{x}) = \int_{\mathbb{R}^D} \mathrm{d}\mathbf{y} \, \pi(\mathbf{x}, \mathbf{y}) \, p^{(i)}(\mathbf{y})
 \end{equation} Per garantire che la catena converga a una specifica distribuzione stazionaria di target $p(\mathbf{x})$, il kernel di transizione deve soddisfare la condizione di bilancio dettagliato:
@@ -201,7 +200,7 @@ P(x_3 \mid x_1) & P(x_3 \mid x_2) & P(x_3 \mid x_3)
 \end{pmatrix}
 \].
 La matrice d'esempio rispetta l'Equazione~\ref{eq:normaliz}, ovvero che ogni colonna somma ad 1.
-Il grafo delle transizioni è illustrato in Figura~\ref{fig:markov_meteo}.
+Il grafo delle transizioni è illustrato in figura.
 
 \begin{center}
 \includegraphics[width=0.85\textwidth]{images/MCMC/markov_meteo_tre_stati.png}
@@ -236,7 +235,7 @@ A livello computazionale, il procedimento per generare lo stato $\mathbf{x}_{i+1
 \begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\textwidth]{images/MCMC/mcmc_algo.png}
-    \caption{A destra l'algoritmo di Metropolis-Hastings per la generazione dello stato $\mathbf{x}_{i+1}$. A sinistra l'iterazione dell'algoritmo partendo prima dell'estrazione da una distribuzione uniforme per il primo stato della catena, successivamente si utilizza l'algoritmo di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata.}
+    \caption{A destra l'algoritmo di Metropolis-Hastings per la generazione dello stato $\mathbf{x}_{i+1}$. A sinistra l'iterazione dell'algoritmo partendo prima dell'estrazione da una distribuzione uniforme per il primo stato della catena, successivamente si utilizza l'algoritmo di cui si possono vedere i passi locali accettati e rifiutati. Infine i campioni generati seguono la distribuzione stazionaria ricercata. Immagine tratta da \cite{leoni2023enhancing}. }
     \label{fig:metropolis-hastings}
 \end{figure}
 
@@ -352,7 +351,7 @@ Una stima diretta di $\tau^{\mathrm{int}}_O$ tramite l'Equazione~\ref{eq:tau_int
 \begin{equation}
     \chi_k = \frac{1}{N-k}\sum_{i=1}^{N-k} \left(O(\mathbf{x}_i)-\bar{O}\right)\left(O(\mathbf{x}_{i+k})-\bar{O}\right),
 \end{equation} 
-che ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio usato nel codice per stimare $\chi_k$ sulle catene generate.
+che ha costo $\mathcal{O}(N^2)$ se calcolata per tutti i ritardi, risultando proibitiva per le lunghezze di catena tipiche di una simulazione Monte Carlo. È tuttavia possibile calcolarla in $\mathcal{O}(N\log N)$ tramite Fast Fourier Transform (FFT), ed è questo l'approccio per stimare $\chi_k$ sulle catene generate nel codice\footnote{Il codice è disponibile all'indirizzo \url{https://github.com/rpivi}.} scritto per il confronto fra i metodi di campionamento esplorati nella tesi.
 
 Una volta ottenuta $\chi_k$, è necessario sommare $\chi_k/\chi_0$ su tutti i ritardi $k$ come nella definizione di $\tau^{\mathrm{int}}_O$ (Equazione~\ref{eq:tau_int}). Questo non è uno stimatore consistente, perché per $k \gg \tau_{\mathrm{int},\, O}$ i valori $\chi_k$ sono dominati dal rumore statistico piuttosto che dal segnale fisico, e la loro somma su un numero crescente di termini aumenta la varianza dello stimatore \cite{sokal1996monte}. La soluzione consiste nel troncare la somma a un ritardo massimo $M$:
 \begin{equation}
