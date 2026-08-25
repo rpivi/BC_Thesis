@@ -3,7 +3,7 @@
 
 Nei capitoli precedenti sono stati introdotti gli strumenti teorici necessari a campionare una distribuzione di Boltzmann: il campionamento markoviano locale via Metropolis-Hastings (Sez.~\ref{sec:mcmc}), i Normalizing Flows (Capitolo~\ref{ch:nf}) e da questi è stato derivato uno schema ibrido, il Flow-MCMC (Sez.~\ref{subsec:flow-mcmc}). Questi tre metodi condividono l'obiettivo, ma differiscono radicalmente nella strategia: MCMC locale esplora lo spazio delle configurazioni muovendosi solo nell'intorno immediato dello stato corrente; il Normalizing Flow genera campioni indipendenti, pagando il prezzo di un addestramento preliminare e di un possibile disallineamento tra la distribuzione appresa e quella target; il Flow-MCMC combina le due prospettive mantenendo convergenza asintotica e campionamento globale. La domanda naturale è se questa differenza di strategia si traduca in una differenza misurabile nella qualità del campionamento.
 
-Per rispondere si è scelto, come sistema di test, il potenziale a doppio pozzo, descritto in Sezione~\ref{sec:potenziale_dw}. Questo sistema ha la minima richiesta di multimodalità, essendo bimodale, e dunque è il caso più semplice in cui ci si aspetta che le strategie locali di campionamento entrino in difficoltà. Alla coordinata bimodale si sono affiancate ulteriori dimensioni puramente armoniche, che non aggiungono multimodalità, ma permettono di studiare l'effetto della dimensionalità del sistema sull'efficienza del campionamento.
+Per rispondere si è scelto, come sistema di test, il potenziale a doppio pozzo, descritto in Sezione~\ref{sec:potenziale_dw}. Questo sistema è uno dei più utilizzati come caso di studio per nuovi metodi di campionamento come Boltzmann Generators \cite{noe2019boltzmann}, Normalizing Flow stocastici \cite{wu2020stochastic}, e altre strategie \cite{asghar2024efficient, invernizzi2022skipping}. Inoltre il potenziale doppio pozzo ha la minima richiesta di multimodalità, essendo bimodale, dunque è il caso più semplice in cui ci si aspetta che le strategie locali di campionamento entrino in difficoltà. Alla coordinata bimodale si sono affiancate ulteriori dimensioni puramente armoniche, che non aggiungono multimodalità, ma permettono di studiare l'effetto della dimensionalità del sistema sull'efficienza del campionamento.
 
 Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studiano i limiti di Markov Chain Monte Carlo (MCMC) locale al variare del numero di dimensioni del sistema e della temperatura e si quantifica l'efficienza del metodo attraverso il tasso di accettazione e il tempo di autocorrelazione integrato. La Sezione~\ref{sec:confronto_metodi} confronta invece i tre metodi --- MCMC locale, Normalizing Flow con re-weighting e Flow-MCMC --- a dimensione fissata e al variare sia della temperatura sia del numero di campioni utilizzati.
 
@@ -11,7 +11,7 @@ Lo studio si articola in due parti. Nella Sezione~\ref{sec:limiti_mcmc} si studi
 \label{sec:potenziale_dw}
 
 \paragraph*{Metastabilità in fisica.}
-Molti sistemi fisici e chimici di interesse presentano un panorama energetico caratterizzato da più minimi locali separati da barriere di potenziale: è il caso di transizioni conformazionali di macromolecole, reazioni chimiche con stati di transizione (Figura~\ref{fig:reazione}) o transizioni di fase in sistemi a molti corpi. Il massimo di potenziale che separa due minimi rappresenta la barriera energetica che il sistema deve superare per transire da una configurazione all'altra. Mentre ciascun minimo corrisponde a uno stato \emph{metastabile} in cui il sistema può permanere per tempi lunghi rispetto alla scala delle fluttuazioni termiche. Poiché la distribuzione di Boltzmann è una funzione monotona decrescente dell'energia, ogni minimo del potenziale corrisponde a un massimo locale della distribuzione, ovvero a un \emph{modo}: la molteplicità dei minimi energetici si traduce così direttamente nella multimodalità della distribuzione da campionare.
+Molti sistemi fisici e chimici di interesse presentano un panorama energetico caratterizzato da più minimi locali separati da barriere di potenziale: è il caso di transizioni conformazionali di macromolecole, reazioni chimiche con stati di transizione (Figura~\ref{fig:reazione}), transizioni di fase in sistemi a molti corpi o fenomeni come ferroelettricità e paraelettricità quantistica \cite{verdi2023quantum}. Il massimo di potenziale che separa due minimi rappresenta la barriera energetica che il sistema deve superare per transire da una configurazione all'altra. Mentre ciascun minimo corrisponde a uno stato \emph{metastabile} in cui il sistema può permanere per tempi lunghi rispetto alla scala delle fluttuazioni termiche. Poiché la distribuzione di Boltzmann è una funzione monotona decrescente dell'energia, ogni minimo del potenziale corrisponde a un massimo locale della distribuzione, ovvero a un \emph{modo}: la molteplicità dei minimi energetici si traduce così direttamente nella multimodalità della distribuzione da campionare.
 \begin{figure}[bt]
     \centering
     \includegraphics[width=0.7\textwidth]{images/Doppio_pozzo/DW_reaction.png}
@@ -62,7 +62,6 @@ La distribuzione di Boltzmann del sistema di test a temperatura $T$ è dunque
 p(\mathbf{x}) = \frac{1}{Z} e^{-\beta V(\mathbf{x})} = \frac{1}{Z} e^{-\beta V_{\text{dw}}(x_1)} e^{-\beta V_{\text{arm}}(\mathbf{x}_\perp)}  \quad \beta = \frac{1}{k_BT},\ \mathbf{x}=(x_1,\mathbf{x}_\perp).
 \end{equation}
 Nella Figura~\ref{fig:potenziale_e_boltzmann} si può notare, rispettivamente per il potenziale a doppio pozzo e quello armonico, come i minimi del potenziale siano i massimi della distribuzione di Boltzmann associata.
-
 \paragraph*{Riflessione e parità.}
 Il potenziale così definito è una funzione simmetrica per riflessione di ogni variabile $V(-x_i) = V(x_i) \ \forall x_i$ (e dunque anche pari), proprietà che vengono ereditate anche dalla distribuzione di Boltzmann $p(-x_i) = p(x_i) \forall x_i$. Una conseguenza immediata riguarda il valore nullo del segno medio della coordinata lenta, $\langle \operatorname{sgn}(x_1) \rangle$. Dalla definizione di valore di aspettazione:
 \begin{equation}
@@ -80,7 +79,6 @@ da cui segue:
 L'osservabile $\langle \operatorname{sgn}(x_1) \rangle$ funge da fondamentale indicatore di un buon campionamento: se un campionatore rimane confinato in una sola delle due buche per l'intera durata della simulazione, il valore stimato della media sarà $\approx +1$ oppure $\approx -1$. La deviazione da zero misura direttamente l'incapacità dell'algoritmo di attraversare la barriera e campionare equamente entrambi i minimi. 
 
 Infatti la simmetria del sistema considerato permette di avere stime corrette di alcuni osservabili anche se è stato campionato solo uno dei due minimi. Gli osservabili $g(\mathbf{x})$ che rientrano in questa categoria sono funzioni pari delle variabili del sistema: se la catena rimane confinata in una sola buca, ma riesce a campionare correttamente da essa, la distribuzione dei valori di $g(\mathbf{x})$ campionati coincide comunque, per simmetria di riflessione, con quella che si otterrebbe campionando entrambe le buche. La stima di $\langle E\rangle$ e $C_V$ è quindi corretta anche in condizioni di intrappolamento in un modo, purché la catena sia termalizzata \emph{localmente} all'interno del pozzo occupato. Il segno di $x_1$ essendo una funzione dispari, è invece un'osservabile in grado di diagnosticare l'intrappolamento in un singolo modo, ed è dunque la quantità a cui affidarsi quando si vuole verificare l'assenza di questo tipo di bias.
-
 \paragraph*{Parametri e barriera di potenziale.}
 Nelle simulazioni presentate in questo lavoro sono stati fissati i parametri $a = 0.1$~eV e $b = 1.0$ a.u. (unità arbitrarie), corrispondenti a una barriera di potenziale $\Delta V = 0.1$~eV con minimi posizionati in $x_1 = \pm 1$.
 
@@ -95,20 +93,18 @@ Infatti ricordando la definizione di tasso di accettazione per una proposta gaus
     \label{eq:ac_barrier}
 \mathcal{A}(\mathbf{x}_{min}, \mathbf{x}_{max}) = \min \left\{ 1, \, e^{-\frac{\Delta V}{k_B T}} \right\}
 \end{equation}
-A temperature elevate ($\sim 1000$~K), l'energia termica è confrontabile con la barriera ($\Delta V \approx k_B T$), rendendo frequenti i passaggi tra i due minimi anche per un campionamento a mosse locali. Al contrario, a basse temperature ($100$~K), la probabilità di sormontare la barriera è soppressa, poiché il fattore di Boltzmann ha un valore di $e^{-11.6} \approx 9\times10^{-6}$. In questo regime ci si aspetta che MCMC locale rimanga intrappolato in un modo, mettendo in evidenza i vantaggi di NF e di Flow-MCMC.
-
+A temperature elevate ($\sim 1000$~K), l'energia termica è confrontabile con la barriera ($\Delta V \approx k_B T$), rendendo frequenti i passaggi tra i due minimi anche per un campionamento a mosse locali. Al contrario, a basse temperature ($100$~K), la probabilità di sormontare la barriera è soppressa, poiché il fattore di Boltzmann ha un valore di $e^{-11.6} \approx 9\times10^{-6}$. In questo regime ci si aspetta che MCMC locale rimanga intrappolato in un modo.
 \section{Limiti di Markov Chain Monte Carlo}
 \label{sec:limiti_mcmc}
-
 \paragraph*{Dettagli implementativi.}
 Le simulazioni sono condotte con l'algoritmo di Metropolis-Hastings a proposta gaussiana simmetrica (Eq.~\ref{eq:proposta_gaussiana}), con ampiezza $\sigma$ fissa. Per ciascuna dimensione $D \in \{1,2,3,4\}$ si esegue una scansione di temperatura $T \in [150, 1140]$~K a passi di 10~K, procedendo in ordine di temperatura \emph{crescente}: si parte dal caso più difficile ($T=150$~K), a cui viene dedicata una termalizzazione più estesa, per poi proseguire verso temperature via via più alte riutilizzando come configurazione iniziale l'ultimo stato della catena alla temperatura precedente (\emph{warm start}). Questo schema è più efficiente di una termalizzazione indipendente a ogni $T$, poichè consente di diminuire il numero di passi utilizzati nella fase di termalizzazione.
 
-Per ogni coppia $(D,T)$ vengono generati $10^6$ campioni di produzione. Viene stimato il tempo di autocorrelazione integrato della variabile lenta  tramite il metodo della finestra automatica di Sokal (Sez.~\ref{sec:campioni_autocorrelati}). Si utilizzano i campioni per stimare energia media e capacità termica e l'incertezza su di essi è stimata tramite blocking analysis di Flyvbjerg-Petersen, individuando il plateau di $R_O(m)$ con una tolleranza del $10\%$ su una finestra di 4 valori consecutivi in scala logaritmica. I parametri sono riassunti in Tabella~\ref{tab:mcmc_details}.
+Per ogni coppia $(D,T)$ vengono generati $10^6$ campioni di produzione. Viene stimato il tempo di autocorrelazione integrato della variabile lenta  tramite il metodo della finestra automatica di Sokal (Sez.~\ref{sec:campioni_autocorrelati}). Si stimano energia media e capacità termica tramite la media Monte Carlo e l'incertezza su di essi è stimata tramite blocking analysis di Flyvbjerg-Petersen, individuando il plateau di $R_O(m)$ con una tolleranza del $10\%$ su una finestra di 4 valori consecutivi in scala logaritmica. I parametri sono riassunti in Tabella~\ref{tab:mcmc_details}.
 
 Prima di procedere al confronto sistematico, è importante verificare empiricamente che i passi utilizzati per la termalizzazione siano sufficienti. Si prende in considerazione il caso più difficile della scansione, $D=4$ e $T=150$~K. Si inizializzano due configurazioni - una estratta da una distribuzione normale standard e l'altra inizializzata ad uno \(\mathbf{x}=(1, \dots, 1)\) - e ne si confronta l'evoluzione dell'energia. In Figura~\ref{fig:therm_T_D} si osserva che, indipendentemente dal punto di partenza, l'energia fluttua intorno allo stesso valore medio entro le prime centinaia di passi: questo ci garantisce la termalizzazione ma non implica l'assenza di intrappolamento in un singolo modo.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.66\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
+    \includegraphics[width=0.65\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
     \caption{Evoluzione dell'energia durante la termalizzazione per $D=4$,
 $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf{x}=(1,\dots,1)$ e una estratta da distribuzione normale standard.}
     \label{fig:therm_T_D}
@@ -155,8 +151,7 @@ temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{images/MCMC/Tau_vs_T.png}
-    \caption{Tempo di autocorrelazione integrato $\tau^{int}$ della coordinata
-lenta $x_1$ in funzione della temperatura, stimato con il metodo della
+    \caption{Tempo di autocorrelazione integrato $\tau^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della
 finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$.}
     \label{fig:tau_T_D}
 \end{figure}
@@ -185,7 +180,7 @@ Sez.~\ref{sec:limiti_mcmc}. A ogni $T$ viene comunque eseguita una termalizzazio
 
 Il Normalizing Flow è una Real NVP con 6 coupling layer, ciascuno condizionato da un multilayer perceptron (MLP) a 3 strati con 32 unità nascoste e attivazione $\tanh$. Il flow viene addestrato minimizzando la KL reverse con ottimizzatore Adam ($\text{lr}=10^{-3}$), eseguendo 1000 passi di discesa del gradiente per ogni temperatura, con batch di 500 campioni per passo. I pesi della rete \emph{non} vengono reinizializzati a ogni $T$: si riutilizzano quelli ottenuti alla temperatura precedente come punto di partenza del training alla nuova $T$ (warm start dei parametri del flow). Successivamente all'addestramento si generano $10^6$ campioni tramite il flow e le stime vengono corrette tramite re-weighting.
 
-Il Flow-MCMC utilizza, a ogni $T$, esattamente lo stesso flow addestrato per il Normalizing Flow, impiegandolo come distribuzione di proposta in uno schema Metropolis-Hastings di tipo independence sampler (Sez.~\ref{subsec:flow-mcmc}); anche in questo caso si generano $10^6$ campioni di produzione. Poiché i flow usati per il re-weighting e per il Flow-MCMC coincidono le differenze osservate tra i due metodi, discusse nel paragrafo seguente, sono attribuibili esclusivamente all'uso dell'algoritmo di Metropolis-Hastings, e non a una diversa qualità del training.
+Il Flow-MCMC utilizza, a ogni $T$, esattamente lo stesso flow addestrato per il Normalizing Flow, impiegandolo come distribuzione di proposta in uno schema Metropolis-Hastings di tipo independence sampler (Sez.~\ref{subsec:flow-mcmc}); anche in questo caso si generano $10^6$ campioni di produzione. Poiché i flows usati per il re-weighting e per il Flow-MCMC coincidono, le differenze osservate tra i due metodi sono attribuibili esclusivamente all'uso dell'algoritmo di Metropolis-Hastings, e non ad una diversa qualità del training.
 
 L'incertezza sugli osservabili è stimata, per MCMC e Flow-MCMC, tramite blocking analysis di Flyvbjerg-Petersen (tolleranza $10\%$, finestra di 3 valori consecutivi in scala logaritmica). Per il NF con re-weighting l'incertezza sullo stimatore di importance sampling (Eq.~\ref{eq:reweighting-estimator}) si stima come
 \begin{equation}

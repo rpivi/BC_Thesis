@@ -116,4 +116,25 @@ Frank Noé, Simon Olsson, Jonas Köhler, and Hao Wu.
   systems with deep learning.
 \newblock {\em Science}, 365(6457):eaaw1147, 2019.
 
+\bibitem{wu2020stochastic}
+Hao Wu, Jonas K{\"o}hler, and Frank No{\'e}.
+\newblock Stochastic normalizing flows.
+\newblock In {\em Neural Information Processing Systems}, volume~33, 2020.
+
+\bibitem{asghar2024efficient}
+Solomon Asghar, Qing-Xiang Pei, Giorgio Volpe, and Ran Ni.
+\newblock Efficient rare event sampling with unsupervised normalizing flows.
+\newblock {\em Nature Machine Intelligence}, 6:1370--1381, 2024.
+
+\bibitem{invernizzi2022skipping}
+Michele Invernizzi, Andreas Kr{\"a}mer, Cecilia Clementi, and Frank No{\'e}.
+\newblock Skipping the replica exchange ladder with normalizing flows.
+\newblock {\em The Journal of Physical Chemistry Letters}, 13(50), 2022.
+
+\bibitem{verdi2023quantum}
+Carla Verdi, Luigi Ranalli, Cesare Franchini, and Georg Kresse.
+\newblock Quantum paraelectricity and structural phase transitions in strontium
+  titanate beyond density-functional theory.
+\newblock {\em Physical Review Materials}, 7(3), 2023.
+
 \end{thebibliography}

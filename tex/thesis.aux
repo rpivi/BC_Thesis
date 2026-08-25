@@ -58,8 +58,8 @@
 \citation{kalos2008montecarlo}
 \newlabel{fig:ulam}{{2.1a}{20}{Stanisław Ulam e il FERMIAC}{figure.caption.8}{}}
 \newlabel{sub@fig:ulam}{{a}{20}{Stanisław Ulam e il FERMIAC}{figure.caption.8}{}}
-\newlabel{fig:von-neumann}{{2.1b}{20}{Von Neumann}{figure.caption.8}{}}
-\newlabel{sub@fig:von-neumann}{{b}{20}{Von Neumann}{figure.caption.8}{}}
+\newlabel{fig:von-neumann}{{2.1b}{20}{John von Neumann}{figure.caption.8}{}}
+\newlabel{sub@fig:von-neumann}{{b}{20}{John von Neumann}{figure.caption.8}{}}
 \newlabel{fig:fermi}{{2.1c}{20}{Enrico Fermi}{figure.caption.8}{}}
 \newlabel{sub@fig:fermi}{{c}{20}{Enrico Fermi}{figure.caption.8}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces I pionieri del metodo Monte Carlo.}}{20}{figure.caption.8}\protected@file@percent }
@@ -166,6 +166,11 @@
 \@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Flow-MCMC}}{48}{algocf.2}\protected@file@percent }
 \newlabel{alg:flow-mcmc}{{2}{48}{}{algocf.2}{}}
 \newlabel{eq:ac_flow_mcmc}{{3.46}{49}{}{equation.3.46}{}}
+\citation{noe2019boltzmann}
+\citation{wu2020stochastic}
+\citation{asghar2024efficient}
+\citation{invernizzi2022skipping}
+\citation{verdi2023quantum}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{51}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -175,12 +180,81 @@
 \newlabel{sec:potenziale_dw}{{4.1}{51}{Il potenziale doppio pozzo}{section.4.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Rappresentazione schematica di un profilo energetico con due stati metastabili separati da una barriera di potenziale per una reazione con uno stato di transizione.}}{52}{figure.caption.20}\protected@file@percent }
 \newlabel{fig:reazione}{{4.1}{52}{Rappresentazione schematica di un profilo energetico con due stati metastabili separati da una barriera di potenziale per una reazione con uno stato di transizione}{figure.caption.20}{}}
-\newlabel{eq:barrier_height}{{4.3}{52}{}{equation.4.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Profilo del potenziale e della distribuzione di Boltzmann: a sinistra per la coordinata lenta $x_1$, a destra per una coordinata veloce.}}{53}{figure.caption.21}\protected@file@percent }
 \newlabel{fig:potenziale_e_boltzmann}{{4.2}{53}{Profilo del potenziale e della distribuzione di Boltzmann: a sinistra per la coordinata lenta $x_1$, a destra per una coordinata veloce}{figure.caption.21}{}}
+\newlabel{eq:barrier_height}{{4.3}{53}{}{equation.4.3}{}}
 \newlabel{eq:double_well_potential}{{4.4}{53}{}{equation.4.4}{}}
 \newlabel{eq:sgn_zero}{{4.8}{54}{}{equation.4.8}{}}
 \newlabel{eq:ac_barrier}{{4.10}{54}{}{equation.4.10}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{55}{section.4.2}\protected@file@percent }
 \newlabel{sec:limiti_mcmc}{{4.2}{55}{Limiti di Markov Chain Monte Carlo}{section.4.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizial
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf  {x}=(1,\dots  ,1)$ e una estratta da distribuzione normale standard.}}{55}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:therm_T_D}{{4.3}{55}{Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf {x}=(1,\dots ,1)$ e una estratta da distribuzione normale standard}{figure.caption.22}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Parametri implementativi delle simulazioni MCMC.}}{56}{table.caption.23}\protected@file@percent }
+\newlabel{tab:mcmc_details}{{4.1}{56}{Parametri implementativi delle simulazioni MCMC}{table.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Tasso di accettazione medio in funzione della temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $\sigma =0.1$ (Tabella~\ref {tab:mcmc_details}).}}{57}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:acc_T_D}{{4.4}{57}{Tasso di accettazione medio in funzione della temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $\sigma =0.1$ (Tabella~\ref {tab:mcmc_details})}{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$.}}{57}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:tau_T_D}{{4.5}{57}{Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$}{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Energia media in funzione della temperatura per $D=1,2,3,4$.}}{58}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:E_T_D}{{4.6}{58}{Energia media in funzione della temperatura per $D=1,2,3,4$}{figure.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Capacità termica in funzione della temperatura per $D=1,2,3,4$.}}{58}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:Cv_T_D}{{4.7}{58}{Capacità termica in funzione della temperatura per $D=1,2,3,4$}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{59}{section.4.3}\protected@file@percent }
+\newlabel{sec:confronto_metodi}{{4.3}{59}{Confronto dei metodi di campionamento}{section.4.3}{}}
+\newlabel{eq:var_ESS}{{4.11}{59}{}{equation.4.11}{}}
+\newlabel{eq:tau_eff}{{4.12}{59}{}{equation.4.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Parametri implementativi del confronto tra metodi di campionamento.}}{60}{table.caption.28}\protected@file@percent }
+\newlabel{tab:confronto_details}{{4.2}{60}{Parametri implementativi del confronto tra metodi di campionamento}{table.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$.}}{61}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:acc_T_all}{{4.8}{61}{Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$}{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text  {eff}}=N/(2\,\mathrm  {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$.}}{61}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:tau_T_all}{{4.9}{61}{Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text {eff}}=N/(2\,\mathrm {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$}{figure.caption.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$.}}{62}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:E_T_all}{{4.10}{62}{Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname  {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$.}}{62}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:msig_T_all}{{4.11}{62}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento.}}{64}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:E_vs_N}{{4.12}{64}{Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento}{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$.}}{66}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:msig_vs_N}{{4.13}{66}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$}{figure.caption.36}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$.}}{67}{figure.caption.37}\protected@file@percent }
+\newlabel{fig:x_distribution}{{4.14}{67}{Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$}{figure.caption.37}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text  {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione.}}{68}{figure.caption.38}\protected@file@percent }
+\newlabel{fig:x_trajectory}{{4.15}{68}{Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione}{figure.caption.38}{}}
+\@writefile{toc}{\contentsline {chapter}{Conclusione}{71}{chapter*.39}\protected@file@percent }
+\bibstyle{unsrt}
+\bibdata{Bibliografia}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{73}{appendix.Alph1}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{sec:a_boltzm_der}{{A}{73}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
+\bibcite{budd2025monte}{1}
+\bibcite{marinari2023calcolo}{2}
+\bibcite{kennett2020essential}{3}
+\bibcite{buffon1777}{4}
+\bibcite{laplace1886}{5}
+\bibcite{metropolis1987beginning}{6}
+\bibcite{rosenbluth2003}{7}
+\bibcite{georgescu2023}{8}
+\bibcite{kalos2008montecarlo}{9}
+\bibcite{gubernatis2016quantum}{10}
+\bibcite{leoni2023enhancing}{11}
+\bibcite{Leoni2024}{12}
+\bibcite{metropolis1953equation}{13}
+\bibcite{hastings1970monte}{14}
+\bibcite{flyvbjerg1989error}{15}
+\bibcite{sokal1996monte}{16}
+\bibcite{papamakarios2021normalizing}{17}
+\bibcite{rudin2006real}{18}
+\bibcite{dinh2017density}{19}
+\bibcite{kullback1951information}{20}
+\bibcite{noe2019boltzmann}{21}
+\bibcite{wu2020stochastic}{22}
+\bibcite{asghar2024efficient}{23}
+\bibcite{invernizzi2022skipping}{24}
+\bibcite{verdi2023quantum}{25}
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{76}{appendix*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{79}{appendix*.41}\protected@file@percent }
+\gdef \@abspage@last{88}
