@@ -33,6 +33,12 @@ Nicholas Metropolis.
 \newblock The beginning of the monte carlo method.
 \newblock {\em Los Alamos Science}, Special Issue, 1987.
 
+\bibitem{metropolis1953equation}
+Nicholas Metropolis, Arianna~W. Rosenbluth, Marshall~N. Rosenbluth, Augusta~H.
+  Teller, and Edward Teller.
+\newblock Equation of state calculations by fast computing machines.
+\newblock {\em The Journal of Chemical Physics}, 21(6), 1953.
+
 \bibitem{rosenbluth2003}
 Marshall~N. Rosenbluth.
 \newblock Genesis of the monte carlo algorithm for statistical mechanics.
@@ -64,12 +70,6 @@ Luca Leoni.
 Luca Leoni and Cesare Franchini.
 \newblock Global sampling of {F}eynman's diagrams through normalizing flow.
 \newblock {\em Physical Review Research}, 6(3), 2024.
-
-\bibitem{metropolis1953equation}
-Nicholas Metropolis, Arianna~W. Rosenbluth, Marshall~N. Rosenbluth, Augusta~H.
-  Teller, and Edward Teller.
-\newblock Equation of state calculations by fast computing machines.
-\newblock {\em The Journal of Chemical Physics}, 21(6), 1953.
 
 \bibitem{hastings1970monte}
 W.~Keith Hastings.
@@ -116,25 +116,25 @@ Frank Noé, Simon Olsson, Jonas Köhler, and Hao Wu.
   systems with deep learning.
 \newblock {\em Science}, 365(6457):eaaw1147, 2019.
 
+\bibitem{verdi2023quantum}
+Carla Verdi, Luigi Ranalli, Cesare Franchini, and Georg Kresse.
+\newblock Quantum paraelectricity and structural phase transitions in strontium
+  titanate beyond density-functional theory.
+\newblock {\em Physical Review Materials}, 7(3), 2023.
+
 \bibitem{wu2020stochastic}
 Hao Wu, Jonas K{\"o}hler, and Frank No{\'e}.
 \newblock Stochastic normalizing flows.
 \newblock In {\em Neural Information Processing Systems}, volume~33, 2020.
-
-\bibitem{asghar2024efficient}
-Solomon Asghar, Qing-Xiang Pei, Giorgio Volpe, and Ran Ni.
-\newblock Efficient rare event sampling with unsupervised normalizing flows.
-\newblock {\em Nature Machine Intelligence}, 6:1370--1381, 2024.
 
 \bibitem{invernizzi2022skipping}
 Michele Invernizzi, Andreas Kr{\"a}mer, Cecilia Clementi, and Frank No{\'e}.
 \newblock Skipping the replica exchange ladder with normalizing flows.
 \newblock {\em The Journal of Physical Chemistry Letters}, 13(50), 2022.
 
-\bibitem{verdi2023quantum}
-Carla Verdi, Luigi Ranalli, Cesare Franchini, and Georg Kresse.
-\newblock Quantum paraelectricity and structural phase transitions in strontium
-  titanate beyond density-functional theory.
-\newblock {\em Physical Review Materials}, 7(3), 2023.
+\bibitem{asghar2024efficient}
+Solomon Asghar, Qing-Xiang Pei, Giorgio Volpe, and Ran Ni.
+\newblock Efficient rare event sampling with unsupervised normalizing flows.
+\newblock {\em Nature Machine Intelligence}, 6:1370--1381, 2024.
 
 \end{thebibliography}

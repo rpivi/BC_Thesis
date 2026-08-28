@@ -53,6 +53,7 @@
 \newlabel{ch:mc}{{2}{19}{Metodi Monte Carlo}{chapter.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Cenni storici}{19}{section.2.1}\protected@file@percent }
 \newlabel{sec:storia}{{2.1}{19}{Cenni storici}{section.2.1}{}}
+\citation{metropolis1953equation}
 \citation{rosenbluth2003}
 \citation{georgescu2023}
 \citation{kalos2008montecarlo}
@@ -166,10 +167,6 @@
 \@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Flow-MCMC}}{48}{algocf.2}\protected@file@percent }
 \newlabel{alg:flow-mcmc}{{2}{48}{}{algocf.2}{}}
 \newlabel{eq:ac_flow_mcmc}{{3.46}{49}{}{equation.3.46}{}}
-\citation{noe2019boltzmann}
-\citation{wu2020stochastic}
-\citation{asghar2024efficient}
-\citation{invernizzi2022skipping}
 \citation{verdi2023quantum}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Studio del campionamento}{51}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -188,61 +185,87 @@
 \newlabel{eq:ac_barrier}{{4.10}{54}{}{equation.4.10}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Limiti di Markov Chain Monte Carlo}{55}{section.4.2}\protected@file@percent }
 \newlabel{sec:limiti_mcmc}{{4.2}{55}{Limiti di Markov Chain Monte Carlo}{section.4.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf  {x}=(1,\dots  ,1)$ e una estratta da distribuzione normale standard.}}{55}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:therm_T_D}{{4.3}{55}{Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf {x}=(1,\dots ,1)$ e una estratta da distribuzione normale standard}{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf  {x}=(1,\dots  ,1)$ e una estratta da distribuzione normale standard.}}{56}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:therm_T_D}{{4.3}{56}{Evoluzione dell'energia durante la termalizzazione per $D=4$, $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf {x}=(1,\dots ,1)$ e una estratta da distribuzione normale standard}{figure.caption.22}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Parametri implementativi delle simulazioni MCMC.}}{56}{table.caption.23}\protected@file@percent }
 \newlabel{tab:mcmc_details}{{4.1}{56}{Parametri implementativi delle simulazioni MCMC}{table.caption.23}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Tasso di accettazione medio in funzione della temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $\sigma =0.1$ (Tabella~\ref {tab:mcmc_details}).}}{57}{figure.caption.24}\protected@file@percent }
 \newlabel{fig:acc_T_D}{{4.4}{57}{Tasso di accettazione medio in funzione della temperatura, per $D=1,2,3,4$, con proposta gaussiana e ampiezza di passo fissa $\sigma =0.1$ (Tabella~\ref {tab:mcmc_details})}{figure.caption.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$.}}{57}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:tau_T_D}{{4.5}{57}{Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$}{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$.}}{58}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:tau_T_D}{{4.5}{58}{Tempo di autocorrelazione integrato $\tau ^{int}$ della coordinata lenta $x_1$ (in unità di passi di Metropolis) in funzione della temperatura, stimato con il metodo della finestra automatica di Sokal ($c=5$), per $D=1$ e $D=4$}{figure.caption.25}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Energia media in funzione della temperatura per $D=1,2,3,4$.}}{58}{figure.caption.26}\protected@file@percent }
 \newlabel{fig:E_T_D}{{4.6}{58}{Energia media in funzione della temperatura per $D=1,2,3,4$}{figure.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Capacità termica in funzione della temperatura per $D=1,2,3,4$.}}{58}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:Cv_T_D}{{4.7}{58}{Capacità termica in funzione della temperatura per $D=1,2,3,4$}{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Capacità termica in funzione della temperatura per $D=1,2,3,4$.}}{59}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:Cv_T_D}{{4.7}{59}{Capacità termica in funzione della temperatura per $D=1,2,3,4$}{figure.caption.27}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.3}Confronto dei metodi di campionamento}{59}{section.4.3}\protected@file@percent }
 \newlabel{sec:confronto_metodi}{{4.3}{59}{Confronto dei metodi di campionamento}{section.4.3}{}}
-\newlabel{eq:var_ESS}{{4.11}{59}{}{equation.4.11}{}}
-\newlabel{eq:tau_eff}{{4.12}{59}{}{equation.4.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Parametri implementativi del confronto tra metodi di campionamento.}}{60}{table.caption.28}\protected@file@percent }
-\newlabel{tab:confronto_details}{{4.2}{60}{Parametri implementativi del confronto tra metodi di campionamento}{table.caption.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$.}}{61}{figure.caption.29}\protected@file@percent }
-\newlabel{fig:acc_T_all}{{4.8}{61}{Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$}{figure.caption.29}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text  {eff}}=N/(2\,\mathrm  {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$.}}{61}{figure.caption.30}\protected@file@percent }
-\newlabel{fig:tau_T_all}{{4.9}{61}{Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text {eff}}=N/(2\,\mathrm {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$}{figure.caption.30}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$.}}{62}{figure.caption.31}\protected@file@percent }
-\newlabel{fig:E_T_all}{{4.10}{62}{Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$}{figure.caption.31}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname  {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$.}}{62}{figure.caption.32}\protected@file@percent }
-\newlabel{fig:msig_T_all}{{4.11}{62}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$}{figure.caption.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento.}}{64}{figure.caption.34}\protected@file@percent }
-\newlabel{fig:E_vs_N}{{4.12}{64}{Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento}{figure.caption.34}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$.}}{66}{figure.caption.36}\protected@file@percent }
-\newlabel{fig:msig_vs_N}{{4.13}{66}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$}{figure.caption.36}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$.}}{67}{figure.caption.37}\protected@file@percent }
-\newlabel{fig:x_distribution}{{4.14}{67}{Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$}{figure.caption.37}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text  {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione.}}{68}{figure.caption.38}\protected@file@percent }
-\newlabel{fig:x_trajectory}{{4.15}{68}{Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione}{figure.caption.38}{}}
-\@writefile{toc}{\contentsline {chapter}{Conclusione}{71}{chapter*.39}\protected@file@percent }
+\newlabel{eq:var_ESS}{{4.11}{60}{}{equation.4.11}{}}
+\newlabel{eq:tau_eff}{{4.12}{60}{}{equation.4.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Parametri implementativi del confronto tra metodi di campionamento.}}{61}{table.caption.28}\protected@file@percent }
+\newlabel{tab:confronto_details}{{4.2}{61}{Parametri implementativi del confronto tra metodi di campionamento}{table.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$.}}{62}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:acc_T_all}{{4.8}{62}{Tasso di accettazione medio di MCMC e Flow-MCMC in funzione della temperatura, a dimensione fissata $D=3$}{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text  {eff}}=N/(2\,\mathrm  {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$.}}{62}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:tau_T_all}{{4.9}{62}{Si mostra $\tau ^{int}$ di $x_1$ per MCMC e Flow-MCMC e lo si confronta a $\tau _{\text {eff}}=N/(2\,\mathrm {ESS})$ per NF. Tutti in funzione della temperatura e a dimensione fissata $D=3$}{figure.caption.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$.}}{63}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:E_T_all}{{4.10}{63}{Energia media stimata da MCMC, Normalizing Flow e Flow-MCMC in funzione della temperatura, a $D=3$}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname  {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$.}}{63}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:msig_T_all}{{4.11}{63}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ per MCMC, NF e Flow-MCMC in funzione della temperatura. L'asse verticale utilizza una scala logaritmica simmetrica, lineare per $|\langle \operatorname {sgn}(x_1)\rangle |<10^{-2}$. Il valore teorico atteso è nullo per ogni $T$}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento.}}{65}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:E_vs_N}{{4.12}{65}{Energia media stimata da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T={100,600,1100}$~K. La linea tratteggiata indica il valore di riferimento}{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Segno medio $\langle \operatorname  {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$.}}{67}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:msig_vs_N}{{4.13}{67}{Segno medio $\langle \operatorname {sgn}(x_1)\rangle $ stimato da MCMC, NF e Flow-MCMC in funzione del numero di campioni $N$, per $D=3$ a tre diverse temperature $T=100,600,1100$~K. Il valore teorico atteso è zero per ogni $T$}{figure.caption.36}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$.}}{68}{figure.caption.37}\protected@file@percent }
+\newlabel{fig:x_distribution}{{4.14}{68}{Istogramma, normalizzato a densità di probabilità, della coordinata $x_1$ campionata da MCMC, NF e Flow-MCMC, confrontato con la distribuzione di Boltzmann marginale ottenuta per integrazione numerica (linea tratteggiata), a tre diverse temperature, $D=3$}{figure.caption.37}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text  {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione.}}{69}{figure.caption.38}\protected@file@percent }
+\newlabel{fig:x_trajectory}{{4.15}{69}{Traiettoria della coordinata $x_1$ per MCMC, NF e Flow-MCMC, a tre diverse temperature, $D=3$. Colonna sinistra: primi 3000 passi della traiettoria. Colonna destra: densità di occupazione (espressa come $\log (\text {conteggio})$) sull'intera traiettoria di produzione, in funzione dell'indice di campione}{figure.caption.38}{}}
+\citation{noe2019boltzmann}
+\citation{noe2019boltzmann}
+\citation{noe2019boltzmann}
+\citation{noe2019boltzmann}
+\citation{noe2019boltzmann}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Contesto della tesi rispetto alla letteratura}{70}{section.4.4}\protected@file@percent }
+\newlabel{sec:contesto_letteratura}{{4.4}{70}{Contesto della tesi rispetto alla letteratura}{section.4.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.16}{\ignorespaces A: il potenziale con due traiettorie MD brevi (blu, rossa) che restano intrappolate ciascuna nel proprio stato metastabile. In arancione lo stato di transizione. B: Le traiettorie MD nello spazio latente. I due bacini blu e rosso diventano regioni distinte nella gaussiana latente. C: Distribuzione dell'energia potenziale campionata da MD (grigio) e BG (verde e arancione). D: Distribuzione dei campioni di BG rispetto alla coordinata lenta. E: Stime dell'energia libera ottenute dal flow dopo il re-weighting. F: Cammini generati interpolando linearmente nello spazio latente coppie (blu-rossa) di campioni MD. Immagine tratta da \cite  {noe2019boltzmann}.}}{70}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:noé}{{4.16}{70}{A: il potenziale con due traiettorie MD brevi (blu, rossa) che restano intrappolate ciascuna nel proprio stato metastabile. In arancione lo stato di transizione. B: Le traiettorie MD nello spazio latente. I due bacini blu e rosso diventano regioni distinte nella gaussiana latente. C: Distribuzione dell'energia potenziale campionata da MD (grigio) e BG (verde e arancione). D: Distribuzione dei campioni di BG rispetto alla coordinata lenta. E: Stime dell'energia libera ottenute dal flow dopo il re-weighting. F: Cammini generati interpolando linearmente nello spazio latente coppie (blu-rossa) di campioni MD. Immagine tratta da \cite {noe2019boltzmann}}{figure.caption.39}{}}
+\citation{wu2020stochastic}
+\citation{invernizzi2022skipping}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.17}{\ignorespaces a: Configurazioni chiusa (blu) e aperta (rossa) del dimero e sotto il potenziale del dimero bistabile. b: Distribuzione dei dati delle simulazioni MD nelle coordinate dello spazio latente $z_1, z_2$. Sotto le differenze di energia libera in funzione della distanza del dimero e della temperatura campionate tramite BG. c: Struttura cristallografica a raggi X di BPTI. d: Campione generato tramite BG di tutti gli 892 atomi della proteina BPTI, analogo alla struttura a raggi X. Immagini tratte da \cite  {noe2019boltzmann}.}}{71}{figure.caption.40}\protected@file@percent }
+\newlabel{fig:noé_2}{{4.17}{71}{a: Configurazioni chiusa (blu) e aperta (rossa) del dimero e sotto il potenziale del dimero bistabile. b: Distribuzione dei dati delle simulazioni MD nelle coordinate dello spazio latente $z_1, z_2$. Sotto le differenze di energia libera in funzione della distanza del dimero e della temperatura campionate tramite BG. c: Struttura cristallografica a raggi X di BPTI. d: Campione generato tramite BG di tutti gli 892 atomi della proteina BPTI, analogo alla struttura a raggi X. Immagini tratte da \cite {noe2019boltzmann}}{figure.caption.40}{}}
+\citation{wu2020stochastic}
+\citation{wu2020stochastic}
+\citation{invernizzi2022skipping}
+\citation{invernizzi2022skipping}
+\citation{asghar2024efficient}
+\citation{asghar2024efficient}
+\citation{asghar2024efficient}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.18}{\ignorespaces NF versus SNF per il potenziale doppio pozzo. Le frecce rosse indicano l'uso di una trasformazione deterministica, mentre le blu di una stocastica. a: 3 RealNVP blocks (2 layers each). b: Egualmente ma con 20 passi stocastici prima e dopo ogni RealNVP. c: Campioni dalla distribuzione target. Immagine tratta da \cite  {wu2020stochastic}.}}{72}{figure.caption.41}\protected@file@percent }
+\newlabel{fig:wu}{{4.18}{72}{NF versus SNF per il potenziale doppio pozzo. Le frecce rosse indicano l'uso di una trasformazione deterministica, mentre le blu di una stocastica. a: 3 RealNVP blocks (2 layers each). b: Egualmente ma con 20 passi stocastici prima e dopo ogni RealNVP. c: Campioni dalla distribuzione target. Immagine tratta da \cite {wu2020stochastic}}{figure.caption.41}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.19}{\ignorespaces a: Potenziale doppio pozzo $N$-dimensionale usato come sistema di test, con le prime due coordinate bimodali e le restanti armoniche. b: Efficienza di campionamento di REX (verde) e LREX (arancione) in funzione della dimensionalità $N$, in scala log-log: REX diminuisce all'aumentare di $N$, LREX resta pressoché costante. Immagine tratta da \cite  {invernizzi2022skipping}.}}{72}{figure.caption.42}\protected@file@percent }
+\newlabel{fig:invernizzi}{{4.19}{72}{a: Potenziale doppio pozzo $N$-dimensionale usato come sistema di test, con le prime due coordinate bimodali e le restanti armoniche. b: Efficienza di campionamento di REX (verde) e LREX (arancione) in funzione della dimensionalità $N$, in scala log-log: REX diminuisce all'aumentare di $N$, LREX resta pressoché costante. Immagine tratta da \cite {invernizzi2022skipping}}{figure.caption.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.20}{\ignorespaces a: I percorsi di due particelle che partono dallo stesso punto $w_0$ (croce) e tentano la transizione verso la regione target (ellisse tratteggiata). Ogni percorso $W$ è una sequenza di microstati. Il percorso $W_\alpha $ (blu) effettua la transizione con successo, mentre $W_\beta $ (rosso) non raggiunge il target. b: Schema del flusso di lavoro FlowRES, mostrato per il caso di particelle browniane passive che superano la barriera di un potenziale a doppio pozzo per raggiungere la regione target (ellisse tratteggiata). A sinistra: la traiettoria $W_B$ (punti blu) viene campionata da una distribuzione gaussiana multivariata $\rho _B(W_B)$, con $W_B \sim \mathcal  {N}(0, I)$. Al centro: un NF $F$ trasforma $W_B$ in un percorso proposto $W'$ (linea blu) che verrà utilizzato come proposta di Metropolis-Hastings; la loro distribuzione $\rho _{\text  {NF}}(W')$ rappresenta dunque la distribuzione di proposta. A destra: i percorsi proposti vengono sottoposti a una fase di accettazione-rifiuto di Metropolis-Hastings, che convergerà alla distribuzione target dei cammini. La distribuzione FlowRES $\hat  {\rho }(W)$ addestra nuovamente $F$: ad ogni iterazione, la distribuzione proposta si adatta sempre meglio al target. Immagine tratta da \cite  {asghar2024efficient}.}}{73}{figure.caption.43}\protected@file@percent }
+\newlabel{fig:ash}{{4.20}{73}{a: I percorsi di due particelle che partono dallo stesso punto $w_0$ (croce) e tentano la transizione verso la regione target (ellisse tratteggiata). Ogni percorso $W$ è una sequenza di microstati. Il percorso $W_\alpha $ (blu) effettua la transizione con successo, mentre $W_\beta $ (rosso) non raggiunge il target. b: Schema del flusso di lavoro FlowRES, mostrato per il caso di particelle browniane passive che superano la barriera di un potenziale a doppio pozzo per raggiungere la regione target (ellisse tratteggiata). A sinistra: la traiettoria $W_B$ (punti blu) viene campionata da una distribuzione gaussiana multivariata $\rho _B(W_B)$, con $W_B \sim \mathcal {N}(0, I)$. Al centro: un NF $F$ trasforma $W_B$ in un percorso proposto $W'$ (linea blu) che verrà utilizzato come proposta di Metropolis-Hastings; la loro distribuzione $\rho _{\text {NF}}(W')$ rappresenta dunque la distribuzione di proposta. A destra: i percorsi proposti vengono sottoposti a una fase di accettazione-rifiuto di Metropolis-Hastings, che convergerà alla distribuzione target dei cammini. La distribuzione FlowRES $\hat {\rho }(W)$ addestra nuovamente $F$: ad ogni iterazione, la distribuzione proposta si adatta sempre meglio al target. Immagine tratta da \cite {asghar2024efficient}}{figure.caption.43}{}}
+\@writefile{toc}{\contentsline {chapter}{Conclusione}{77}{chapter*.44}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{Bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{73}{appendix.Alph1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{79}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{sec:a_boltzm_der}{{A}{73}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
+\newlabel{sec:a_boltzm_der}{{A}{79}{Derivazione della distribuzione di Boltzmann}{appendix.Alph1}{}}
 \bibcite{budd2025monte}{1}
 \bibcite{marinari2023calcolo}{2}
 \bibcite{kennett2020essential}{3}
 \bibcite{buffon1777}{4}
 \bibcite{laplace1886}{5}
 \bibcite{metropolis1987beginning}{6}
-\bibcite{rosenbluth2003}{7}
-\bibcite{georgescu2023}{8}
-\bibcite{kalos2008montecarlo}{9}
-\bibcite{gubernatis2016quantum}{10}
-\bibcite{leoni2023enhancing}{11}
-\bibcite{Leoni2024}{12}
-\bibcite{metropolis1953equation}{13}
+\bibcite{metropolis1953equation}{7}
+\bibcite{rosenbluth2003}{8}
+\bibcite{georgescu2023}{9}
+\bibcite{kalos2008montecarlo}{10}
+\bibcite{gubernatis2016quantum}{11}
+\bibcite{leoni2023enhancing}{12}
+\bibcite{Leoni2024}{13}
 \bibcite{hastings1970monte}{14}
 \bibcite{flyvbjerg1989error}{15}
 \bibcite{sokal1996monte}{16}
@@ -251,10 +274,10 @@
 \bibcite{dinh2017density}{19}
 \bibcite{kullback1951information}{20}
 \bibcite{noe2019boltzmann}{21}
-\bibcite{wu2020stochastic}{22}
-\bibcite{asghar2024efficient}{23}
+\bibcite{verdi2023quantum}{22}
+\bibcite{wu2020stochastic}{23}
 \bibcite{invernizzi2022skipping}{24}
-\bibcite{verdi2023quantum}{25}
-\@writefile{toc}{\contentsline {chapter}{Bibliografia}{76}{appendix*.40}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{79}{appendix*.41}\protected@file@percent }
-\gdef \@abspage@last{88}
+\bibcite{asghar2024efficient}{25}
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{82}{appendix*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Ringraziamenti}{85}{appendix*.46}\protected@file@percent }
+\gdef \@abspage@last{94}
