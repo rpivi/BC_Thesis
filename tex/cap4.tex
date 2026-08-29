@@ -106,12 +106,11 @@ Per ogni coppia $(D,T)$ vengono generati $10^6$ campioni di produzione. Viene st
 Prima di procedere al confronto sistematico, è importante verificare empiricamente che i passi utilizzati per la termalizzazione siano sufficienti. Si prende in considerazione il caso più difficile della scansione, $D=4$ e $T=150$~K. Si inizializzano due configurazioni - una estratta da una distribuzione normale standard e l'altra inizializzata a \(\mathbf{x}=(1, \dots, 1)\) - e ne si confronta l'evoluzione dell'energia. In Figura~\ref{fig:therm_T_D} si osserva che, indipendentemente dal punto di partenza, l'energia fluttua intorno allo stesso valore medio entro le prime centinaia di passi: questo ci garantisce la termalizzazione ma non implica l'assenza di intrappolamento in un singolo modo.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
+    \includegraphics[width=0.70\textwidth]{images/MCMC/thermalization_energies_D4_T150.00.png}
     \caption{Evoluzione dell'energia durante la termalizzazione per $D=4$,
 $T=150$~K, a partire da due inizializzazioni distinte: una $\mathbf{x}=(1,\dots,1)$ e una estratta da distribuzione normale standard.}
     \label{fig:therm_T_D}
 \end{figure}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
@@ -133,7 +132,6 @@ Finestra blocking per rilevazione plateau                     & 4 \\
 \caption{Parametri implementativi delle simulazioni MCMC.}
 \label{tab:mcmc_details}
 \end{table}
-
 \FloatBarrier
 \paragraph*{Risultati.}
 I risultati confermano quantitativamente il quadro qualitativo delineato in Sez.~\ref{sec:potenziale_dw}, articolandosi in tre evidenze complementari: l'inefficienza delle mosse locali, il costo che questa inefficienza comporta in termini di campioni effettivamente indipendenti e, infine, il comportamento degli osservabili termodinamici standard, che per la simmetria del sistema non permettono di diagnosticare il problema dell'intrappolamento in un modo.
