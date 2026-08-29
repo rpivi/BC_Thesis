@@ -1,14 +1,14 @@
 \chapter{Normalizing Flows}
 \label{ch:nf}
-In questo capitolo si introducono i Normalizing Flows (NF), una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice in una distribuzione target complessa. La versatilità di questi modelli permette di utilizzarli sia per fare inferenza di dati sia per il campionamento diretto da una distribuzione.
+In questo capitolo si introducono i Normalizing Flows (NF), che sono una classe di modelli generativi basati su trasformazioni invertibili e differenziabili, capaci di mappare una distribuzione base semplice in una distribuzione target complessa. La versatilità di questi modelli permette di utilizzarli sia per fare inferenza di dati sia per il campionamento diretto da una distribuzione.
 
-Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real Non Volume Preserving} (Real NVP), ed il problema del loro addestramento(Sez.~\ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
+Il capitolo è organizzato come segue. Nella Sez.~\ref{sec:flows} si formalizza il concetto di NF come cambio di variabile, se ne discute l'espressività teorica e si introducono le due modalità operative di campionamento e inferenza. Successivamente nella Sez.~\ref{sec:construction} si mostra come costruire un flow tramite composizione di trasformazioni semplici, fino a spiegare la costruzione di una \emph{Real Non Volume Preserving} (Real NVP) ed il problema del loro addestramento (Sez.~\ref{sec:addestramento-flow}). Infine, nella Sez.~\ref{sec:camp_nf} si presentano due metodi di campionamento: il primo è il semplice utilizzo di un NF con re-weighting (Sez.~\ref{subsec:boltzmann_gen}), il secondo è l'algoritmo Flow-MCMC, che combina un NF pre-addestrato con MCMC in modo da poter avere passi globali e risolvere il problema dell'intrappolamento in un modo, mantenendo la convergenza alla distribuzione target (Sez.~\ref{subsec:flow-mcmc}).
 
 \section{Definizione, proprietà ed utilizzo}
 \label{sec:flows}
 \subsection{Cambio di variabili e funzioni invertibili}
 
-Un Normalizing Flow è una trasformazione invertibile $T$ che permette di mappare una variabile aleatoria con distribuzione $p_Z$ in una nuova variable con distribuzione diversa semplicemente applicando T:
+Un Normalizing Flow è una trasformazione invertibile $T$ che permette di mappare una variabile aleatoria con distribuzione $p_Z$ in una nuova variabile con distribuzione diversa semplicemente applicando T:
 \begin{equation}
     \mathbf{x} = T (\mathbf{z}), \quad \mathbf{z} \sim p_Z(\mathbf{z})
 \end{equation}
@@ -62,7 +62,7 @@ In figura è illustrato un esempio pratico con $a = 2$ e $b = 7.5$, mostrando il
 
 \subsection{Espressività del flow}
 
-Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. È possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che è possibile sotto certe condizioni rappresentare qualsiasi distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
+Una questione di fondamentale importanza è \emph{l'espressività} del flow $T$. È possibile rappresentare una qualsiasi distribuzione $p_X(\mathbf{x})$, anche se la distribuzione base è semplice? Mostreremo che sotto certe condizioni è possibile rappresentare qualsiasi distribuzione $p_X(\mathbf{x})$ a partire da una distribuzione di base $p_Z(\mathbf{z})$ uniforme nell'insieme $(0,1)^D$.
 
 Supponiamo che $p_X(\mathbf{x}) > 0$ per ogni $\mathbf{x} \in \mathbb{R}^D$, e assumiamo che tutte le probabilità condizionate $\Pr(x_i' \le x_i \mid \mathbf{x}_{<i})$ — dove $x_i'$ è la variabile aleatoria a cui questa probabilità fa riferimento — siano differenziabili rispetto a $(x_i, \mathbf{x}_{<i})$. Usando la regola della catena della probabilità, possiamo decomporre $p_X(\mathbf{x})$ in un prodotto di densità condizionate:
 \begin{equation}
@@ -76,7 +76,7 @@ Poiché ciascuna $F_i$ è differenziabile rispetto ai propri argomenti, $F$ è d
 \begin{equation}
     x_i = \big(F_i(\cdot, \mathbf{x}_{<i})\big)^{-1}(z_i) \quad \text{per } i = 1, \dots, D.
 \end{equation}
-Lo Jacobiano di $F$ è triangolare inferiore, poiché $\partial F_i / \partial x_j = 0$ per $i < j$. Quindi il determinante Jacobiano di $F$ è uguale al prodotto dei suoi elementi diagonali:
+Lo Jacobiano di $F$ è triangolare inferiore, poiché $\partial F_i / \partial x_j = 0$ per $i < j$. Quindi il determinante dello Jacobiano di $F$ è uguale al prodotto dei suoi elementi diagonali:
 \begin{equation}
     \det J_F(\mathbf{x}) = \prod_{i=1}^{D} \frac{\partial F_i}{\partial x_i} = \prod_{i=1}^{D} p_X(x_i \mid \mathbf{x}_{<i}) = p_X(\mathbf{x}).
 \end{equation}
@@ -141,9 +141,9 @@ Il logaritmo del determinante del Jacobiano di $T$ sarà dunque calcolabile come
 
 Rimane da chiarire quali singole trasformazioni $T_k$ implementare per creare il flow $T$. Sarebbe desiderabile che ogni $T_k$ avesse le seguenti tre proprietà. La prima è l'invertibilità, una richiesta imprescindibile come mostrato in precedenza, è proprio l'esistenza di $T^{-1}$ a garantire la buona definizione della densità $p_X(\mathbf{x})$ tramite la formula del cambio di variabile, oltre a essere necessaria per l'eventuale fase di inferenza.
 
-Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni. Esso è un costo computazionale proibitivo, poiché viene ripetuto a ogni passo dell'addestramento (Sezione~\ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico. Infine l'espressività, infatti anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili per limitare il numero di calcoli.
+Il secondo requisito nasce invece da un vincolo pratico: sebbene ogni trasformazione differenziabile ammetta per definizione uno Jacobiano ben definito, per una generica matrice $D \times D$ il calcolo del determinante richiede $\mathcal{O}(D^3)$ operazioni. Esso è un costo computazionale proibitivo, poiché viene ripetuto a ogni passo dell'addestramento (Sezione~\ref{sec:addestramento-flow}). È dunque necessario progettare trasformazioni il cui Jacobiano abbia una struttura particolare — ad esempio triangolare o diagonale a blocchi — che ne renda il determinante calcolabile in tempo lineare $\mathcal{O}(D)$, anziché cubico. Infine occorre che vi sia l'espressività: anche se è possibile concatenare molte trasformazioni semplici e poco espressive, conviene impiegare un minor numero di trasformazioni che siano il più espressive possibili per limitare il numero di calcoli.
 
-Si discuteranno nelle prossime sezioni gli \emph{autoregressive flows} e un particolare tipo di NF di tale categoria chiamato \emph{Real NVP}.
+Si discuteranno nelle prossime sezioni gli \emph{autoregressive flows} e un particolare tipo di NF chiamato \emph{Real NVP}.
 
 \subsection{Autoregressive flows}
 
@@ -195,7 +195,7 @@ Resta da imporre l'invertibilità della trasformazione, necessaria per essere un
     \tau^{-1}(z_i';\mathbf{h}_i).
 \end{equation}
 
-La struttura autoregressiva permette quindi di ottenere trasformazioni con un Jacobiano di cui il determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
+La struttura autoregressiva permette di ottenere trasformazioni con un Jacobiano il cui determinante è facilmente calcolabile. Il prezzo da pagare è però una struttura sequenziale nell'esecuzione della trasformazione inversa. In particolare, poiché $\mathbf{h}_i$ dipende dalle componenti precedenti, le diverse componenti non possono essere ricostruite
 simultaneamente. Si mostra in Figura~\ref{fig:autoregressive} lo schema di calcolo per un autoregressive flow.
 Un vantaggio molto importante degli autoregressive flow è che le proprietà fondamentali per essere un flow sono a carico di $\tau$, mentre il condizionatore $c_i$ è un elemento di estrema libertà implementativa. Infatti su $c_i$ non vi è alcuna richiesta di invertibilità, questo ci permette di utilizzare una rete neurale (neural network o NN) come condizionatore.
 \begin{figure}[t]
@@ -251,7 +251,7 @@ Applicando una sequenza di $N = 8$ layer di flow autoregressivi consecutivi, la 
 \end{example}
 \subsection{Real NVP}
 \label{sec:realnvp}
-Una architettura molto utilizzata per costruire Normalizing Flows è la \emph{Real NVP} (Real-valued Non-Volume Preserving), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una \emph{trasformazione affine}, i cui parametri sono calcolati da un condizionatore. Il condizionatore ha due caratteristiche principali: è una rete neurale ed ha una struttura di condizionamento chiamata \emph{coupling layer}.
+Un'architettura molto utilizzata per costruire Normalizing Flows è la \emph{Real NVP} (Real-valued Non-Volume Preserving), introdotta da Dinh et al.~\cite{dinh2017density}. L'idea alla base della Real NVP è costruire un autoregressive flow che ha come trasformatore una \emph{trasformazione affine}, i cui parametri sono calcolati da un condizionatore. Il condizionatore ha due caratteristiche principali: è una rete neurale ed ha una struttura di condizionamento chiamata \emph{coupling layer}.
 
 \paragraph*{Trasformazione affine.}
 
@@ -291,7 +291,7 @@ Il primo blocco $\mathbf{z}_{\leq d}$ viene quindi lasciato \emph{invariato} e f
     \label{fig:coupling}
 \end{figure}
 
-Si noti che, a differenza dei flow autoregressivi generali, l'inversione di un coupling layer non richiede alcuna procedura sequenziale: tutte le componenti di $\mathbf{z}_{>d}$ vengono ricostruite \emph{simultaneamente}, poiché dipendono unicamente dal blocco $\mathbf{z}_{\leq d}$ già disponibile. Per lo stesso motivo, anche la valutazione in avanti (forward) è completamente parallelizzabile: il coupling layer è quindi \emph{computazionalmente simmetrico}, essendo ugualmente efficiente da valutare in entrambe le direzioni (Figura~\ref{fig:coupling}).
+A differenza dei flows autoregressivi generali, si noti che l'inversione di un coupling layer non richiede alcuna procedura sequenziale: tutte le componenti di $\mathbf{z}_{>d}$ vengono ricostruite \emph{simultaneamente}, poiché dipendono unicamente dal blocco $\mathbf{z}_{\leq d}$ già disponibile. Per lo stesso motivo, anche la valutazione in avanti (forward) è completamente parallelizzabile: il coupling layer è quindi \emph{computazionalmente simmetrico}, essendo ugualmente efficiente da valutare in entrambe le direzioni (Figura~\ref{fig:coupling}).
 Lo Jacobiano della trasformazione Real NVP ha la seguente struttura triangolare inferiore:
 \begin{equation}
     J_{\phi} =
@@ -307,7 +307,7 @@ dove $\mathbf{I}_d$ è la matrice identità $d \times d$, $\mathbf{0}$ è la mat
 \end{equation}
 il che conferma che il costo di valutazione del log-determinante è lineare in $D$, indipendentemente dalla complessità delle reti $\mathbf{s}$ e $\mathbf{t}$.
 
-Un singolo coupling layer, tuttavia, lascia $\mathbf{z}_{\leq d}$ completamente invariato: per ottenere un flow espressivo è quindi necessario \emph{concatenare più coupling layer}, alternando a ogni passo quale sottoinsieme di componenti viene tenuto fisso. Tipicamente questo è ottenuto \emph{permutando} gli elementi a ogni passo in modo che ogni componente venga trasformata più volte nel corso del flow, ovviamente è necessario assicurarsi che alla fine di ogni trasformazione ogni componente sia nella sua posizione originale.
+Un singolo coupling layer lascia $\mathbf{z}_{\leq d}$ completamente invariato. Per ottenere un flow espressivo è necessario \emph{concatenare più coupling layer}, alternando a ogni passo il sottoinsieme di componenti che viene tenuto fisso. Tipicamente questo è ottenuto \emph{permutando} gli elementi a ogni passo in modo che ogni componente venga trasformata più volte nel corso del flow; ovviamente è necessario assicurarsi che alla fine di ogni trasformazione ogni componente sia nella sua posizione originale.
 
 La presenza delle NN nelle Real NVP non è un caso, ma è un elemento fondamentale: esse permettono al flow $T$ una maggiore espressività e una dipendenza da un numero maggiore di parametri $\boldsymbol{\theta}$, conferendo al flow la capacità di apprendere trasformazioni complesse. I parametri delle reti neurali devono essere determinati attraverso una procedura di addestramento. L'obiettivo è scegliere tali parametri in modo che la trasformazione appresa sia in grado di rappresentare in modo efficace la distribuzione di interesse. Nella prossima sezione si illustra come viene formulato il problema dell'addestramento di un NF.
 
@@ -338,7 +338,7 @@ L'obiettivo dell'addestramento è determinare i parametri $\boldsymbol{\theta}$ 
     p_X(\mathbf{x};\boldsymbol{\theta}) = p_Z\big(T_{\boldsymbol{\theta}}^{-1}(\mathbf{x})\big)\,\big|\det J_{T_{\boldsymbol{\theta}}^{-1}}(\mathbf{x})\big|,
 \end{equation}
 approssimi il più fedelmente possibile una distribuzione target $p_X^*(\mathbf{x})$.
-Per farlo è necessario innanzitutto scegliere una misura di distanza tra le due distribuzioni. La scelta più comune, che adotteremo anche in questo lavoro, è la \emph{divergenza di Kullback-Leibler} (KL) \cite{kullback1951information}, definita per due densità $p$ e $q$ come
+Per farlo è necessario innanzitutto scegliere una misura di distanza tra le due distribuzioni. La scelta più comune è la \emph{divergenza di Kullback-Leibler} (KL) \cite{kullback1951information}, definita per due densità $p$ e $q$ come
 \begin{equation}
     D_{\mathrm{KL}}(p \,\|\, q) = \Big\langle \log \frac{p}{q} \Big\rangle_{p} = \int p(\mathbf{x}) \log \frac{p(\mathbf{x})}{q(\mathbf{x})}\, d\mathbf{x}.
 \end{equation}
@@ -434,7 +434,7 @@ L'utilizzo del flow per il campionamento ha altri vantaggi: la capacità di prod
 
 L'idea alla base di \emph{Flow-MCMC} è creare un metodo di campionamento ibrido, che mantenga le caratteristiche migliori dei due: la convergenza alla distribuzione target di MCMC e la globalità del campionamento di un NF. Il flow addestrato non viene quindi utilizzato come campionatore diretto, bensì come \emph{distribuzione di proposta} $\Gamma$ all'interno di uno schema Metropolis-Hastings, permettendo così di correggere esattamente l'eventuale differenza tra $p_X(\mathbf{x};\boldsymbol{\theta})$ e $p_X^*(\mathbf{x})$. I tre approcci presentano dunque vantaggi e svantaggi, come riassunto in Tabella~\ref{tab:confronto_metodi}.
 
-\paragraph*{Independence sampler}
+\paragraph*{Independence sampler.}
 Un metodo Metropolis-Hastings si dice \emph{independence sampler} se la distribuzione di proposta $\Gamma(\mathbf{x} \to \mathbf{y})$ non dipende dallo stato corrente $\mathbf{x}$, ossia $\Gamma(\mathbf{x} \to \mathbf{y}) = \Gamma(\mathbf{y})$ per ogni $\mathbf{x}$. In questo caso ogni candidato $\mathbf{y}$ è un campione indipendente estratto da $\Gamma$, accettato o rifiutato secondo il consueto criterio di Metropolis-Hastings.
 
 Utilizzando la distribuzione $p_X(\mathbf{x}; \boldsymbol{\theta})$, ottenuta dall'addestramento di $T_{\boldsymbol{\theta}}$, come distribuzione di proposta $\Gamma(\mathbf{x} \to \mathbf{y})$ all'interno dell'algoritmo di Metropolis-Hastings (Sez.~\ref{subsec:metropolis}), si ottiene un independence sampler. Infatti a differenza della proposta gaussiana locale, la proposta ottenuta dal flow non dipende dallo stato corrente della catena
@@ -480,7 +480,7 @@ Campiona $\mathbf{z}_0 \sim p_Z(\mathbf{z})$; $\ \mathbf{x}_0 \leftarrow T_{\bol
 \vspace{3mm}
 \noindent Si noti che l'algoritmo è formulato per un target non normalizzato $f(\mathbf{x})$ del tutto generico: nel caso della distribuzione di Boltzmann trattata in questo lavoro si ha semplicemente $f(\mathbf{x}) = \tilde{p}_X(\mathbf{x}) = e^{-\beta \mathcal{H}(\mathbf{x})}$, ma lo schema resta valido per qualunque distribuzione target di cui sia nota la densità non normalizzata.
 
-\paragraph*{Convergenza ed efficienza}
+\paragraph*{Convergenza ed efficienza.}
 
 La convergenza asintotica a $p_X^*(\mathbf{x})$ non dipende dalla qualità dell'addestramento del flow. La domanda è se l'efficienza di tale convergenza possa dipendere da quanto bene  $p_X(\mathbf{x};\boldsymbol{\theta})$ approssima la distribuzione target. Infatti per avere un metodo più efficiente possibile vorremmo che ogni proposta fosse accettata, di modo che la catena si muova liberamente fra i modi.
 Si può dimostrare la seguente affermazione
@@ -498,7 +498,7 @@ e utilizzando l'ipotesi di buon addestramento e ricordando $p_X^*(\mathbf{x}) = 
 \end{equation}
 
 Inoltre si può dimostrare che se $p_X(\mathbf{x};\boldsymbol{\theta}) \approx p_X^*(\mathbf{x})$ allora il tempo di autocorrelazione integrato e la varianza della media raggiungono il minor valore possibile.
-Avendo dimostrao che in caso di un buon addestramento il tasso di accettazione è $\approx 1$ (Eq.~\ref{eq:ac_flow_mcmc}), sappiamo che la catena è composta di campioni estratti in modo indipendente grazie al flow, questo comporta che la funzione di correlazione \ref{eq:cor} si annulli:
+Avendo dimostrato che in caso di un buon addestramento il tasso di accettazione è $\approx 1$ (Eq.~\ref{eq:ac_flow_mcmc}), sappiamo che la catena è composta di campioni estratti in modo indipendente grazie al flow, questo comporta che la funzione di correlazione \ref{eq:cor} si annulli:
 \begin{equation}
     \chi_{|i-j|} = \langle O(\mathbf{x}_i) O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle = \langle O(\mathbf{x}_i)\rangle \langle O(\mathbf{x}_j)\rangle - \langle O(\mathbf{x}_i) \rangle \langle O(\mathbf{x}_j) \rangle = 0 .
 \end{equation}
