@@ -132,9 +132,9 @@
 % ============================================================
 \begin{titlepage}
 \begin{center}
-{{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di Bologna}}}} 
-\rule[0.1cm]{15.8cm}{0.1mm}
-\rule[0.5cm]{15.8cm}{0.6mm}
+\resizebox{\textwidth}{!}{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di Bologna}}
+\rule[0.1cm]{\textwidth}{0.1mm}
+\rule[0.5cm]{\textwidth}{0.6mm}
 \\\vspace{3mm}
 
 {\small{\bf Dipartimento di Fisica e Astronomia “Augusto Righi”\\
@@ -144,9 +144,13 @@ Corso di Laurea in Fisica}}
 
 \vspace{23mm}
 
-\begin{center}\textcolor{black}{
-{\LARGE{\bf Metodi Monte Carlo e Normalizing Flows generativi per il campionamento di distribuzioni di Boltzmann multimodali}}\\
-}\end{center}
+\begin{center}
+\begin{minipage}{0.85\textwidth}
+\centering
+{\LARGE\bfseries\linespread{1.15}\selectfont
+Metodi Monte Carlo e Normalizing Flows generativi per il campionamento di distribuzioni di Boltzmann multimodali\par}
+\end{minipage}
+\end{center}
 
 \vspace{50mm} \par \noindent
 
@@ -170,42 +174,35 @@ Riccardo Pivi}}}
 
 \vfill
 
-
 \begin{center}
 Anno Accademico \textcolor{black}{ 2025/2026}
 \end{center}
 \end{titlepage}
 
-% ============================================================
-% Front matter: numerazione romana
-% ============================================================
-\pagenumbering{roman}
+\pagenumbering{gobble} 
 
 \blankpage
 
-\blankpage
+% --- Dedica ---
 \vspace*{90mm}
 \begin{flushright}
 \itshape
 A mio fratello e ai miei genitori,\\
-per essere stati il mio faro e il mio porto sicuro.
+per essere stati il mio faro\\ e il mio porto sicuro.
 \end{flushright}
 \vspace*{\fill}
 
-\blankpage
-
 \input{abstract.tex}
 
-\blankpage
+\cleardoublepage
 
 \tableofcontents
-
-\newpage
 
 % ============================================================
 % Main matter: numerazione araba da qui
 % ============================================================
 \pagenumbering{arabic}
+\pagestyle{fancy} 
 \setcounter{page}{1}
 
 \input{cap1.tex}

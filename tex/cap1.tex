@@ -2,11 +2,11 @@
 \addcontentsline{toc}{chapter}{Introduzione}
 La determinazione delle proprietà macroscopiche di un sistema fisico a partire dalla sua descrizione microscopica costituisce l'obiettivo della meccanica statistica. Nel caso di un sistema all'equilibrio termico con un serbatoio a temperatura costante $T$, le probabilità dei microstati sono descritte dalla distribuzione di Boltzmann. 
 Il calcolo dei valori di aspettazione di generici osservabili fisici richiede la valutazione di integrali definiti sullo spazio delle configurazioni.
-Per sistemi con un numero elevato di gradi di libertà, tali integrali non sono generalmente calcolabili per via analitica. Al contempo, l'impiego di metodi di integrazione numerica risulta impraticabile a causa della crescita esponenziale del costo computazionale all'aumentare della dimensionalità del sistema. In questo contesto, i metodi Monte Carlo costituiscono lo strumento più efficace: sostituiscono l'integrazione esatta con una stima statistica basata sulla media aritmetica di un numero finito $N$ di configurazioni campionate.
+Per sistemi con un numero elevato di gradi di libertà, tali integrali non sono generalmente calcolabili per via analitica. Al contempo, l'impiego di metodi d'integrazione numerica risulta impraticabile a causa della crescita esponenziale del costo computazionale all'aumentare della dimensionalità del sistema. In questo contesto, i metodi Monte Carlo costituiscono lo strumento più efficace: sostituiscono l'integrazione esatta con una stima statistica basata sulla media aritmetica di un numero finito $N$ di configurazioni campionate.
 
-La generazione di un campionamento rappresentativo della distribuzione di Boltzmann presenta forti ostacoli pratici. Il problema del campionamento diventa particolarmente critico quando il sistema presenta un paesaggio energetico complesso: la distribuzione di Boltzmann associata risulta multimodale e dunque caratterizzata da molteplici regioni di alta probabilità (modi) ben separate da regioni di bassa densità.
+La generazione di campioni rappresentativi della distribuzione di Boltzmann presenta forti ostacoli pratici. Il problema del campionamento diventa particolarmente critico quando il sistema ha un paesaggio energetico complesso: la distribuzione di Boltzmann associata risulta multimodale e dunque caratterizzata da molteplici regioni di alta probabilità (modi) ben separate da regioni di bassa densità.
 
-Un metodo per campionare è Markov Chain Monte Carlo, comunemente implementato con l'algoritmo di Metropolis-Hastings con proposte di aggiornamento dello stato della catena di tipo locale. Sebbene Markov Chain Monte Carlo garantisca teoricamente la convergenza asintotica alla distribuzione target, la natura locale delle mosse limita fortemente l'efficienza della catena di Markov in contesti multimodali. Per attraversare una regione a bassa probabilità tramite piccoli spostamenti locali, la catena richiede tempi computazionali estremamente lunghi. Di conseguenza, la catena può rimanere intrappolata in un singolo modo per la quasi totalità della simulazione, portando a una scorretta valutazione dei valori medi degli osservabili.
+Un metodo per campionare è Markov Chain Monte Carlo, comunemente implementato con l'algoritmo di Metropolis-Hastings con proposte di aggiornamento dello stato della catena di tipo locale. Sebbene Markov Chain Monte Carlo garantisca teoricamente la convergenza asintotica alla distribuzione target, la natura locale delle mosse limita fortemente l'efficienza della catena di Markov in contesti multimodali. Per attraversare una regione a bassa probabilità tramite piccoli spostamenti locali, la catena richiede tempi computazionali estremamente lunghi. Di conseguenza, essa può rimanere intrappolata in un singolo modo per la quasi totalità della simulazione, portando a una scorretta valutazione dei valori medi degli osservabili.
 
 Lo sviluppo dell'apprendimento automatico e dei modelli generativi ha aperto nuove prospettive per superare le limitazioni di Markov Chain Monte Carlo. In particolare, i Normalizing Flows costituiscono una classe di modelli generativi basati su trasformazioni invertibili e differenziabili che mappano una distribuzione base semplice in un'approssimazione della distribuzione target. Un Normalizing Flow addestrato ad approssimare la distribuzione di Boltzmann consente di generare campioni in modo diretto, offrendo un campionamento in grado di esplorare globalmente lo spazio delle configurazioni. In questo contesto i Normalizing Flows in letteratura prendono anchi il nome di Boltzmann Generators.
 
@@ -15,7 +15,7 @@ Tuttavia, l'impiego diretto dei Normalizing Flows non garantisce una stima esatt
 In questo lavoro di tesi viene condotta un'analisi comparativa tra i tre approcci di campionamento: il metodo Markov Chain Monte Carlo locale, il campionamento diretto tramite Normalizing Flow e l'approccio ibrido Flow-MCMC. 
 L'analisi viene svolta empiricamente su un sistema di test a potenziale a doppio pozzo, scelto specificamente per la bimodalità che induce sulla distribuzione di Boltzmann associata. Il confronto quantifica l'efficienza e la velocità di convergenza dei tre metodi al variare della temperatura $T$ del sistema e del numero di campioni $N$ generati. I risultati mostrano chiaramente che:
 \begin{itemize}
-    \item A basse temperature, il Markov Chain Monte Carlo locale soffre di un marcato fenomeno di intrappolamento, rimanendo confinato in un solo pozzo di potenziale.
+    \item A basse temperature, Markov Chain Monte Carlo locale soffre di un marcato fenomeno di intrappolamento, rimanendo confinato in un solo pozzo di potenziale.
     \item I metodi basati sui Normalizing Flows riescono a esplorare in modo bilanciato entrambi i modi della distribuzione anche a basse temperature e dimostrano una convergenza più rapida, richiedendo meno campioni per stime accurate.
 \end{itemize}
 I risultati confermano quindi il vantaggio pratico, per il campionamento di distribuzioni multimodali, derivante dall'introduzione di mosse globali tramite Normalizing Flows rispetto alle classiche dinamiche markoviane locali.
@@ -26,7 +26,7 @@ La tesi è strutturata nei seguenti capitoli:
     
     \item \textbf{Capitolo~\ref{ch:mc} - Metodi Monte Carlo}: presenta una rassegna dei metodi stocastici per il campionamento, a partire dai cenni storici e dal metodo dell'inversa, per poi approfondire la teoria delle catene di Markov, l'algoritmo di Metropolis-Hastings e l'analisi dell'autocorrelazione tra campioni.
     
-    \item \textbf{Capitolo~\ref{ch:nf} - Normalizing Flows}: descrive il formalismo teorico dei Normalizing Flows, l'espressività e la costruzione tramite composizione di trasformazioni, fino alla descrizione dell'architettura Real NVP. Essendo metodi generativi è presentato l'addestramento mediante divergenza di Kullback-Leibler. Infine si presentano gli utilizzi dei Normalizing Flow per metodi di campionamento.
+    \item \textbf{Capitolo~\ref{ch:nf} - Normalizing Flows}: descrive il formalismo teorico dei Normalizing Flows, l'espressività e la costruzione tramite composizione di trasformazioni, fino alla descrizione dell'architettura Real NVP. Essendo metodi generativi è presentato l'addestramento mediante divergenza di Kullback-Leibler. Infine si presentano gli utilizzi dei Normalizing Flows per metodi di campionamento.
     
     \item \textbf{Capitolo~\ref{ch:studio} - Studio del campionamento}: espone il sistema di test del potenziale a doppio pozzo, il setup dell'addestramento e la valutazione quantitativa del campionamento ottenuto tramite i tre metodi presi in esame: Markov Chain Monte Carlo, Normalizing Flows, Flow-MCMC.
 \end{itemize}
@@ -37,7 +37,7 @@ La tesi è strutturata nei seguenti capitoli:
 \label{ch:stat_mecstat}
 In questo capitolo vengono introdotti alcuni concetti fondamentali per la comprensione del problema del campionamento: generare una successione di configurazioni secondo una determinata distribuzione di probabilità. Tale problema assume particolare rilevanza in meccanica statistica, dove le proprietà macroscopiche di un sistema possono essere ricavate a partire dalle configurazioni microscopiche che lo costituiscono.
 
-Nelle prossime pagine si introducono le nozioni di variabile aleatoria e distribuzioni di probabilità e si discute l'importanza del campionamento di una distribuzione (Sezione~\ref{sec:probabilita}). Si introduce poi la meccanica statistica e l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (Sezione~\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si espone la distinzione fra campionamento diretto e markoviano (Sezione~\ref{sec:tassonomia_campionamento}) necessaria per comprendere le differenze nei vari metodi di campionamento presentati nei capitoli successivi. 
+Nelle prossime pagine si introducono le nozioni di variabile aleatoria e distribuzioni di probabilità e si discute l'importanza del campionamento di una distribuzione (Sezione~\ref{sec:probabilita}). Si introduce poi la meccanica statistica e l'ensemble canonico, con particolare attenzione alla distribuzione di Boltzmann (Sezione~\ref{sec:meccanica-statistica}), che rappresenta la distribuzione target dei metodi di campionamento studiati nel seguito di questa tesi. Infine si espone la distinzione fra campionamento diretto e markoviano (Sezione~\ref{sec:tassonomia_campionamento}), necessaria per comprendere le differenze nei vari metodi presentati nei capitoli successivi. 
 
 \section{Teoria della probabilità}
 \label{sec:probabilita}
@@ -49,8 +49,8 @@ In teoria della probabilità ha un ruolo fondamentale la definizione di \emph{sp
 \end{equation}
 
 \begin{example}{Tiri di un dado}{dice}
-Quando si tira un dado a sei facce si considera lo spazio degli eventi $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P(\chi_i) = 1/6$ per ogni $\chi_i \in \Omega$ .
-Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \subset \Omega$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
+Quando si tira un dado a sei facce si considera lo spazio degli esiti $\Omega = \{1, 2, ... , 6\}$ e la misura di probabilità $P(\chi_i) = 1/6$ per ogni $\chi_i \in \Omega$ .
+Un esempio di evento è il caso in cui il risultato del tiro sia pari $A =\{2, 4, 6\} \in  \mathcal{F}$ con probabilità calcolabile nel seguente modo: $P(A) = P(2) + P(4) + P(6) = 1/2$.
 \end{example}
 
 Una \emph{variabile aleatoria} (reale) $X$ associa ad ogni elemento $\chi$  di uno spazio degli esiti $\Omega$ un valore $x$ appartenente a uno spazio misurabile $(\mathbb{R}, \mathcal{F}(\mathbb{R}))$. Nel caso di una variabile aleatoria reale si ha quindi:
@@ -82,7 +82,7 @@ La densità di probabilità deve inoltre soddisfare la condizione di normalizzaz
 p_X(x) \geq 0 \quad \forall x \in \mathbb{R}.
 \end{equation}
 
-È importante sottolineare che la densità di probabilità per una variabile aleatoria continua non rappresenta direttamente la probabilità che assuma un determinato valore: infatti la probabilità di assumere esattamente un valore $x_0$
+È importante sottolineare che la densità di probabilità per una variabile aleatoria continua non rappresenta direttamente la probabilità che assuma un determinato valore: infatti, la probabilità di assumere esattamente un valore $x_0$
 è nulla. La densità di probabilità permette invece di calcolare la probabilità che la variabile aleatoria assuma un valore appartenente a un determinato intervallo. In particolare, la probabilità che $X$ appartenga all'intervallo $[a,b]$ è data da
 \begin{equation}
 P(a\leq X\leq b) = \int_a^b p_X(x) dx.
@@ -121,8 +121,8 @@ Sia $p(\mathbf{x})$ la densità di probabilità della variabile aleatoria e $O(\
 \langle O(\mathbf{x})\rangle_p=\int_{\mathbb{R}^D} O(\mathbf{x})p(\mathbf{x}) \ d\mathbf{x}.
 \end{equation}
 
-La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$, inoltre questo integrale non è sempre facilmente risolvibile analiticamente o numericamente.
-Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica \cite{marinari2023calcolo}, che discretizzano lo spazio delle configurazioni su una griglia e approssimano l'integrale come somma pesata sui punti della griglia.
+La convergenza dell'integrale non è affatto garantita e dipende dall'andamento della funzione $O(\mathbf{x})$ e da $p(\mathbf{x})$; inoltre questo integrale non è sempre facilmente risolvibile analiticamente o numericamente.
+Un approccio diretto al calcolo di $\langle O(\mathbf{x})\rangle$ potrebbe basarsi su metodi di quadratura numerica \cite{marinari2023calcolo}, che discretizzano lo spazio delle configurazioni su una griglia ed approssimano l'integrale come somma pesata sui punti della griglia.
 
 \begin{example}{Metodo del trapezio}{trapezoid}
 Nel caso unidimensionale il metodo di quadratura approssima l'integrale di una funzione $f(x)$ su un intervallo $[a,b]$ mediante la formula:
@@ -157,9 +157,9 @@ Diversamente dai metodi di quadratura, questo risultato non dipende esplicitamen
 
 \subsection{Distribuzioni unimodali e multimodali}
 
-Una distribuzione di probabilità può presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \emph{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \emph{modo}. Un esempio tipico è rappresentato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
+Una distribuzione di probabilità può presentare una struttura caratterizzata dalla presenza di uno o più massimi locali. In particolare, si definisce distribuzione \emph{unimodale} una distribuzione caratterizzata da un'unica regione di massima probabilità detta \emph{modo}. Un esempio tipico è dato dalla distribuzione gaussiana, che presenta un unico massimo in corrispondenza del suo valore medio.
 
-Una distribuzione \emph{multimodale}, invece, presenta più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa. Il caso particolare in cui vi siano due massimi locali è detto distribuzione \emph{bimodale}. La differenza qualitativa tra le due tipologie di distribuzioni è illustrata in Figura~\ref{fig:uni_multi}.
+Una distribuzione \emph{multimodale}, invece, ha più regioni distinte di alta probabilità, associate a più massimi locali della densità. In questo caso, ciascun massimo identifica un modo della distribuzione. Le diverse regioni ad alta probabilità possono essere separate da regioni caratterizzate da una densità molto più bassa. Il caso particolare in cui vi siano due massimi locali è detto distribuzione \emph{bimodale}. La differenza qualitativa tra le due tipologie di distribuzioni è illustrata in Figura~\ref{fig:uni_multi}.
 
 \begin{figure}[!t]
     \centering
@@ -174,7 +174,7 @@ Se le diverse regioni ad alta probabilità sono ben separate, il valore medio $\
 
 \begin{equation}
     \sum_i \left( O(x_i) - \langle O \rangle \right)^2
-\end{equation} assume valori tipicamente più elevati rispetto al caso di una distribuzione unimodale di eguale larghezza. Le distribuzioni multimodali possiedono pertanto una deviazione standard intrinsecamente più alta, e più in generale proprietà statistiche più complesse da caratterizzare rispetto a una distribuzione con un unico massimo ben localizzato attorno al proprio valore medio.
+\end{equation} assume valori tipicamente più elevati rispetto al caso di una distribuzione unimodale di eguale larghezza. Le distribuzioni multimodali possiedono pertanto una deviazione standard intrinsecamente più alta, e più in generale proprietà statistiche più complesse rispetto a una distribuzione con un unico massimo ben localizzato attorno al proprio valore medio.
 
 Va inoltre sottolineato che la presenza di due o più modi non influenza soltanto queste proprietà statistiche, ma ha un impatto significativo anche sul processo di campionamento, come vedremo nei capitoli successivi.
 
@@ -182,8 +182,8 @@ Va inoltre sottolineato che la presenza di due o più modi non influenza soltant
 \label{sec:meccanica-statistica}
 
 \subsection{Microstato, macrostato e ensemble statistico}
-Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico, adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo descrivere il sistema microscopicamente in modo completo, dovremmo tenere conto delle variabili dinamiche di tutte le particelle che lo compongono. Per un sistema macroscopico, il numero di gradi di libertà è enorme e una descrizione microscopica completa risulta quindi impraticabile. Un tipico esempio è la descrizione di un gas ideale: in una mole vi sono $\sim 10^{23}$ particelle e per seguire l'evoluzione temporale di ogni atomo o molecola sarebbe necessario risolvere l'equazione di Schrödinger per ciascuna di esse. Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle.
-La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche dei singoli elementi che lo costituiscono. In particolare, si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
+Noi esseri umani percepiamo il mondo circostante ad un livello macroscopico: adoperiamo oggetti composti da atomi, ma ne ignoriamo i dettagli microscopici, ovvero lo stato specifico di ciascuno di essi. Se volessimo descrivere il sistema microscopicamente in modo completo, dovremmo tenere conto delle variabili dinamiche di tutte le particelle che lo compongono. Per un sistema macroscopico, il numero di gradi di libertà è enorme e una descrizione microscopica completa risulta quindi impraticabile. Un tipico esempio è la descrizione di un gas ideale: in una mole vi sono $\sim 10^{23}$ particelle e per seguire l'evoluzione temporale di ogni atomo o molecola sarebbe necessario risolvere l'equazione di Schrödinger per ciascuna di esse. Ovviamente il problema appena descritto è inaffrontabile e soprattutto inutile dal punto di vista pratico: si è interessati a descrivere il comportamento macroscopico di un sistema e non il moto di molte singole particelle.
+La meccanica statistica fornisce un formalismo per descrivere il comportamento macroscopico di un sistema a partire dalle proprietà microscopiche dei singoli elementi che lo costituiscono. In particolare, essa si concentra sullo studio di sistemi composti da un numero elevato di particelle, come gas, liquidi o solidi, e mira a derivare le leggi della termodinamica a partire dalle leggi della meccanica classica o quantistica \cite{kennett2020essential}.
 
 In meccanica statistica, un \emph{microstato} rappresenta una configurazione specifica del sistema, descritta da tutte le variabili microscopiche necessarie per caratterizzarlo completamente. Ad esempio, per un gas ideale, un microstato può essere definito dalle posizioni e dai momenti di tutte le particelle che lo compongono. Un \emph{macrostato}, invece, è una descrizione più generale del sistema, caratterizzata da grandezze macroscopiche come energia, numero di particelle e volume. Un macrostato può corrispondere a molti microstati diversi: ad esempio, due configurazioni microscopiche diverse di un gas possono avere la stessa temperatura e pressione, come raffigurato in Figura~\ref{fig:micro_macro}.
 
@@ -197,15 +197,15 @@ In meccanica statistica, un \emph{microstato} rappresenta una configurazione spe
 Josiah Willard Gibbs (1839-1903) introdusse il concetto di \emph{ensemble statistico}, che rappresenta un insieme di copie del sistema di interesse, ciascuna delle quali può trovarsi in uno dei possibili microstati compatibili con un dato macrostato. Se l'ensemble è sufficientemente grande, allora la probabilità di trovare il sistema in un particolare microstato è la frazione di copie dell'ensemble che si trovano in quel microstato. 
 Vi sono diversi tipi di ensemble statistici, ognuno dei quali è adatto a descrivere sistemi con diversi vincoli. I principali ensemble sono:
 \begin{itemize}
-\item \textbf{Ensemble microcanonico}: Descrive un sistema isolato con energia e numero di particelle costanti. Tutti i microstati compatibili con questi vincoli hanno la stessa probabilità.
-\item \textbf{Ensemble canonico}: Descrive un sistema a contatto termico con un serbatoio a temperatura fissa, in cui l'energia può fluttuare ma il numero di particelle è costante. La probabilità di un microstato è data dalla distribuzione di Boltzmann.
-\item \textbf{Ensemble grand-canonico}: Descrive un sistema a contatto con un serbatoio che può scambiare sia energia che particelle. La probabilità di un microstato è data dalla distribuzione Grand Canonica.
+\item \textbf{Ensemble microcanonico}: descrive un sistema isolato con energia e numero di particelle costanti. Tutti i microstati compatibili con questi vincoli hanno la stessa probabilità.
+\item \textbf{Ensemble canonico}: descrive un sistema a contatto termico con un serbatoio a temperatura fissa, in cui l'energia può fluttuare, ma il numero di particelle è costante. La probabilità di un microstato è data dalla distribuzione di Boltzmann.
+\item \textbf{Ensemble grand-canonico}: descrive un sistema a contatto con un serbatoio che può scambiare sia energia che particelle. La probabilità di un microstato è data dalla distribuzione Grand Canonica.
 \end{itemize}
 Per comprendere il comportamento di un sistema fisico, è fondamentale scegliere l'ensemble statistico appropriato in base alle condizioni sperimentali e ai vincoli imposti sul sistema. Questa tesi ha l'obiettivo di presentare metodi di campionamento per la distribuzione di Boltzmann, dunque nelle prossime sezioni si discuterà più nel dettaglio l'ensemble canonico e la relativa distribuzione.
 
 \subsection{L'ensemble canonico}
 
-Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$, dove $\mathbf{x}$ rappresenta collettivamente i gradi di libertà del sistema, quali posizioni, impulsi o, più in generale, tutte le variabili necessarie a identificarne uno stato microscopico, ovvero una configurazione del sistema.
+Consideriamo un sistema fisico descritto da una hamiltoniana $\mathcal{H}(\mathbf{x})$, dove $\mathbf{x}$ rappresenta collettivamente i gradi di libertà del sistema, quali posizioni, impulsi o, più in generale, tutte le variabili necessarie ad identificarne uno stato microscopico, ovvero una configurazione del sistema.
 
 Supponiamo che il sistema sia posto a contatto con un \emph{serbatoio termico} (o bagno termico), cioè un sistema macroscopico molto più grande del sistema in esame. I due sistemi possono scambiare energia, mentre il numero di particelle rimane costante. Una rappresentazione grafica della situazione fisica è la Figura~\ref{fig:canonical}. Grazie alle dimensioni macroscopiche del serbatoio, gli scambi di energia producono variazioni trascurabili del suo stato, cosicché esso può essere considerato in equilibrio ad una temperatura costante $T$. 
 
@@ -225,7 +225,7 @@ Dalla massimizzazione dell'entropia, soggetta ai vincoli di normalizzazione dell
     p(\mathbf{x}, T) = \frac{1}{Z(\beta)} e^{-\beta \mathcal{H}(\mathbf{x})}, \quad Z(\beta) = \int_{\mathbb{R}^D} e^{-\beta \mathcal{H}(\mathbf{x})} \ d\mathbf{x}
 \end{equation} dove $\beta = \frac{1}{k_B T}$ e $Z(\beta)$ è la funzione di partizione.
 
-Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina il peso relativo delle configurazioni nella distribuzione. Si può facilmente comprendere come all'aumentare della temperatura sono probabilisticamente permessi un'insieme più ampio di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e da essa possono essere ricavate le principali grandezze termodinamiche del sistema.
+Il prodotto $\beta \mathcal{H}(\mathbf{x})$ determina il peso relativo delle configurazioni nella distribuzione. Si può facilmente comprendere come all'aumentare della temperatura sono probabilisticamente permessi un insieme più ampio di stati; al diminuire della temperatura, invece, la probabilità si concentra progressivamente negli stati di energia minima. Inoltre, la funzione di partizione svolge un ruolo centrale, poiché garantisce la normalizzazione della distribuzione e da essa possono essere ricavate le principali grandezze termodinamiche del sistema.
 L'energia libera di Helmholtz è
 \begin{equation}
 F=-k_BT\ln Z.
@@ -261,7 +261,7 @@ k_B(\ln Z+\beta\langle E\rangle).
 Nella maggior parte dei sistemi di interesse fisico la funzione di partizione non può essere calcolata in forma chiusa. Essa richiede infatti l'integrazione della quantità:
 \begin{equation}
     e^{-\beta \mathcal{H}(\mathbf{x})}
-\end{equation} su tutto lo spazio delle configurazioni, che è uno spazio multidimensionale di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle. Di conseguenza, anche il valore della densità di probabilità normalizzata non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le densità di probabilità di due configurazioni
+\end{equation} su tutto lo spazio delle configurazioni, che è uno spazio di dimensione pari al numero di gradi di libertà del sistema. Per sistemi costituiti da molte particelle il calcolo diretto dell'integrale è proibitivo: basti pensare ad un gas ideale con un numero di Avogadro ($\sim 10^{23}$) di particelle. Di conseguenza, anche il valore della densità di probabilità normalizzata non è generalmente noto, poiché dipende dalla funzione di partizione. Tuttavia è possibile valutare il rapporto tra le densità di probabilità di due configurazioni
 \begin{equation}
     \frac{p(\mathbf{x}_2, T)}{p(\mathbf{x}_1, T)} = e^{-\beta [\mathcal{H}(\mathbf{x}_2) - \mathcal{H}(\mathbf{x}_1)]},
 \end{equation} nel quale il fattore di normalizzazione $Z(\beta)$ si semplifica. Questa osservazione è importante per i capitoli successivi, poiché per poter campionare la distribuzione di Boltzmann è necessario disporre di metodi in grado di generare configurazioni distribuite secondo la distribuzione target anche quando questa è nota soltanto a meno della costante di normalizzazione.
@@ -269,11 +269,11 @@ Nella maggior parte dei sistemi di interesse fisico la funzione di partizione no
 \section{Campionamento: diretto e markoviano}
 \label{sec:tassonomia_campionamento}
 
-Il problema centrale di questa tesi - generare configurazioni distribuite secondo la distribuzione di Boltzmann - può essere affrontato secondo strategie molto diverse tra loro, ciascuna con vantaggi e limiti. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
+Il problema centrale di questa tesi - generare configurazioni distribuite secondo la distribuzione di Boltzmann - può essere affrontato attraverso strategie molto diverse tra loro, ciascuna con vantaggi e limiti. Prima di addentrarci nei metodi concreti, è utile costruire una mappa concettuale delle possibili strategie, in modo che le differenze fra i metodi presentati nei capitoli successivi risultino chiare fin da subito.
 \paragraph*{Diretto vs markoviano.}
 La prima distinzione riguarda come viene prodotta una configurazione. Si parla di \emph{campionamento diretto} quando è possibile generare direttamente campioni indipendenti distribuiti secondo $p(\mathbf{x})$. Il prezzo che viene richiesto è di conoscere analiticamente la distribuzione target: nel Capitolo~\ref{ch:mc} si mostra un metodo efficace per distribuzioni unidimensionali semplici, ovvero il metodo dell'inversa o della CDF inversa (Sezione~\ref{sec:metodo-inversa}), che è un metodo esatto di campionamento diretto.
 
-Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda solo dalla precedente. Una successione avente questa proprietà è una \emph{catena di Markov}, ed essa è alla base dei metodi \emph{Markov Chain Monte Carlo} (MCMC), presentati nella Sezione~\ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \emph{termalizzazione}. 
+Quando il campionamento diretto non è una scelta possibile per il problema che si vuole affrontare, si può ricorrere a una strategia alternativa: costruire una successione di configurazioni in cui ciascuna dipenda solo dalla precedente. Una successione avente questa proprietà è una \emph{catena di Markov} ed essa è alla base dei metodi \emph{Markov Chain Monte Carlo} (MCMC), presentati nella Sezione~\ref{sec:mcmc}. La catena non produce istantaneamente un campione dalla distribuzione corretta: è necessario \emph{iterare} finché la catena non abbia raggiunto la propria distribuzione stazionaria, una fase detta \emph{termalizzazione}. 
 
 Inoltre ogni configurazione dipende da quella precedente, dunque le configurazioni generate non sono statisticamente indipendenti ma \emph{correlate}: due passi successivi tendono a essere più simili di due configurazioni estratte direttamente, il che riduce l'informazione statistica effettivamente contenuta in $N$ passi della catena rispetto a $N$ campioni indipendenti.
 \newline
@@ -303,7 +303,7 @@ I tre metodi confrontati in questa tesi si collocano dunque rispettivamente nel 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{images/MCMC/map_methods.png}
-    \caption{Mappa concettuale dei vari metodi di campionamento e quali sono presentati in questa tesi ed in che capitoli.}
+    \caption{Mappa concettuale dei vari metodi di campionamento presentati in questa tesi e in quali capitoli.}
     \label{fig:map_methods}
 \end{figure}
 
