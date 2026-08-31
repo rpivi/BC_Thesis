@@ -33,7 +33,7 @@
 \contentsline {paragraph}{Divergenza KL forward.}{46}{paragraph*.16}%
 \contentsline {paragraph}{Divergenza KL reverse.}{46}{paragraph*.17}%
 \contentsline {section}{\numberline {3.4}Campionamento con NF}{47}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Campionamento diretto e re-weithing}{47}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.1}Campionamento diretto e re-weighting}{47}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Flow Markov Chain Monte Carlo}{49}{subsection.3.4.2}%
 \contentsline {chapter}{\numberline {4}Studio del campionamento}{53}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Il potenziale doppio pozzo}{53}{section.4.1}%

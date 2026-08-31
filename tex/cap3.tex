@@ -381,7 +381,7 @@ il cui gradiente rispetto a $\boldsymbol{\theta}$ è stimabile tramite una media
 
 \section{Campionamento con NF}
 \label{sec:camp_nf}
-\subsection{Campionamento diretto e re-weithing} 
+\subsection{Campionamento diretto e re-weighting} 
 \label{subsec:boltzmann_gen}
 La minimizzazione della KL reverse richiede quindi di poter calcolare la trasformazione diretta $T_{\boldsymbol{\theta}}$ e il determinante del suo Jacobiano, ma non richiede di invertire $T_{\boldsymbol{\theta}}$ né di conoscere campioni dal target: è sufficiente poter valutare $\tilde{p}_X$ in un punto qualsiasi. Questa è esattamente la situazione in cui ci troviamo per la distribuzione di Boltzmann:
 \begin{equation}
