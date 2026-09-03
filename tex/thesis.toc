@@ -43,3 +43,4 @@
 \contentsline {chapter}{Conclusione}{77}{chapter*.44}%
 \contentsline {chapter}{\numberline {A}Derivazione della distribuzione di Boltzmann}{79}{appendix.Alph1}%
 \contentsline {chapter}{Bibliografia}{82}{appendix*.45}%
+\contentsline {chapter}{Ringraziamenti}{85}{appendix*.46}%

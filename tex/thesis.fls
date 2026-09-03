@@ -812,6 +812,9 @@ INPUT appendix.tex
 INPUT .\thesis.bbl
 INPUT .\thesis.bbl
 INPUT thesis.bbl
+INPUT .\ringraziamenti.tex
+INPUT .\ringraziamenti.tex
+INPUT ringraziamenti.tex
 INPUT thesis.aux
 INPUT .\thesis.out
 INPUT .\thesis.out
